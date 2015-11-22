@@ -1,13 +1,12 @@
 
-.. brain swap space index file, created by `ablog start` on Mon Nov 16 21:50:33 2015.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+===================
+My Brain Swap Space
+===================
 
-Welcome to Markus Zoeller's Blog!
-============================================
+A blog with tech stuff I don't want to forget.
 
-Hello World! Find more about me here: :ref:`about`
-
+Recent posts
+============
 
 Here is a list of most recent posts:
 
@@ -21,6 +20,11 @@ Here is a list of most recent posts:
 
    Posts are excluded from this directive so that they aren't double listed
    in the sidebar both under Navigation and Recent Posts.
+
+Drafts
+======
+
+A list of drafts I'm working on: :ref:`blog-drafts`
 
 .. toctree::
    :hidden:

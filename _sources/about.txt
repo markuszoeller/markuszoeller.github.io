@@ -1,8 +1,10 @@
 
 .. _about:
 
-About Markus Zoeller
-============================
+About
+=====
 
-The world wants to know more about you.
-
+I'm Markus Zoeller and I'm with IBM since early 2013. I work on OpenStack
+since April 2014 and I'm mainly focused on the *Nova* project. My IRC handle
+is ``markus_z``. This blog intends to persist some things  I'd like to share
+with others or don't want to forget... Enough about me.
