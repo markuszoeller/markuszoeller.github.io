@@ -31,7 +31,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
   
-  <link rel="alternate" type="application/atom+xml"  href="../../blog/atom.xml" title="My Brain Swap Space Blog">
+  <link rel="alternate" type="application/atom+xml"  href="../../posts/atom.xml" title="My Brain Swap Space Blog">
   
   
   <link href="True" rel="stylesheet">
@@ -46,12 +46,12 @@
   </style>
 
   </head>
-  <body>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="openstack-s-bug-management">
 <h1>OpenStack&#8217;s Bug Management<a class="headerlink" href="#openstack-s-bug-management" title="Permalink to this headline">¶</a></h1>
@@ -61,7 +61,7 @@ basic life cycle a bug goes through and in which state you can contribute
 in which way. It also clarifies some possible misunderstandings and gives a
 few best practices. In general, the bugs of a project (like <em>Nova</em>, <em>Cinder</em>,
 <em>Neutron</em> and others) can be found in our issue tracker <em>Launchpad</em>. The
-lists of bugs are available at <tt class="docutils literal"><span class="pre">https://bugs.launchpad.net/&lt;projectname&gt;</span></tt>.</p>
+lists of bugs are available at <code class="docutils literal"><span class="pre">https://bugs.launchpad.net/&lt;projectname&gt;</span></code>.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#overview-of-the-life-cycle" id="id1">Overview of the Life Cycle</a></li>
@@ -129,14 +129,14 @@ lists of bugs are available at <tt class="docutils literal"><span class="pre">ht
 </table>
 <p>The purpose of an issue tracker is to improve the quality of the project. An
 improvement has happened when the bug is in an &#8220;Accepted Status&#8221; like
-<tt class="docutils literal"><span class="pre">Fix</span> <span class="pre">Committed</span></tt> or <tt class="docutils literal"><span class="pre">Fix</span> <span class="pre">Released</span></tt>.</p>
-<p>A bug ending up in any of the &#8220;Closed States&#8221; (<tt class="docutils literal"><span class="pre">Won't</span> <span class="pre">Fix</span></tt>, <tt class="docutils literal"><span class="pre">Opinion</span></tt> or
-<tt class="docutils literal"><span class="pre">Invalid</span></tt>) &#8211; which may happen for a variety of reasons including that the
+<code class="docutils literal"><span class="pre">Fix</span> <span class="pre">Committed</span></code> or <code class="docutils literal"><span class="pre">Fix</span> <span class="pre">Released</span></code>.</p>
+<p>A bug ending up in any of the &#8220;Closed States&#8221; (<code class="docutils literal"><span class="pre">Won't</span> <span class="pre">Fix</span></code>, <code class="docutils literal"><span class="pre">Opinion</span></code> or
+<code class="docutils literal"><span class="pre">Invalid</span></code>) &#8211; which may happen for a variety of reasons including that the
 proposed bug is actually a result of operator error or is out of scope &#8211;
 arguably hasn&#8217;t directly improved the project. But it could suggest or make it
 clear that a concept is not as intuitive or well documented as it should be.</p>
-<p>The &#8220;Open States&#8221; (<tt class="docutils literal"><span class="pre">New</span></tt>, <tt class="docutils literal"><span class="pre">Incomplete</span></tt>, <tt class="docutils literal"><span class="pre">Triaged</span></tt>, <tt class="docutils literal"><span class="pre">Confirmed</span></tt> and
-<tt class="docutils literal"><span class="pre">In</span> <span class="pre">Progress</span></tt>) call for ongoing effort of one or many contributors.</p>
+<p>The &#8220;Open States&#8221; (<code class="docutils literal"><span class="pre">New</span></code>, <code class="docutils literal"><span class="pre">Incomplete</span></code>, <code class="docutils literal"><span class="pre">Triaged</span></code>, <code class="docutils literal"><span class="pre">Confirmed</span></code> and
+<code class="docutils literal"><span class="pre">In</span> <span class="pre">Progress</span></code>) call for ongoing effort of one or many contributors.</p>
 </div>
 <div class="section" id="reporting-a-new-bug">
 <h2><a class="toc-backref" href="#contents">Reporting a New Bug</a><a class="headerlink" href="#reporting-a-new-bug" title="Permalink to this headline">¶</a></h2>
@@ -332,13 +332,13 @@ label the bug with one or more of the <em>tags</em> (see <a class="reference int
 reasonably timely manner. If you think you&#8217;re incorrectly assigned, move
 the bug state back to the most recent valid state and remove yourself as
 assignee, so another person can take it.</li>
-<li>If you are the bug reporter and the state of the bug is <tt class="docutils literal"><span class="pre">Won't</span> <span class="pre">Fix</span></tt> or
-<tt class="docutils literal"><span class="pre">Opinion</span></tt> or <tt class="docutils literal"><span class="pre">Invalid</span></tt>, please read the rationale of the contributor who
+<li>If you are the bug reporter and the state of the bug is <code class="docutils literal"><span class="pre">Won't</span> <span class="pre">Fix</span></code> or
+<code class="docutils literal"><span class="pre">Opinion</span></code> or <code class="docutils literal"><span class="pre">Invalid</span></code>, please read the rationale of the contributor who
 set the the bug to this state. If you don&#8217;t agree with the provided
-rationale, it&#8217;s fine to set the status to <tt class="docutils literal"><span class="pre">New</span></tt> again and explain why
+rationale, it&#8217;s fine to set the status to <code class="docutils literal"><span class="pre">New</span></code> again and explain why
 you don&#8217;t agree.</li>
-<li>If you are a bug-supervisor, please ensure that <tt class="docutils literal"><span class="pre">Triaged</span></tt> and
-<tt class="docutils literal"><span class="pre">Confirmed</span></tt> bugs are prioritized.</li>
+<li>If you are a bug-supervisor, please ensure that <code class="docutils literal"><span class="pre">Triaged</span></code> and
+<code class="docutils literal"><span class="pre">Confirmed</span></code> bugs are prioritized.</li>
 </ol>
 </div>
 <div class="section" id="status-and-fields">
@@ -415,7 +415,7 @@ Importance, Assigned to, Milestone</td>
 <p class="first admonition-title">Note</p>
 <p class="last">Only the bug-supervisor sets the importance of a bug. The bug-supervisors
 are the core reviewers and a group of volunteers. In other words, usually
-you are not supposed to set <tt class="docutils literal"><span class="pre">Importance</span></tt> or <tt class="docutils literal"><span class="pre">Milestone</span></tt>.</p>
+you are not supposed to set <code class="docutils literal"><span class="pre">Importance</span></code> or <code class="docutils literal"><span class="pre">Milestone</span></code>.</p>
 </div>
 </div>
 <div class="section" id="status-transitions-details">
@@ -424,42 +424,42 @@ you are not supposed to set <tt class="docutils literal"><span class="pre">Impor
 can lead to confusion to contributors. The following are examples of how some
 of these common state transitions and how they should be handled.</p>
 <div><img height="120" src="../../_images/blockdiag-725c775bea473a2df61bb6c0ae520bb77342e3db.png" width="448" /></div><p>If there is not enough information provided, contributors switch the bug from
-<tt class="docutils literal"><span class="pre">New</span></tt> to <tt class="docutils literal"><span class="pre">Incomplete</span></tt> and ask the reporters for more details. When the
-reporters provide that information, they switch the status back to <tt class="docutils literal"><span class="pre">New</span></tt>.</p>
+<code class="docutils literal"><span class="pre">New</span></code> to <code class="docutils literal"><span class="pre">Incomplete</span></code> and ask the reporters for more details. When the
+reporters provide that information, they switch the status back to <code class="docutils literal"><span class="pre">New</span></code>.</p>
 <div><img height="360" src="../../_images/blockdiag-315c5f1bb0a95068c711b3046116b5acfa27b62b.png" width="448" /></div><p>Sometimes a bug is reported and the issue is solved by another patch which
 wasn&#8217;t aware of the specific bug. It&#8217;s totally acceptable to set this bug to
-<tt class="docutils literal"><span class="pre">Fix</span> <span class="pre">Committed</span></tt> and link to the patch which solved it. This reduces the
+<code class="docutils literal"><span class="pre">Fix</span> <span class="pre">Committed</span></code> and link to the patch which solved it. This reduces the
 monitoring effort for bugs in &#8220;Open States&#8221; whereby other bugs can get more
 focus.</p>
 <div><img height="120" src="../../_images/blockdiag-493bbb23839d92422ec4d00ead93be884dc457a9.png" width="448" /></div><p>The issue was reproduced by someone other than the reporter. You don&#8217;t need
 to be in the role of a &#8220;bug-supervisor&#8221; to do that. Every contributor is
 encouraged to do so.</p>
-<div><img height="280" src="../../_images/blockdiag-feb7badf47d36c4e7acf09551d596208a0029a36.png" width="448" /></div><p>Sometimes an issue is assigned and set to <tt class="docutils literal"><span class="pre">In</span> <span class="pre">Progress</span></tt> but there is no
+<div><img height="280" src="../../_images/blockdiag-feb7badf47d36c4e7acf09551d596208a0029a36.png" width="448" /></div><p>Sometimes an issue is assigned and set to <code class="docutils literal"><span class="pre">In</span> <span class="pre">Progress</span></code> but there is no
 progress in a long time for a variety of reasons, for example:</p>
 <ul class="simple">
 <li>the review for that issue was abandoned</li>
 <li>the was no review for that issue</li>
-<li>the review was &#8220;left alone&#8221; with a <tt class="docutils literal"><span class="pre">-1</span></tt></li>
+<li>the review was &#8220;left alone&#8221; with a <code class="docutils literal"><span class="pre">-1</span></code></li>
 </ul>
 <p>To enable other contributors to work on that issue, remove the assigne and
-set the status to the last known before it was set to <tt class="docutils literal"><span class="pre">In</span> <span class="pre">Progress</span></tt>. Every
+set the status to the last known before it was set to <code class="docutils literal"><span class="pre">In</span> <span class="pre">Progress</span></code>. Every
 project will handle that policy in a somewhat different way.</p>
 </div>
 <div class="section" id="contributions">
 <h2><a class="toc-backref" href="#contents">Contributions</a><a class="headerlink" href="#contributions" title="Permalink to this headline">¶</a></h2>
 <p>There are several key tasks with regards to bugs that anyone can do:</p>
 <ol class="arabic simple">
-<li>Tag <tt class="docutils literal"><span class="pre">New</span></tt> bugs with the project specific tags (see <a class="reference internal" href="#tags">Tags</a>).</li>
-<li>Confirm new bugs: When a bug is filed, it is set to the <tt class="docutils literal"><span class="pre">New</span></tt> status.
-A <tt class="docutils literal"><span class="pre">New</span></tt> bug can be marked <tt class="docutils literal"><span class="pre">Confirmed</span></tt> once it has been reproduced
+<li>Tag <code class="docutils literal"><span class="pre">New</span></code> bugs with the project specific tags (see <a class="reference internal" href="#tags">Tags</a>).</li>
+<li>Confirm new bugs: When a bug is filed, it is set to the <code class="docutils literal"><span class="pre">New</span></code> status.
+A <code class="docutils literal"><span class="pre">New</span></code> bug can be marked <code class="docutils literal"><span class="pre">Confirmed</span></code> once it has been reproduced
 and is thus confirmed as genuine.</li>
 <li>Solve inconsistencies: Make sure bugs are Confirmed, and if assigned
-that they are marked <tt class="docutils literal"><span class="pre">In</span> <span class="pre">Progress</span></tt> (see <a class="reference internal" href="#status-and-fields">Status and Fields</a>)</li>
-<li>Check <tt class="docutils literal"><span class="pre">Incomplete</span></tt> bugs: See if information that caused them to be
-marked <tt class="docutils literal"><span class="pre">Incomplete</span></tt> has been provided, determine if more information is
+that they are marked <code class="docutils literal"><span class="pre">In</span> <span class="pre">Progress</span></code> (see <a class="reference internal" href="#status-and-fields">Status and Fields</a>)</li>
+<li>Check <code class="docutils literal"><span class="pre">Incomplete</span></code> bugs: See if information that caused them to be
+marked <code class="docutils literal"><span class="pre">Incomplete</span></code> has been provided, determine if more information is
 required and provide reminders to the bug reporter if they haven&#8217;t
 responded after 2-4 weeks.</li>
-<li>Check stale <tt class="docutils literal"><span class="pre">In</span> <span class="pre">Progress</span></tt> bugs: Work with assignee of bugs to determine
+<li>Check stale <code class="docutils literal"><span class="pre">In</span> <span class="pre">Progress</span></code> bugs: Work with assignee of bugs to determine
 if the bug is still being worked on, if not, unassign them and mark them
 back to the last known state.</li>
 </ol>
@@ -502,7 +502,7 @@ way.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="../../">My Brain Swap Space</a></h1>
 
@@ -553,7 +553,7 @@ way.</p>
 </ul>
 
 
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search/" method="get">
       <input type="text" name="q" />
@@ -574,7 +574,7 @@ way.</p>
       &copy;2015, Markus Zoeller.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
       
       |
