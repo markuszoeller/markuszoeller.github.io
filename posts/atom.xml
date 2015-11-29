@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title type="text">My Brain Swap Space Blog</title>
+  <title type="text">Markus's Brain Swap Space</title>
   <id>http://markuszoeller.github.io/posts/atom.xml</id>
-  <updated>2015-11-22T19:20:42.429303Z</updated>
-  <link href="http://markuszoeller.github.io" />
+  <updated>2015-11-29T19:42:05.791855Z</updated>
+  <link href="http://markuszoeller.github.io/" />
   <link href="http://markuszoeller.github.io/posts/atom.xml" rel="self" />
   <generator uri="http://ablog.readthedocs.org" version="0.8.1">ABlog</generator>
 </feed>

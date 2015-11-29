@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>OpenStack’s Bug Management &mdash; My Brain Swap Space  documentation</title>
+    <title>OpenStack’s Bug Management &mdash; Blog  documentation</title>
     
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -24,14 +24,14 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="author" title="About these documents" href="../../about/" />
-    <link rel="top" title="My Brain Swap Space  documentation" href="../../" />
+    <link rel="top" title="Blog  documentation" href="../../" />
   
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
   
-  <link rel="alternate" type="application/atom+xml"  href="../../posts/atom.xml" title="My Brain Swap Space Blog">
+  <link rel="alternate" type="application/atom+xml"  href="../../posts/atom.xml" title="Markus's Brain Swap Space">
   
   
   <link href="True" rel="stylesheet">
@@ -55,13 +55,14 @@
             
   <div class="section" id="openstack-s-bug-management">
 <h1>OpenStack&#8217;s Bug Management<a class="headerlink" href="#openstack-s-bug-management" title="Permalink to this headline">¶</a></h1>
-<p>This post intends to give you enough background to play an
-active part in working with bugs. This includes an understanding of the
+<p>This post intends to give you enough background to play an active part in
+working with bugs in <em>OpenStack</em>. This includes an understanding of the
 basic life cycle a bug goes through and in which state you can contribute
 in which way. It also clarifies some possible misunderstandings and gives a
 few best practices. In general, the bugs of a project (like <em>Nova</em>, <em>Cinder</em>,
 <em>Neutron</em> and others) can be found in our issue tracker <em>Launchpad</em>. The
-lists of bugs are available at <code class="docutils literal"><span class="pre">https://bugs.launchpad.net/&lt;projectname&gt;</span></code>.</p>
+lists of bugs are available at <code class="docutils literal"><span class="pre">https://bugs.launchpad.net/&lt;projectname&gt;</span></code> for
+example <code class="docutils literal"><span class="pre">https://bugs.launchpad.net/nova</span></code> for the <em>Nova</em> project.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#overview-of-the-life-cycle" id="id1">Overview of the Life Cycle</a></li>
@@ -76,12 +77,13 @@ lists of bugs are available at <code class="docutils literal"><span class="pre">
 <li><a class="reference internal" href="#contributions" id="id8">Contributions</a></li>
 <li><a class="reference internal" href="#tags" id="id9">Tags</a></li>
 <li><a class="reference internal" href="#best-practices" id="id10">Best Practices</a></li>
+<li><a class="reference internal" href="#conclusion" id="id11">Conclusion</a></li>
 </ul>
 </div>
 <div class="section" id="overview-of-the-life-cycle">
 <h2><a class="toc-backref" href="#contents">Overview of the Life Cycle</a><a class="headerlink" href="#overview-of-the-life-cycle" title="Permalink to this headline">¶</a></h2>
 <p>This is the most basic (and slightly simplified) life cycle of a bug:</p>
-<div><img height="520" src="../../_images/blockdiag-d83d0354eb04f7e62194a99d90ed1ce9479c2bcd.png" width="832" /></div><table border="1" class="docutils">
+<div><img height="520" src="../../_images/blockdiag-939b775311630a4fcd8251d6620856361b728fcf.png" width="832" /></div><table border="1" class="docutils">
 <colgroup>
 <col width="50%" />
 <col width="50%" />
@@ -93,10 +95,12 @@ lists of bugs are available at <code class="docutils literal"><span class="pre">
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>New</td>
-<td>The bug was just created</td>
+<td>The bug was just created and no one has looked
+                    at it yet</td>
 </tr>
 <tr class="row-odd"><td>Incomplete</td>
-<td>The bug is waiting on input from the reporter</td>
+<td>The bug is waiting on input from the reporter
+                    (other issue trackers name this status <em>NEEDINFO</em>)</td>
 </tr>
 <tr class="row-even"><td>Triaged</td>
 <td>The bug comments contain a full analysis on how to
@@ -107,7 +111,7 @@ lists of bugs are available at <code class="docutils literal"><span class="pre">
                     from someone other than the reporter</td>
 </tr>
 <tr class="row-even"><td>In Progress</td>
-<td>Work on the fix is in progress, bug has an assignee</td>
+<td>The assignee of the bug is working on a fix</td>
 </tr>
 <tr class="row-odd"><td>Fix Committed</td>
 <td>The branch containing the fix was merged into master</td>
@@ -123,14 +127,14 @@ lists of bugs are available at <code class="docutils literal"><span class="pre">
 <td>This is a valid issue, but it is the way it should be</td>
 </tr>
 <tr class="row-odd"><td>Invalid</td>
-<td>This is not a bug</td>
+<td>This is not a bug, could be a feature request</td>
 </tr>
 </tbody>
 </table>
 <p>The purpose of an issue tracker is to improve the quality of the project. An
 improvement has happened when the bug is in an &#8220;Accepted Status&#8221; like
 <code class="docutils literal"><span class="pre">Fix</span> <span class="pre">Committed</span></code> or <code class="docutils literal"><span class="pre">Fix</span> <span class="pre">Released</span></code>.</p>
-<p>A bug ending up in any of the &#8220;Closed States&#8221; (<code class="docutils literal"><span class="pre">Won't</span> <span class="pre">Fix</span></code>, <code class="docutils literal"><span class="pre">Opinion</span></code> or
+<p>A bug ending up in any of the &#8220;Rejected States&#8221; (<code class="docutils literal"><span class="pre">Won't</span> <span class="pre">Fix</span></code>, <code class="docutils literal"><span class="pre">Opinion</span></code> or
 <code class="docutils literal"><span class="pre">Invalid</span></code>) &#8211; which may happen for a variety of reasons including that the
 proposed bug is actually a result of operator error or is out of scope &#8211;
 arguably hasn&#8217;t directly improved the project. But it could suggest or make it
@@ -144,58 +148,87 @@ clear that a concept is not as intuitive or well documented as it should be.</p>
 to enable another contributor to understand <strong>why</strong> you think that this is an
 issue. We have a lot of contributors, each one with a different background,
 with a specific set of knowledge and with a different depth in OpenStack. It
-is unlikely that everyone understands instantly why an incident or workflow
+is unlikely that everyone understands instantly <strong>why</strong> an incident or workflow
 didn&#8217;t pass your expectation.</p>
 <p>A possible template, which helps others to understand you, could be:</p>
-<div class="highlight-python"><div class="highlight"><pre>1. Exact version of OpenStack you are running:
+<div class="highlight-python"><div class="highlight"><pre>Description
+===========
+Some prose which explains more in detail what this bug report is
+about. If the headline of this report is descriptive enough,
+skip this section.
+
+Steps to reproduce
+==================
+A chronological list of steps which will bring off the
+issue you noticed:
+* I did X
+* then I did Y
+* then I did Z
+A list of openstack client commands would be the most
+descriptive example.
+
+Expected result
+===============
+After the execution of the steps above, what should have
+happened if the issue wasn&#39;t present?
+
+Actual result
+=============
+What happened instead of the expected result?
+How did the issue look like?
+
+Environment
+===========
+1. Exact version of OpenStack you are running. See the following
+   list for all releases: http://docs.openstack.org/releases/
+   For the current stable release &quot;Liberty&quot; it is:
+   http://docs.openstack.org/releases/releases/liberty.html
 
     If this is from a distro please provide
-        `dpkg -l | grep &lt;projectname&gt;`
+        $ dpkg -l | grep &lt;projectname&gt;
         or
-        `rpm -ql | grep &lt;projectname&gt;`.
-    If this is from git, please provide `git log -1`.
+        $ rpm -ql | grep &lt;projectname&gt;
+    If this is from git, please provide
+        $ git log -1
 
-2. Relevant log files:
+2. Which storage type did you use?
+   (For example: Ceph, LVM, GPFS, ...)
 
-    If this involves a crash, or a 500 error on a server some where,
-    please provide the relevant sections of your server log files.
+3. Which networking type did you use?
+   (For example: nova-network, Neutron with OpenVSwitch, ...)
 
-3. Reproduce steps:
-    * I did X
-    * then I did Y
-    * then I did Z
+Logs
+====
 
-    Expected result:
-    * VM foo was running with the following attributes
+The tool *sosreport* has support for some OpenStack projects.
+It&#39;s worth having a look at it. For example, if you want to collect
+the logs of a compute node you would execute:
 
-    Actual result:
-    * VM foo crashed and the following was in `nova show` ....
+    $ sudo sosreport -o openstack_nova --batch
 
-4. Bonus points for reproducing shell script / test:
-
-    If you can provide a short shell script that reproduces this on
-    Devstack, your bug is likely to get addressed very quickly.
+on that compute node. Attach the logs to this bug report.
 </pre></div>
 </div>
 <p>For a more detailed rationale why this information is necessary read the
-<a class="reference external" href="https://wiki.openstack.org/wiki/BugFilingRecommendations">Bug Filing Recommendations</a>.</p>
+<a class="reference external" href="https://wiki.openstack.org/wiki/BugFilingRecommendations">Bug Filing Recommendations</a> from the
+<em>OpenStack</em> wiki.</p>
 <div class="section" id="tooling-support">
 <h3><a class="toc-backref" href="#contents">Tooling Support</a><a class="headerlink" href="#tooling-support" title="Permalink to this headline">¶</a></h3>
 <p>When you report a bug you will face some typical issue which can be solved
 with appropriate tooling support. Below are the situations you will most
 likely encounter in your role as bug reporter.</p>
-<p><em>I want to paste logs or console commands or config files in my bug report,</em>
-<em>what do i use?</em></p>
+<p><strong>Q:</strong> <em>I want to paste logs or console commands or config files in my bug</em>
+<em>report, what do I use?</em></p>
 <blockquote>
-<div>Try <a class="reference external" href="http://paste.openstack.org/">pastebin</a>. It&#8217;s easy to read and
+<div><strong>A:</strong> Try <a class="reference external" href="http://paste.openstack.org/">pastebin</a>. It&#8217;s easy to read and
 provides a lot of preconfigured highlightings. Just reference from your
 bug description to the pastebin link.</div></blockquote>
-<p><em>I want to show a console session (where possibly timing is relevant). How</em>
-<em>do I link to that in my bug report?</em></p>
+<p><strong>Q:</strong> <em>I want to show a console session (where possibly timing is relevant).</em>
+<em>How do I link to that in my bug report?</em></p>
 <blockquote>
-<div>Try <a class="reference external" href="http://showterm.io/">showterm</a>. It records your console session
-and replays it with all input and output in the exact timing it happened.
-Just reference from your bug description to the <em>showterm</em> link.</div></blockquote>
+<div><strong>A:</strong> Try <a class="reference external" href="http://showterm.io/">showterm</a>. It records your console
+session and replays it with all input and output in the exact timing it
+happened. Just reference from your bug description to the <em>showterm</em> link.</div></blockquote>
 </div>
 <div class="section" id="security">
 <h3><a class="toc-backref" href="#contents">Security</a><a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h3>
@@ -228,7 +261,7 @@ bug.</li>
 </ul>
 <p>The following table should be read like:</p>
 <blockquote>
-<div><em>&#8220;The bug has the status [...] and I am in the role of a/an [...], I am</em>
+<div><em>&#8220;The bug has the status [...] and in the role of a/an [...], I am</em>
 <em>supposed to work with this bug if there is an &#8216;x&#8217;.&#8221;</em>:</div></blockquote>
 <table border="1" class="docutils">
 <colgroup>
@@ -322,11 +355,11 @@ bug.</li>
 <p>Examples:</p>
 <ol class="arabic simple">
 <li>If you are the bug reporter and you get a notification that the state of the
-bug is <em>incomplete</em>, please read the comments of the bug and provide the
-requested necessary information.</li>
-<li>If you see a <em>new</em> bug and could reproduce the issue, you can set the state
-to <em>confirmed</em>.</li>
-<li>If you see a <em>new</em> bug and know where the issue has its root cause,
+bug is <code class="docutils literal"><span class="pre">Incomplete</span></code>, please read the comments of the bug and provide the
+requested necessary information. After that, set the status back to <code class="docutils literal"><span class="pre">New</span></code>.</li>
+<li>If you see a <code class="docutils literal"><span class="pre">New</span></code> bug and could reproduce the issue, you can set the state
+to <code class="docutils literal"><span class="pre">Confirmed</span></code>.</li>
+<li>If you see a <code class="docutils literal"><span class="pre">New</span></code> bug and know where the issue has its root cause,
 label the bug with one or more of the <em>tags</em> (see <a class="reference internal" href="#tags">Tags</a>)</li>
 <li>If you are the assignee of a bug, you&#8217;re expected to provide a patch in a
 reasonably timely manner. If you think you&#8217;re incorrectly assigned, move
@@ -488,6 +521,22 @@ the first line in your answer:</p>
 necessary. Unfortunately <em>Launchpad</em> doesn&#8217;t support this in an automated
 way.</p>
 </div>
+<div class="section" id="conclusion">
+<h2><a class="toc-backref" href="#contents">Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>This post should have given you an overview how the bug management in OpenStack
+is (usually) done. Although this will differ from project to project it should
+give you a good start. There are ongoing efforts to move away from <em>Launchpad</em>
+to another platform, but I&#8217;m confident that the overall way how to deal with
+bugs won&#8217;t be differ too much to what is described in this post.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The content of this post was initially intended to be part of the
+official docs of <em>OpenStack</em> but there was no project which had the right
+scope for that. See <a class="reference external" href="https://review.openstack.org/187571">the nova review</a>
+and <a class="reference external" href="https://review.openstack.org/192232">the infra-manual review</a>
+for more details.</p>
+</div>
+</div>
 </div>
 
   <div class="section">
@@ -504,53 +553,12 @@ way.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../">My Brain Swap Space</a></h1>
+<h1 class="logo"><a href="../../">Blog</a></h1>
 
 
 
 
 
-
-
-  
-  
-  <h2>
-  
-    <i class="fa fa-pencil"></i>
-     Draft 
-  
-  </h2>
-
-  <ul>
-    
-
-  
-
-  
-
-  
-
-  
-  <li><i class="fa-fw fa fa-folder-open"></i>
-    
-      openstack
-    </li>
-  
-
-  
-  <li><i class="fa-fw fa fa-tag"></i>
-    
-      bugs
-    </li>
-  
-  
-  </ul>
-
-
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../about/">About</a></li>
-</ul>
 
 
 <div id="searchbox" style="display: none" role="search">
@@ -574,7 +582,7 @@ way.</p>
       &copy;2015, Markus Zoeller.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
       
       |

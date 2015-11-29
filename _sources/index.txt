@@ -1,9 +1,13 @@
 
-===================
-My Brain Swap Space
-===================
+=========================
+Markus's Brain Swap Space
+=========================
 
-A blog with tech stuff I don't want to forget.
+A blog with tech stuff I'd like to share and don't want to forget.
+
+More about me: :ref:`about`
+
+Feeds: `Atom <posts/atom.xml>`_
 
 Recent posts
 ============
