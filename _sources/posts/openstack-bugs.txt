@@ -1,6 +1,6 @@
 
 
-.. post::
+.. post:: 01 Dec, 2015
    :tags: bugs, openstack
    :title: OpenStack's Bug Management
 
