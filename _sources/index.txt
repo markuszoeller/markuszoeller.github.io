@@ -31,4 +31,5 @@ A list of drafts I'm working on: :ref:`blog-drafts`
    :hidden:
 
    about.rst
+   posts/openstack-bugs.rst
 

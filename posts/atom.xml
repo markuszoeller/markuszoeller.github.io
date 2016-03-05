@@ -8,10 +8,10 @@
   <generator uri="http://ablog.readthedocs.org" version="0.8.2">ABlog</generator>
   <entry xml:base="http://markuszoeller.github.io/posts/atom.xml">
     <title type="text">OpenStack's Bug Management</title>
-    <id>http://markuszoeller.github.io/posts/openstack-bugs/</id>
+    <id>http://markuszoeller.github.io/posts/2015/12/01/openstack-bugs/</id>
     <updated>2015-12-01T00:00:00Z</updated>
     <published>2015-12-01T00:00:00Z</published>
-    <link href="http://markuszoeller.github.io/posts/openstack-bugs/" />
+    <link href="http://markuszoeller.github.io/posts/2015/12/01/openstack-bugs/" />
     <author>
       <name>Markus Zoeller</name>
     </author>
