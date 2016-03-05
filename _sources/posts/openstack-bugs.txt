@@ -23,6 +23,15 @@ example ``https://bugs.launchpad.net/nova`` for the *Nova* project.
     :local:
     :backlinks: top
 
+Change history:
+
+==========  =================================================================
+Date        Change description
+==========  =================================================================
+2015-12-01  The first release
+2016-03-05  Added a change history
+==========  =================================================================
+
 
 Overview of the Life Cycle
 ==========================
