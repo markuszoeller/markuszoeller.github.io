@@ -33,6 +33,9 @@ Step-by-Step
 
 .. highlight:: bash
 
+A few Prerequisites
+-------------------
+
 change the timezone to UTC-0, everything else is confusing::
 
     $ dpkg-reconfigure tzdata
@@ -40,6 +43,9 @@ change the timezone to UTC-0, everything else is confusing::
 We need git to clone the helper scripts::
 
     $ apt-get install -y git
+
+Setup statsd and graphite
+-------------------------
 
 *Synthesize* [1]_ installs statsd and graphite for us::
 
@@ -49,6 +55,8 @@ We need git to clone the helper scripts::
     $ cd /opt/synthesize/synthesize
     $ ./install
 
+Setup Grafana
+-------------
 
 Install ``grafana`` from package [2]_ (it's not in the official repos)::
 
@@ -74,18 +82,9 @@ Everything is set up, start the engines::
 Open the grafana dashboard with your browser and use port ``3000`` in the URL.
 That's the admin URL which is necessary to save your created dashboards.
 
-.. todo:: Add an annotated picture here, the list is bad
-
-Add as datasource:
-
-* Name: my-graphite
-* Type: Graphite
-* Url: https://127.0.0.01
-* Access: proxy
-* Basic Auth: checked
-* With Credentials: checked
-* User: admin
-* Password: graphite_me_synthesize
+.. image:: ../images/grafana_datasource.jpg
+   :alt: The statsd gauges displayed in graphite
+   :target: ../../_images/grafana_datasource.jpg
 
 The Grafana dashboard is intuitive and you can build graphs easily.
 There are already some metrics about the host machine.
@@ -95,6 +94,9 @@ There are already some metrics about the host machine.
 You can also access the web UI of the underlying *graphite* at
 port ``80``. The hierarchy of the metrics is shown there in a nice
 way.
+
+Collect and push custom metrics
+-------------------------------
 
 If you want to push your own metrics, below is an example.
 It queries information about *OpenStack Nova* bugs from Launchpad and
@@ -116,91 +118,16 @@ Create the folder for the statsd script::
 
 Get the script ``bug_stats.py`` which creates the statsd data
 
-.. code-block:: python
-    :linenos:
-    :emphasize-lines: 6,61,63
-
-    #!/usr/bin/env python
-
-    from launchpadlib.launchpad import Launchpad
-
-    import os
-    import statsd
-    import sys
-
-
-    class BugStatsCollector(object):
-        """Collect bug stats by Launchpad project name """
-
-        LP_IMPORTANCES = ["Undecided", "Wishlist", "Low",
-                          "Medium", "High", "Critical"]
-
-        def __init__(self, project_name):
-            self.project_name = project_name
-
-            cachedir = os.path.expanduser("~/.launchpadlib/cache/")
-            if not os.path.exists(cachedir):
-                os.makedirs(cachedir, 0o700)
-            launchpad = Launchpad.login_anonymously('bugstats',
-                                                    'production',
-                                                    cachedir)
-            self.project = launchpad.projects[self.project_name]
-
-        def get_open_by_importance(self):
-            """Return the stats for open bugs, separated by importance.
-
-            :rtype: list of 2-tuple key-value pairs
-            """
-            importance_stats = []
-            for importance in BugStatsCollector.LP_IMPORTANCES:
-                bug_tasks = self.project.searchTasks(
-                    status=BugStatsCollector.LP_OPEN_STATUSES,
-                    importance=importance,
-                    omit_duplicates=True)
-                stats_key = self._get_valid_stat_key_name(importance)
-                stats_value = self._count_bug_tasks(bug_tasks)
-                stat =(stats_key, stats_value)
-                importance_stats.append(stat)
-            return importance_stats
-
-        def _get_valid_stat_key_name(self, name):
-            stat_key = name
-            stat_key = stat_key.replace(" ", "").lower()
-            stat_key = stat_key.replace("(", "-")
-            stat_key = stat_key.replace(")", "")
-            return stat_key
-
-        def _count_bug_tasks(self, bug_tasks):
-            return int(bug_tasks._wadl_resource.representation['total_size'])
-
-
-    def push_to_statsd(metric_name, bug_stats):
-        """push bug statistics to statsd on this host machine
-
-        :param metric_name: The name of the metric
-        :param bug_stats: list of 2-tuple key-value pairs to push
-        """
-        gauge = statsd.Gauge(metric_name)
-        for bug_stat in bug_stats:
-            gauge.send(bug_stat[0], bug_stat[1])
-
-
-    if __name__ == '__main__':
-        projects = ['nova', 'python-novaclient', 'cinder', 'neutron']
-        for project_name in projects:
-            collector = BugStatsCollector(project_name)
-            metric_name = 'launchpad.bugs.%s.open-by-importance' % project_name
-            bug_stats = collector.get_open_by_importance()
-            push_to_statsd(metric_name, bug_stats)
+.. literalinclude:: /code_examples/bug_stats.py
+   :language: python
+   :emphasize-lines: 6,60,62
+   :linenos:
 
 This script will create this hierarchy in *graphite*:
 
-.. image:: ../images/graphite_gauges.jpg
+.. image:: /images/graphite_gauges.jpg
    :alt: The statsd gauges displayed in graphite
-   :target: ../../_images/graphite_gauges.jpg
-
-
-.. todo:: replace that above with a picture from graphite
+   :target: /_images/graphite_gauges.jpg
 
 The leaves of this tree will be filled with the values we provide attached
 to a timestamp *statsd* will get from the host. That's why setting the
@@ -212,6 +139,36 @@ interruption when the SSH session terminates::
 
     $ nohup watch -n 300 python bug_stats.py &
 
+
+Build a templated graph in Grafana
+----------------------------------
+
+As we get the stats from 4 different projects but want to reuse the same
+graph, we will template it with the project name.
+
+At first we need to connect Grafana to the datasource *graphite*
+
+.. image:: ../images/grafana_datasource.jpg
+   :alt: TODO
+   :target: ../../_images/grafana_datasource.jpg
+
+After that we can create a variable so that we can switch between the four
+different projects.
+
+.. image:: ../images/grafana_templating.jpg
+   :alt: TODO
+   :target: ../../_images/grafana_templating.jpg
+
+Now we can build a graph which makes use of that variable
+
+.. image:: ../images/grafana_templated_query.jpg
+   :alt: TODO
+   :target: ../../_images/grafana_templated_query.jpg
+
+Save the dashboard and switch between the projects to see the different
+collected data. The data we've chosen in this post makes more sense in seeing
+long term trends or the impact of *bug smash days*, *bug fix review days* and
+so on.
 
 Conclusion
 ==========
