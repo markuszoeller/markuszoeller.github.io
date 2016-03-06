@@ -2,10 +2,29 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Markus's Brain Swap Space</title>
   <id>http://markuszoeller.github.io/posts/atom.xml</id>
-  <updated>2015-12-01T00:00:00Z</updated>
+  <updated>2016-03-06T00:00:00Z</updated>
   <link href="http://markuszoeller.github.io/" />
   <link href="http://markuszoeller.github.io/posts/atom.xml" rel="self" />
   <generator uri="http://ablog.readthedocs.org" version="0.8.2">ABlog</generator>
+  <entry xml:base="http://markuszoeller.github.io/posts/atom.xml">
+    <title type="text">Setup Grafana + Graphite + statsd</title>
+    <id>http://markuszoeller.github.io/posts/2016/03/06/grafana-graphite-statsd/</id>
+    <updated>2016-03-06T00:00:00Z</updated>
+    <published>2016-03-06T00:00:00Z</published>
+    <link href="http://markuszoeller.github.io/posts/2016/03/06/grafana-graphite-statsd/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;If you ever played around with time series data and wanted to visualize them
+with graphs in a nice way you probably have had heard about &lt;em&gt;Grafana&lt;/em&gt;. This
+post provides a step-by-step instruction on how to build a &lt;em&gt;Grafana&lt;/em&gt;-playground
+in about 15 minutes. The setup will be build of &lt;em&gt;statsd&lt;/em&gt; to collect metrics,
+&lt;em&gt;graphite&lt;/em&gt; to store those metrics, and &lt;em&gt;Grafana&lt;/em&gt; to visualize those metrics.
+We will also create and push custom metrics and create templated graphs based
+on them. This post won&amp;#8217;t provide any in-depth details about &lt;em&gt;statsd&lt;/em&gt;,
+&lt;em&gt;graphite&lt;/em&gt; and &lt;em&gt;Grafana&lt;/em&gt; itself.&lt;/p&gt;
+</content>
+  </entry>
   <entry xml:base="http://markuszoeller.github.io/posts/atom.xml">
     <title type="text">OpenStack's Bug Management</title>
     <id>http://markuszoeller.github.io/posts/2015/12/01/openstack-bugs/</id>
@@ -23,25 +42,6 @@ few best practices. In general, the bugs of a project (like &lt;em&gt;Nova&lt;/e
 &lt;em&gt;Neutron&lt;/em&gt; and others) can be found in our issue tracker &lt;em&gt;Launchpad&lt;/em&gt;. The
 lists of bugs are available at &lt;code class=&quot;docutils literal&quot;&gt;&lt;span class=&quot;pre&quot;&gt;https://bugs.launchpad.net/&amp;lt;projectname&amp;gt;&lt;/span&gt;&lt;/code&gt; for
 example &lt;code class=&quot;docutils literal&quot;&gt;&lt;span class=&quot;pre&quot;&gt;https://bugs.launchpad.net/nova&lt;/span&gt;&lt;/code&gt; for the &lt;em&gt;Nova&lt;/em&gt; project.&lt;/p&gt;
-</content>
-  </entry>
-  <entry xml:base="http://markuszoeller.github.io/posts/atom.xml">
-    <title type="text">Setup Grafana + Graphite + statsd</title>
-    <id>http://markuszoeller.github.io/posts/2016/03/06/grafana-graphite-statsd/</id>
-    <updated>2015-03-06T00:00:00Z</updated>
-    <published>2015-03-06T00:00:00Z</published>
-    <link href="http://markuszoeller.github.io/posts/2016/03/06/grafana-graphite-statsd/" />
-    <author>
-      <name>Markus Zoeller</name>
-    </author>
-    <content type="html">&lt;p&gt;If you ever played around with time series data and wanted to visualize them
-with graphs in a nice way you probably have had heard about &lt;em&gt;Grafana&lt;/em&gt;. This
-post provides a step-by-step instruction on how to build a &lt;em&gt;Grafana&lt;/em&gt;-playground
-in about 15 minutes. The setup will be build of &lt;em&gt;statsd&lt;/em&gt; to collect metrics,
-&lt;em&gt;graphite&lt;/em&gt; to store those metrics, and &lt;em&gt;Grafana&lt;/em&gt; to visualize those metrics.
-We will also create and push custom metrics and create templated graphs based
-on them. This post won&amp;#8217;t provide any in-depth details about &lt;em&gt;statsd&lt;/em&gt;,
-&lt;em&gt;graphite&lt;/em&gt; and &lt;em&gt;Grafana&lt;/em&gt; itself.&lt;/p&gt;
 </content>
   </entry>
 </feed>

@@ -1,6 +1,6 @@
 
 
-.. post:: 06 Mar, 2015
+.. post:: 06 Mar, 2016
    :tags: data-visualization, how-to
    :title: Setup Grafana + Graphite + statsd
 

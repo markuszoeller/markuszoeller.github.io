@@ -5,15 +5,16 @@ Markus's Brain Swap Space
 
 A blog with tech stuff I'd like to share and don't want to forget.
 
-More about me: :ref:`about`
-
 Feeds: `Atom <posts/atom.xml>`_
+Me: :ref:`about`
+Future: :ref:`blog-drafts`
 
 Recent posts
 ============
 
 .. postlist:: 5
    :excerpts:
+   :list-style: circle
 
 .. `toctree` directive, below, contains list of non-post `.rst` files.
    This is how they appear in Navigation sidebar. Note that directive
@@ -21,11 +22,6 @@ Recent posts
 
    Posts are excluded from this directive so that they aren't double listed
    in the sidebar both under Navigation and Recent Posts.
-
-Drafts
-======
-
-A list of drafts I'm working on: :ref:`blog-drafts`
 
 .. toctree::
    :hidden:
