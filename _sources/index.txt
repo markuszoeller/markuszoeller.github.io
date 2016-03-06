@@ -14,6 +14,7 @@ Recent posts
 
 .. postlist:: 5
    :excerpts:
+   :date: %b %d, %Y
    :list-style: circle
 
 .. `toctree` directive, below, contains list of non-post `.rst` files.
