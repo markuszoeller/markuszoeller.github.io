@@ -6,7 +6,7 @@
 
 
 =================================
-Setup Grafana + Graphite + statsd
+Setup Grafana + Graphite + Statsd
 =================================
 
 If you ever played around with time series data and wanted to visualize them
