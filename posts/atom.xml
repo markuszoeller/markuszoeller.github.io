@@ -7,7 +7,7 @@
   <link href="http://markuszoeller.github.io/posts/atom.xml" rel="self" />
   <generator uri="http://ablog.readthedocs.org" version="0.8.2">ABlog</generator>
   <entry xml:base="http://markuszoeller.github.io/posts/atom.xml">
-    <title type="text">Setup Grafana + Graphite + statsd</title>
+    <title type="text">Setup Grafana + Graphite + Statsd</title>
     <id>http://markuszoeller.github.io/posts/2016/03/06/grafana-graphite-statsd/</id>
     <updated>2016-03-06T00:00:00Z</updated>
     <published>2016-03-06T00:00:00Z</published>

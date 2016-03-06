@@ -2,7 +2,7 @@
 
 .. post:: 06 Mar, 2016
    :tags: data-visualization, how-to
-   :title: Setup Grafana + Graphite + statsd
+   :title: Setup Grafana + Graphite + Statsd
 
 
 =================================
