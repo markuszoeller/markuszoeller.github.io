@@ -16,7 +16,7 @@
       <name>Markus Zoeller</name>
     </author>
     <content type="html">&lt;p&gt;If you ever played around with time series data and wanted to visualize them
-with graphs in a nice way you probably have had heard about &lt;em&gt;Grafana&lt;/em&gt;. This
+with graphs in a nice way you probably have heard about &lt;em&gt;Grafana&lt;/em&gt;. This
 post provides a step-by-step instruction on how to build a &lt;em&gt;Grafana&lt;/em&gt;-playground
 in about 15 minutes. The setup will be build of &lt;em&gt;statsd&lt;/em&gt; to collect metrics,
 &lt;em&gt;graphite&lt;/em&gt; to store those metrics, and &lt;em&gt;Grafana&lt;/em&gt; to visualize those metrics.

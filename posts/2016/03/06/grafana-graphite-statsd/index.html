@@ -57,7 +57,7 @@
   <div class="section" id="setup-grafana-graphite-statsd">
 <h1>Setup Grafana + Graphite + Statsd<a class="headerlink" href="#setup-grafana-graphite-statsd" title="Permalink to this headline">¶</a></h1>
 <p>If you ever played around with time series data and wanted to visualize them
-with graphs in a nice way you probably have had heard about <em>Grafana</em>. This
+with graphs in a nice way you probably have heard about <em>Grafana</em>. This
 post provides a step-by-step instruction on how to build a <em>Grafana</em>-playground
 in about 15 minutes. The setup will be build of <em>statsd</em> to collect metrics,
 <em>graphite</em> to store those metrics, and <em>Grafana</em> to visualize those metrics.
@@ -93,6 +93,10 @@ on them. This post won&#8217;t provide any in-depth details about <em>statsd</em
 <tbody valign="top">
 <tr class="row-even"><td>2016-03-06</td>
 <td>The first release</td>
+</tr>
+<tr class="row-odd"><td>2016-03-08</td>
+<td>Changed the wording about the directories in <code class="docutils literal"><span class="pre">/opt/</span></code> and fixed
+a few minor grammar issues.</td>
 </tr>
 </tbody>
 </table>
@@ -130,8 +134,9 @@ clone these scripts:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ apt-get install -y git
 </pre></div>
 </div>
-<p>Arbitrarily choose and create the directories which contain our artifacts to
-get things running:</p>
+<p>Create the directories which will contain our artifacts to get things running.
+I&#8217;ve chosen those arbitrarily, there is no technical need to use these but
+I will use them throughout this post:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ mkdir -p /opt/grafana-poc/statsd-graphite/
 $ mkdir -p /opt/grafana-poc/grafana-bin/
 $ mkdir -p /opt/grafana-poc/custom-stats/
@@ -174,7 +179,7 @@ $ dpkg -i grafana_2.6.0_amd64.deb
 </pre></div>
 </div>
 <p>Other installation methods are described in <a class="footnote-reference" href="#id7" id="id3">[2]</a>.</p>
-<p>You maybe want to allow anonymous access with <em>viewer</em> rights <a class="footnote-reference" href="#id8" id="id4">[3]</a>. Be aware
+<p>You may want to allow anonymous access with <em>viewer</em> rights <a class="footnote-reference" href="#id8" id="id4">[3]</a>. Be aware
 that users which are <em>not</em> logged in (and therefore are in the <em>viewer</em> role)
 can create dashboards but cannot save them.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ vim /etc/grafana/grafana.ini
@@ -387,7 +392,7 @@ The metric name can be seen as a category.</li>
 to a timestamp <em>statsd</em> will get from the host. That&#8217;s why setting the
 time zone in <a class="reference internal" href="#prereqs"><span>A few Prerequisites</span></a> was important. Running this script multiple times
 will create the time series data we want to visualize with <em>Grafana</em>.</p>
-<p>Run <code class="docutils literal"><span class="pre">bug_stats.py</span></code> in an interval of 5 minutes (= 300 seconds as <code class="docutils literal"><span class="pre">nohup</span></code>
+<p>Run <code class="docutils literal"><span class="pre">bug_stats.py</span></code> in an interval of 5 minutes (= 300 seconds) as <code class="docutils literal"><span class="pre">nohup</span></code>
 to avoid interruption when the SSH session to your VM terminates:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ nohup watch -n <span class="m">300</span> python /opt/grafana-poc/custom-stats/bug_stats.py <span class="p">&amp;</span>
 </pre></div>

@@ -10,7 +10,7 @@ Setup Grafana + Graphite + Statsd
 =================================
 
 If you ever played around with time series data and wanted to visualize them
-with graphs in a nice way you probably have had heard about *Grafana*. This
+with graphs in a nice way you probably have heard about *Grafana*. This
 post provides a step-by-step instruction on how to build a *Grafana*-playground
 in about 15 minutes. The setup will be build of *statsd* to collect metrics,
 *graphite* to store those metrics, and *Grafana* to visualize those metrics.
@@ -28,6 +28,8 @@ Change history:
 Date        Change description
 ==========  =================================================================
 2016-03-06  The first release
+2016-03-08  Changed the wording about the directories in ``/opt/`` and fixed
+            a few minor grammar issues.
 ==========  =================================================================
 
 
@@ -75,8 +77,9 @@ clone these scripts::
 
     $ apt-get install -y git
 
-Arbitrarily choose and create the directories which contain our artifacts to
-get things running::
+Create the directories which will contain our artifacts to get things running.
+I've chosen those arbitrarily, there is no technical need to use these but
+I will use them throughout this post::
 
     $ mkdir -p /opt/grafana-poc/statsd-graphite/
     $ mkdir -p /opt/grafana-poc/grafana-bin/
@@ -127,7 +130,7 @@ the package and install like this::
 
 Other installation methods are described in [2]_.
 
-You maybe want to allow anonymous access with *viewer* rights [3]_. Be aware
+You may want to allow anonymous access with *viewer* rights [3]_. Be aware
 that users which are *not* logged in (and therefore are in the *viewer* role)
 can create dashboards but cannot save them.
 ::
@@ -203,7 +206,7 @@ to a timestamp *statsd* will get from the host. That's why setting the
 time zone in :ref:`prereqs` was important. Running this script multiple times
 will create the time series data we want to visualize with *Grafana*.
 
-Run ``bug_stats.py`` in an interval of 5 minutes (= 300 seconds as ``nohup``
+Run ``bug_stats.py`` in an interval of 5 minutes (= 300 seconds) as ``nohup``
 to avoid interruption when the SSH session to your VM terminates::
 
     $ nohup watch -n 300 python /opt/grafana-poc/custom-stats/bug_stats.py &
