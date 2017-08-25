@@ -5,4 +5,4 @@ rm -rf ./_website/
 ablog build
 
 echo "The newly built blog content is ready:"
-ls -la
+ls -la _website
