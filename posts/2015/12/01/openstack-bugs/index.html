@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>OpenStack’s Bug Management &mdash; Blog  documentation</title>
+    <title>OpenStack’s Bug Management &#8212; Blog  documentation</title>
     
     <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,8 @@
         VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
@@ -25,9 +26,12 @@
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="../../../../../about/" />
-    <link rel="top" title="Blog  documentation" href="../../../../../" />
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" />
   
    
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -47,7 +51,8 @@
   </style>
 
   </head>
-  <body role="document">  
+  <body role="document">
+  
 
     <div class="document">
       <div class="documentwrapper">
@@ -172,7 +177,7 @@ with a specific set of knowledge and with a different depth in OpenStack. It
 is unlikely that everyone understands instantly <strong>why</strong> an incident or workflow
 didn&#8217;t pass your expectation.</p>
 <p>A possible template, which helps others to understand you, could be:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>Description
+<div class="highlight-default"><div class="highlight"><pre><span></span>Description
 ===========
 Some prose which explains more in detail what this bug report is
 about. If the headline of this report is descriptive enough,
@@ -294,7 +299,7 @@ bug.</li>
 <col width="20%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>reporter</td>
 <td>triager</td>
 <td>supervisor</td>
@@ -302,74 +307,74 @@ bug.</li>
 <td>release-mgmt</td>
 </tr>
 <tr class="row-even"><td>New</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>x</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>Incomplete</td>
 <td>x</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>Triaged</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 <td>x</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>Confirmed</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 <td>x</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>In Progress</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 <td>x</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>Fix Committed</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 <td>x</td>
 </tr>
 <tr class="row-even"><td>Fix Released</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 <td>x</td>
 </tr>
 <tr class="row-odd"><td>Won&#8217;t Fix</td>
 <td>x</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>Opinion</td>
 <td>x</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>Invalid</td>
 <td>x</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
 </tbody>
 </table>
@@ -535,7 +540,7 @@ found in the <a class="reference external" href="https://wiki.openstack.org/wiki
 complicated it will get to understand who is talking to whom about what. If
 you want to answer on a comment from another contributor, try to use this as
 the first line in your answer:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>@&lt;name&gt; in reply to comment #&lt;N&gt;:
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">@&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="n">reply</span> <span class="n">to</span> <span class="n">comment</span> <span class="c1">#&lt;N&gt;:</span>
 </pre></div>
 </div>
 <p>This makes it also easier in notification e-mails to spot that a reaction is
@@ -629,6 +634,8 @@ for more details.</p>
       
     
       
+    
+      
       <li class="ablog-cloud ablog-cloud-3">
         <a href="../../../../tag/data-visualization/">data-visualization</a></li>
       
@@ -639,8 +646,12 @@ for more details.</p>
       
     
       
+    
+      
       <li class="ablog-cloud ablog-cloud-3">
         <a href="../../../../tag/openstack/">openstack</a></li>
+      
+    
       
     
   </ul>
@@ -661,14 +672,11 @@ for more details.</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../../../search/" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -679,11 +687,11 @@ for more details.</p>
       &copy;2015, Markus Zoeller.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="../../../../../_sources/posts/2015/12/01/openstack-bugs.txt"
+      <a href="../../../../../_sources/posts/2015/12/01/openstack-bugs.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

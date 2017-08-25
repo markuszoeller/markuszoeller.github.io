@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Setup Grafana + Graphite + Statsd &mdash; Blog  documentation</title>
+    <title>Setup Grafana + Graphite + Statsd &#8212; Blog  documentation</title>
     
     <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,8 @@
         VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
@@ -25,9 +26,12 @@
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="../../../../../about/" />
-    <link rel="top" title="Blog  documentation" href="../../../../../" />
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" />
   
    
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -47,7 +51,8 @@
   </style>
 
   </head>
-  <body role="document">  
+  <body role="document">
+  
 
     <div class="document">
       <div class="documentwrapper">
@@ -312,7 +317,7 @@ after the script:</p>
     <span class="n">LP_IMPORTANCES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Undecided&quot;</span><span class="p">,</span> <span class="s2">&quot;Wishlist&quot;</span><span class="p">,</span> <span class="s2">&quot;Low&quot;</span><span class="p">,</span>
                       <span class="s2">&quot;Medium&quot;</span><span class="p">,</span> <span class="s2">&quot;High&quot;</span><span class="p">,</span> <span class="s2">&quot;Critical&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">project_name</span> <span class="o">=</span> <span class="n">project_name</span>
 
         <span class="n">cachedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/.launchpadlib/cache/&quot;</span><span class="p">)</span>
@@ -364,7 +369,7 @@ after the script:</p>
 <span class="hll">        <span class="n">gauge</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">bug_stat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bug_stat</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">projects</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nova&#39;</span><span class="p">,</span> <span class="s1">&#39;python-novaclient&#39;</span><span class="p">,</span> <span class="s1">&#39;cinder&#39;</span><span class="p">,</span> <span class="s1">&#39;neutron&#39;</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">project_name</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">:</span>
         <span class="n">collector</span> <span class="o">=</span> <span class="n">BugStatsCollector</span><span class="p">(</span><span class="n">project_name</span><span class="p">)</span>
@@ -374,7 +379,7 @@ after the script:</p>
 </pre></div>
 </td></tr></table></div>
 <ul class="simple">
-<li>line 6 makes use of the python package we installed in <a class="reference internal" href="#prereqs"><span>A few Prerequisites</span></a>.
+<li>line 6 makes use of the python package we installed in <a class="reference internal" href="#prereqs"><span class="std std-ref">A few Prerequisites</span></a>.
 We can now interact with the local <em>statsd</em> deamon on this machine.</li>
 <li>line 42 creates one single metric we will later push to <em>statsd</em>.
 The key is one of the possible bug report importances and the value is
@@ -390,7 +395,7 @@ The metric name can be seen as a category.</li>
 <a class="reference external image-reference" href="/_images/graphite_gauges.jpg"><img alt="The statsd gauges displayed in graphite" src="../../../../../_images/graphite_gauges.jpg" /></a>
 <p>The leaves of this tree will be filled with the values we provide attached
 to a timestamp <em>statsd</em> will get from the host. That&#8217;s why setting the
-time zone in <a class="reference internal" href="#prereqs"><span>A few Prerequisites</span></a> was important. Running this script multiple times
+time zone in <a class="reference internal" href="#prereqs"><span class="std std-ref">A few Prerequisites</span></a> was important. Running this script multiple times
 will create the time series data we want to visualize with <em>Grafana</em>.</p>
 <p>Run <code class="docutils literal"><span class="pre">bug_stats.py</span></code> in an interval of 5 minutes (= 300 seconds) as <code class="docutils literal"><span class="pre">nohup</span></code>
 to avoid interruption when the SSH session to your VM terminates:</p>
@@ -413,7 +418,7 @@ interest in trends and historical data of bug reports.</p>
 <p>As we get the stats from 4 different projects and want to reuse the same
 graph, we will template it with the project name.</p>
 <p>At first we need to connect Grafana to the datasource <em>graphite</em>. Use the
-credentials mentioned in <a class="reference internal" href="#synthesize"><span>Setup Statsd and Graphite</span></a> if you haven&#8217;t changed them.</p>
+credentials mentioned in <a class="reference internal" href="#synthesize"><span class="std std-ref">Setup Statsd and Graphite</span></a> if you haven&#8217;t changed them.</p>
 <p>The name of the datasource will be used in later steps.</p>
 <a class="reference external image-reference" href="/_images/grafana_datasource.jpg"><img alt="Grafana can work with different datasources, we will use graphite" src="../../../../../_images/grafana_datasource.jpg" /></a>
 <p>After that we can create a variable so that we can switch between the four
@@ -423,7 +428,7 @@ the project names. The name of the variable is used later in data queries.</p>
 <p>Now we can build a graph which makes use of the custom metrics we collected.
 We will also use the variable we declared in our query to use the same graph
 for different projects. You will notice that the query we use matches the
-metric name we declared in <a class="reference internal" href="#custom-metrics"><span>Collect and Push Custom Metrics</span></a>.</p>
+metric name we declared in <a class="reference internal" href="#custom-metrics"><span class="std std-ref">Collect and Push Custom Metrics</span></a>.</p>
 <a class="reference external image-reference" href="/_images/grafana_templated_query.jpg"><img alt="A variable can be used in grafana queries." src="../../../../../_images/grafana_templated_query.jpg" /></a>
 <p>Save the dashboard and switch between the projects to see the different
 collected data.</p>
@@ -542,6 +547,8 @@ into the entity you monitor.</p>
       
     
       
+    
+      
       <li class="ablog-cloud ablog-cloud-3">
         <a href="../../../../tag/data-visualization/">data-visualization</a></li>
       
@@ -552,8 +559,12 @@ into the entity you monitor.</p>
       
     
       
+    
+      
       <li class="ablog-cloud ablog-cloud-3">
         <a href="../../../../tag/openstack/">openstack</a></li>
+      
+    
       
     
   </ul>
@@ -574,14 +585,11 @@ into the entity you monitor.</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../../../search/" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -592,11 +600,11 @@ into the entity you monitor.</p>
       &copy;2015, Markus Zoeller.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="../../../../../_sources/posts/2016/03/06/grafana-graphite-statsd.txt"
+      <a href="../../../../../_sources/posts/2016/03/06/grafana-graphite-statsd.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
