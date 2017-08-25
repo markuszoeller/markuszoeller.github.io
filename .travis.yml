@@ -17,7 +17,7 @@ install:
   - sudo pip list
 
 script:
-  - build_sources.sh
+  - ./build_sources.sh
 
 after_success:
   - bash publish-gh-pages.sh
