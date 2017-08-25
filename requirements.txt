@@ -1,3 +1,4 @@
 # install with pip install -r requirements.txt
+Sphinx<1.6.0
 ablog
 sphinxcontrib-blockdiag
