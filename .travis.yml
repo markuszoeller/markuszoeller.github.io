@@ -1,0 +1,23 @@
+---
+# Control file for Travis CI.
+# Must be located in the root directory of the Git repository.
+
+notifications:
+  email: false
+
+os:
+  - linux
+
+language: python
+python:
+  - "2.7"
+
+install:
+  - sudo pip install -r requirements.txt
+  - sudo pip list
+
+script:
+  - build_sources.sh
+
+after_success:
+  - bash publish-gh-pages.sh
