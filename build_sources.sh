@@ -4,4 +4,5 @@ rm -rf ./.doctrees/
 rm -rf ./_website/
 ablog build
 
-# TODO
+echo "The newly built blog content is ready:"
+ls -la
