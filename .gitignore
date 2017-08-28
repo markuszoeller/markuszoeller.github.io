@@ -1,3 +1,4 @@
 .doctrees
 .venv
 _website
+*.pyc
