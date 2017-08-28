@@ -188,7 +188,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Blog'
+project = u'MZIO'
 copyright = u'2015, Markus Zoeller'
 author = u'Markus Zoeller'
 
