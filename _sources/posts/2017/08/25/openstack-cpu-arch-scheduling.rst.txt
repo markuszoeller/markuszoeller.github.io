@@ -18,13 +18,14 @@ a target with the correct CPU architecture.
     :local:
     :backlinks: top
 
-Change history:
+.. list-table:: Change history:
+   :widths: 1 5
+   :header-rows: 1
 
-==========  =================================================================
-Date        Change description
-==========  =================================================================
-2017-08-25  The first release
-==========  =================================================================
+   * - Date
+     - Change description
+   * - 2017-08-25
+     - The first release
 
 TL;DR
 =====
