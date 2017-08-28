@@ -12,7 +12,7 @@ timezone ``UTC+1``.
 This blog intends to persist some things I'd like to share with others or
 don't want to forget. English is not my first language. If you see
 spelling and/or grammar errors, tell me about it by opening an
-`issue <https://github.com/markuszoeller/blog-source/issues>`_
+`issue <https://github.com/markuszoeller/markuszoeller.github.io/issues>`_
 
 **Legal disclaimer**: Opinions are my own and not necessarily the views of my
 employer.
