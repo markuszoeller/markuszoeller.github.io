@@ -2,15 +2,20 @@
 .. todo:: date, tags and title
 
 .. post::
-   :tags: template
-   :title: title
+   :tags: logrotate, logging
+   :title: Basics about Logrotate
 
 
-=====
-Title
-=====
+======================
+Basics about Logrotate
+======================
 
 .. todo:: abstract
+
+Ever lost a host because one of the services on that host used all
+available disk space with its logs? `Logrotate` is a common tool
+which truncates your logs to make sure this won't happen anymore.
+This post is a short *how-to*.
 
 .. contents::
     :local:
@@ -26,11 +31,6 @@ Title
      - Change description
    * - YYYY-MM-DD
      - The first release
-
-TL;DR
-=====
-
-.. todo:: short conclusion here
 
 Use Case
 ========
@@ -73,12 +73,19 @@ Installation of logrotate::
     $ logrotate --version
     logrotate 3.8.7
 
+We want to achieve these goals:
+
+* rotate the logs every week
+* keep the last 4 weeks before purging the oldest logs
+* compress the old, rotated log files to save disk space
+* if there is no log file, be cool and keep calm
+* if the log file is empty, do nothing
+
+This policy should be applied to all files in a specific directory.
+
 Create the logrotate config for the zuul services::
 
     $ cat /etc/logrotate.d/zuul-logs
-    # mzoeller: 2017-08-04:
-    # This is added manually and needs to be replaced with an Ansible approach.
-
     /var/log/zuul/*.log {
         rotate 4
         weekly
