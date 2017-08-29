@@ -1,3 +1,7 @@
+
+.. image:: https://travis-ci.org/markuszoeller/markuszoeller.github.io.svg?branch=sources
+    :target: https://travis-ci.org/markuszoeller/markuszoeller.github.io
+
 ======
 README
 ======
