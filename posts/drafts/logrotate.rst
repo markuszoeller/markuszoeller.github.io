@@ -1,7 +1,5 @@
 
-.. todo:: date, tags and title
-
-.. post::
+.. post:: 29 Sep, 2017
    :tags: logrotate, logging
    :title: Basics about Logrotate
 
@@ -11,7 +9,7 @@ Basics about logrotate
 ======================
 
 Ever lost a host because one of the services on that host used all
-available disk space with its logs? `logrotate` is a common tool
+available disk space with its logs? *logrotate* is a common tool
 which truncates your logs to make sure this won't happen anymore.
 This post is a short *how-to*.
 
@@ -34,10 +32,10 @@ Use Case
 
 Like described in the abstract before, almost every software supports a
 way to log its internal actions to log files. Mostly with different
-types of severities like `critical`, `error`, `warning`, `info` and `debug`.
-The most verbose one, `debug`, can sometimes create so many log entries in
-the designated logfile, that this file uses all of the available disk space
-of the host. We had this recently with the software `Zuul`, a project
+types of severities like *critical*, *error*, *warning*, *info* and *debug*.
+The most verbose one, *debug*, can sometimes create so many log entries in
+the designated log file, that this file uses all of the available disk space
+of the host. We had this recently with the software *Zuul*, a project
 gating system developed for the OpenStack Project [1]_. In general, log
 rotation is recommended practice by the *OpenSCAP Security Guide* [2]_
 and good background information is available at Rackspace [3]_.
@@ -47,17 +45,16 @@ Installation
 
 This post explains a manual setup on:
 
-* Ubuntu 16.04 Xenial release on
-* `IBM Z s390x` platform (it's the same for x86 though)
+* Ubuntu 16.04 Xenial release
+* on *IBM Z s390x* platform (it's the same for x86, though)
 
 An automatized way is available with the *Ansible* role
-``openstack/ansible-role-logrotate`` [4]_, but that won't be discussed
+*openstack/ansible-role-logrotate* [4]_, but that won't be discussed
 further here.
 
 Let's check the available packages:
 
 .. code-block:: text
-   :linenos:
 
     root@zuul:~# apt-cache policy logrotate
     logrotate:
@@ -72,14 +69,12 @@ Let's check the available packages:
 We install the package:
 
 .. code-block:: text
-   :linenos:
 
     root@zuul:~# apt install -y logrotate
 
-And lastly double-check the version of ``logrotate``:
+And lastly double-check the version of *logrotate*:
 
 .. code-block:: text
-   :linenos:
 
     root@zuul:~# logrotate --version
     logrotate 3.8.7
@@ -97,14 +92,13 @@ We want the configuration to achieve these goals:
 #. if the log file is empty, do nothing
 
 This policy should be applied to all files in a specific directory. As
-we mentioned the ``Zuul`` software before, we configure it for this
+we mentioned the *Zuul* software before, we configure it for this
 service which logs everything into ``/var/log/zuul``.
 
 Create the logrotate config file ``zuul-logs`` in the directory
 ``/etc/logrotate.d/``:
 
 .. code-block:: text
-   :linenos:
 
     root@zuul:~# cat /etc/logrotate.d/zuul-logs
     /var/log/zuul/*.log {
@@ -117,17 +111,18 @@ Create the logrotate config file ``zuul-logs`` in the directory
 
 The name of the file is arbitrarily chosen, you can choose whatever you like.
 You'll notice that the five goals are reflected in the configuration. More
-possibilities are described at [5]_.
+possibilities are described at [5]_. You also see that we can use wildcards
+``*`` in the path, which is handy when a service creates multiple log files,
+like *Zuul* does.
 
 Dry-Run
 =======
 
-After we configured ``logrotate``, we can do a dry-run, to see
-what would or wouldn't change, if ``logrotate`` would run normally.
+After we configured *logrotate*, we can do a dry-run, to see
+what would or wouldn't change, if *logrotate* would run normally.
 Your output might look similar to this:
 
 .. code-block:: text
-   :linenos:
    :emphasize-lines: 1,7,13,14,19,21
 
     root@zuul:~# logrotate -d /etc/logrotate.conf
@@ -172,7 +167,6 @@ how it would look like every week. Let's check the log files **before**
 logrotate got enforced for a first run:
 
 .. code-block:: text
-   :linenos:
    :emphasize-lines: 7
 
     root@zuul:~# ls -lh /var/log/zuul
@@ -190,7 +184,6 @@ example is the ``server-debug.log`` which uses 3.5G of disk space.
 The overall system disk space **before** we do the logrotate:
 
 .. code-block:: text
-   :linenos:
    :emphasize-lines: 5
 
     root@zuul:~# df -h
@@ -206,18 +199,16 @@ The overall system disk space **before** we do the logrotate:
 Start one **manual logrotation** to see that things work out:
 
 .. code-block:: text
-   :linenos:
 
     root@zuul:~# # this can take a minute
     root@zuul:~# logrotate -f /etc/logrotate.d/zuul-logs
 
+The ``-f`` parameter forces a logrotation although the criteria are not
+met. You have to specify the configuration file you want to apply here.
 
-Log files **after** logrotate got enforced for a first run:
-
+Let's look at the log files **after** logrotate got enforced for a first run:
 
 .. code-block:: text
-   :linenos:
-   :emphasize-lines: 4,6,9,11
 
     root@zuul:~# ls -lh /var/log/zuul
     total 322M
@@ -237,11 +228,14 @@ incremented with each logrotation. That means:
 * the higher the number the older the compressed logs
 * the lower the number the younger the compressed logs
 
+As an example, ``server.log.2.gz`` is older than ``server.log.1.gz``.
+Please note that these compressed archives get **renamed** when a new
+logrotation happens.
+
 The compression reduced the file ``server-debug.log`` from 3.5G to 300M.
 This is also reflected in the overall system disk space:
 
 .. code-block:: text
-   :linenos:
    :emphasize-lines: 5
 
     root@zuul:~# df -h
@@ -258,11 +252,10 @@ Rotate continuously
 ===================
 
 The manual rotation we did before was only to demo the result. We
-can rely on the cronjob for logrotate which gets set up at during package
+can rely on the *cronjob* for logrotate which gets set up at during package
 install and runs daily:
 
 .. code-block:: text
-   :linenos:
    :emphasize-lines: 15
 
     root@zuul:~# cat /etc/cron.daily/logrotate
@@ -288,7 +281,6 @@ file from the beginning.
 Logrotate also saves its status in a file:
 
 .. code-block:: text
-   :linenos:
 
     root@zuul:~# cat /var/lib/logrotate/status
     logrotate state -- version 2
@@ -307,18 +299,16 @@ Known issues
 The ``logrotate -d`` dry-run might show this:
 
 .. code-block:: text
-   :linenos:
 
     root@zuul:~# logrotate -d /etc/logrotate.conf
     reading config file /etc/logrotate.conf
     error: /etc/logrotate.conf:7 unknown group 'syslog'
     removing last 0 log configs
 
-Apparently there is an issue with the group ``syslog`` which is the default
-owning group in the logrotate config:
+Apparently there is an issue with the (non-)existence of the group
+``syslog`` which is the default owning group in the logrotate config:
 
 .. code-block:: text
-   :linenos:
 
     root@zuul:~# cat /etc/logrotate.conf | grep syslog
     # use the syslog group by default, since this is the owning group
@@ -326,20 +316,18 @@ owning group in the logrotate config:
     su root syslog
 
 But that user/group doesn't exist in plain Ubuntu 16.04, which
-is a confirmed Ubuntu upstream bug [6]_.
-According to this bug report, the user/group gets created when ``rsyslog``
-is installed. This is currently not the case:
+is a confirmed Ubuntu upstream bug [6]_. According to this bug report,
+the user/group gets created when *rsyslog* is installed. This is currently
+not the case:
 
 .. code-block:: text
-   :linenos:
 
     root@zuul:~# ll /var/log/ | grep syslog
 
-Let's install rsyslog (which creates the syslog user/group which
+Let's install *rsyslog* (which creates the ``syslog`` user/group which
 is expected by logrotate):
 
 .. code-block:: text
-   :linenos:
 
     root@zuul:~# apt install rsyslog
     [...]
