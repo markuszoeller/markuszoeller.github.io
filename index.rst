@@ -8,6 +8,7 @@ A blog with tech stuff I'd like to share and don't want to forget.
 Feeds: `Atom <posts/atom.xml>`_
 Me: :ref:`about`
 Future: :ref:`blog-drafts`
+Sources: `Github <https://github.com/markuszoeller/markuszoeller.github.io>`_
 
 Recent posts
 ============
