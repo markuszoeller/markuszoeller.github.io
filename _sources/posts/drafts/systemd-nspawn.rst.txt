@@ -3,7 +3,7 @@
 
 .. post::
    :tags: template
-   :title: title
+   :title: Container with systemd-nspawn
 
 
 ==============
