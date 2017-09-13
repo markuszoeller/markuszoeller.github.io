@@ -3,7 +3,7 @@
 
 .. post::
    :tags: monitoring
-   :title: title
+   :title: Monitoring with Prometheus
 
 
 ==========

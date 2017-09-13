@@ -2,7 +2,7 @@
 
 .. post::
    :tags: template
-   :title: title
+   :title: HAProxy
 
 
 =======

@@ -3,7 +3,7 @@
 
 .. post::
    :tags: template
-   :title: title
+   :title: etcd - a distributed key-value store
 
 
 ====
