@@ -149,10 +149,11 @@ fontawesome_link_cdn = True
 
 # You can enable Disqus_ by setting ``disqus_shortname`` variable.
 # Disqus_ short name for the blog.
-#disqus_shortname = None
+disqus_shortname = "mzio"
 
 # Choose to disqus pages that are not posts, default is ``False``.
-#disqus_pages = False
+# markus_z: apparently my posts don't count as 'posts', so I have to set this to True
+disqus_pages = True
 
 # Choose to disqus posts that are drafts (without a published date),
 # default is ``False``.
