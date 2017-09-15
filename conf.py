@@ -169,6 +169,7 @@ needs_sphinx = '1.2'
 # ones.
 extensions = [
     'sphinx.ext.extlinks',
+    'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'alabaster',
@@ -245,6 +246,10 @@ pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+
+# -- Options for Graphviz -------------------------------------------------
+graphviz_output_format = 'svg'
 
 
 # -- Options for HTML output ----------------------------------------------
