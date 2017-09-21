@@ -1,0 +1,60 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+
+  # =========================================================================
+  # The servers in our environment
+  # =========================================================================
+  servers=[
+    {
+      :hostname => "prometheus-server",
+      :box => "geerlingguy/ubuntu1604",
+      :ip => "192.168.100.10",
+      :port => 50001,
+      :ram => 1024,
+      :cpu => 1
+    },
+    {
+      :hostname => "prometheus-client-1",
+      :box => "geerlingguy/ubuntu1604",
+      :ip => "192.168.100.11",
+      :port => 50002,
+      :ram => 1024,
+      :cpu => 1
+    },
+    {
+      :hostname => "prometheus-client-2",
+      :box => "geerlingguy/ubuntu1604",
+      :ip => "192.168.100.12",
+      :port => 50003,
+      :ram => 1024,
+      :cpu => 1
+    }
+  ]
+
+  # =========================================================================
+  # The general settings
+  # =========================================================================
+  config.vm.provider "virtualbox" do |v|
+    # https://www.vagrantup.com/docs/virtualbox/configuration.html#linked-clones
+    v.linked_clone = true
+  end
+
+  # =========================================================================
+  # Server specific settings
+  # =========================================================================
+  servers.each do |machine|
+    config.vm.define machine[:hostname] do |node|
+      node.vm.box = machine[:box]
+      node.vm.hostname = machine[:hostname]
+      node.vm.network "private_network", ip: machine[:ip]
+      node.vm.network "forwarded_port", guest: 22, host: machine[:port], id: "ssh"
+
+      node.vm.provider "virtualbox" do |vb|
+        vb.memory = machine[:ram]
+        vb.cpus = machine[:cpu]
+      end
+    end
+  end
+end

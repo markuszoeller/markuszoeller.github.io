@@ -30,6 +30,8 @@ etcd
 TL;DR
 =====
 
+https://github.com/andrewrothstein/ansible-etcd-cluster
+
 .. todo:: short conclusion here
 
 Use Case

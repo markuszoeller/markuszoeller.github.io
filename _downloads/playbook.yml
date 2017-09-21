@@ -1,0 +1,78 @@
+---
+
+# ===========================================================================
+# Do basic setup on all hosts
+# ===========================================================================
+- hosts: all
+  become: true
+
+  tasks:
+    - name: "Add our servers to the hosts file."
+      lineinfile:
+        dest: /etc/hosts
+        # use the IP address we specified in the Vagrantfile
+        line: '{{ hostvars[item].ansible_all_ipv4_addresses[1] }} {{item}}'
+      with_items: '{{ groups["all"] }}'
+
+
+# ===========================================================================
+# Do prometheus client specific setup on all hosts
+# ===========================================================================
+- hosts: all  # we want the metrics of the server too
+  become: true
+
+  tasks:
+    - name: "Install Prometheus Node Exporter package."
+      apt:
+        name: prometheus-node-exporter
+
+    - name: "Ensure the Node Exporter is started and starts at boot."
+      service:
+        name: prometheus-node-exporter
+        enabled: true
+        state: started
+
+    - name: "Check if the service emits metrics."
+      uri:
+        url: http://127.0.0.1:9100/metrics
+        method: GET
+        status_code: 200
+
+
+# ===========================================================================
+# Do prometheus server specific setup only on the prometheus server
+# ===========================================================================
+- hosts: prometheus-server
+  become: true
+
+
+  tasks:
+    - name: "Install the Prometheus server."
+      apt:
+        name: prometheus
+
+    - name: "Ensure the service is started and starts at boot."
+      service:
+        name: prometheus
+        enabled: true
+        state: started
+
+    - name: "Check if the service is accessible."
+      uri:
+        url: http://127.0.0.1:9090/graph
+        method: GET
+        status_code: 200
+
+    - name: "Copy Prometheus configuration file."
+      template:
+        src: prometheus.yml.j2
+        dest: /etc/prometheus/prometheus.yml
+      notify: event_prometheus_config_changed
+
+
+  handlers:
+    - name: "Reload the Prometheus service to read the new config."
+      service:
+        name: prometheus
+        state: reloaded
+      listen: event_prometheus_config_changed

@@ -2,13 +2,16 @@
 .. todo:: date, tags and title
 
 .. post::
-   :tags: monitoring
-   :title: Monitoring with Prometheus
+   :tags: template
+   :title: Taskflow
 
 
-==========
-Prometheus
-==========
+========
+Taskflow
+========
+
+Dig into https://github.com/openstack/taskflow and show some use-cases
+and examples.
 
 .. todo:: abstract
 
@@ -31,8 +34,6 @@ TL;DR
 =====
 
 .. todo:: short conclusion here
-
-vagrant + ansible in multinode in U1604
 
 Use Case
 ========
