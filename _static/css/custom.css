@@ -1,0 +1,70 @@
+
+/* alabaster theme ========================================================*/
+
+div.document {
+    width: 1100px;
+}
+
+table.highlighttable {
+    margin: 0px;
+    padding: 0px;
+    /*
+    background-color: greenyellow;
+    border: 1px solid;
+    border-color: black;
+    */
+}
+
+div.literal-block-wrapper {
+    padding: 0px;
+    /*
+    background-color: yellow;
+    border: 1px solid;
+    border-color: black;
+    */
+}
+
+div.highlight {
+/*
+    background-color: red;
+    border: 1px solid;
+    border-color: black;
+*/
+}
+
+td.code div.highlight pre {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    overflow: hidden;
+}
+
+table tbody tr td.code{
+    width: 100%;
+    padding: 0px;
+    /*
+    background-color: yellow;
+    border: 1px solid;
+    border-color: red;
+    */
+}
+
+table tbody tr td.code pre{
+    width: 100%;
+    margin: 0px;
+    padding; 0px;
+    /*
+    border: 1px dashed;
+    border-color: blue;
+    */
+}
+
+/* sphinx_tabs ============================================================*/
+
+/*
+
+.sphinx-tabs .sphinx-menu a.item {
+    color: red !important;
+}
+
+*/

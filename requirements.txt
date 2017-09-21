@@ -3,4 +3,5 @@ docutils==0.12
 Sphinx<1.6.0
 ablog
 sphinxcontrib-blockdiag
+sphinx_tabs
 watchdog
