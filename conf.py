@@ -101,9 +101,9 @@ html_sidebars = {
            , 'recentposts.html'
            #, 'postcard.html'
            , 'tagcloud.html'
+           , 'categories.html'
            ,  'archives.html'
            , 'searchbox.html'
-            #'categories.html'
             ],
     }
 
