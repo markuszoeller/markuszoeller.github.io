@@ -17,6 +17,7 @@ install:
   - sudo pip list
 
 script:
+  - ./ensure_ci_date.sh
   - ./build_sources.sh
 
 after_success:
