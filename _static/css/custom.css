@@ -59,6 +59,33 @@ table tbody tr td.code pre{
     */
 }
 
+/* Definition list */
+dl dt {
+    font-weight: bold;
+}
+
+/* quotes */
+blockquote {
+    font-style: italic;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    width: 80%;
+    quotes: "\00BB" "\00AB";
+}
+
+blockquote:before {
+    content: open-quote;
+}
+
+blockquote:after {
+    content: close-quote;
+}
+
+/* Format of emphasized text rst: `text` */
+cite {
+    font-style: italic;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
 /* sphinx_tabs ============================================================*/
 
 
