@@ -67,6 +67,7 @@ dl dt {
 /* quotes */
 blockquote {
     font-style: italic;
+    font-size: 110%;
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
     width: 80%;
     quotes: "\00BB" "\00AB";
