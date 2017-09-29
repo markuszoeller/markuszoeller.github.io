@@ -2,3 +2,4 @@
 .venv
 _website
 *.pyc
+.vagrant
