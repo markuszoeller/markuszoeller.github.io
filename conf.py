@@ -175,6 +175,7 @@ extensions = [
     'sphinx.ext.todo',
     'alabaster',
     'ablog',
+    'sphinxcontrib.spelling',
     'sphinxcontrib.blockdiag'
 ]
 
@@ -252,6 +253,10 @@ todo_include_todos = True
 # -- Options for Graphviz -------------------------------------------------
 graphviz_output_format = 'svg'
 
+
+# -- Options for sphinxcontrib-spelling -----------------------------------
+spelling_lang = 'en_US'
+spelling_word_list_filename = 'spelling_wordlist.txt'
 
 # -- Options for HTML output ----------------------------------------------
 

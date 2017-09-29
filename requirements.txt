@@ -5,3 +5,4 @@ ablog
 sphinxcontrib-blockdiag
 sphinx_tabs>=1.1.4
 watchdog
+sphinxcontrib-spelling
