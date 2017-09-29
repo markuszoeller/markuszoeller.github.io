@@ -1,7 +1,8 @@
 
 
 .. post:: 01 Dec, 2015
-   :tags: bugs, openstack
+   :category: openstack
+   :tags: bugs
    :title: OpenStack's Bug Management
 
 .. |tracker-name| replace:: *Launchpad*

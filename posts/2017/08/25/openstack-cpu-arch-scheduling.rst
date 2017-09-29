@@ -1,7 +1,8 @@
 
 
 .. post:: 25 Aug, 2017
-   :tags: openstack, nova, scheduling, cpu-architecture
+   :category: openstack
+   :tags: nova, scheduling, cpu-architecture
    :title: OpenStack Nova Scheduling based on CPU architecture
 
 
