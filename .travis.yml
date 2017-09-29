@@ -12,8 +12,10 @@ language: python
 python:
   - "2.7"
 
+before_install:
+  - sudo ./install-apt-packages.sh
+
 install:
-  - ./install-apt-packages.sh
   - sudo pip install -r requirements.txt
   - sudo pip list
 
