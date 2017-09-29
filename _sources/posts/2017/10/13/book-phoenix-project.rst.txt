@@ -4,6 +4,12 @@
    :title: Book Review: The Phoenix Project
 
 
+.. spelling::
+   phoenix project
+   Spafford
+   Behr
+
+
 ================================
 Book Review: The Phoenix Project
 ================================
@@ -123,7 +129,7 @@ technological reasons but social reasons.
 
 Raise your hand if you ever were in a meeting were it got decided that a
 homegrown solution is the best way although you know N already existing
-solutions which fulfil the requirements but nobody listened to you.
+solutions which fulfill the requirements but nobody listened to you.
 Now it's one or two years later and the Behemoth of an "easy" solution
 is nearly unmaintainable and every requested change needs 1 PY to implement.
 
