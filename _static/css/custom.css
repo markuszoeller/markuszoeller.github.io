@@ -2,7 +2,10 @@
 /* alabaster theme ========================================================*/
 
 div.document {
+/*
+    MZO: A fixed size doesn't match well with a reactive behavior (mobile)
     width: 1100px;
+*/
 }
 
 table.highlighttable {
