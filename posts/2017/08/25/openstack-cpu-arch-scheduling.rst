@@ -111,7 +111,7 @@ Sounds like the correct one for your use-case, right? The openstack CLI
 also says to use this [2]_.
 
 It gets a bit more confusing when you want to use the *Ansible* module
-*os_image* for your *Infrastructure as Code (IaC)*. The example there
+*os_image* [3]_ for your *Infrastructure as Code (IaC)*. The example there
 uses ``cpu_arch``:
 
 .. code-block:: yaml
