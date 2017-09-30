@@ -28,7 +28,7 @@ spelling and/or grammar errors, tell me about it by opening an
      data-theme="light"
      data-vanity="markus-zoeller">
        <a class="LI-simple-link"
-         href='https://de.linkedin.com/in/markus-zoeller?trk=profile-badge'>Markus Zoeller</a>
+         href='https://de.linkedin.com/in/markus-zoeller?trk=profile-badge'>LinkedIn: Markus Zoeller</a>
    </div>
 
 **Legal disclaimer**: Opinions are my own and not necessarily the views of my
