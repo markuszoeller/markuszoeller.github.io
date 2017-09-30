@@ -214,16 +214,16 @@ likely encounter in your role as bug reporter.
 **Q:** *I want to paste logs or console commands or config files in my bug*
 *report, what do I use?*
 
-    **A:** Try `pastebin <http://paste.openstack.org/>`_. It's easy to read and
-    provides a lot of preconfigured highlightings. Just reference from your
-    bug description to the pastebin link.
+**A:** Try `pastebin <http://paste.openstack.org/>`_. It's easy to read and
+provides a lot of preconfigured highlightings. Just reference from your
+bug description to the pastebin link.
 
 **Q:** *I want to show a console session (where possibly timing is relevant).*
 *How do I link to that in my bug report?*
 
-    **A:** Try `showterm <http://showterm.io/>`_. It records your console
-    session and replays it with all input and output in the exact timing it
-    happened. Just reference from your bug description to the *showterm* link.
+**A:** Try `showterm <http://showterm.io/>`_. It records your console
+session and replays it with all input and output in the exact timing it
+happened. Just reference from your bug description to the *showterm* link.
 
 Security
 --------
@@ -257,8 +257,8 @@ can have more than one role:
 
 The following table should be read like:
 
-    *"The bug has the status [...] and in the role of a/an [...], I am*
-    *supposed to work with this bug if there is an 'x'."*:
+    The bug has the status [...] and in the role of a/an [...], I am
+    supposed to work with this bug if there is an 'x'.:
 
 +---------------+----------+---------+------------+----------+--------------+
 |               | reporter | triager | supervisor | assignee | release-mgmt |
@@ -313,9 +313,9 @@ sorting and querying of bugs easier and is the base for release management.
 Not every combination of bug status and bug fields makes sense. As a
 guideline, read the following table as
 
-    *"The bug has the status [...]. A bug in this status should have the*
-    *fields [...] set. I should be in the role of a [...] to set*
-    *these fields."*:
+    The bug has the status [...]. A bug in this status should have the
+    fields [...] set. I should be in the role of a [...] to set
+    these fields.:
 
 +---------------+------------------------------------+-------------------+
 | Status        | Fields which should be set         | Contributor Role  |
