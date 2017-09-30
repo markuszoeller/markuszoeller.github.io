@@ -37,5 +37,4 @@ Recent posts
    :hidden:
 
    about.rst
-   posts/openstack-bugs.rst
 
