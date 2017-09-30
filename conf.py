@@ -10,7 +10,7 @@
 import os
 import sys
 import ablog
-import alabaster
+import sphinx_bootstrap_theme
 
 # -- General ABlog Options ----------------------------------------------------
 
@@ -95,17 +95,7 @@ blog_languages = {
 # a link to a archive pages generated for each tag, category, and year.
 # In addition, there are authors.html, languages.html, and locations.html
 # sidebars that link to author and location archive pages.
-html_sidebars = {
-    '**': ['about.html'
-           #, 'navigation.html'
-           , 'recentposts.html'
-           #, 'postcard.html'
-           , 'tagcloud.html'
-           , 'categories.html'
-           ,  'archives.html'
-           , 'searchbox.html'
-            ],
-    }
+html_sidebars = {}
 
 # -- Blog Feed Options --------------------------------------------------------
 
@@ -262,17 +252,25 @@ spelling_word_list_filename = 'spelling_wordlist.txt'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = 'bootstrap'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
-    'github_button': False,
+    # https://github.com/ryan-roemer/sphinx-bootstrap-theme
+    'navbar_links': [
+        ("About", "about"),
+        ("Categories", "posts/category"),
+        ("Tags", "posts/tag"),
+        ("Archives", "posts/archive"),
+    ],
+    'globaltoc_includehidden': "false",
+    'navbar_sidebarrel': False,
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = [alabaster.get_path()]
+html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
