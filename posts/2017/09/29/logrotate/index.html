@@ -147,7 +147,7 @@
     <div class="col-md-12 content">
       
   <div class="section" id="basics-about-logrotate">
-<h1>Basics about logrotate<a class="headerlink" href="#basics-about-logrotate" title="Permalink to this headline">¶</a></h1>
+<h1>Basics about logrotate<a class="headerlink" href="#basics-about-logrotate" title="Permalink to this headline"> </a></h1>
 <p>Ever lost a host because one of the services on that host used all
 available disk space with its logs? <em>logrotate</em> is a common tool
 which truncates your logs to make sure this won&#8217;t happen anymore.
@@ -166,7 +166,7 @@ This post is a short <em>how-to</em>.</p>
 </ul>
 </div>
 <table border="1" class="docutils" id="id13">
-<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id13" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id13" title="Permalink to this table"> </a></caption>
 <colgroup>
 <col width="17%" />
 <col width="83%" />
@@ -183,7 +183,7 @@ This post is a short <em>how-to</em>.</p>
 </tbody>
 </table>
 <div class="section" id="use-case">
-<h2><a class="toc-backref" href="#contents">Use Case</a><a class="headerlink" href="#use-case" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#contents">Use Case</a><a class="headerlink" href="#use-case" title="Permalink to this headline"> </a></h2>
 <p>Like described in the abstract before, almost every software supports a
 way to log its internal actions to log files. Mostly with different
 types of severities like <em>critical</em>, <em>error</em>, <em>warning</em>, <em>info</em> and <em>debug</em>.
@@ -195,7 +195,7 @@ rotation is recommended practice by the <em>OpenSCAP Security Guide</em> <a clas
 and good background information is available at Rackspace <a class="footnote-reference" href="#id9" id="id3">[3]</a>.</p>
 </div>
 <div class="section" id="installation">
-<h2><a class="toc-backref" href="#contents">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#contents">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline"> </a></h2>
 <p>This post explains a manual setup on:</p>
 <ul class="simple">
 <li>Ubuntu 16.04 Xenial release</li>
@@ -227,7 +227,7 @@ logrotate 3.8.7
 </div>
 </div>
 <div class="section" id="configuration">
-<h2><a class="toc-backref" href="#contents">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#contents">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline"> </a></h2>
 <p>We want the configuration to achieve these goals:</p>
 <ol class="arabic simple">
 <li>keep the last 4 rotated logs before purging the oldest logs</li>
@@ -258,7 +258,7 @@ possibilities are described at <a class="footnote-reference" href="#id11" id="id
 like <em>Zuul</em> does.</p>
 </div>
 <div class="section" id="dry-run">
-<h2><a class="toc-backref" href="#contents">Dry-Run</a><a class="headerlink" href="#dry-run" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#contents">Dry-Run</a><a class="headerlink" href="#dry-run" title="Permalink to this headline"> </a></h2>
 <p>After we configured <em>logrotate</em>, we can do a dry-run, to see
 what would or wouldn&#8217;t change, if <em>logrotate</em> would run normally.
 Your output might look similar to this:</p>
@@ -296,7 +296,7 @@ interesting lines are highlighted. If you see errors in your output,
 see the section <a class="reference internal" href="#issues"><span class="std std-ref">Known issues</span></a> below.</p>
 </div>
 <div class="section" id="rotate-manually">
-<h2><a class="toc-backref" href="#contents">Rotate manually</a><a class="headerlink" href="#rotate-manually" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#contents">Rotate manually</a><a class="headerlink" href="#rotate-manually" title="Permalink to this headline"> </a></h2>
 <p>We don&#8217;t want to wait for a week until the first logrotate gets done
 automatically. Therefore we do an (optional) manual logrotate to see
 how it would look like every week. Let&#8217;s check the log files <strong>before</strong>
@@ -368,7 +368,7 @@ This is also reflected in the overall system disk space:</p>
 </div>
 </div>
 <div class="section" id="rotate-continuously">
-<h2><a class="toc-backref" href="#contents">Rotate continuously</a><a class="headerlink" href="#rotate-continuously" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#contents">Rotate continuously</a><a class="headerlink" href="#rotate-continuously" title="Permalink to this headline"> </a></h2>
 <p>The manual rotation we did before was only to demo the result. We
 can rely on the <em>cronjob</em> for logrotate which gets set up at during package
 install and runs daily:</p>
@@ -404,7 +404,7 @@ logrotate state -- version 2
 </div>
 </div>
 <div class="section" id="known-issues">
-<span id="issues"></span><h2><a class="toc-backref" href="#contents">Known issues</a><a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<span id="issues"></span><h2><a class="toc-backref" href="#contents">Known issues</a><a class="headerlink" href="#known-issues" title="Permalink to this headline"> </a></h2>
 <p>The <code class="docutils literal"><span class="pre">logrotate</span> <span class="pre">-d</span></code> dry-run might show this:</p>
 <div class="highlight-text"><div class="highlight"><pre><span></span>root@zuul:~# logrotate -d /etc/logrotate.conf
 reading config file /etc/logrotate.conf
@@ -438,14 +438,14 @@ root@zuul:~# ll /var/log/syslog
 <p>After that, the expected group is available and logrotate can do its work.</p>
 </div>
 <div class="section" id="conclusion">
-<h2><a class="toc-backref" href="#contents">Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#contents">Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this headline"> </a></h2>
 <p>This post showed you how you can use <em>logrotate</em> to prevent log files
 from growing too big. Depending on your logging strategy you might also
 want to look into tools like <em>elasticsearch</em>, <em>logstash</em>, <em>rsyslog</em> and
 <em>journalctl</em>.</p>
 </div>
 <div class="section" id="references">
-<h2><a class="toc-backref" href="#contents">References</a><a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#contents">References</a><a class="headerlink" href="#references" title="Permalink to this headline"> </a></h2>
 <table class="docutils footnote" frame="void" id="id7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
