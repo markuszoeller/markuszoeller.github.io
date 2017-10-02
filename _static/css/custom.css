@@ -9,6 +9,18 @@ footer {
 }
 
 
+/* Permalinks ============================================================= */
+a.headerlink:before{
+    /* http://fontawesome.io/icon/link/ */
+    font-family: "FontAwesome";
+    content: "\f0c1";
+}
+a.headerlink:hover {
+    /* otherwise we see an underline below the whitespace */
+    text-decoration: none;
+}
+
+
 /* Code =================================================================== */
 table.highlighttable tbody tr {
     font-size: 1em;
