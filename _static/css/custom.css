@@ -27,6 +27,15 @@ table tbody tr td.code {
     font-size: 1em;
 }
 
+div[class^="highlight-"] {
+     /*
+     This includes all the special syntax highlighting tables:
+       - highlight-text
+       - highlight-yaml
+       - highlight-*
+     */
+     overflow-x: auto; /* only scroll horizontally if necessary */
+}
 
 /* Definition list ======================================================== */
 dl dt {
@@ -49,10 +58,29 @@ blockquote:after {
 }
 
 
+/* Tables ================================================================= */
+    /* 'tr:first-child.row-odd' is for tables *without* a header line */
+table.table tbody tr:first-child.row-odd td {
+    word-break: break-all;
+}
+
+
 /* Format of emphasized text rst: `text` ================================== */
 cite {
     font-style: italic;
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+
+/* URLs in references section handling ==================================== */
+table.footnote.table tbody tr td {
+    word-break: break-all;
+}
+
+
+/* Long code formatted text =============================================== */
+code.docutils.literal span.pre {
+    word-break: break-all;
 }
 
 
