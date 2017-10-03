@@ -10,13 +10,30 @@
    Behr
 
 
-================================
-Book Review: The Phoenix Project
-================================
+===================================
+Recommendation: The Phoenix Project
+===================================
 
 This is my take on the book
 `The Phoenix Project: A  Novel about IT, DevOps, and Helping Your Business Win`
-from 2014 by Gene Kim; Kevin Behr; George Spafford.
+from 2014 by Gene Kim; Kevin Behr; George Spafford. It's more of a personal 
+reflection why I like the book -- and why I think you should read it too --
+and less of a review.
+
+The book follows the character *Bill Palmer* who's working for
+*Parts Unlimited*, a fictional company producing and selling automotive parts.
+The company is struggling, as it cannot keep up with their competitors.
+The e-commerce project *Phoenix* is supposed to put a stop to the struggle
+and bring the company back to the top. And Bill, our protagonist,
+unexpectedly promoted from a mid-level operations manager to
+*Vice President of IT Operations*, is now responsible for making it happen,
+and (of course) things are falling apart.
+
+.. contents::
+   :local:
+   :backlinks: top
+   :depth: 1
+
 
 .. list-table:: Change history:
    :widths: 1 5
@@ -41,9 +58,6 @@ Target group:
 Focus:
     End-to-end view of software development, delivery and operations.
 
-Recommendation:
-    Yes, without any doubt. A must read for all developers.
-
 ISBN search:
     https://isbnsearch.org/isbn/0988262509
 
@@ -58,6 +72,50 @@ Preview:
            src="https://read.amazon.co.uk/kp/card?asin=B00AZRBLHO&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_Rt7YzbFJXBVP6" >
        </iframe>
 
+
+
+Why you should read it
+======================
+
+With *"you"*, I'm talking specifically to us IT people, working in companies
+>500 people. It gets harder to relate if you're working in a smaller company,
+I guess. If you're in your last semesters of college and majoring in something
+IT related, read it as a preparation for the work life (that and all the
+*Dilbert* cartoons).
+
+The first time the book struck a nerve was when *Brent*, an IT engineer, was
+introduced. Brent is the go-to guy for anything non-trivial. Funnily enough,
+he's also most of the time **the only one who knows how it works**. All the
+negative sides of this (and how to overcome them) are mentioned in the book.
+I'm sure you can name *your Brent* too.
+
+It also doesn't stop with Brent. The book introduces different characters from
+different areas in the company. Marketing, developers, the compliance and audit
+folks, and of course the operators. You're going to
+**recognize many of those characters and their behaviors in your own company**.
+
+Why is this useful for you, you ask? The authors **wave in little learning
+lessons** into the story, each time the protagonist and his team fail and
+recover. And the team faces obstacles over and over again. A short,
+non-exhaustive summary might be:
+
+* developers: get a system wide view; coding is only a part of a bigger 
+  picture
+* security folks: don't follow the rules blindly, risk mitigation can
+  have multiple forms
+* managers: not only your team has to perform (help each other out)
+* operators: reduce variance and manual effort
+* marketing: you're part of the overall flow
+* everyone: consider other teams have valid concerns too
+
+And lastly, if you ever struggled to explain to your (non-IT) friends or
+family members **how the IT life looks like**, give them this book. They can
+ignore the learning aspect and enjoy the thrill of a bunch of IT people
+when a system goes down and the finger pointing starts.
+
+If you're not convinced by now, the next section will contain very specific
+examples from the book, which might give you a better understanding where
+I come from.
 
 
 The 5 most noteworthy things
@@ -144,7 +202,7 @@ drive it.
 -------
 
     [...] as important as throttling the release of work
-    is managing the handoffs. [...] goal is to maximize
+    is managing the handoffs. [...] [the] goal is to maximize
     the flow.
 
 Here's a thought I can put a lot of blame on me. I'm a software developer,
@@ -155,7 +213,7 @@ Deployment, operations, upgrades; these things were the
 I try to become better in this area.
 
 This also doesn't stop at the handoffs between developers and operators.
-There are a lot of earlier stages were *work* gets released. Be it
+There are a lot of earlier stages were *work* gets released. Be it:
 
 * a market analysis to justify development effort
 * a requirements engineering document
@@ -164,3 +222,9 @@ There are a lot of earlier stages were *work* gets released. Be it
 Sloppy handoffs are an easy way to kill efficiency and throughput. Value
 is only generated as soon as the *user can consume* the effort we've
 spent for the solution.
+
+----
+
+This book gave me a lot of insights and I enjoyed reading and learning from
+it. 
+
