@@ -5,6 +5,8 @@
    :tags: nova, scheduling, cpu-architecture
    :title: OpenStack Nova Scheduling based on CPU architecture
 
+.. spelling::
+   ppc
 
 ===================================================
 OpenStack Nova Scheduling based on CPU architecture
@@ -89,7 +91,7 @@ For the sake of example, maybe something like this:
 The openstack users usually don't see the details of the different compute
 nodes. They don't need to and shouldn't. All they want is that this
 architecture specific image gets scheduled on the compute node which can
-fulfil their needs.
+fulfill their needs.
 
 Guest image metadata properties
 ===============================
@@ -196,7 +198,7 @@ and the other one with ``s390x``:
    DEBUG nova.filters [...] Filter ImagePropertiesFilter returned 1 host(s)
 
 You'll notice that the ``ImagePropertiesFilter`` removed the one compute
-node which cannot fulfil the ``ImageMetaProps``. We started with 2 hosts
+node which cannot fulfill the ``ImageMetaProps``. We started with 2 hosts
 and at the end only one host is an eligible target host for the Instance,
 because it offers the prerequisite defined with ``hw_architecture``. A
 full list of supported CPU architectures can be found at [6]_.
