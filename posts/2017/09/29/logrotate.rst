@@ -3,6 +3,11 @@
    :tags: logrotate, logging
    :title: Basics about Logrotate
 
+.. spelling::
+   Rackspace
+   Xenial
+   wildcards
+   logrotation
 
 ======================
 Basics about logrotate
