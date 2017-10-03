@@ -6,6 +6,17 @@
    :tags: bugs
    :title: OpenStack's Bug Management
 
+
+.. spelling::
+   preconfigured
+   highlightings
+   pastebin
+   triager
+   mgmt
+   assigne
+   unassign
+
+
 .. |tracker-name| replace:: *Launchpad*
 
 ==========================

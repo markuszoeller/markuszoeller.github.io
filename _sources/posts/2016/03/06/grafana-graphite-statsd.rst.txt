@@ -4,6 +4,13 @@
    :tags: data-visualization, how-to
    :title: Setup Grafana + Graphite + Statsd
 
+.. spelling::
+   Grafana
+   grafana
+   Statsd
+   Templated
+   templated
+
 
 =================================
 Setup Grafana + Graphite + Statsd
@@ -173,7 +180,7 @@ Go to the directory where we  will create script::
     $ cd /opt/grafana-poc/custom-stats/
 
 Create the file ``bug_stats.py`` which collects the metrics and pushes them
-to *statsd*. The highlighted lines are the key points and will be expained
+to *statsd*. The highlighted lines are the key points and will be explained
 after the script::
 
     $ vim bug_stats.py
@@ -184,7 +191,7 @@ after the script::
    :linenos:
 
 * line 6 makes use of the python package we installed in :ref:`prereqs`.
-  We can now interact with the local *statsd* deamon on this machine.
+  We can now interact with the local *statsd* daemon on this machine.
 * line 42 creates one single metric we will later push to *statsd*.
   The key is one of the possible bug report importances and the value is
   the number of bug reports associated with it. For example: ``high:33`` means,

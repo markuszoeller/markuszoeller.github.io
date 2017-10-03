@@ -309,7 +309,7 @@ which I intend to make part of <a class="footnote-reference" href="#id9" id="id5
 </pre></div>
 </div>
 <p>Create the file <code class="docutils literal"><span class="pre">bug_stats.py</span></code> which collects the metrics and pushes them
-to <em>statsd</em>. The highlighted lines are the key points and will be expained
+to <em>statsd</em>. The highlighted lines are the key points and will be explained
 after the script:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ vim bug_stats.py
 </pre></div>
@@ -469,7 +469,7 @@ after the script:</p>
 </td></tr></table></div>
 <ul class="simple">
 <li>line 6 makes use of the python package we installed in <a class="reference internal" href="#prereqs"><span class="std std-ref">A few Prerequisites</span></a>.
-We can now interact with the local <em>statsd</em> deamon on this machine.</li>
+We can now interact with the local <em>statsd</em> daemon on this machine.</li>
 <li>line 42 creates one single metric we will later push to <em>statsd</em>.
 The key is one of the possible bug report importances and the value is
 the number of bug reports associated with it. For example: <code class="docutils literal"><span class="pre">high:33</span></code> means,
