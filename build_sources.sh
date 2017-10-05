@@ -7,12 +7,10 @@ pip install -r requirements.txt
 rm -rf ./.doctrees/
 rm -rf ./_website/
 
-# workaround --->
-echo "=== MZO: apply private fixes"
-echo "Trying to find the file to patch..."
-ls -l .venv/local/lib/python2.7/site-packages/ablog/blog.py
-find / -name blog.py -type f 2>/dev/null
-# <--- workaround
+# private fixes --->
+echo "=== MZO: apply private fix for https://github.com/abakan/ablog/issues/94"
+patch --verbose -d .venv/local/lib/python2.7/site-packages/ablog < patches/tomorrow.diff
+# <--- private fixes
 
 ablog build
 

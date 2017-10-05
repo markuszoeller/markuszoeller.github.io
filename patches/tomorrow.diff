@@ -1,0 +1,10 @@
+--- blog.py	2017-10-05 20:19:08.405927051 +0200
++++ blog.py.new	2017-10-05 20:10:42.842425856 +0200
+@@ -87,6 +87,7 @@
+ 
+ 
+ TOMORROW = datetime.today() + dtmod.timedelta(1)
++TOMORROW = TOMORROW.replace(hour=0, minute=0, second=0, microsecond=0)
+ FUTURE = datetime(9999, 12, 31)
+ 
+ 
