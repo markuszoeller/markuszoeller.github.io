@@ -94,7 +94,7 @@ different areas in the company. Marketing, developers, the compliance and audit
 folks, and of course the operators. You're going to
 **recognize many of those characters and their behaviors in your own company**.
 
-Why is this useful for you, you ask? The authors **wave in little learning
+Why is this useful for you, you ask? The authors **weave in little learning
 lessons** into the story, each time the protagonist and his team fail and
 recover. And the team faces obstacles over and over again. A short,
 non-exhaustive summary might be:
