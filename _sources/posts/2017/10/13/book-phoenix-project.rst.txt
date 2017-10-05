@@ -1,7 +1,7 @@
 
 .. post:: 13 Oct, 2017
    :category: books
-   :title: Book Review: The Phoenix Project
+   :title: Recommendation: The Phoenix Project
 
 
 .. spelling::
