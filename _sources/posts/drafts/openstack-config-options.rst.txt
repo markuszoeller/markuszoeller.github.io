@@ -9,7 +9,7 @@
 OpenStack Configuration: A Technical View
 =========================================
 
-.. todo:: how does openstack configure it's projects. ``oslo.config`` et al
+.. todo:: how does openstack configure it's projects. ``oslo.config`` 
 
 .. contents::
     :local:

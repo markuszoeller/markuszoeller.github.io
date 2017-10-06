@@ -5,6 +5,11 @@
    :title: HAProxy
 
 
+.. spelling::
+   loadbalancer
+   keepalive
+
+
 =======
 HAProxy
 =======

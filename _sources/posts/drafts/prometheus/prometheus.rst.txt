@@ -119,7 +119,7 @@ TL;DR
 
 .. todo:: short conclusion here
 
-vagrant + ansible in multinode in U1604
+vagrant + ansible in multi node in U1604
 
 Use Case
 ========

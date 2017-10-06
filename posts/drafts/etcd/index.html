@@ -42,7 +42,7 @@
   <link rel="alternate" type="application/atom+xml"  href="../../../posts/atom.xml" title="Markus's Brain Swap Space">
   
   
-  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="_static/http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
   
   <style type="text/css">
     ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
@@ -116,11 +116,7 @@
             
             
             
-              <li class="hidden-sm">
-<div id="sourcelink">
-  <a href="../../../_sources/posts/drafts/etcd.rst.txt"
-     rel="nofollow">Source</a>
-</div></li>
+              <li class="hidden-sm"></li>
             
           </ul>
 
@@ -219,7 +215,7 @@
 <li>3 VMs (set up with Vagrant and Ansible)</li>
 <li>clustered etcd on those VMs</li>
 <li>have a distributed python app which listens to etcd keys</li>
-<li>access apps with haproxy (on one node; HA of HAproxy comes later)</li>
+<li>access applications with haproxy (on one node; HA of HAProxy comes later)</li>
 <li>update key (feature toggle) with Ansible</li>
 <li>the app should watch for that change</li>
 <li>show changed behavior after the value change in etcd</li>

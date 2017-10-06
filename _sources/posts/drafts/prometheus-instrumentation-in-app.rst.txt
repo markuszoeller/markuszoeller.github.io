@@ -6,6 +6,10 @@
    :title: How to add Prometheus monitoring instrumentation to your application
 
 
+.. spelling::
+   async
+
+
 ====================================================================
 How to add Prometheus monitoring instrumentation to your application
 ====================================================================
@@ -18,7 +22,7 @@ https://prometheus.io/docs/instrumenting/clientlibs/
 * write a small app with multithreading / pools / stuff to monitor
 * add prometheus instrumentation to your app
 * monitor those instrumented app metrics
-* do weird stuff with the app's api to influence the metrics
+* do weird stuff with the app's API to influence the metrics
   * thread pool bug?
   * async job duration?
   * logged in users?

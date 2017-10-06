@@ -5,6 +5,10 @@
    :title: Cross Compilation
 
 
+.. spelling::
+   etcd
+
+
 =================
 Cross Compilation
 =================
@@ -14,9 +18,9 @@ Cross Compilation
 
 * https://www6.software.ibm.com/developerworks/education/l-cross/l-cross-ltr.pdf
 * create/download a cross-compiler
-* create a C programm and compile it for x86 and s390x (on x86)
+* create a C program and compile it for x86 and s390x (on x86)
 * (optional) compile it for s390x on s390x and do a binary compare?
-* (optional) combile etcd3 for s390x on x86
+* (optional) compile etcd3 for s390x on x86
 
 .. contents::
     :local:
