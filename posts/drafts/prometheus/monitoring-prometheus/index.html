@@ -5,14 +5,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Prometheus &#8212; Markus Zoeller Blog</title>
+    <title>Intro to monitoring with Prometheus &#8212; Markus Zoeller Blog</title>
     
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/sphinx_tabs/tabs.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/sphinx_tabs/semantic-ui-2.2.10/segment.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/sphinx_tabs/semantic-ui-2.2.10/menu.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/sphinx_tabs/semantic-ui-2.2.10/tab.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,8 +22,6 @@
       };
     </script>
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../../_static/sphinx_tabs/tabs.js"></script>
-    <script type="text/javascript" src="../../../../_static/sphinx_tabs/semantic-ui-2.2.10/tab.min.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
@@ -105,10 +99,11 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Prometheus</a><ul>
+<li><a class="reference internal" href="#">Intro to monitoring with Prometheus</a><ul>
+<li><a class="reference internal" href="#use-case">Use Case</a></li>
 <li><a class="reference internal" href="#brain-dump">Brain dump</a></li>
 <li><a class="reference internal" href="#tl-dr">TL;DR</a></li>
-<li><a class="reference internal" href="#use-case">Use Case</a></li>
+<li><a class="reference internal" href="#id1">Use Case</a></li>
 <li><a class="reference internal" href="#sub-title">sub-title</a></li>
 <li><a class="reference internal" href="#references">References</a></li>
 </ul>
@@ -148,10 +143,65 @@
 <p class="first admonition-title">Todo</p>
 <p class="last">date, tags and title</p>
 </div>
-<div class="section" id="prometheus">
-<h1>Prometheus<a class="headerlink" href="#prometheus" title="Permalink to this headline"> </a></h1>
+<div class="section" id="intro-to-monitoring-with-prometheus">
+<h1>Intro to monitoring with Prometheus<a class="headerlink" href="#intro-to-monitoring-with-prometheus" title="Permalink to this headline"> </a></h1>
+<p>One of the worst calls you can get as developer, is one from the user
+who complains that the service is slow or &#8211; even worse &#8211; doesn&#8217;t
+respond anymore. A user should <strong>never know before you</strong>, that your
+service doesn&#8217;t behave in its parameters anymore. One of the common
+causes for service degradation or interruption is still the failure
+or exhaustion of your basic infrastructure. This post gives you an
+intro how you can monitor your resources with <em>Prometheus</em>.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#use-case" id="id5">Use Case</a></li>
+<li><a class="reference internal" href="#brain-dump" id="id6">Brain dump</a></li>
+<li><a class="reference internal" href="#tl-dr" id="id7">TL;DR</a></li>
+<li><a class="reference internal" href="#id1" id="id8">Use Case</a></li>
+<li><a class="reference internal" href="#sub-title" id="id9">sub-title</a></li>
+<li><a class="reference internal" href="#references" id="id10">References</a></li>
+</ul>
+</div>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">date</p>
+</div>
+<table border="1" class="docutils" id="id4">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id4" title="Permalink to this table"> </a></caption>
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Date</th>
+<th class="head">Change description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>YYYY-MM-DD</td>
+<td>The first release</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="use-case">
+<h2><a class="toc-backref" href="#contents">Use Case</a><a class="headerlink" href="#use-case" title="Permalink to this headline"> </a></h2>
+<p>Monitoring is a way of collecting and storing data (so called <em>metrics</em>)
+so that you can extrapolate a trend out of the historic view, to give
+you insights if preemptive actions are necessary to keep your promised
+<em>Service Level Agreements</em> (SLAs).</p>
+<p>This post will focus on the monitoring aspect of the resources your
+service can consume. Specifically I&#8217;ll go into details of monitoring:</p>
+<ul class="simple">
+<li>CPU</li>
+<li>memory</li>
+<li>disk space</li>
+</ul>
+<p>For example, if you don&#8217;t use <em>logrotation</em>, it&#8217;s easy to consume all
+disk space and become unserviceable. A bug in the thread handling can
+also lead to block CPU. And a good old memory leak is never out of fashion.</p>
+</div>
 <div class="section" id="brain-dump">
-<h2>Brain dump<a class="headerlink" href="#brain-dump" title="Permalink to this headline"> </a></h2>
+<h2><a class="toc-backref" href="#contents">Brain dump</a><a class="headerlink" href="#brain-dump" title="Permalink to this headline"> </a></h2>
 <p>Save this file:</p>
 <div class="literal-block-wrapper container" id="vagrantfile">
 <div class="code-block-caption"><span class="caption-text">file: Vagrantfile <a class="reference download internal" href="../../../../_downloads/Vagrantfile" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#vagrantfile" title="Permalink to this code"> </a></div>
@@ -362,18 +412,6 @@
 Ansible examples in this blog, as this is my tool of choice for such
 tasks. The shell way looks smaller and easier at first, but the more
 nodes you have, the more Ansible comes in handy.</p>
-<div class="sphinx-tabs container">
-<div class="ui top attached tabular menu sphinx-menu container">
-<div class="active item sphinx-data-tab-0 container">
-<div class="container">
-The Ansible way</div>
-</div>
-<div class="item sphinx-data-tab-1 container">
-<div class="container">
-The shell way</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0 active container">
 <p>After this is done, we will use this hosts file for <em>Ansible</em>:</p>
 <div class="literal-block-wrapper container" id="hostsfile">
 <div class="code-block-caption"><span class="caption-text">file: hosts.ini <a class="reference download internal" href="../../../../_downloads/hosts.ini" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#hostsfile" title="Permalink to this code"> </a></div>
@@ -562,80 +600,37 @@ The shell way</div>
 in the Vagrantfile, but to have a more realistic scenario here,
 I separated these steps.</p>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-1 container">
-<div class="literal-block-wrapper container" id="prometheus-server">
-<div class="code-block-caption"><span class="caption-text">file: prometheus-server.sh <a class="reference download internal" href="../../../../_downloads/prometheus-server.sh" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#prometheus-server" title="Permalink to this code"> </a></div>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="hll"><span class="ch">#!/usr/bin/env bash</span>
-</span>
-<span class="nb">echo</span> <span class="s2">&quot;TODO&quot;</span>
-
-apt install -y prometheus
-</pre></div>
-</td></tr></table></div>
-</div>
-</div>
-</div>
 <p>Open the prometheus server UI at 192.168.100.10 (port?)</p>
+</div>
 <hr class="docutils" />
-<div class="admonition-todo admonition" id="index-1">
-<p class="first admonition-title">Todo</p>
-<p class="last">abstract</p>
-</div>
-<div class="admonition-todo admonition" id="index-2">
-<p class="first admonition-title">Todo</p>
-<p class="last">date</p>
-</div>
-<table border="1" class="docutils" id="id3">
-<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id3" title="Permalink to this table"> </a></caption>
-<colgroup>
-<col width="17%" />
-<col width="83%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Date</th>
-<th class="head">Change description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>YYYY-MM-DD</td>
-<td>The first release</td>
-</tr>
-</tbody>
-</table>
-</div>
 <div class="section" id="tl-dr">
-<h2>TL;DR<a class="headerlink" href="#tl-dr" title="Permalink to this headline"> </a></h2>
-<div class="admonition-todo admonition" id="index-3">
+<h2><a class="toc-backref" href="#contents">TL;DR</a><a class="headerlink" href="#tl-dr" title="Permalink to this headline"> </a></h2>
+<div class="admonition-todo admonition" id="index-2">
 <p class="first admonition-title">Todo</p>
 <p class="last">short conclusion here</p>
 </div>
 <p>vagrant + ansible in multi node in U1604</p>
 </div>
-<div class="section" id="use-case">
-<h2>Use Case<a class="headerlink" href="#use-case" title="Permalink to this headline"> </a></h2>
-<div class="admonition-todo admonition" id="index-4">
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#contents">Use Case</a><a class="headerlink" href="#id1" title="Permalink to this headline"> </a></h2>
+<div class="admonition-todo admonition" id="index-3">
 <p class="first admonition-title">Todo</p>
 <p class="last">describe the use case here</p>
 </div>
 </div>
 <div class="section" id="sub-title">
-<h2>sub-title<a class="headerlink" href="#sub-title" title="Permalink to this headline"> </a></h2>
-<div class="admonition-todo admonition" id="index-5">
+<h2><a class="toc-backref" href="#contents">sub-title</a><a class="headerlink" href="#sub-title" title="Permalink to this headline"> </a></h2>
+<div class="admonition-todo admonition" id="index-4">
 <p class="first admonition-title">Todo</p>
-<p class="last">explain more here and reference to it <a class="footnote-reference" href="#id2" id="id1">[1]</a></p>
+<p class="last">explain more here and reference to it <a class="footnote-reference" href="#id3" id="id2">[1]</a></p>
 </div>
 </div>
 <div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"> </a></h2>
-<table class="docutils footnote" frame="void" id="id2" rules="none">
+<h2><a class="toc-backref" href="#contents">References</a><a class="headerlink" href="#references" title="Permalink to this headline"> </a></h2>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>www.google.com</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>www.google.com</td></tr>
 </tbody>
 </table>
 </div>
