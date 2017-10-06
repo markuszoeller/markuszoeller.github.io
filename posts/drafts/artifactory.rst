@@ -6,6 +6,10 @@
    :title: Artifactory
 
 
+.. spelling::
+   Artifactory
+
+
 ===========
 Artifactory
 ===========

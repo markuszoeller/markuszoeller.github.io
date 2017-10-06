@@ -6,6 +6,11 @@
    :title: Taskflow
 
 
+.. spelling::
+   taskflow
+   Taskflow
+
+
 ========
 Taskflow
 ========

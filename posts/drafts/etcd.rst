@@ -6,6 +6,10 @@
    :title: etcd - a distributed key-value store
 
 
+.. spelling::
+   etcd
+   
+
 ====
 etcd
 ====
@@ -56,7 +60,7 @@ unsorted stuff
 * 3 VMs (set up with Vagrant and Ansible)
 * clustered etcd on those VMs
 * have a distributed python app which listens to etcd keys
-* access apps with haproxy (on one node; HA of HAproxy comes later)
+* access applications with haproxy (on one node; HA of HAProxy comes later)
 * update key (feature toggle) with Ansible
 * the app should watch for that change
 * show changed behavior after the value change in etcd

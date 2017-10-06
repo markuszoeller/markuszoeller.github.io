@@ -6,6 +6,11 @@
    :title: Use graphviz to generate images for Sphinx docs
 
 
+.. spelling::
+   graphviz
+
+
+
 ===============================================
 Use graphviz to generate images for Sphinx docs
 ===============================================

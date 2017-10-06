@@ -6,6 +6,10 @@
    :title: Container with systemd-nspawn
 
 
+.. spelling::
+   nspawn
+
+
 ==============
 systemd-nspawn
 ==============

@@ -1,5 +1,7 @@
 Ansible
 ansible
+haproxy
+HAProxy
 prometheus
 Prometheus
 Vagrantfile
@@ -29,4 +31,19 @@ datasource
 app
 systemd
 PoC
+Multithreading
+multithreading
+Jan
+Feb
+Mar
+Apr
+May
+Jun
+Jul
+Aug
+Sep
+Oct
+Nov
+Dec
+templated
 
