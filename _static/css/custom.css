@@ -22,14 +22,11 @@ a.headerlink:hover {
 
 
 /* Code =================================================================== */
-table.highlighttable tbody tr {
-    font-size: 1em;
-}
 table.highlighttable tbody tr .linenos .linenodiv pre {
-    font-size: 1em;
+    font-size: 0.75em;
 }
 table.highlighttable tbody tr .code .highlight pre {
-    font-size: 1em;
+    font-size: 0.75em;
 }
 td.code div.highlight {
     width: 100%;
