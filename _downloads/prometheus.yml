@@ -1,24 +1,28 @@
 # The full config is at:
 #   https://prometheus.io/docs/operating/configuration/
 
+global:
+  # How frequently to scrape targets by default.
+  scrape_interval: 15s
+
 scrape_configs:
 
   - job_name: 'monitoring'
-    static_configs:
+    target_groups:
       - targets: ['localhost:9100']
         labels:
           name: 'monitoring'
           type: infra-server
 
   - job_name: 'prometheus-client-1'
-    static_configs:
+    target_groups:
       - targets: ['prometheus-client-1:9100']
         labels:
           name: 'prometheus-client-1'
           type: app-server
 
   - job_name: 'prometheus-client-2'
-    static_configs:
+    target_groups:
       - targets: ['prometheus-client-2:9100']
         labels:
           name: 'prometheus-client-2'
