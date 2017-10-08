@@ -21,6 +21,26 @@ a.headerlink:hover {
 }
 
 
+/* Images ================================================================= */
+img {
+    /* Contrast white images on white background */
+    border: solid 1px #CCC;
+    /* Rounded corners (which need a little extra space) */
+    border-radius: 20px;
+    padding: 5px;
+    /* Shadow at the bottom and right (which shouldn't overlap text) */
+    box-shadow: 8px 8px 10px  #aaa;
+    -moz-box-shadow: 8px 8px 10px  #aaa;
+    -webkit-box-shadow: 8px 8px 10px  #aaa;
+    -o-box-shadow: 8px 8px 10px  #aaa;
+    margin-bottom: 8px;
+    /* Centering the image */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 /* Code =================================================================== */
 table.highlighttable tbody tr .linenos .linenodiv pre {
     font-size: 0.75em;
