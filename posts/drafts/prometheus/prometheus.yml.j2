@@ -1,37 +1,25 @@
 # The full config is at:
 #   https://prometheus.io/docs/operating/configuration/
 
-
-# A scrape configuration containing exactly one endpoint to scrape:
-# Here it's Prometheus itself.
 scrape_configs:
-
-
-# TODO: make this a template(?) add custom label and filter in grafana?
-# for hosts
-#   add job
-# end for hosts
 
   - job_name: 'monitoring'
     static_configs:
       - targets: ['localhost:9100']
         labels:
           name: 'monitoring'
+          type: infra-server
 
-  - job_name: 'nodepool'
+  - job_name: 'prometheus-client-1'
     static_configs:
-      - targets: ['nodepool:9100']
+      - targets: ['prometheus-client-1:9100']
         labels:
-          name: 'nodepool'
+          name: 'prometheus-client-1'
+          type: app-server
 
-  - job_name: 'jenkins'
+  - job_name: 'prometheus-client-2'
     static_configs:
-      - targets: ['jenkins:9100']
+      - targets: ['prometheus-client-2:9100']
         labels:
-          name: 'jenkins'
-
-  - job_name: 'zuul'
-    static_configs:
-      - targets: ['zuul:9100']
-        labels:
-          name: 'zuul'
+          name: 'prometheus-client-2'
+          type: app-server
