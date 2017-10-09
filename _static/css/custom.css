@@ -9,6 +9,14 @@ footer {
 }
 
 
+/* Post list ============================================================== */
+ul.postlist > li > p.first {
+    font-weight: bold;
+    margin-bottom: 0px;
+    margin-top: 5px;
+}
+
+
 /* Permalinks ============================================================= */
 a.headerlink:before{
     /* http://fontawesome.io/icon/link/ */
@@ -117,4 +125,3 @@ code.docutils.literal span.pre {
 .sphinx-tabs .sphinx-menu a.item {
     color: #3E4349 !important;
 }
-

@@ -153,19 +153,19 @@ or exhaustion of your basic infrastructure. This post gives you an
 intro how you can monitor your resources with <em>Prometheus</em>.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#use-case" id="id8">Use Case</a></li>
-<li><a class="reference internal" href="#setup-overview" id="id9">Setup Overview</a></li>
-<li><a class="reference internal" href="#brain-dump" id="id10">Brain dump</a></li>
-<li><a class="reference internal" href="#conclusion" id="id11">Conclusion</a></li>
-<li><a class="reference internal" href="#references" id="id12">References</a></li>
+<li><a class="reference internal" href="#use-case" id="id9">Use Case</a></li>
+<li><a class="reference internal" href="#setup-overview" id="id10">Setup Overview</a></li>
+<li><a class="reference internal" href="#brain-dump" id="id11">Brain dump</a></li>
+<li><a class="reference internal" href="#conclusion" id="id12">Conclusion</a></li>
+<li><a class="reference internal" href="#references" id="id13">References</a></li>
 </ul>
 </div>
 <div class="admonition-todo admonition" id="index-1">
 <p class="first admonition-title">Todo</p>
 <p class="last">date</p>
 </div>
-<table border="1" class="docutils" id="id7">
-<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id7" title="Permalink to this table"> </a></caption>
+<table border="1" class="docutils" id="id8">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id8" title="Permalink to this table"> </a></caption>
 <colgroup>
 <col width="17%" />
 <col width="83%" />
@@ -529,9 +529,18 @@ This is a good chance to show in another post, how we can create
 <em>Ansible Roles</em> to encapsulate the logic of getting the newest <em>Grafana</em>
 source code, building it, and deploying it. This also enables us to
 to make use of the much nicer API <a class="reference internal" href="#grafds" id="id6">[grafds]</a> and UI.</p>
+<p>Those node metrics aren&#8217;t the only metrics you can collect. There is a
+variety of different exporters <a class="reference internal" href="#promex" id="id7">[promex]</a> which help you to keep the overview.
+You can also instrument your own application to emit metrics. That&#8217;s something
+I will show in another post.</p>
 </div>
 <div class="section" id="references">
 <h2><a class="toc-backref" href="#contents">References</a><a class="headerlink" href="#references" title="Permalink to this headline"> </a></h2>
+<div class="admonition-todo admonition" id="index-4">
+<p class="first admonition-title">Todo</p>
+<p class="last">make numbers out of these references and order them accordingly
+when the post is finalized.</p>
+</div>
 <table class="docutils citation" frame="void" id="promstatic" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -568,11 +577,12 @@ to make use of the much nicer API <a class="reference internal" href="#grafds" i
 <tr><td class="label"><a class="fn-backref" href="#id5">[grafdrop]</a></td><td><a class="reference external" href="https://answers.launchpad.net/ubuntu/+source/grafana/+question/658771">https://answers.launchpad.net/ubuntu/+source/grafana/+question/658771</a></td></tr>
 </tbody>
 </table>
-<div class="admonition-todo admonition" id="index-4">
-<p class="first admonition-title">Todo</p>
-<p class="last">make numbers out of these references and order them accordingly
-when the post is finalized.</p>
-</div>
+<table class="docutils citation" frame="void" id="promex" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[promex]</a></td><td><a class="reference external" href="https://prometheus.io/docs/instrumenting/exporters/">https://prometheus.io/docs/instrumenting/exporters/</a></td></tr>
+</tbody>
+</table>
 </div>
 </div>
 
