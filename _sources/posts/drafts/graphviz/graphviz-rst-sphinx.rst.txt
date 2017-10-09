@@ -16,7 +16,11 @@ Use graphviz to generate images for Sphinx docs
 ===============================================
 
 
+brain dump
+==========
 
+Maybe use this graph to show the significance:
+https://docs.openstack.org/nova/latest/reference/vm-states.html
 
 
 
