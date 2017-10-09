@@ -194,9 +194,20 @@ This is a good chance to show in another post, how we can create
 source code, building it, and deploying it. This also enables us to
 to make use of the much nicer API [grafds]_ and UI.
 
+Those node metrics aren't the only metrics you can collect. There is a
+variety of different exporters [promex]_ which help you to keep the overview.
+You can also instrument your own application to emit metrics. That's something
+I will show in another post.
+
 
 References
 ==========
+
+
+.. todo:: 
+   make numbers out of these references and order them accordingly
+   when the post is finalized.
+
 
 .. [promstatic] https://github.com/prometheus/prometheus/issues/1706
 
@@ -210,5 +221,4 @@ References
 
 .. [grafdrop] https://answers.launchpad.net/ubuntu/+source/grafana/+question/658771
 
-.. todo:: make numbers out of these references and order them accordingly
-   when the post is finalized.
+.. [promex] https://prometheus.io/docs/instrumenting/exporters/
