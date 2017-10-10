@@ -30,7 +30,8 @@ a.headerlink:hover {
 
 
 /* Images ================================================================= */
-img {
+/* NOTE: only my own images (not linkedin) should be this fancy */
+img.image-reference {
     /* Contrast white images on white background */
     border: solid 1px #CCC;
     /* Rounded corners (which need a little extra space) */
