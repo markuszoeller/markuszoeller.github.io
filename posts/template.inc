@@ -5,6 +5,8 @@
    :tags: template
    :title: title
 
+.. spelling::
+   foo
 
 =====
 Title
