@@ -3,20 +3,21 @@
 
 .. post::
    :tags: monitoring
-   :title: Intro to monitoring with Prometheus
+   :title: Monitoring with Prometheus
 
 
-===================================
-Intro to monitoring with Prometheus
-===================================
+==========================
+Monitoring with Prometheus
+==========================
 
 One of the worst calls you can get as developer, is one from the user
 who complains that the service is slow or -- even worse -- doesn't
 respond anymore. A user should **never know before you**, that your
 service doesn't behave in its parameters anymore. One of the common
 causes for service degradation or interruption is still the failure
-or exhaustion of your basic infrastructure. This post gives you an
-intro how you can monitor your resources with *Prometheus*.
+or exhaustion of your basic infrastructure resources. This post gives you an
+intro how you can monitor your basic resources with *Prometheus*. It shows
+the setup with *Ansible* and the data visualization with *Grafana*.
 
 
 .. contents::
