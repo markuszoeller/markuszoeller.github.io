@@ -5,15 +5,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Intro to monitoring with Prometheus &#8212; Markus Zoeller Blog</title>
+    <title>Monitoring with Prometheus &#8212; Markus Zoeller Blog</title>
     
-    <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/custom.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../../../',
+        URL_ROOT:    '../../../../../',
         VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '',
@@ -21,17 +21,17 @@
         SOURCELINK_SUFFIX: '.txt'
       };
     </script>
-    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
-    <link rel="author" title="About these documents" href="../../../../about/" />
-    <link rel="index" title="Index" href="../../../../genindex/" />
-    <link rel="search" title="Search" href="../../../../search/" />
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="../../../../../about/" />
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" />
   
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -39,7 +39,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   
-  <link rel="alternate" type="application/atom+xml"  href="../../../../posts/atom.xml" title="Markus's Brain Swap Space">
+  <link rel="alternate" type="application/atom+xml"  href="../../../../../posts/atom.xml" title="Markus's Brain Swap Space">
   
   
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -65,7 +65,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../../../../">
+        <a class="navbar-brand" href="../../../../../">
           MZIO</a>
         <span class="navbar-text navbar-version pull-left"><b></b></span>
       </div>
@@ -73,10 +73,10 @@
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
-                <li><a href="../../../../about/">About</a></li>
-                <li><a href="../../../category/">Categories</a></li>
-                <li><a href="../../../tag/">Tags</a></li>
-                <li><a href="../../../archive/">Archives</a></li>
+                <li><a href="../../../../../about/">About</a></li>
+                <li><a href="../../../../category/">Categories</a></li>
+                <li><a href="../../../../tag/">Tags</a></li>
+                <li><a href="../../../../archive/">Archives</a></li>
             
             
               <li class="dropdown globaltoc-container">
@@ -84,7 +84,7 @@
      id="dLabelGlobalToc"
      data-toggle="dropdown"
      data-target="#"
-     href="../../../../">Site <b class="caret"></b></a>
+     href="../../../../../">Site <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"></ul>
@@ -99,7 +99,7 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Intro to monitoring with Prometheus</a><ul>
+<li><a class="reference internal" href="#">Monitoring with Prometheus</a><ul>
 <li><a class="reference internal" href="#use-case">Use Case</a></li>
 <li><a class="reference internal" href="#setup-overview">Setup Overview</a></li>
 <li><a class="reference internal" href="#brain-dump">Brain dump</a></li>
@@ -122,7 +122,7 @@
 
           
             
-<form class="navbar-form navbar-right" action="../../../../search/" method="get">
+<form class="navbar-form navbar-right" action="../../../../../search/" method="get">
  <div class="form-group">
   <input type="text" name="q" class="form-control" placeholder="Search" />
  </div>
@@ -142,15 +142,16 @@
 <p class="first admonition-title">Todo</p>
 <p class="last">date, tags and title</p>
 </div>
-<div class="section" id="intro-to-monitoring-with-prometheus">
-<h1>Intro to monitoring with Prometheus<a class="headerlink" href="#intro-to-monitoring-with-prometheus" title="Permalink to this headline"> </a></h1>
+<div class="section" id="monitoring-with-prometheus">
+<h1>Monitoring with Prometheus<a class="headerlink" href="#monitoring-with-prometheus" title="Permalink to this headline"> </a></h1>
 <p>One of the worst calls you can get as developer, is one from the user
 who complains that the service is slow or &#8211; even worse &#8211; doesn&#8217;t
 respond anymore. A user should <strong>never know before you</strong>, that your
 service doesn&#8217;t behave in its parameters anymore. One of the common
 causes for service degradation or interruption is still the failure
-or exhaustion of your basic infrastructure. This post gives you an
-intro how you can monitor your resources with <em>Prometheus</em>.</p>
+or exhaustion of your basic infrastructure resources. This post gives you an
+intro how you can monitor your basic resources with <em>Prometheus</em>. It shows
+the setup with <em>Ansible</em> and the data visualization with <em>Grafana</em>.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#use-case" id="id9">Use Case</a></li>
@@ -176,7 +177,7 @@ intro how you can monitor your resources with <em>Prometheus</em>.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>YYYY-MM-DD</td>
+<tr class="row-even"><td>2017-10-27</td>
 <td>The first release</td>
 </tr>
 </tbody>
@@ -196,11 +197,15 @@ service can consume. Specifically I&#8217;ll go into details of monitoring:</p>
 </ul>
 <p>For example, if you don&#8217;t use <em>logrotation</em>, it&#8217;s easy to consume all
 disk space and become unserviceable. A bug in the thread handling can
-also lead to block CPU. And a good old memory leak is never out of fashion.</p>
+also slow down your CPUs. And a good old memory leak is never out of fashion.</p>
+<p>I cannot stress enough that having historic data is very valuable. A singel
+point in time observation is not enough. The show case here will use a specific
+setup, which is explained below.</p>
 </div>
 <div class="section" id="setup-overview">
 <h2><a class="toc-backref" href="#contents">Setup Overview</a><a class="headerlink" href="#setup-overview" title="Permalink to this headline"> </a></h2>
 <p>Our end result will look like this:</p>
+<a class="reference external image-reference" href="/_images/topology.svg"><img alt="The topology of our demo setup." src="../../../../../_images/topology.svg" /></a>
 <div class="admonition-todo admonition" id="index-2">
 <p class="first admonition-title">Todo</p>
 <p class="last">picture</p>
@@ -216,7 +221,7 @@ also lead to block CPU. And a good old memory leak is never out of fashion.</p>
 <h2><a class="toc-backref" href="#contents">Brain dump</a><a class="headerlink" href="#brain-dump" title="Permalink to this headline"> </a></h2>
 <p>Save this file:</p>
 <div class="literal-block-wrapper container" id="vagrantfile">
-<div class="code-block-caption"><span class="caption-text">file: Vagrantfile <a class="reference download internal" href="../../../../_downloads/Vagrantfile" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#vagrantfile" title="Permalink to this code"> </a></div>
+<div class="code-block-caption"><span class="caption-text">file: Vagrantfile <a class="reference download internal" href="../../../../../_downloads/Vagrantfile" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#vagrantfile" title="Permalink to this code"> </a></div>
 <div class="highlight-ruby"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -342,7 +347,7 @@ also lead to block CPU. And a good old memory leak is never out of fashion.</p>
 <p>Do a <code class="docutils literal"><span class="pre">vagrant</span> <span class="pre">up</span></code>.</p>
 <p>This is how we configure the prometheus server:</p>
 <div class="literal-block-wrapper container" id="prometheus-config">
-<div class="code-block-caption"><span class="caption-text">file: prometheus.yml <a class="reference download internal" href="../../../../_downloads/prometheus.yml" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#prometheus-config" title="Permalink to this code"> </a></div>
+<div class="code-block-caption"><span class="caption-text">file: prometheus.yml <a class="reference download internal" href="../../../../../_downloads/prometheus.yml" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#prometheus-config" title="Permalink to this code"> </a></div>
 <div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -414,7 +419,7 @@ tasks. Doing such things with the shell looks smaller and easier at first,
 but the more nodes you have, the more <em>Ansible</em> comes in handy.</p>
 <p>After this is done, we will use this hosts file for <em>Ansible</em>:</p>
 <div class="literal-block-wrapper container" id="hostsfile">
-<div class="code-block-caption"><span class="caption-text">file: hosts.ini <a class="reference download internal" href="../../../../_downloads/hosts.ini" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#hostsfile" title="Permalink to this code"> </a></div>
+<div class="code-block-caption"><span class="caption-text">file: hosts.ini <a class="reference download internal" href="../../../../../_downloads/hosts.ini" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#hostsfile" title="Permalink to this code"> </a></div>
 <div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -436,7 +441,7 @@ but the more nodes you have, the more <em>Ansible</em> comes in handy.</p>
 </div>
 <p>It&#8217;s this <em>Ansible</em> playbook:</p>
 <div class="literal-block-wrapper container" id="playbook">
-<div class="code-block-caption"><span class="caption-text">file: playbook.yml <a class="reference download internal" href="../../../../_downloads/playbook.yml" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#playbook" title="Permalink to this code"> </a></div>
+<div class="code-block-caption"><span class="caption-text">file: playbook.yml <a class="reference download internal" href="../../../../../_downloads/playbook.yml" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#playbook" title="Permalink to this code"> </a></div>
 <div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -494,7 +499,7 @@ I separated these steps.</p>
 open the prometheus server UI at <a class="reference external" href="http://192.168.100.10:9090/status">http://192.168.100.10:9090/status</a> .
 You should see that all the expected targets are listend and in state <code class="docutils literal"><span class="pre">UP</span></code>
 like in this image:</p>
-<a class="reference external image-reference" href="/_images/prometheus-targets-status.png"><img alt="Prometheus status page with the expected outcome." src="../../../../_images/prometheus-targets-status.png" /></a>
+<a class="reference external image-reference" href="/_images/prometheus-targets-status.png"><img alt="Prometheus status page with the expected outcome." src="../../../../../_images/prometheus-targets-status.png" /></a>
 <div class="admonition-todo admonition" id="index-3">
 <p class="first admonition-title">Todo</p>
 <p class="last">double-check the naming of the servers here, I might have renamed
@@ -509,7 +514,7 @@ you can query the available disk space from the nodes by using
 <li><code class="docutils literal"><span class="pre">node_filesystem_free</span></code>: This is the metric you&#8217;re interested in</li>
 <li><code class="docutils literal"><span class="pre">{mountpoint='/'}</span></code>: This is a constraint you can specify</li>
 </ul>
-<a class="reference external image-reference" href="/_images/prometheus-graph.png"><img alt="Prometheus graph page with a query for free disk space" src="../../../../_images/prometheus-graph.png" /></a>
+<a class="reference external image-reference" href="/_images/prometheus-graph.png"><img alt="Prometheus graph page with a query for free disk space" src="../../../../../_images/prometheus-graph.png" /></a>
 <p>You&#8217;ll notice very quickly that this gets ugly. For example, the metric
 is in bytes, and you cannot transform it to a human readable unit. Let&#8217;s
 use <em>Grafana</em> to visualize that in a sensible way.</p>
