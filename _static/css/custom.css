@@ -36,7 +36,7 @@ a.image-reference img {
     border: solid 1px #CCC;
     /* Rounded corners (which need a little extra space) */
     border-radius: 20px;
-    padding: 5px;
+    padding: 20px;
     /* Shadow at the bottom and right (which shouldn't overlap text) */
     box-shadow: 8px 8px 10px  #aaa;
     -moz-box-shadow: 8px 8px 10px  #aaa;
