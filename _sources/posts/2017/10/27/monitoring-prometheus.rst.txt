@@ -11,6 +11,8 @@
 .. |ans| replace:: *Ansible*
 .. |prom| replace:: *Prometheus*
 .. |graf| replace:: *Grafana*
+.. |vagr| replace:: *Vagrant*
+.. |vb| replace:: *VirtualBox*
 
 
 ==========================
@@ -71,19 +73,69 @@ Setup Overview
 
 Our end result will look like this:
 
+.. todo::
+   rename the servers and all code to "monitoring" and "app-server-N".
+   Don't forget to redo the screenshots with the correct names.
+
 .. image:: topology.svg
    :alt: The topology of our demo setup.
    :target: /_images/topology.svg
 
+We will have 3 servers:
+  * one monitoring server
+  * two application server
 
-.. todo:: picture
+The application server will have small applications which consume different
+types of resources. This will demonstrate the influence on the collected
+metrics, which are stored on the monitoring server within |prom|. The
+code we use to do that is below:
 
-* 3 nodes
-  * 1 = monitoring server
-  * 2 = application server
+**Consume CPU**
 
-* application server will each have a mini app
+.. literalinclude:: eat_cpu.py
+   :caption: file: eat_cpu.py :download:`(download) <eat_cpu.py>`
+   :name: eat_cpu
+   :language: python
+   :linenos:
 
+**Consume Memory**
+
+.. literalinclude:: eat_memory.py
+   :caption: file: eat_memory.py :download:`(download) <eat_memory.py>`
+   :name: eat_memory
+   :language: python
+   :linenos:
+
+**Consume Disk Space**
+
+.. literalinclude:: eat_disk.py
+   :caption: file: eat_disk.py :download:`(download) <eat_disk.py>`
+   :name: eat_disk
+   :language: python
+   :linenos:
+
+We will deploy those demo applications to the application servers
+and trigger them after the monitoring is establish. More on that later.
+
+Server Provisioning
+===================
+
+To create the servers described before, I'll utilize |vagr| with |vb| as
+hypervisor. I use the term *provisioning* in the sense of creating the
+servers and configuring the basic infra support functions (which includes
+the monitoring). The configuration is done with |ans|. There are multiple
+files included in this operation, they get explained piece by piece below.
+The short version of the actions you have to trigger is:
+
+.. code-block:: bash
+   :caption: All you need to do in your console
+   :linenos:
+
+   $ vagrant up                                    # create the server
+   $ ansible-playbook -i hosts.ini playbook.yml    # install monitoring
+   $ firefox http://192.168.100.10:3000/           # or any other browser
+
+But more on that later, when the necessary parts are explained.
 
 Brain dump
 ==========

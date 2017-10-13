@@ -102,6 +102,7 @@
 <li><a class="reference internal" href="#">Monitoring with Prometheus</a><ul>
 <li><a class="reference internal" href="#use-case">Use Case</a></li>
 <li><a class="reference internal" href="#setup-overview">Setup Overview</a></li>
+<li><a class="reference internal" href="#server-provisioning">Server Provisioning</a></li>
 <li><a class="reference internal" href="#brain-dump">Brain dump</a></li>
 <li><a class="reference internal" href="#conclusion">Conclusion</a></li>
 <li><a class="reference internal" href="#references">References</a></li>
@@ -154,11 +155,12 @@ intro how you can monitor your basic resources with <em>Prometheus</em>. It show
 the setup with <em>Ansible</em> and the data visualization with <em>Grafana</em>.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#use-case" id="id9">Use Case</a></li>
-<li><a class="reference internal" href="#setup-overview" id="id10">Setup Overview</a></li>
-<li><a class="reference internal" href="#brain-dump" id="id11">Brain dump</a></li>
-<li><a class="reference internal" href="#conclusion" id="id12">Conclusion</a></li>
-<li><a class="reference internal" href="#references" id="id13">References</a></li>
+<li><a class="reference internal" href="#use-case" id="id10">Use Case</a></li>
+<li><a class="reference internal" href="#setup-overview" id="id11">Setup Overview</a></li>
+<li><a class="reference internal" href="#server-provisioning" id="id12">Server Provisioning</a></li>
+<li><a class="reference internal" href="#brain-dump" id="id13">Brain dump</a></li>
+<li><a class="reference internal" href="#conclusion" id="id14">Conclusion</a></li>
+<li><a class="reference internal" href="#references" id="id15">References</a></li>
 </ul>
 </div>
 <div class="admonition-todo admonition" id="index-1">
@@ -205,17 +207,141 @@ setup, which is explained below.</p>
 <div class="section" id="setup-overview">
 <h2><a class="toc-backref" href="#contents">Setup Overview</a><a class="headerlink" href="#setup-overview" title="Permalink to this headline"> </a></h2>
 <p>Our end result will look like this:</p>
-<a class="reference external image-reference" href="/_images/topology.svg"><img alt="The topology of our demo setup." src="../../../../../_images/topology.svg" /></a>
 <div class="admonition-todo admonition" id="index-2">
 <p class="first admonition-title">Todo</p>
-<p class="last">picture</p>
+<p class="last">rename the servers and all code to &#8220;monitoring&#8221; and &#8220;app-server-N&#8221;.
+Don&#8217;t forget to redo the screenshots with the correct names.</p>
 </div>
-<ul class="simple">
-<li>3 nodes
-* 1 = monitoring server
-* 2 = application server</li>
-<li>application server will each have a mini app</li>
+<a class="reference external image-reference" href="/_images/topology.svg"><img alt="The topology of our demo setup." src="../../../../../_images/topology.svg" /></a>
+<dl class="docutils">
+<dt>We will have 3 servers:</dt>
+<dd><ul class="first last simple">
+<li>one monitoring server</li>
+<li>two application server</li>
 </ul>
+</dd>
+</dl>
+<p>The application server will have small applications which consume different
+types of resources. This will demonstrate the influence on the collected
+metrics, which are stored on the monitoring server within <em>Prometheus</em>. The
+code we use to do that is below:</p>
+<p><strong>Consume CPU</strong></p>
+<div class="literal-block-wrapper container" id="eat-cpu">
+<div class="code-block-caption"><span class="caption-text">file: eat_cpu.py <a class="reference download internal" href="../../../../../_downloads/eat_cpu.py" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#eat-cpu" title="Permalink to this code"> </a></div>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+
+<span class="c1"># based on https://technobeans.com/2012/04/16/5-ways-of-fibonacci-in-python/</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">fibonacci</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p><strong>Consume Memory</strong></p>
+<div class="literal-block-wrapper container" id="eat-memory">
+<div class="code-block-caption"><span class="caption-text">file: eat_memory.py <a class="reference download internal" href="../../../../../_downloads/eat_memory.py" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#eat-memory" title="Permalink to this code"> </a></div>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+
+<span class="c1"># based on https://stackoverflow.com/questions/6317818/how-to-eat-memory-using-python</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">blanks</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">blanks</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">50</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">MemoryError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;We&#39;re going out of memory.&quot;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p><strong>Consume Disk Space</strong></p>
+<div class="literal-block-wrapper container" id="eat-disk">
+<div class="code-block-caption"><span class="caption-text">file: eat_disk.py <a class="reference download internal" href="../../../../../_downloads/eat_disk.py" download=""><code class="xref download docutils literal"><span class="pre">(download)</span></code></a></span><a class="headerlink" href="#eat-disk" title="Permalink to this code"> </a></div>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;dd if=/dev/zero of=big-file-</span><span class="si">%s</span><span class="s2"> count=1024 bs=1048576&quot;</span> <span class="o">%</span> <span class="n">i</span>
+    <span class="n">call</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># https://stackoverflow.com/questions/8816059/create-file-of-particular-size-in-python</span>
+<span class="c1"># creates files of 1GB size but `df -h` doesn&#39;t recognize that (not sure why).</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>We will deploy those demo applications to the application servers
+and trigger them after the monitoring is establish. More on that later.</p>
+</div>
+<div class="section" id="server-provisioning">
+<h2><a class="toc-backref" href="#contents">Server Provisioning</a><a class="headerlink" href="#server-provisioning" title="Permalink to this headline"> </a></h2>
+<p>To create the servers described before, I&#8217;ll utilize <em>Vagrant</em> with <em>VirtualBox</em> as
+hypervisor. I use the term <em>provisioning</em> in the sense of creating the
+servers and configuring the basic infra support functions (which includes
+the monitoring). The configuration is done with <em>Ansible</em>. There are multiple
+files included in this operation, they get explained piece by piece below.
+The short version of the actions you have to trigger is:</p>
+<div class="literal-block-wrapper container" id="id9">
+<div class="code-block-caption"><span class="caption-text">All you need to do in your console</span><a class="headerlink" href="#id9" title="Permalink to this code"> </a></div>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ vagrant up                                    <span class="c1"># create the server</span>
+$ ansible-playbook -i hosts.ini playbook.yml    <span class="c1"># install monitoring</span>
+$ firefox http://192.168.100.10:3000/           <span class="c1"># or any other browser</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>But more on that later, when the necessary parts are explained.</p>
 </div>
 <div class="section" id="brain-dump">
 <h2><a class="toc-backref" href="#contents">Brain dump</a><a class="headerlink" href="#brain-dump" title="Permalink to this headline"> </a></h2>
