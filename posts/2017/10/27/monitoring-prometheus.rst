@@ -6,6 +6,13 @@
    :title: Monitoring with Prometheus
 
 
+.. specific terms I use quite often
+
+.. |ans| replace:: *Ansible*
+.. |prom| replace:: *Prometheus*
+.. |graf| replace:: *Grafana*
+
+
 ==========================
 Monitoring with Prometheus
 ==========================
@@ -16,8 +23,8 @@ respond anymore. A user should **never know before you**, that your
 service doesn't behave in its parameters anymore. One of the common
 causes for service degradation or interruption is still the failure
 or exhaustion of your basic infrastructure resources. This post gives you an
-intro how you can monitor your basic resources with *Prometheus*. It shows
-the setup with *Ansible* and the data visualization with *Grafana*.
+intro how you can monitor your basic resources with |prom|. It shows
+the setup with |ans| and the data visualization with |graf|.
 
 
 .. contents::
@@ -32,7 +39,7 @@ the setup with *Ansible* and the data visualization with *Grafana*.
 
    * - Date
      - Change description
-   * - YYYY-MM-DD
+   * - 2017-10-27
      - The first release
 
 Use Case
@@ -52,13 +59,22 @@ service can consume. Specifically I'll go into details of monitoring:
 
 For example, if you don't use *logrotation*, it's easy to consume all
 disk space and become unserviceable. A bug in the thread handling can
-also lead to block CPU. And a good old memory leak is never out of fashion.
+also slow down your CPUs. And a good old memory leak is never out of fashion.
+
+I cannot stress enough that having historic data is very valuable. A singel
+point in time observation is not enough. The show case here will use a specific
+setup, which is explained below.
 
 
 Setup Overview
 ==============
 
 Our end result will look like this:
+
+.. image:: topology.svg
+   :alt: The topology of our demo setup.
+   :target: /_images/topology.svg
+
 
 .. todo:: picture
 
