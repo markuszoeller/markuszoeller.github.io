@@ -36,7 +36,7 @@
 
 
 # ===========================================================================
-# Do prometheus client specific setup on all hosts
+# Do setup on all hosts we want to monitor
 # ===========================================================================
 - hosts: all  # we want the metrics of the server too
   become: true
@@ -60,9 +60,9 @@
 
 
 # ===========================================================================
-# Do prometheus server specific setup only on the prometheus server
+# Do prometheus server specific setup only on the monitoring server
 # ===========================================================================
-- hosts: prometheus-server
+- hosts: monitoring
   become: true
 
 
@@ -163,3 +163,21 @@
         name: grafana
         state: restarted
       listen: event_restart_grafana
+
+
+# ===========================================================================
+# Push the "applications" to the application servers
+# ===========================================================================
+- hosts: application-servers
+  become: true
+  gather_facts: false
+
+  tasks:
+     - name: "Copy the applications to the servers."
+       copy:
+         src: "{{ item }}"
+         dest: "/root/{{ item }}"
+       with_items:
+         - eat_cpu.py
+         - eat_disk.py
+         - eat_memory.py
