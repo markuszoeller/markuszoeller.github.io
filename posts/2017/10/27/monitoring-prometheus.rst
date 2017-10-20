@@ -230,7 +230,7 @@ At http://192.168.100.10:9090/graph you can start using the Prometheus
 query language [promq]_ to create graphs based on the metrics the
 Prometheus server scrapes from the targets in an interval. For example,
 you can query the available disk space from the nodes by using
-``node_filesystem_free{mountpoint='/'}``:
+``node_filesystem_free{mountpoint='/', name!=''}``:
 
 * ``node_filesystem_free``: This is the metric you're interested in
 * ``{mountpoint='/'}``: This is a constraint you can specify
@@ -238,6 +238,11 @@ you can query the available disk space from the nodes by using
 .. image:: prometheus-graph.png
    :target: /_images/prometheus-graph.png
    :alt: Prometheus graph page with a query for free disk space
+
+.. note:: The (old) version of *Prometheus* I used here adds itself
+   automatically (not sure if this is a bug or a feature) additionally
+   to the setting I did (with labels), so I ignore that entry with
+   another constraint ``name!=''`` like you see in the image.
 
 You'll notice very quickly that this gets ugly. For example, the metric
 is in bytes, and you cannot transform it to a human readable unit. Let's
@@ -247,6 +252,40 @@ The Ansible playbook also installed and configured the Grafana service,
 which is accessible at http://192.168.100.10:3000/ .
 
 Sign in as username ``admin`` and password ``admin``.
+
+.. image:: grafana-dashboard.png
+   :target: /_images/grafana-dashboard.png
+   :alt: Grafana dashboard visualizing Prometheus Node Exporter metrics
+
+
+Fire up one of the applications to consume some resources:
+
+.. code-block:: bash
+   :linenos:
+
+   [markus@home] $ vagrant ssh app-server-1
+   Welcome to Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-62-generic x86_64)
+
+    * Documentation:  https://help.ubuntu.com
+    * Management:     https://landscape.canonical.com
+    * Support:        https://ubuntu.com/advantage
+   Last login: Fri Oct 20 17:51:44 2017 from 192.168.100.1
+   vagrant@app-server-1:~$ sudo su -
+   root@app-server-1:~#
+   root@app-server-1:~#
+   root@app-server-1:~# python eat_cpu.py &
+   [1] 2392
+   root@app-server-1:~# kill -9 2392  # if you're impatient :)
+
+
+You'll see the impact immediately in your dashboard.
+
+.. image:: grafana-cpu-consumption.png
+   :target: /_images/grafana-cpu-consumption.png
+   :alt: Grafana displays the CPU consumption
+
+
+
 
 
 Conclusion

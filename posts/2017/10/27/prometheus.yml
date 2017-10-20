@@ -12,18 +12,18 @@ scrape_configs:
       - targets: ['localhost:9100']
         labels:
           name: 'monitoring'
-          type: infra-server
+          owner: 'mzio'
 
-  - job_name: 'prometheus-client-1'
+  - job_name: 'app-server-1'
     target_groups:
-      - targets: ['prometheus-client-1:9100']
+      - targets: ['app-server-1:9100']
         labels:
-          name: 'prometheus-client-1'
-          type: app-server
+          name: 'app-server-1'
+          arch: 'x86'
 
-  - job_name: 'prometheus-client-2'
+  - job_name: 'app-server-2'
     target_groups:
-      - targets: ['prometheus-client-2:9100']
+      - targets: ['app-server-2:9100']
         labels:
-          name: 'prometheus-client-2'
-          type: app-server
+          name: 'app-server-2'
+          arch: 'x86'
