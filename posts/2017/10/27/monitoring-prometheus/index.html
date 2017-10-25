@@ -162,25 +162,25 @@ a playground you can easily recreate when things go wrong, thanks to
 example, the post is really long.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#tl-dr" id="id12">TL;DR</a></li>
-<li><a class="reference internal" href="#use-case" id="id13">Use Case</a></li>
-<li><a class="reference internal" href="#setup-overview" id="id14">Setup Overview</a></li>
-<li><a class="reference internal" href="#server-provisioning" id="id15">Server Provisioning</a><ul>
-<li><a class="reference internal" href="#vagrant" id="id16">Vagrant</a></li>
-<li><a class="reference internal" href="#ansible-hosts" id="id17">Ansible hosts</a></li>
-<li><a class="reference internal" href="#ansible-playbook" id="id18">Ansible playbook</a></li>
-<li><a class="reference internal" href="#prometheus" id="id19">Prometheus</a></li>
-<li><a class="reference internal" href="#grafana" id="id20">Grafana</a></li>
+<li><a class="reference internal" href="#tl-dr" id="id13">TL;DR</a></li>
+<li><a class="reference internal" href="#use-case" id="id14">Use Case</a></li>
+<li><a class="reference internal" href="#setup-overview" id="id15">Setup Overview</a></li>
+<li><a class="reference internal" href="#server-provisioning" id="id16">Server Provisioning</a><ul>
+<li><a class="reference internal" href="#vagrant" id="id17">Vagrant</a></li>
+<li><a class="reference internal" href="#ansible-hosts" id="id18">Ansible hosts</a></li>
+<li><a class="reference internal" href="#ansible-playbook" id="id19">Ansible playbook</a></li>
+<li><a class="reference internal" href="#prometheus" id="id20">Prometheus</a></li>
+<li><a class="reference internal" href="#grafana" id="id21">Grafana</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#monitor-the-metrics" id="id21">Monitor the metrics</a></li>
-<li><a class="reference internal" href="#conclusion" id="id22">Conclusion</a></li>
-<li><a class="reference internal" href="#references" id="id23">References</a></li>
-<li><a class="reference internal" href="#appendix-a" id="id24">Appendix A</a></li>
+<li><a class="reference internal" href="#monitor-the-metrics" id="id22">Monitor the metrics</a></li>
+<li><a class="reference internal" href="#conclusion" id="id23">Conclusion</a></li>
+<li><a class="reference internal" href="#references" id="id24">References</a></li>
+<li><a class="reference internal" href="#appendix-a" id="id25">Appendix A</a></li>
 </ul>
 </div>
-<table border="1" class="docutils" id="id11">
-<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id11" title="Permalink to this table"> </a></caption>
+<table border="1" class="docutils" id="id12">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id12" title="Permalink to this table"> </a></caption>
 <colgroup>
 <col width="17%" />
 <col width="83%" />
@@ -200,7 +200,7 @@ example, the post is really long.</p>
 <h2><a class="toc-backref" href="#contents">TL;DR</a><a class="headerlink" href="#tl-dr" title="Permalink to this headline"> </a></h2>
 <p>The short version of the actions you have to trigger is:</p>
 <ol class="arabic">
-<li><p class="first">download and uncompress the
+<li><p class="first">download the archive and extract the
 <a class="reference download internal" href="../../../../../_downloads/monitoring-with-prometheus-source.tar.gz" download=""><code class="xref download docutils literal"><span class="pre">project</span> <span class="pre">source</span> <span class="pre">files</span></code></a></p>
 </li>
 <li><p class="first">ensure you have installed: <em>Vagrant</em>, <em>VirtualBox</em> and <em>Ansible</em></p>
@@ -220,7 +220,7 @@ example, the post is really long.</p>
 </li>
 </ol>
 <p>Open your browser at <a class="reference external" href="http://192.168.100.10:3000/">http://192.168.100.10:3000/</a> and see the impact of
-the demo application code. That&#8217;s it. The next sections desribe the steps
+the demo application code. That&#8217;s it. The next sections describe the steps
 in more detail.</p>
 </div>
 <div class="section" id="use-case">
@@ -286,8 +286,9 @@ Virtual environment description file (depends on <em>VirtualBox</em>)</li>
 <em>Ansible</em> playbook to set up our environment.</li>
 </ul>
 <p>I will describe the files more in detail when I use them later.
-If you&#8217;re less interested in the <strong>how</strong>, you can jump to section
-<a class="reference internal" href="#monitoring-metrics"><span class="std std-ref">Monitor the metrics</span></a>. There is the <strong>what</strong>.</p>
+If you&#8217;re less interested in the details and want to see the end result
+first, you can jump to section <a class="reference internal" href="#monitoring-metrics"><span class="std std-ref">Monitor the metrics</span></a> and come back to
+the details later.</p>
 </div>
 <div class="section" id="server-provisioning">
 <h2><a class="toc-backref" href="#contents">Server Provisioning</a><a class="headerlink" href="#server-provisioning" title="Permalink to this headline"> </a></h2>
@@ -304,7 +305,7 @@ and describes the basic structure of our environment. Typically, I have
 three parts in a Vagrantfile:</p>
 <ol class="arabic simple">
 <li>an array which <strong>describes</strong> the servers and their attributes</li>
-<li>some general virtualizer settings</li>
+<li>some general hypervisor settings</li>
 <li>the logic to <strong>create</strong> the servers from the array</li>
 </ol>
 <p>Lets take a look at the <strong>first part</strong>:</p>
@@ -379,11 +380,11 @@ three parts in a Vagrantfile:</p>
 </td></tr></table></div>
 <p>You&#8217;ll notice that the three servers we mentioned in the previous section
 get described here. I like the <em>Vagrant Box</em> from <code class="docutils literal"><span class="pre">geerlingguy</span></code>, as it
-works better as the official one from <em>Canonical</em>. I use pre-defined private
+works better as the official one from <em>Canonical</em>. I use predefined private
 IPs (and not DNS), as I feed these IPs later to <em>Ansible</em>. Sometime I had issues
 with host port clashes when working with multiple <em>Vagrant</em> environments at the
-same time, so I usually pre-define them as well. From time to time, I need
-different amount of resources for a multi-VM-environment, so I added attributes
+same time, so I usually predefine them as well. From time to time, I need
+different amount of resources for a multi VM environment, so I added attributes
 for CPUs and memory to my template as well.</p>
 <p>The <strong>second part</strong> is this:</p>
 <div class="highlight-ruby"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>36
@@ -401,7 +402,7 @@ for CPUs and memory to my template as well.</p>
   <span class="k">end</span>
 </pre></div>
 </td></tr></table></div>
-<p>I use a virtualizer specific feature from <em>VirtualBox</em> to speed things up a little.
+<p>I use a hypervisor specific feature from <em>VirtualBox</em> to speed things up a little.
 When you destroy and create such an environment multiple times, this comes
 in handy.</p>
 <p>And the <strong>third part</strong> is this:</p>
@@ -442,7 +443,7 @@ in handy.</p>
 </td></tr></table></div>
 <p>This iterates through the servers defined in the first part and applies
 all the attributes we defined.</p>
-<p>With this file locally in place, you can influence the lifecycle of your
+<p>With this file locally in place, you can influence the life cycle of your
 servers with:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ vagrant up          <span class="c1"># create the servers</span>
@@ -465,8 +466,8 @@ If you haven&#8217;t tried it yet, give it a chance, it&#8217;s awesome.</p>
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="hll"><span class="k">[infra-servers]</span>
-</span><span class="na">monitoring ansible_host</span><span class="o">=</span><span class="s">192.168.100.10 ansible_user=vagrant ansible_ssh_pass=vagrant</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[infra-servers]</span>
+<span class="na">monitoring ansible_host</span><span class="o">=</span><span class="s">192.168.100.10 ansible_user=vagrant ansible_ssh_pass=vagrant</span>
 
 <span class="k">[application-servers]</span>
 <span class="na">app-server-1 ansible_host</span><span class="o">=</span><span class="s">192.168.100.11 ansible_user=vagrant ansible_ssh_pass=vagrant</span>
@@ -476,7 +477,7 @@ If you haven&#8217;t tried it yet, give it a chance, it&#8217;s awesome.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Do <strong>not</strong> store passwords like that when using <em>Ansible</em>. Use the
-<em>Ansible Vault</em> feature <a class="reference internal" href="#ansivault" id="id1">[ansivault]</a> for that. I excluded it from the
+<em>Ansible Vault</em> feature <a class="footnote-reference" href="#ansivault" id="id1">[1]</a> for that. I excluded it from the
 scope of this post.</p>
 </div>
 <p>You&#8217;ll recognize the servers we described in the <code class="docutils literal"><span class="pre">Vagrantfile</span></code> before.
@@ -484,7 +485,7 @@ If you don&#8217;t provide the <code class="docutils literal"><span class="pre">
 resolution will be attempted.
 As <em>Ansible</em> is <em>agentless</em> and uses plain SSH to access the targets, I used
 the default credentials <em>Vagrant</em> creates when starting the servers. The servers
-got separated into <em>groups</em> (or ini file sections). You can have groups of
+got separated into <em>groups</em> (or <code class="docutils literal"><span class="pre">*.ini</span></code> file sections). You can have groups of
 groups too, which is is a powerful concept. These groups come in handy when
 applying deployment logic based on these groups. The next section will
 show that.</p>
@@ -576,7 +577,7 @@ As described before, that includes all servers. From reading the <code class="do
 lines, you should get an idea <strong>what</strong> happens. You also see that I re-use
 existing <em>Ansible</em> modules, namely <code class="docutils literal"><span class="pre">wait_for</span></code>, <code class="docutils literal"><span class="pre">lineinfile</span></code>, <code class="docutils literal"><span class="pre">ping</span></code> and
 <code class="docutils literal"><span class="pre">apt</span></code>. I won&#8217;t go into the details of the modules I used.
-A full list of modules is available at <a class="reference internal" href="#ansmods" id="id2">[ansmods]</a>, take a look at them
+A full list of modules is available at <a class="footnote-reference" href="#ansmods" id="id2">[2]</a>, take a look at them
 for the details. The goal of this play is to have the servers ready
 for deploying the monitoring and applications later.</p>
 <p>Keep in mind that everything here happens inside the servers (if not
@@ -632,7 +633,7 @@ hosts file on these servers.</p>
 </pre></div>
 </td></tr></table></div>
 <p>After we have prepared the servers with the basic steps, we install
-the operating system packaged version of one of many <em>Prometheus</em> exporters <a class="reference internal" href="#promex">promex</a>,
+the operating system packaged version of one of many <em>Prometheus</em> exporters <a class="footnote-reference" href="#promex" id="id3">[3]</a>,
 the <em>Prometheus-Node-Exporter</em>. This exporter emits the metrics we are
 interested in. The <em>Prometheus</em> will later collect the from this URI.</p>
 <p>I like to add small <em>&#8220;assert tasks&#8221;</em> which check conditions I expect to be there,
@@ -856,7 +857,7 @@ only on the <code class="docutils literal"><span class="pre">monitoring</span></
 <li><code class="docutils literal"><span class="pre">grafana.ini</span></code> configures <em>Grafana</em></li>
 <li><code class="docutils literal"><span class="pre">infra-node-metrics.json</span></code> example dashboard</li>
 </ul>
-<p>If you want to have a reproducable infrastructure, it&#8217;s good to save such
+<p>If you want to have a reproducible infrastructure, it&#8217;s good to save such
 things in your version control system too. For the dashboard, I usually
 create one in the <em>Grafana</em> web UI and use the export function to store the
 generated JSON. Only for very small changes I edit the JSON file itself.</p>
@@ -905,7 +906,7 @@ is shown in <a class="reference internal" href="#appendix-a"><span class="std st
 <p class="last">It&#8217;s perfectly fine to start <em>Ansible</em> playbooks like I did here.
 For example, when you transition from shell scripts. At some point in
 time you should very strongly consider to encapsulated logic into
-<em>Ansible roles</em> <a class="reference internal" href="#ansiroles" id="id3">[ansiroles]</a>. Think of them as re-usable libraries
+<em>Ansible roles</em> <a class="footnote-reference" href="#ansiroles" id="id4">[4]</a>. Think of them as re-usable libraries
 with defined interfaces.</p>
 </div>
 <p>Now execute the playbook locally (not in any of the VMs):</p>
@@ -981,7 +982,7 @@ files we have copied to the monitoring node.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">In newer versions of Prometheus, <code class="docutils literal"><span class="pre">target_groups</span></code> got replaced by
-<code class="docutils literal"><span class="pre">static_configs</span></code> <a class="reference internal" href="#promstatic" id="id4">[promstatic]</a> .</p>
+<code class="docutils literal"><span class="pre">static_configs</span></code> <a class="footnote-reference" href="#promstatic" id="id5">[5]</a> .</p>
 </div>
 <p>This is a static configuration, which only makes sense if your environment
 does not change that often. There are more dynamic ones with service discovery,
@@ -997,11 +998,11 @@ Then you don&#8217;t care about a single HTTP server, but in the combined metric
 A job name could then be <em>&#8220;web-ui-app-x&#8221;</em> with multiple targets. I plan to
 write a post about <code class="docutils literal"><span class="pre">HAProxy</span></code> at some point, it will make more sense then.</li>
 <li><code class="docutils literal"><span class="pre">targets</span></code>: A <em>scrape job</em> can have multiple targets. We could have added
-both application servers here, but then both would get the same lables
+both application servers here, but then both would get the same labels
 applied. The labels are one of the nice things of <em>Prometheus</em> which distinguishes
 it from other monitoring software like <em>statsd</em>.</li>
-<li><code class="docutils literal"><span class="pre">name</span></code>: This is simply an arbitrarily chosen free-form label. Lables give
-you the ability to <em>tag</em> / <em>label</em> / <em>mark</em> / <em>annotate</em> your metrics. These
+<li><code class="docutils literal"><span class="pre">name</span></code>: This is simply an arbitrarily chosen free-form label. Labels give
+you the ability to <em>tag</em> / <em>label</em> / <em>mark</em> / <em>annotate</em> your metrics.These
 values can later get used to set constraints in the <em>Prometheus</em> query language.</li>
 </ul>
 <p>The best metrics don&#8217;t help, if you can&#8217;t pull knowledge out of them and
@@ -1032,7 +1033,7 @@ and it&#8217;s a very simple one:</p>
 <p class="first admonition-title">Important</p>
 <p class="last">One of the (not shown here and thereby default) values I use is the
 admin password. Take care of that when you use <em>Grafana</em> in a sensitive
-environment (see <a class="reference internal" href="#grafdoc" id="id5">[grafdoc]</a> for the full configuration).</p>
+environment (see <a class="footnote-reference" href="#grafdoc" id="id6">[6]</a> for the full configuration).</p>
 </div>
 <p>The only thing I change from the defaults is, that I&#8217;d like to have reading
 access for people not logged into <em>Grafana</em>. You still need to be logged in
@@ -1048,7 +1049,7 @@ with that.</p>
 targets are listed and in state <code class="docutils literal"><span class="pre">UP</span></code> like in this image:</p>
 <a class="reference external image-reference" href="/_images/prometheus-targets-status.png"><img alt="Prometheus status page with the expected outcome." src="../../../../../_images/prometheus-targets-status.png" /></a>
 <p>At <a class="reference external" href="http://192.168.100.10:9090/graph">http://192.168.100.10:9090/graph</a> you can start using the Prometheus
-query language <a class="reference internal" href="#promq" id="id6">[promq]</a> to create graphs based on the metrics the
+query language <a class="footnote-reference" href="#promq" id="id7">[7]</a> to create graphs based on the metrics the
 Prometheus server scrapes from the targets in an interval. For example,
 you can query the available disk space from the nodes by using
 <code class="docutils literal"><span class="pre">node_filesystem_free{mountpoint='/',</span> <span class="pre">name!=''}</span></code>:</p>
@@ -1073,7 +1074,7 @@ use <em>Grafana</em> to visualize that in a sensible way.</p>
 <p>The Ansible playbook also installed and configured the <em>Grafana</em> service,
 which is accessible at <a class="reference external" href="http://192.168.100.10:3000/">http://192.168.100.10:3000/</a>.</p>
 <p>Sign in as username <code class="docutils literal"><span class="pre">admin</span></code> and password <code class="docutils literal"><span class="pre">admin</span></code>, and you&#8217;ll see this:</p>
-<a class="reference external image-reference" href="/_images/grafana-dashboard.png"><img alt="Grafana dashboard visualizing Prometheus Node Exporter metrics" src="../../../../../_images/grafana-dashboard.png" /></a>
+<a class="reference external image-reference" href="/_images/grafana-dashboard.png"><img alt="|graf| dashboard visualizing Prometheus Node Exporter metrics" src="../../../../../_images/grafana-dashboard.png" /></a>
 <p>This is the dashboard created from the file <code class="docutils literal"><span class="pre">infra-node-metrics.json</span></code>.
 As said earlier, I usually use the edit functionality in the web UI to
 create and change the dashboards and then export it as JSON file.</p>
@@ -1104,13 +1105,13 @@ root@app-server-1:~# <span class="nb">kill</span> -9 <span class="m">2392</span>
 </pre></div>
 </td></tr></table></div>
 <p>You&#8217;ll see the impact immediately in your dashboard:</p>
-<a class="reference external image-reference" href="/_images/grafana-cpu-consumption.png"><img alt="Grafana displays the CPU consumption" src="../../../../../_images/grafana-cpu-consumption.png" /></a>
+<a class="reference external image-reference" href="/_images/grafana-cpu-consumption.png"><img alt="|graf| displays the CPU consumption" src="../../../../../_images/grafana-cpu-consumption.png" /></a>
 <p>That&#8217;s it. It&#8217;s a good way to start like this and let the pattern matching
 machine in your head do its magic for some time, and learn what&#8217;s <em>&#8220;normal&#8221;</em>
 and what&#8217;s an <em>&#8220;anomaly&#8221;</em>, before considering to introduce <em>alerting</em>,
 another corner stone of monitoring. I won&#8217;t cover alerting in this post,
 but be aware that this most probably will become necessary, as you don&#8217;t
-want to watch this the whole day. Visualizing data (like reource consumption
+want to watch this the whole day. Visualizing data (like resource consumption
 here), is also a very good show case within your company, especially when you
 try to convince people who have only 1 minute (or less) on their hand for
 listening to you.</p>
@@ -1131,84 +1132,79 @@ tasks:</p>
 <div class="section" id="conclusion">
 <h2><a class="toc-backref" href="#contents">Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this headline"> </a></h2>
 <p>This post showed how to monitor operating system metrics with
-<em>Grafana</em>, <em>Prometheus</em> und <em>Prometheus Node Exporter</em>. The deployment
+<em>Grafana</em>, <em>Prometheus</em> and <em>Prometheus Node Exporter</em>. The deployment
 of the software happened with <em>Ansible</em>, after the server provisioning
 was done with <em>Vagrant</em> and <em>VirtualBox</em>. We deployed the necessary
 software by using the packaged versions from <em>Ubuntu</em>. Unfortunately,
-it got decided that <em>Grafana</em> won&#8217;t be in release <em>17.10</em> and newer <a class="reference internal" href="#grafdrop" id="id7">[grafdrop]</a>.
+it got decided that <em>Grafana</em> won&#8217;t be in release <em>17.10</em> and newer <a class="footnote-reference" href="#grafdrop" id="id8">[8]</a>.
 This is a good chance to show in another post, how we can create
 <em>Ansible Roles</em> to encapsulate the logic of getting the newest <em>Grafana</em>
 source code, building it, and deploying it. This also enables us to
-to make use of the much nicer API <a class="reference internal" href="#grafds" id="id8">[grafds]</a> and UI.</p>
+to make use of the much nicer API <a class="footnote-reference" href="#grafds" id="id9">[9]</a> and UI.</p>
 <p>Those node metrics aren&#8217;t the only metrics you can collect. There is a
-variety of different exporters <a class="reference internal" href="#promex" id="id9">[promex]</a> which help you to keep the overview.
+variety of different exporters <a class="footnote-reference" href="#promex" id="id10">[3]</a> which help you to keep the overview.
 You can also instrument your own application to emit metrics. That&#8217;s something
 I will show in another post.</p>
 </div>
 <div class="section" id="references">
 <h2><a class="toc-backref" href="#contents">References</a><a class="headerlink" href="#references" title="Permalink to this headline"> </a></h2>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">make numbers out of these references and order them accordingly
-when the post is finalized.</p>
-</div>
-<table class="docutils citation" frame="void" id="promstatic" rules="none">
+<table class="docutils footnote" frame="void" id="ansivault" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[promstatic]</a></td><td><a class="reference external" href="https://github.com/prometheus/prometheus/issues/1706">https://github.com/prometheus/prometheus/issues/1706</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/playbooks_vault.html">http://docs.ansible.com/ansible/latest/playbooks_vault.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="promq" rules="none">
+<table class="docutils footnote" frame="void" id="ansmods" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id6">[promq]</a></td><td><a class="reference external" href="https://prometheus.io/docs/querying/basics/">https://prometheus.io/docs/querying/basics/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/list_of_all_modules.html">http://docs.ansible.com/ansible/latest/list_of_all_modules.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="ansivault" rules="none">
+<table class="docutils footnote" frame="void" id="promex" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[ansivault]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/playbooks_vault.html">http://docs.ansible.com/ansible/latest/playbooks_vault.html</a></td></tr>
+<tr><td class="label">[3]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id10">2</a>)</em> <a class="reference external" href="https://prometheus.io/docs/instrumenting/exporters/">https://prometheus.io/docs/instrumenting/exporters/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="grafds" rules="none">
+<table class="docutils footnote" frame="void" id="ansiroles" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[grafds]</a></td><td><a class="reference external" href="http://docs.grafana.org/http_api/data_source/">http://docs.grafana.org/http_api/data_source/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/playbooks_reuse_roles.html">http://docs.ansible.com/ansible/latest/playbooks_reuse_roles.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="ansiroles" rules="none">
+<table class="docutils footnote" frame="void" id="promstatic" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[ansiroles]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/playbooks_reuse_roles.html">http://docs.ansible.com/ansible/latest/playbooks_reuse_roles.html</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><a class="reference external" href="https://github.com/prometheus/prometheus/issues/1706">https://github.com/prometheus/prometheus/issues/1706</a></td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="grafdrop" rules="none">
+<table class="docutils footnote" frame="void" id="grafdoc" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[grafdrop]</a></td><td><a class="reference external" href="https://answers.launchpad.net/ubuntu/+source/grafana/+question/658771">https://answers.launchpad.net/ubuntu/+source/grafana/+question/658771</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td><a class="reference external" href="http://docs.grafana.org/installation/configuration/">http://docs.grafana.org/installation/configuration/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="promex" rules="none">
+<table class="docutils footnote" frame="void" id="promq" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id9">[promex]</a></td><td><a class="reference external" href="https://prometheus.io/docs/instrumenting/exporters/">https://prometheus.io/docs/instrumenting/exporters/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td><a class="reference external" href="https://prometheus.io/docs/querying/basics/">https://prometheus.io/docs/querying/basics/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="ansmods" rules="none">
+<table class="docutils footnote" frame="void" id="grafdrop" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[ansmods]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/list_of_all_modules.html">http://docs.ansible.com/ansible/latest/list_of_all_modules.html</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id8">[8]</a></td><td><a class="reference external" href="https://answers.launchpad.net/ubuntu/+source/grafana/+question/658771">https://answers.launchpad.net/ubuntu/+source/grafana/+question/658771</a></td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="grafdoc" rules="none">
+<table class="docutils footnote" frame="void" id="grafds" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[grafdoc]</a></td><td><a class="reference external" href="http://docs.grafana.org/installation/configuration/">http://docs.grafana.org/installation/configuration/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id9">[9]</a></td><td><a class="reference external" href="http://docs.grafana.org/http_api/data_source/">http://docs.grafana.org/http_api/data_source/</a></td></tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="appendix-a">
-<span id="id10"></span><h2><a class="toc-backref" href="#contents">Appendix A</a><a class="headerlink" href="#appendix-a" title="Permalink to this headline"> </a></h2>
+<span id="id11"></span><h2><a class="toc-backref" href="#contents">Appendix A</a><a class="headerlink" href="#appendix-a" title="Permalink to this headline"> </a></h2>
 <p>The application code we use to impact the resource consumption of our
 infrastructure is shown below. It&#8217;s basically nonsense and only for
 demo purposes, that&#8217;s why I don&#8217;t add an explanation to them.</p>
