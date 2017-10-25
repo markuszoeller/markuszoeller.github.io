@@ -47,7 +47,7 @@ TL;DR
 
 The short version of the actions you have to trigger is:
 
-#. download and uncompress the
+#. download the archive and extract the
    :download:`project source files <monitoring-with-prometheus-source.tar.gz>`
 
 #. ensure you have installed: |vagr|, |vb| and |ans|
@@ -64,7 +64,7 @@ The short version of the actions you have to trigger is:
        root@app-server-1:~# python eat_cpu.py &        # start demo application
 
 Open your browser at http://192.168.100.10:3000/ and see the impact of
-the demo application code. That's it. The next sections desribe the steps
+the demo application code. That's it. The next sections describe the steps
 in more detail.
 
 
@@ -139,8 +139,9 @@ Use the full list of files below (or
   |ans| playbook to set up our environment.
 
 I will describe the files more in detail when I use them later.
-If you're less interested in the **how**, you can jump to section
-:ref:`monitoring-metrics`. There is the **what**.
+If you're less interested in the details and want to see the end result
+first, you can jump to section :ref:`monitoring-metrics` and come back to
+the details later.
 
 
 Server Provisioning
@@ -161,7 +162,7 @@ and describes the basic structure of our environment. Typically, I have
 three parts in a Vagrantfile:
 
 #. an array which **describes** the servers and their attributes
-#. some general virtualizer settings
+#. some general hypervisor settings
 #. the logic to **create** the servers from the array
 
 Lets take a look at the **first part**:
@@ -175,11 +176,11 @@ Lets take a look at the **first part**:
 
 You'll notice that the three servers we mentioned in the previous section
 get described here. I like the *Vagrant Box* from ``geerlingguy``, as it
-works better as the official one from *Canonical*. I use pre-defined private
+works better as the official one from *Canonical*. I use predefined private
 IPs (and not DNS), as I feed these IPs later to |ans|. Sometime I had issues
 with host port clashes when working with multiple |vagr| environments at the
-same time, so I usually pre-define them as well. From time to time, I need
-different amount of resources for a multi-VM-environment, so I added attributes
+same time, so I usually predefine them as well. From time to time, I need
+different amount of resources for a multi VM environment, so I added attributes
 for CPUs and memory to my template as well.
 
 The **second part** is this:
@@ -190,7 +191,7 @@ The **second part** is this:
    :lines: 36-43
    :lineno-start: 36
 
-I use a virtualizer specific feature from |vb| to speed things up a little.
+I use a hypervisor specific feature from |vb| to speed things up a little.
 When you destroy and create such an environment multiple times, this comes
 in handy.
 
@@ -206,7 +207,7 @@ And the **third part** is this:
 This iterates through the servers defined in the first part and applies
 all the attributes we defined.
 
-With this file locally in place, you can influence the lifecycle of your
+With this file locally in place, you can influence the life cycle of your
 servers with:
 
 
@@ -245,7 +246,7 @@ If you don't provide the ``ansible_host`` key-value-pair, a DNS name
 resolution will be attempted.
 As |ans| is *agentless* and uses plain SSH to access the targets, I used
 the default credentials |vagr| creates when starting the servers. The servers
-got separated into *groups* (or ini file sections). You can have groups of
+got separated into *groups* (or ``*.ini`` file sections). You can have groups of
 groups too, which is is a powerful concept. These groups come in handy when
 applying deployment logic based on these groups. The next section will
 show that.
@@ -322,7 +323,7 @@ only on the ``monitoring`` server. Three important files get used here:
 * ``grafana.ini`` configures |graf|
 * ``infra-node-metrics.json`` example dashboard
 
-If you want to have a reproducable infrastructure, it's good to save such
+If you want to have a reproducible infrastructure, it's good to save such
 things in your version control system too. For the dashboard, I usually
 create one in the |graf| web UI and use the export function to store the
 generated JSON. Only for very small changes I edit the JSON file itself.
@@ -391,11 +392,11 @@ ones. The meaning of these lines piece by piece:
   A job name could then be *"web-ui-app-x"* with multiple targets. I plan to
   write a post about ``HAProxy`` at some point, it will make more sense then.
 * ``targets``: A *scrape job* can have multiple targets. We could have added
-  both application servers here, but then both would get the same lables
+  both application servers here, but then both would get the same labels
   applied. The labels are one of the nice things of |prom| which distinguishes
   it from other monitoring software like *statsd*.
-* ``name``: This is simply an arbitrarily chosen free-form label. Lables give
-  you the ability to *tag* / *label* / *mark* / *annotate* your metrics. These
+* ``name``: This is simply an arbitrarily chosen free-form label. Labels give
+  you the ability to *tag* / *label* / *mark* / *annotate* your metrics.These
   values can later get used to set constraints in the |prom| query language.
 
 The best metrics don't help, if you can't pull knowledge out of them and
@@ -473,7 +474,7 @@ Sign in as username ``admin`` and password ``admin``, and you'll see this:
 
 .. image:: grafana-dashboard.png
    :target: /_images/grafana-dashboard.png
-   :alt: Grafana dashboard visualizing Prometheus Node Exporter metrics
+   :alt: |graf| dashboard visualizing Prometheus Node Exporter metrics
 
 This is the dashboard created from the file ``infra-node-metrics.json``.
 As said earlier, I usually use the edit functionality in the web UI to
@@ -506,14 +507,14 @@ You'll see the impact immediately in your dashboard:
 
 .. image:: grafana-cpu-consumption.png
    :target: /_images/grafana-cpu-consumption.png
-   :alt: Grafana displays the CPU consumption
+   :alt: |graf| displays the CPU consumption
 
 That's it. It's a good way to start like this and let the pattern matching
 machine in your head do its magic for some time, and learn what's *"normal"*
 and what's an *"anomaly"*, before considering to introduce *alerting*,
 another corner stone of monitoring. I won't cover alerting in this post,
 but be aware that this most probably will become necessary, as you don't
-want to watch this the whole day. Visualizing data (like reource consumption
+want to watch this the whole day. Visualizing data (like resource consumption
 here), is also a very good show case within your company, especially when you
 try to convince people who have only 1 minute (or less) on their hand for
 listening to you.
@@ -538,7 +539,7 @@ Conclusion
 ==========
 
 This post showed how to monitor operating system metrics with
-*Grafana*, *Prometheus* und *Prometheus Node Exporter*. The deployment
+*Grafana*, *Prometheus* and *Prometheus Node Exporter*. The deployment
 of the software happened with *Ansible*, after the server provisioning
 was done with *Vagrant* and *VirtualBox*. We deployed the necessary
 software by using the packaged versions from *Ubuntu*. Unfortunately,
