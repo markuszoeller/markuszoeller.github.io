@@ -1,10 +1,7 @@
 
-.. todo:: date, tags and title
-
-.. post::
+.. post:: 27 Oct, 2017
    :tags: monitoring
    :title: Monitoring with Prometheus
-
 
 .. specific terms I use quite often
 
@@ -19,21 +16,21 @@
 Monitoring with Prometheus
 ==========================
 
-One of the worst calls you can get as developer, is one from the user
-who complains that the service is slow or -- even worse -- doesn't
-respond anymore. A user should **never know before you**, that your
-service doesn't behave in its parameters anymore. One of the common
-causes for service degradation or interruption is still the failure
-or exhaustion of your basic infrastructure resources. This post gives you an
-intro how you can monitor your basic resources with |prom|. It shows
-the setup with |ans| and the data visualization with |graf|.
+One of the common causes for service degradation or interruption is still
+the failure or exhaustion of your basic infrastructure resources.
+This post gives you an intro how you can monitor your basic resources
+with |prom|. It shows the setup with |ans| and the data visualization
+with |graf|. The post does **not** show all the capabilities of |prom|.
+In fact, I'm showing you only the simplest configuration. The benefit
+of this post is, that it takes you from start to finish and gives you
+a playground you can easily recreate when things go wrong, thanks to
+|vagr| and |vb|. Beware, as this is a non-trivial (non-hello-world)
+example, the post is really long.
 
 
 .. contents::
     :local:
     :backlinks: top
-
-.. todo:: date
 
 .. list-table:: Change history:
    :widths: 1 5
@@ -73,6 +70,12 @@ in more detail.
 
 Use Case
 ========
+
+
+One of the worst calls you can get as developer, is one from the user
+who complains that the service is slow or -- even worse -- doesn't
+respond anymore. A user should **never know before you**, that your
+service doesn't behave in its parameters anymore.
 
 Monitoring is a way of collecting and storing data (so called *metrics*)
 so that you can extrapolate a trend out of the historic view, to give
@@ -136,7 +139,8 @@ Use the full list of files below (or
   |ans| playbook to set up our environment.
 
 I will describe the files more in detail when I use them later.
-
+If you're less interested in the **how**, you can jump to section
+:ref:`monitoring-metrics`. There is the **what**.
 
 
 Server Provisioning
@@ -247,6 +251,7 @@ applying deployment logic based on these groups. The next section will
 show that.
 
 
+
 Ansible playbook
 ----------------
 
@@ -272,7 +277,7 @@ As described before, that includes all servers. From reading the ``name``
 lines, you should get an idea **what** happens. You also see that I re-use
 existing |ans| modules, namely ``wait_for``, ``lineinfile``, ``ping`` and
 ``apt``. I won't go into the details of the modules I used.
-A full list of modules is available at `ansmods`_, take a look at them
+A full list of modules is available at [ansmods]_, take a look at them
 for the details. The goal of this play is to have the servers ready
 for deploying the monitoring and applications later.
 
@@ -287,20 +292,47 @@ hosts file on these servers.
 .. literalinclude:: playbook.yml
    :language: yaml
    :linenos:
-   :emphasize-lines: 4
+   :emphasize-lines: 4,8,12,18
    :lines: 38-61
    :lineno-start: 38
 
+After we have prepared the servers with the basic steps, we install
+the operating system packaged version of one of many |prom| exporters `promex`_,
+the *Prometheus-Node-Exporter*. This exporter emits the metrics we are
+interested in. The |prom| will later collect the from this URI.
 
+I like to add small *"assert tasks"* which check conditions I expect to be there,
+to fail fast if things go wrong. Here I do a simple HTTP GET request to see
+if the exporter emits metrics.
+
+Now that we have something to listen on, let's install the rest of the
+monitoring.
 
 .. literalinclude:: playbook.yml
    :language: yaml
    :linenos:
-   :emphasize-lines: 4
+   :emphasize-lines: 4,16,28,39,51,81,93
    :lines: 62-167
    :lineno-start: 62
 
+This is a big one. The important parts are highlighted. We apply this logic
+only on the ``monitoring`` server. Three important files get used here:
 
+* ``prometheus.yml`` configures |prom|
+* ``grafana.ini`` configures |graf|
+* ``infra-node-metrics.json`` example dashboard
+
+If you want to have a reproducable infrastructure, it's good to save such
+things in your version control system too. For the dashboard, I usually
+create one in the |graf| web UI and use the export function to store the
+generated JSON. Only for very small changes I edit the JSON file itself.
+
+There are also again some tasks which assert that the services are up and
+running. The ``handlers`` at the end get fired **after** the tasks are
+finished.
+
+With this logic, we have the monitoring in place. But we need something
+to have impact on our resources. We need applications:
 
 .. literalinclude:: playbook.yml
    :language: yaml
@@ -309,8 +341,10 @@ hosts file on these servers.
    :lines: 168-
    :lineno-start: 168
 
+A very simple and short one this time. The application code we copy here
+is shown in :ref:`appendix-a`.
 
-.. note::
+.. tip::
    It's perfectly fine to start |ans| playbooks like I did here.
    For example, when you transition from shell scripts. At some point in
    time you should very strongly consider to encapsulated logic into
@@ -324,65 +358,87 @@ Now execute the playbook locally (not in any of the VMs):
 
    $ ansible-playbook -i hosts.ini playbook.yml
 
-
-.. note:: It's possible to use Vagrant's Ansible provisioner directly
-   in the Vagrantfile, but to have a more realistic scenario here,
-   I separated these steps.
-
-
-
+While this command does its magic, let's have a look at the configuration
+files we have copied to the monitoring node.
 
 
 Prometheus
 ----------
 
-asdf
-
-
-Grafana
--------
-
-adsf
-
-
-
-
-Brain dump
-==========
-
-
-
-
-
-
-
-This is how we configure the prometheus server:
+You have seen in the playbook before, that we copy a file called
+``prometheus.yml``. This is what it does:
 
 .. literalinclude:: prometheus.yml
-   :caption: file: prometheus.yml :download:`(download) <prometheus.yml>`
-   :name: prometheus-config
    :language: yaml
    :linenos:
-   :emphasize-lines: 1
+   :emphasize-lines: 8,17,19,21
 
 .. important::
    In newer versions of Prometheus, ``target_groups`` got replaced by
    ``static_configs`` [promstatic]_ .
 
+This is a static configuration, which only makes sense if your environment
+does not change that often. There are more dynamic ones with service discovery,
+but I won't dive into that right now. The highlighted lines are the interesting
+ones. The meaning of these lines piece by piece:
+
+* ``scrape_configs``: The act of collecting (pulling) metrics from a source
+  is called *scraping* in |prom| terms. We can have N scrape configurations.
+* ``job_name``: A *job*  abstracts 1 to N targets. For target specific
+  resources (like in this post), this seems unnecessary. Imagine HTTP response
+  times of your distributed, highly available application on the other hand.
+  Then you don't care about a single HTTP server, but in the combined metrics.
+  A job name could then be *"web-ui-app-x"* with multiple targets. I plan to
+  write a post about ``HAProxy`` at some point, it will make more sense then.
+* ``targets``: A *scrape job* can have multiple targets. We could have added
+  both application servers here, but then both would get the same lables
+  applied. The labels are one of the nice things of |prom| which distinguishes
+  it from other monitoring software like *statsd*.
+* ``name``: This is simply an arbitrarily chosen free-form label. Lables give
+  you the ability to *tag* / *label* / *mark* / *annotate* your metrics. These
+  values can later get used to set constraints in the |prom| query language.
+
+The best metrics don't help, if you can't pull knowledge out of them and
+derive actions from that knowledge. Visualizing data is the best method
+(for me) to create knowledge from data, and |graf| does a very good job
+at data visualization.
+
+Grafana
+-------
+
+This is the last file we discuss, before finally monitoring our environment
+and it's a very simple one:
+
+.. literalinclude:: grafana.ini
+   :language: ini
+   :linenos:
+   :emphasize-lines: 0
+
+.. important::
+   One of the (not shown here and thereby default) values I use is the
+   admin password. Take care of that when you use |graf| in a sensitive
+   environment (see [grafdoc]_ for the full configuration).
+
+The only thing I change from the defaults is, that I'd like to have reading
+access for people not logged into |graf|. You still need to be logged in
+to create, change or delete dashboards.
+
+That's the last part of the automation we use. Let's check what we can do
+with that.
 
 
+.. _`monitoring-metrics`:
 
-After the playbooks is executed
-open the prometheus server UI at http://192.168.100.10:9090/status .
-You should see that all the expected targets are listend and in state ``UP``
-like in this image:
+Monitor the metrics
+===================
+
+After the playbook is executed, open the prometheus server UI at
+http://192.168.100.10:9090/status . You should see that all the expected
+targets are listed and in state ``UP`` like in this image:
 
 .. image:: prometheus-targets-status.png
    :target: /_images/prometheus-targets-status.png
    :alt: Prometheus status page with the expected outcome.
-
-.. todo:: double-check the naming of the servers here, I might have renamed
-   them at some point.
 
 At http://192.168.100.10:9090/graph you can start using the Prometheus
 query language [promq]_ to create graphs based on the metrics the
@@ -404,43 +460,41 @@ The constraints get logically ``AND``'ed.
 .. note:: The (old) version of |prom| I used here adds itself
    automatically (not sure if this is a bug or a feature) additionally
    to the setting I did (with labels), so I ignore that entry with
-   another constraint ``name!=''`` like you see in the image.
+   the constraint ``name!=''`` like you see in the image.
 
 You'll notice very quickly that this gets ugly. For example, the metric
 is in bytes, and you cannot transform it to a human readable unit. Let's
 use *Grafana* to visualize that in a sensible way.
 
 The Ansible playbook also installed and configured the |graf| service,
-which is accessible at http://192.168.100.10:3000/ .
+which is accessible at http://192.168.100.10:3000/.
 
-Sign in as username ``admin`` and password ``admin``.
+Sign in as username ``admin`` and password ``admin``, and you'll see this:
 
 .. image:: grafana-dashboard.png
    :target: /_images/grafana-dashboard.png
    :alt: Grafana dashboard visualizing Prometheus Node Exporter metrics
 
+This is the dashboard created from the file ``infra-node-metrics.json``.
+As said earlier, I usually use the edit functionality in the web UI to
+create and change the dashboards and then export it as JSON file.
 
-
-The dummy application code files (``eat_cpu.py``, ``eat_memory.py`` and
+You can watch that for a while if you want to, but there won't be a lot
+of action. We have to trigger something which consumes the resources
+we monitor. That's where the application files we copied onto the
+application servers come into play.
+These files (``eat_cpu.py``, ``eat_memory.py`` and
 ``eat_disk.py``) are listed fully in :ref:`appendix-a`, I won't describe
 them in detail in this post.
 
-We will deploy those demo applications to the application servers
-and trigger them after the monitoring is establish. More on that later.
-
-
-Fire up one of the applications to consume some resources:
+Fire up one of the applications (inside one or both of the application
+servers) to consume some resources:
 
 .. code-block:: bash
    :linenos:
 
    [markus@home] $ vagrant ssh app-server-1
-   Welcome to Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-62-generic x86_64)
-
-    * Documentation:  https://help.ubuntu.com
-    * Management:     https://landscape.canonical.com
-    * Support:        https://ubuntu.com/advantage
-   Last login: Fri Oct 20 17:51:44 2017 from 192.168.100.1
+   [...]
    vagrant@app-server-1:~$ sudo su -
    root@app-server-1:~#
    root@app-server-1:~#
@@ -448,14 +502,35 @@ Fire up one of the applications to consume some resources:
    [1] 2392
    root@app-server-1:~# kill -9 2392  # if you're impatient :)
 
-
-You'll see the impact immediately in your dashboard.
+You'll see the impact immediately in your dashboard:
 
 .. image:: grafana-cpu-consumption.png
    :target: /_images/grafana-cpu-consumption.png
    :alt: Grafana displays the CPU consumption
 
+That's it. It's a good way to start like this and let the pattern matching
+machine in your head do its magic for some time, and learn what's *"normal"*
+and what's an *"anomaly"*, before considering to introduce *alerting*,
+another corner stone of monitoring. I won't cover alerting in this post,
+but be aware that this most probably will become necessary, as you don't
+want to watch this the whole day. Visualizing data (like reource consumption
+here), is also a very good show case within your company, especially when you
+try to convince people who have only 1 minute (or less) on their hand for
+listening to you.
 
+**"Homework"**:
+
+With this environment at your hand, you can try yourself at the following
+tasks:
+
+* run another one of the demo application files and watch the impact
+* visualize a query which only shows the servers labeled with ``arch: x86``
+* visualize a query which watches only the used swap in the servers
+* visualize only the CPU steal time of the monitoring server
+* add any other metric offered by the |prom| node exporter to the dashboard
+* destroy and create the environment 5 times in a row
+* run the playbook at least 3 times
+* <whatever-comes-to-your-mind>
 
 
 
@@ -504,6 +579,9 @@ References
 
 .. [ansmods] http://docs.ansible.com/ansible/latest/list_of_all_modules.html
 
+.. [grafdoc] http://docs.grafana.org/installation/configuration/
+
+
 
 .. _appendix-a:
 
@@ -514,22 +592,21 @@ The application code we use to impact the resource consumption of our
 infrastructure is shown below. It's basically nonsense and only for
 demo purposes, that's why I don't add an explanation to them.
 
+``eat_cpu.py``:
+
 .. literalinclude:: eat_cpu.py
-   :caption: file: eat_cpu.py :download:`(download) <eat_cpu.py>`
-   :name: eat_cpu
    :language: python
    :linenos:
 
+
+``eat_memory.py``:
 
 .. literalinclude:: eat_memory.py
-   :caption: file: eat_memory.py :download:`(download) <eat_memory.py>`
-   :name: eat_memory
    :language: python
    :linenos:
 
+``eat_disk.py``:
 
 .. literalinclude:: eat_disk.py
-   :caption: file: eat_disk.py :download:`(download) <eat_disk.py>`
-   :name: eat_disk
    :language: python
    :linenos:
