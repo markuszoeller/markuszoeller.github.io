@@ -234,11 +234,11 @@ If you haven't tried it yet, give it a chance, it's awesome.
 .. literalinclude:: hosts.ini
    :language: ini
    :linenos:
-   :emphasize-lines: 1
+   :emphasize-lines: 0
 
 .. warning::
    Do **not** store passwords like that when using |ans|. Use the
-   *Ansible Vault* feature [ansivault]_ for that. I excluded it from the
+   *Ansible Vault* feature [#ansivault]_ for that. I excluded it from the
    scope of this post.
 
 You'll recognize the servers we described in the ``Vagrantfile`` before.
@@ -278,7 +278,7 @@ As described before, that includes all servers. From reading the ``name``
 lines, you should get an idea **what** happens. You also see that I re-use
 existing |ans| modules, namely ``wait_for``, ``lineinfile``, ``ping`` and
 ``apt``. I won't go into the details of the modules I used.
-A full list of modules is available at [ansmods]_, take a look at them
+A full list of modules is available at [#ansmods]_, take a look at them
 for the details. The goal of this play is to have the servers ready
 for deploying the monitoring and applications later.
 
@@ -298,7 +298,7 @@ hosts file on these servers.
    :lineno-start: 38
 
 After we have prepared the servers with the basic steps, we install
-the operating system packaged version of one of many |prom| exporters `promex`_,
+the operating system packaged version of one of many |prom| exporters [#promex]_,
 the *Prometheus-Node-Exporter*. This exporter emits the metrics we are
 interested in. The |prom| will later collect the from this URI.
 
@@ -349,7 +349,7 @@ is shown in :ref:`appendix-a`.
    It's perfectly fine to start |ans| playbooks like I did here.
    For example, when you transition from shell scripts. At some point in
    time you should very strongly consider to encapsulated logic into
-   *Ansible roles* [ansiroles]_. Think of them as re-usable libraries
+   *Ansible roles* [#ansiroles]_. Think of them as re-usable libraries
    with defined interfaces.
 
 Now execute the playbook locally (not in any of the VMs):
@@ -376,7 +376,7 @@ You have seen in the playbook before, that we copy a file called
 
 .. important::
    In newer versions of Prometheus, ``target_groups`` got replaced by
-   ``static_configs`` [promstatic]_ .
+   ``static_configs`` [#promstatic]_ .
 
 This is a static configuration, which only makes sense if your environment
 does not change that often. There are more dynamic ones with service discovery,
@@ -418,7 +418,7 @@ and it's a very simple one:
 .. important::
    One of the (not shown here and thereby default) values I use is the
    admin password. Take care of that when you use |graf| in a sensitive
-   environment (see [grafdoc]_ for the full configuration).
+   environment (see [#grafdoc]_ for the full configuration).
 
 The only thing I change from the defaults is, that I'd like to have reading
 access for people not logged into |graf|. You still need to be logged in
@@ -442,7 +442,7 @@ targets are listed and in state ``UP`` like in this image:
    :alt: Prometheus status page with the expected outcome.
 
 At http://192.168.100.10:9090/graph you can start using the Prometheus
-query language [promq]_ to create graphs based on the metrics the
+query language [#promq]_ to create graphs based on the metrics the
 Prometheus server scrapes from the targets in an interval. For example,
 you can query the available disk space from the nodes by using
 ``node_filesystem_free{mountpoint='/', name!=''}``:
@@ -543,14 +543,14 @@ This post showed how to monitor operating system metrics with
 of the software happened with *Ansible*, after the server provisioning
 was done with *Vagrant* and *VirtualBox*. We deployed the necessary
 software by using the packaged versions from *Ubuntu*. Unfortunately,
-it got decided that *Grafana* won't be in release *17.10* and newer [grafdrop]_.
+it got decided that *Grafana* won't be in release *17.10* and newer [#grafdrop]_.
 This is a good chance to show in another post, how we can create
 *Ansible Roles* to encapsulate the logic of getting the newest *Grafana*
 source code, building it, and deploying it. This also enables us to
-to make use of the much nicer API [grafds]_ and UI.
+to make use of the much nicer API [#grafds]_ and UI.
 
 Those node metrics aren't the only metrics you can collect. There is a
-variety of different exporters [promex]_ which help you to keep the overview.
+variety of different exporters [#promex]_ which help you to keep the overview.
 You can also instrument your own application to emit metrics. That's something
 I will show in another post.
 
@@ -558,29 +558,23 @@ I will show in another post.
 References
 ==========
 
+.. [#ansivault] http://docs.ansible.com/ansible/latest/playbooks_vault.html
 
-.. todo::
-   make numbers out of these references and order them accordingly
-   when the post is finalized.
+.. [#ansmods] http://docs.ansible.com/ansible/latest/list_of_all_modules.html
 
+.. [#promex] https://prometheus.io/docs/instrumenting/exporters/
 
-.. [promstatic] https://github.com/prometheus/prometheus/issues/1706
+.. [#ansiroles] http://docs.ansible.com/ansible/latest/playbooks_reuse_roles.html
 
-.. [promq] https://prometheus.io/docs/querying/basics/
+.. [#promstatic] https://github.com/prometheus/prometheus/issues/1706
 
-.. [ansivault] http://docs.ansible.com/ansible/latest/playbooks_vault.html
+.. [#grafdoc] http://docs.grafana.org/installation/configuration/
 
-.. [grafds] http://docs.grafana.org/http_api/data_source/
+.. [#promq] https://prometheus.io/docs/querying/basics/
 
-.. [ansiroles] http://docs.ansible.com/ansible/latest/playbooks_reuse_roles.html
+.. [#grafdrop] https://answers.launchpad.net/ubuntu/+source/grafana/+question/658771
 
-.. [grafdrop] https://answers.launchpad.net/ubuntu/+source/grafana/+question/658771
-
-.. [promex] https://prometheus.io/docs/instrumenting/exporters/
-
-.. [ansmods] http://docs.ansible.com/ansible/latest/list_of_all_modules.html
-
-.. [grafdoc] http://docs.grafana.org/installation/configuration/
+.. [#grafds] http://docs.grafana.org/http_api/data_source/
 
 
 
