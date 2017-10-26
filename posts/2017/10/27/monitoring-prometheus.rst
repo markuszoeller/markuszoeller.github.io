@@ -25,7 +25,7 @@ In fact, I'm showing you only the simplest configuration. The benefit
 of this post is, that it takes you from start to finish and gives you
 a playground you can easily recreate when things go wrong, thanks to
 |vagr| and |vb|. Beware, as this is a non-trivial (non-hello-world)
-example, the post is really long.
+example, this post is really long.
 
 
 .. contents::
@@ -45,7 +45,7 @@ example, the post is really long.
 TL;DR
 =====
 
-The short version of the actions you have to trigger is:
+The short version of actions you have to do is:
 
 #. download the archive and extract the
    :download:`project source files <monitoring-with-prometheus-source.tar.gz>`
@@ -72,7 +72,7 @@ Use Case
 ========
 
 
-One of the worst calls you can get as developer, is one from the user
+One of the worst calls you can get as operator, is one from the user
 who complains that the service is slow or -- even worse -- doesn't
 respond anymore. A user should **never know before you**, that your
 service doesn't behave in its parameters anymore.
@@ -83,19 +83,22 @@ you insights if preemptive actions are necessary to keep your promised
 *Service Level Agreements* (SLAs).
 
 This post will focus on the monitoring aspect of the resources your
-service can consume. Specifically I'll go into details of monitoring:
+service can consume. Specifically, I'll go into details of monitoring:
 
 * CPU
 * memory
 * disk space
 
 For example, if you don't use *logrotation*, it's easy to consume all
-disk space and become unserviceable. A bug in the thread handling can
-also slow down your CPUs. And a good old memory leak is never out of fashion.
+disk space and become unserviceable (see my older post :ref:`logrotate`).
+A bug in the thread handling can also exhaust your CPU cycles. And a good
+old memory leak is never out of fashion.
 
-I cannot stress enough that having historic data is very valuable. A single
-point in time observation is not enough. The show case here will use a specific
-setup, which is explained below.
+I cannot stress enough that having historic data is very valuable (if not to
+say, essential). A single point in time observation is not enough.
+A specialized type of data store, called *time series database*, is needed.
+
+The show case here will use a demo setup, which is explained below.
 
 
 Setup Overview
@@ -109,11 +112,11 @@ Our end result will look like this:
 
 We will have 3 servers:
   * one monitoring server
-  * two application server
+  * two application server (observed by the monitoring node)
 
-We deploy small applications which consume different types of resources onto
-the application servers. This will demonstrate the influence on the collected
-metrics, which are stored on the monitoring server within |prom|.
+We will deploy small applications which consume different types of resources
+onto the application servers. This will demonstrate the influence on the
+collected metrics, which are stored on the monitoring server within |prom|.
 
 You need several code files to repeat the actions in this post.
 Use the full list of files below (or
@@ -154,6 +157,14 @@ the monitoring). The configuration is done with |ans|. As described before
 there are multiple files involved in this operation and they get explained
 piece by piece below.
 
+.. admonition:: Feedback needed
+
+    Unfortunately, I haven't yet found crisp, unambiguous terms
+    for the different phases, and *provisioning* and *deploying* is overloaded
+    and therefore ambiguous. If you have found good terms and definitions,
+    I'd be happy if you could leave me a comment on this post.
+
+
 Vagrant
 -------
 
@@ -177,7 +188,7 @@ Lets take a look at the **first part**:
 You'll notice that the three servers we mentioned in the previous section
 get described here. I like the *Vagrant Box* from ``geerlingguy``, as it
 works better as the official one from *Canonical*. I use predefined private
-IPs (and not DNS), as I feed these IPs later to |ans|. Sometime I had issues
+IPs (and not DNS), as I feed these IPs later to |ans|. Sometimes I had issues
 with host port clashes when working with multiple |vagr| environments at the
 same time, so I usually predefine them as well. From time to time, I need
 different amount of resources for a multi VM environment, so I added attributes
@@ -208,14 +219,13 @@ This iterates through the servers defined in the first part and applies
 all the attributes we defined.
 
 With this file locally in place, you can influence the life cycle of your
-servers with:
-
+servers with ``vagrant up`` and ``vagrant destroy``. To continue with
+this post, start the servers with:
 
 .. code-block:: bash
    :linenos:
 
    $ vagrant up          # create the servers
-   $ vagrant destroy -f  # destroy the servers (forcefully)
 
 Now we are ready to deploy something onto those servers.
 
@@ -239,7 +249,7 @@ If you haven't tried it yet, give it a chance, it's awesome.
 .. warning::
    Do **not** store passwords like that when using |ans|. Use the
    *Ansible Vault* feature [#ansivault]_ for that. I excluded it from the
-   scope of this post.
+   scope of this post to keep it a bit more crisp.
 
 You'll recognize the servers we described in the ``Vagrantfile`` before.
 If you don't provide the ``ansible_host`` key-value-pair, a DNS name
@@ -257,7 +267,7 @@ Ansible playbook
 ----------------
 
 |ans| uses *playbooks* to encapsulate deployment and server configuration logic.
-One playbooks can contain 1 to N *plays*. One *play* uses a group of servers
+One playbook can contain 1 to N *plays*. One *play* uses a group of servers
 or a single server as a target. One *play* contains 1 to N *tasks*. A *task*
 is the atomic building block and smallest unit of work in |ans|.
 
@@ -300,7 +310,7 @@ hosts file on these servers.
 After we have prepared the servers with the basic steps, we install
 the operating system packaged version of one of many |prom| exporters [#promex]_,
 the *Prometheus-Node-Exporter*. This exporter emits the metrics we are
-interested in. The |prom| will later collect the from this URI.
+interested in. The |prom| service will later collect the metrics from this URI.
 
 I like to add small *"assert tasks"* which check conditions I expect to be there,
 to fail fast if things go wrong. Here I do a simple HTTP GET request to see
@@ -330,7 +340,7 @@ generated JSON. Only for very small changes I edit the JSON file itself.
 
 There are also again some tasks which assert that the services are up and
 running. The ``handlers`` at the end get fired **after** the tasks are
-finished.
+finished and if a notification was triggered.
 
 With this logic, we have the monitoring in place. But we need something
 to have impact on our resources. We need applications:
@@ -343,24 +353,27 @@ to have impact on our resources. We need applications:
    :lineno-start: 168
 
 A very simple and short one this time. The application code we copy here
-is shown in :ref:`appendix-a`.
+is shown in :ref:`appendix`.
 
-.. tip::
-   It's perfectly fine to start |ans| playbooks like I did here.
-   For example, when you transition from shell scripts. At some point in
-   time you should very strongly consider to encapsulated logic into
-   *Ansible roles* [#ansiroles]_. Think of them as re-usable libraries
-   with defined interfaces.
-
-Now execute the playbook locally (not in any of the VMs):
+Now execute the playbook locally:
 
 .. code-block:: bash
    :linenos:
 
    $ ansible-playbook -i hosts.ini playbook.yml
 
+
 While this command does its magic, let's have a look at the configuration
 files we have copied to the monitoring node.
+
+
+.. tip::
+
+    It's perfectly fine to start |ans| playbooks like I did here.
+    For example, when you transition from shell scripts. At some point in
+    time you should very strongly consider to encapsulated logic into
+    *Ansible roles* [#ansiroles]_. Think of them as re-usable libraries
+    with defined interfaces.
 
 
 Prometheus
@@ -396,13 +409,15 @@ ones. The meaning of these lines piece by piece:
   applied. The labels are one of the nice things of |prom| which distinguishes
   it from other monitoring software like *statsd*.
 * ``name``: This is simply an arbitrarily chosen free-form label. Labels give
-  you the ability to *tag* / *label* / *mark* / *annotate* your metrics.These
+  you the ability to *tag* / *mark* / *annotate* your metrics. These
   values can later get used to set constraints in the |prom| query language.
 
 The best metrics don't help, if you can't pull knowledge out of them and
 derive actions from that knowledge. Visualizing data is the best method
 (for me) to create knowledge from data, and |graf| does a very good job
 at data visualization.
+
+
 
 Grafana
 -------
@@ -428,13 +443,14 @@ That's the last part of the automation we use. Let's check what we can do
 with that.
 
 
+
 .. _`monitoring-metrics`:
 
 Monitor the metrics
 ===================
 
 After the playbook is executed, open the prometheus server UI at
-http://192.168.100.10:9090/status . You should see that all the expected
+http://192.168.100.10:9090/status. You should see that all the expected
 targets are listed and in state ``UP`` like in this image:
 
 .. image:: prometheus-targets-status.png
@@ -449,10 +465,11 @@ you can query the available disk space from the nodes by using
 
 * ``node_filesystem_free``: This is the metric you're interested in
 * ``{}``: Constraints get defined in curly brackets
-* ``mountpoint='/'``: A constraint: only show metrics for the root directory
+* ``mountpoint='/'``: A constraint: only show metrics of the root directory
 * ``name!=''``: A constraint: only show metrics with a value for label ``name``
 
-The constraints get logically ``AND``'ed.
+The constraints get logically ``AND``'ed. After setting that query in the web
+UI, you should see this:
 
 .. image:: prometheus-graph.png
    :target: /_images/prometheus-graph.png
@@ -470,7 +487,8 @@ use *Grafana* to visualize that in a sensible way.
 The Ansible playbook also installed and configured the |graf| service,
 which is accessible at http://192.168.100.10:3000/.
 
-Sign in as username ``admin`` and password ``admin``, and you'll see this:
+Sign in with username ``admin`` and password ``admin``, select the dashboard
+*"Infra Node Metrics"* and you'll see this:
 
 .. image:: grafana-dashboard.png
    :target: /_images/grafana-dashboard.png
@@ -485,7 +503,7 @@ of action. We have to trigger something which consumes the resources
 we monitor. That's where the application files we copied onto the
 application servers come into play.
 These files (``eat_cpu.py``, ``eat_memory.py`` and
-``eat_disk.py``) are listed fully in :ref:`appendix-a`, I won't describe
+``eat_disk.py``) are listed fully in :ref:`appendix`, I won't describe
 them in detail in this post.
 
 Fire up one of the applications (inside one or both of the application
@@ -509,7 +527,7 @@ You'll see the impact immediately in your dashboard:
    :target: /_images/grafana-cpu-consumption.png
    :alt: |graf| displays the CPU consumption
 
-That's it. It's a good way to start like this and let the pattern matching
+That's it. It's a good way to start like this and let the pattern recognition
 machine in your head do its magic for some time, and learn what's *"normal"*
 and what's an *"anomaly"*, before considering to introduce *alerting*,
 another corner stone of monitoring. I won't cover alerting in this post,
@@ -524,13 +542,13 @@ listening to you.
 With this environment at your hand, you can try yourself at the following
 tasks:
 
+* destroy and create the environment 5 times in a row
+* run the playbook at least 3 times
 * run another one of the demo application files and watch the impact
 * visualize a query which only shows the servers labeled with ``arch: x86``
 * visualize a query which watches only the used swap in the servers
 * visualize only the CPU steal time of the monitoring server
 * add any other metric offered by the |prom| node exporter to the dashboard
-* destroy and create the environment 5 times in a row
-* run the playbook at least 3 times
 * <whatever-comes-to-your-mind>
 
 
@@ -578,10 +596,10 @@ References
 
 
 
-.. _appendix-a:
+.. _appendix:
 
-Appendix A
-==========
+Appendix
+========
 
 The application code we use to impact the resource consumption of our
 infrastructure is shown below. It's basically nonsense and only for
