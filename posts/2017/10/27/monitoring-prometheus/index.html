@@ -114,7 +114,7 @@
 <li><a class="reference internal" href="#monitor-the-metrics">Monitor the metrics</a></li>
 <li><a class="reference internal" href="#conclusion">Conclusion</a></li>
 <li><a class="reference internal" href="#references">References</a></li>
-<li><a class="reference internal" href="#appendix-a">Appendix A</a></li>
+<li><a class="reference internal" href="#appendix">Appendix</a></li>
 </ul>
 </li>
 </ul>
@@ -159,7 +159,7 @@ In fact, I&#8217;m showing you only the simplest configuration. The benefit
 of this post is, that it takes you from start to finish and gives you
 a playground you can easily recreate when things go wrong, thanks to
 <em>Vagrant</em> and <em>VirtualBox</em>. Beware, as this is a non-trivial (non-hello-world)
-example, the post is really long.</p>
+example, this post is really long.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#tl-dr" id="id13">TL;DR</a></li>
@@ -176,7 +176,7 @@ example, the post is really long.</p>
 <li><a class="reference internal" href="#monitor-the-metrics" id="id22">Monitor the metrics</a></li>
 <li><a class="reference internal" href="#conclusion" id="id23">Conclusion</a></li>
 <li><a class="reference internal" href="#references" id="id24">References</a></li>
-<li><a class="reference internal" href="#appendix-a" id="id25">Appendix A</a></li>
+<li><a class="reference internal" href="#appendix" id="id25">Appendix</a></li>
 </ul>
 </div>
 <table border="1" class="docutils" id="id12">
@@ -198,7 +198,7 @@ example, the post is really long.</p>
 </table>
 <div class="section" id="tl-dr">
 <h2><a class="toc-backref" href="#contents">TL;DR</a><a class="headerlink" href="#tl-dr" title="Permalink to this headline"> </a></h2>
-<p>The short version of the actions you have to trigger is:</p>
+<p>The short version of actions you have to do is:</p>
 <ol class="arabic">
 <li><p class="first">download the archive and extract the
 <a class="reference download internal" href="../../../../../_downloads/monitoring-with-prometheus-source.tar.gz" download=""><code class="xref download docutils literal"><span class="pre">project</span> <span class="pre">source</span> <span class="pre">files</span></code></a></p>
@@ -225,7 +225,7 @@ in more detail.</p>
 </div>
 <div class="section" id="use-case">
 <h2><a class="toc-backref" href="#contents">Use Case</a><a class="headerlink" href="#use-case" title="Permalink to this headline"> </a></h2>
-<p>One of the worst calls you can get as developer, is one from the user
+<p>One of the worst calls you can get as operator, is one from the user
 who complains that the service is slow or &#8211; even worse &#8211; doesn&#8217;t
 respond anymore. A user should <strong>never know before you</strong>, that your
 service doesn&#8217;t behave in its parameters anymore.</p>
@@ -234,18 +234,20 @@ so that you can extrapolate a trend out of the historic view, to give
 you insights if preemptive actions are necessary to keep your promised
 <em>Service Level Agreements</em> (SLAs).</p>
 <p>This post will focus on the monitoring aspect of the resources your
-service can consume. Specifically I&#8217;ll go into details of monitoring:</p>
+service can consume. Specifically, I&#8217;ll go into details of monitoring:</p>
 <ul class="simple">
 <li>CPU</li>
 <li>memory</li>
 <li>disk space</li>
 </ul>
 <p>For example, if you don&#8217;t use <em>logrotation</em>, it&#8217;s easy to consume all
-disk space and become unserviceable. A bug in the thread handling can
-also slow down your CPUs. And a good old memory leak is never out of fashion.</p>
-<p>I cannot stress enough that having historic data is very valuable. A single
-point in time observation is not enough. The show case here will use a specific
-setup, which is explained below.</p>
+disk space and become unserviceable (see my older post <a class="reference internal" href="../../../09/29/logrotate/#logrotate"><span class="std std-ref">Basics about Logrotate</span></a>).
+A bug in the thread handling can also exhaust your CPU cycles. And a good
+old memory leak is never out of fashion.</p>
+<p>I cannot stress enough that having historic data is very valuable (if not to
+say, essential). A single point in time observation is not enough.
+A specialized type of data store, called <em>time series database</em>, is needed.</p>
+<p>The show case here will use a demo setup, which is explained below.</p>
 </div>
 <div class="section" id="setup-overview">
 <h2><a class="toc-backref" href="#contents">Setup Overview</a><a class="headerlink" href="#setup-overview" title="Permalink to this headline"> </a></h2>
@@ -255,13 +257,13 @@ setup, which is explained below.</p>
 <dt>We will have 3 servers:</dt>
 <dd><ul class="first last simple">
 <li>one monitoring server</li>
-<li>two application server</li>
+<li>two application server (observed by the monitoring node)</li>
 </ul>
 </dd>
 </dl>
-<p>We deploy small applications which consume different types of resources onto
-the application servers. This will demonstrate the influence on the collected
-metrics, which are stored on the monitoring server within <em>Prometheus</em>.</p>
+<p>We will deploy small applications which consume different types of resources
+onto the application servers. This will demonstrate the influence on the
+collected metrics, which are stored on the monitoring server within <em>Prometheus</em>.</p>
 <p>You need several code files to repeat the actions in this post.
 Use the full list of files below (or
 <a class="reference download internal" href="../../../../../_downloads/monitoring-with-prometheus-source.tar.gz" download=""><code class="xref download docutils literal"><span class="pre">the</span> <span class="pre">compressed</span> <span class="pre">archive</span></code></a>):</p>
@@ -298,6 +300,13 @@ servers and configuring the basic infra support functions (which includes
 the monitoring). The configuration is done with <em>Ansible</em>. As described before
 there are multiple files involved in this operation and they get explained
 piece by piece below.</p>
+<div class="admonition-feedback-needed admonition">
+<p class="first admonition-title">Feedback needed</p>
+<p class="last">Unfortunately, I haven&#8217;t yet found crisp, unambiguous terms
+for the different phases, and <em>provisioning</em> and <em>deploying</em> is overloaded
+and therefore ambiguous. If you have found good terms and definitions,
+I&#8217;d be happy if you could leave me a comment on this post.</p>
+</div>
 <div class="section" id="vagrant">
 <h3><a class="toc-backref" href="#contents">Vagrant</a><a class="headerlink" href="#vagrant" title="Permalink to this headline"> </a></h3>
 <p>Let&#8217;s start with the <code class="docutils literal"><span class="pre">Vagrantfile</span></code>. This file is the input for <em>Vagrant</em>
@@ -381,7 +390,7 @@ three parts in a Vagrantfile:</p>
 <p>You&#8217;ll notice that the three servers we mentioned in the previous section
 get described here. I like the <em>Vagrant Box</em> from <code class="docutils literal"><span class="pre">geerlingguy</span></code>, as it
 works better as the official one from <em>Canonical</em>. I use predefined private
-IPs (and not DNS), as I feed these IPs later to <em>Ansible</em>. Sometime I had issues
+IPs (and not DNS), as I feed these IPs later to <em>Ansible</em>. Sometimes I had issues
 with host port clashes when working with multiple <em>Vagrant</em> environments at the
 same time, so I usually predefine them as well. From time to time, I need
 different amount of resources for a multi VM environment, so I added attributes
@@ -444,10 +453,9 @@ in handy.</p>
 <p>This iterates through the servers defined in the first part and applies
 all the attributes we defined.</p>
 <p>With this file locally in place, you can influence the life cycle of your
-servers with:</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ vagrant up          <span class="c1"># create the servers</span>
-$ vagrant destroy -f  <span class="c1"># destroy the servers (forcefully)</span>
+servers with <code class="docutils literal"><span class="pre">vagrant</span> <span class="pre">up</span></code> and <code class="docutils literal"><span class="pre">vagrant</span> <span class="pre">destroy</span></code>. To continue with
+this post, start the servers with:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ vagrant up          <span class="c1"># create the servers</span>
 </pre></div>
 </td></tr></table></div>
 <p>Now we are ready to deploy something onto those servers.</p>
@@ -478,7 +486,7 @@ If you haven&#8217;t tried it yet, give it a chance, it&#8217;s awesome.</p>
 <p class="first admonition-title">Warning</p>
 <p class="last">Do <strong>not</strong> store passwords like that when using <em>Ansible</em>. Use the
 <em>Ansible Vault</em> feature <a class="footnote-reference" href="#ansivault" id="id1">[1]</a> for that. I excluded it from the
-scope of this post.</p>
+scope of this post to keep it a bit more crisp.</p>
 </div>
 <p>You&#8217;ll recognize the servers we described in the <code class="docutils literal"><span class="pre">Vagrantfile</span></code> before.
 If you don&#8217;t provide the <code class="docutils literal"><span class="pre">ansible_host</span></code> key-value-pair, a DNS name
@@ -493,7 +501,7 @@ show that.</p>
 <div class="section" id="ansible-playbook">
 <h3><a class="toc-backref" href="#contents">Ansible playbook</a><a class="headerlink" href="#ansible-playbook" title="Permalink to this headline"> </a></h3>
 <p><em>Ansible</em> uses <em>playbooks</em> to encapsulate deployment and server configuration logic.
-One playbooks can contain 1 to N <em>plays</em>. One <em>play</em> uses a group of servers
+One playbook can contain 1 to N <em>plays</em>. One <em>play</em> uses a group of servers
 or a single server as a target. One <em>play</em> contains 1 to N <em>tasks</em>. A <em>task</em>
 is the atomic building block and smallest unit of work in <em>Ansible</em>.</p>
 <p>There is one <em>magic group</em> called <code class="docutils literal"><span class="pre">all</span></code>. This
@@ -611,7 +619,7 @@ hosts file on these servers.</p>
 59</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># ===========================================================================</span>
 <span class="c1"># Do setup on all hosts we want to monitor</span>
 <span class="c1"># ===========================================================================</span>
-<span class="hll"><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>  <span class="c1"># we want the metrics of the server too</span>
+<span class="hll"><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>  <span class="c1"># we want the metrics of the monitoring server too</span>
 </span>  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
   <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
@@ -635,7 +643,7 @@ hosts file on these servers.</p>
 <p>After we have prepared the servers with the basic steps, we install
 the operating system packaged version of one of many <em>Prometheus</em> exporters <a class="footnote-reference" href="#promex" id="id3">[3]</a>,
 the <em>Prometheus-Node-Exporter</em>. This exporter emits the metrics we are
-interested in. The <em>Prometheus</em> will later collect the from this URI.</p>
+interested in. The <em>Prometheus</em> service will later collect the metrics from this URI.</p>
 <p>I like to add small <em>&#8220;assert tasks&#8221;</em> which check conditions I expect to be there,
 to fail fast if things go wrong. Here I do a simple HTTP GET request to see
 if the exporter emits metrics.</p>
@@ -863,7 +871,7 @@ create one in the <em>Grafana</em> web UI and use the export function to store t
 generated JSON. Only for very small changes I edit the JSON file itself.</p>
 <p>There are also again some tasks which assert that the services are up and
 running. The <code class="docutils literal"><span class="pre">handlers</span></code> at the end get fired <strong>after</strong> the tasks are
-finished.</p>
+finished and if a notification was triggered.</p>
 <p>With this logic, we have the monitoring in place. But we need something
 to have impact on our resources. We need applications:</p>
 <div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>168
@@ -900,7 +908,13 @@ to have impact on our resources. We need applications:</p>
 </pre></div>
 </td></tr></table></div>
 <p>A very simple and short one this time. The application code we copy here
-is shown in <a class="reference internal" href="#appendix-a"><span class="std std-ref">Appendix A</span></a>.</p>
+is shown in <a class="reference internal" href="#appendix"><span class="std std-ref">Appendix</span></a>.</p>
+<p>Now execute the playbook locally:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ansible-playbook -i hosts.ini playbook.yml
+</pre></div>
+</td></tr></table></div>
+<p>While this command does its magic, let&#8217;s have a look at the configuration
+files we have copied to the monitoring node.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">It&#8217;s perfectly fine to start <em>Ansible</em> playbooks like I did here.
@@ -909,12 +923,6 @@ time you should very strongly consider to encapsulated logic into
 <em>Ansible roles</em> <a class="footnote-reference" href="#ansiroles" id="id4">[4]</a>. Think of them as re-usable libraries
 with defined interfaces.</p>
 </div>
-<p>Now execute the playbook locally (not in any of the VMs):</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ansible-playbook -i hosts.ini playbook.yml
-</pre></div>
-</td></tr></table></div>
-<p>While this command does its magic, let&#8217;s have a look at the configuration
-files we have copied to the monitoring node.</p>
 </div>
 <div class="section" id="prometheus">
 <h3><a class="toc-backref" href="#contents">Prometheus</a><a class="headerlink" href="#prometheus" title="Permalink to this headline"> </a></h3>
@@ -1002,7 +1010,7 @@ both application servers here, but then both would get the same labels
 applied. The labels are one of the nice things of <em>Prometheus</em> which distinguishes
 it from other monitoring software like <em>statsd</em>.</li>
 <li><code class="docutils literal"><span class="pre">name</span></code>: This is simply an arbitrarily chosen free-form label. Labels give
-you the ability to <em>tag</em> / <em>label</em> / <em>mark</em> / <em>annotate</em> your metrics.These
+you the ability to <em>tag</em> / <em>mark</em> / <em>annotate</em> your metrics. These
 values can later get used to set constraints in the <em>Prometheus</em> query language.</li>
 </ul>
 <p>The best metrics don&#8217;t help, if you can&#8217;t pull knowledge out of them and
@@ -1045,7 +1053,7 @@ with that.</p>
 <div class="section" id="monitor-the-metrics">
 <span id="monitoring-metrics"></span><h2><a class="toc-backref" href="#contents">Monitor the metrics</a><a class="headerlink" href="#monitor-the-metrics" title="Permalink to this headline"> </a></h2>
 <p>After the playbook is executed, open the prometheus server UI at
-<a class="reference external" href="http://192.168.100.10:9090/status">http://192.168.100.10:9090/status</a> . You should see that all the expected
+<a class="reference external" href="http://192.168.100.10:9090/status">http://192.168.100.10:9090/status</a>. You should see that all the expected
 targets are listed and in state <code class="docutils literal"><span class="pre">UP</span></code> like in this image:</p>
 <a class="reference external image-reference" href="/_images/prometheus-targets-status.png"><img alt="Prometheus status page with the expected outcome." src="../../../../../_images/prometheus-targets-status.png" /></a>
 <p>At <a class="reference external" href="http://192.168.100.10:9090/graph">http://192.168.100.10:9090/graph</a> you can start using the Prometheus
@@ -1056,10 +1064,11 @@ you can query the available disk space from the nodes by using
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">node_filesystem_free</span></code>: This is the metric you&#8217;re interested in</li>
 <li><code class="docutils literal"><span class="pre">{}</span></code>: Constraints get defined in curly brackets</li>
-<li><code class="docutils literal"><span class="pre">mountpoint='/'</span></code>: A constraint: only show metrics for the root directory</li>
+<li><code class="docutils literal"><span class="pre">mountpoint='/'</span></code>: A constraint: only show metrics of the root directory</li>
 <li><code class="docutils literal"><span class="pre">name!=''</span></code>: A constraint: only show metrics with a value for label <code class="docutils literal"><span class="pre">name</span></code></li>
 </ul>
-<p>The constraints get logically <code class="docutils literal"><span class="pre">AND</span></code>&#8216;ed.</p>
+<p>The constraints get logically <code class="docutils literal"><span class="pre">AND</span></code>&#8216;ed. After setting that query in the web
+UI, you should see this:</p>
 <a class="reference external image-reference" href="/_images/prometheus-graph.png"><img alt="Prometheus graph page with a query for free disk space" src="../../../../../_images/prometheus-graph.png" /></a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1073,7 +1082,8 @@ is in bytes, and you cannot transform it to a human readable unit. Let&#8217;s
 use <em>Grafana</em> to visualize that in a sensible way.</p>
 <p>The Ansible playbook also installed and configured the <em>Grafana</em> service,
 which is accessible at <a class="reference external" href="http://192.168.100.10:3000/">http://192.168.100.10:3000/</a>.</p>
-<p>Sign in as username <code class="docutils literal"><span class="pre">admin</span></code> and password <code class="docutils literal"><span class="pre">admin</span></code>, and you&#8217;ll see this:</p>
+<p>Sign in with username <code class="docutils literal"><span class="pre">admin</span></code> and password <code class="docutils literal"><span class="pre">admin</span></code>, select the dashboard
+<em>&#8220;Infra Node Metrics&#8221;</em> and you&#8217;ll see this:</p>
 <a class="reference external image-reference" href="/_images/grafana-dashboard.png"><img alt="|graf| dashboard visualizing Prometheus Node Exporter metrics" src="../../../../../_images/grafana-dashboard.png" /></a>
 <p>This is the dashboard created from the file <code class="docutils literal"><span class="pre">infra-node-metrics.json</span></code>.
 As said earlier, I usually use the edit functionality in the web UI to
@@ -1083,7 +1093,7 @@ of action. We have to trigger something which consumes the resources
 we monitor. That&#8217;s where the application files we copied onto the
 application servers come into play.
 These files (<code class="docutils literal"><span class="pre">eat_cpu.py</span></code>, <code class="docutils literal"><span class="pre">eat_memory.py</span></code> and
-<code class="docutils literal"><span class="pre">eat_disk.py</span></code>) are listed fully in <a class="reference internal" href="#appendix-a"><span class="std std-ref">Appendix A</span></a>, I won&#8217;t describe
+<code class="docutils literal"><span class="pre">eat_disk.py</span></code>) are listed fully in <a class="reference internal" href="#appendix"><span class="std std-ref">Appendix</span></a>, I won&#8217;t describe
 them in detail in this post.</p>
 <p>Fire up one of the applications (inside one or both of the application
 servers) to consume some resources:</p>
@@ -1106,7 +1116,7 @@ root@app-server-1:~# <span class="nb">kill</span> -9 <span class="m">2392</span>
 </td></tr></table></div>
 <p>You&#8217;ll see the impact immediately in your dashboard:</p>
 <a class="reference external image-reference" href="/_images/grafana-cpu-consumption.png"><img alt="|graf| displays the CPU consumption" src="../../../../../_images/grafana-cpu-consumption.png" /></a>
-<p>That&#8217;s it. It&#8217;s a good way to start like this and let the pattern matching
+<p>That&#8217;s it. It&#8217;s a good way to start like this and let the pattern recognition
 machine in your head do its magic for some time, and learn what&#8217;s <em>&#8220;normal&#8221;</em>
 and what&#8217;s an <em>&#8220;anomaly&#8221;</em>, before considering to introduce <em>alerting</em>,
 another corner stone of monitoring. I won&#8217;t cover alerting in this post,
@@ -1119,13 +1129,13 @@ listening to you.</p>
 <p>With this environment at your hand, you can try yourself at the following
 tasks:</p>
 <ul class="simple">
+<li>destroy and create the environment 5 times in a row</li>
+<li>run the playbook at least 3 times</li>
 <li>run another one of the demo application files and watch the impact</li>
 <li>visualize a query which only shows the servers labeled with <code class="docutils literal"><span class="pre">arch:</span> <span class="pre">x86</span></code></li>
 <li>visualize a query which watches only the used swap in the servers</li>
 <li>visualize only the CPU steal time of the monitoring server</li>
 <li>add any other metric offered by the <em>Prometheus</em> node exporter to the dashboard</li>
-<li>destroy and create the environment 5 times in a row</li>
-<li>run the playbook at least 3 times</li>
 <li>&lt;whatever-comes-to-your-mind&gt;</li>
 </ul>
 </div>
@@ -1203,8 +1213,8 @@ I will show in another post.</p>
 </tbody>
 </table>
 </div>
-<div class="section" id="appendix-a">
-<span id="id11"></span><h2><a class="toc-backref" href="#contents">Appendix A</a><a class="headerlink" href="#appendix-a" title="Permalink to this headline"> </a></h2>
+<div class="section" id="appendix">
+<span id="id11"></span><h2><a class="toc-backref" href="#contents">Appendix</a><a class="headerlink" href="#appendix" title="Permalink to this headline"> </a></h2>
 <p>The application code we use to impact the resource consumption of our
 infrastructure is shown below. It&#8217;s basically nonsense and only for
 demo purposes, that&#8217;s why I don&#8217;t add an explanation to them.</p>

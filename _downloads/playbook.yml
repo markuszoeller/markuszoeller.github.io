@@ -38,7 +38,7 @@
 # ===========================================================================
 # Do setup on all hosts we want to monitor
 # ===========================================================================
-- hosts: all  # we want the metrics of the server too
+- hosts: all  # we want the metrics of the monitoring server too
   become: true
 
   tasks:
