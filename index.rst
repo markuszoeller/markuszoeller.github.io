@@ -7,7 +7,7 @@
 Markus's Brain Swap Space
 =========================
 
-A blog with tech stuff I'd like to share and don't want to forget.
+This is Markus Zoeller's blog about software development related topics.
 
 .. list-table::
    :header-rows: 1
@@ -34,4 +34,3 @@ Recent posts
    :hidden:
 
    about.rst
-
