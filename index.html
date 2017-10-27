@@ -165,6 +165,18 @@
 <div class="section" id="recent-posts">
 <h2>Recent posts<a class="headerlink" href="#recent-posts" title="Permalink to this headline"> </a></h2>
 <ul class="postlist-style-circle postlist">
+<li><p class="first">Oct 27, 2017 - <a class="reference internal" href="posts/2017/10/27/monitoring-prometheus/">Monitoring with Prometheus</a></p>
+<p>One of the common causes for service degradation or interruption is still
+the failure or exhaustion of your basic infrastructure resources.
+This post gives you an intro how you can monitor your basic resources
+with <em>Prometheus</em>. It shows the setup with <em>Ansible</em> and the data visualization
+with <em>Grafana</em>. The post does <strong>not</strong> show all the capabilities of <em>Prometheus</em>.
+In fact, I&#8217;m showing you only the simplest configuration. The benefit
+of this post is, that it takes you from start to finish and gives you
+a playground you can easily recreate when things go wrong, thanks to
+<em>Vagrant</em> and <em>VirtualBox</em>. Beware, as this is a non-trivial (non-hello-world)
+example, this post is really long.</p>
+</li>
 <li><p class="first">Oct 13, 2017 - <a class="reference internal" href="posts/2017/10/13/book-phoenix-project/">Recommendation: The Phoenix Project</a></p>
 <p>This is my take on the book
 <cite>The Phoenix Project: A  Novel about IT, DevOps, and Helping Your Business Win</cite>
@@ -193,16 +205,6 @@ in about 15 minutes. The setup will be build of <em>statsd</em> to collect metri
 We will also create and push custom metrics and create templated graphs based
 on them. This post won&#8217;t provide any in-depth details about <em>statsd</em>,
 <em>graphite</em> and <em>Grafana</em> itself.</p>
-</li>
-<li><p class="first">Dec 01, 2015 - <a class="reference internal" href="posts/2015/12/01/openstack-bugs/">OpenStack&#8217;s Bug Management</a></p>
-<p>This post intends to give you enough background to play an active part in
-working with bugs in <em>OpenStack</em>. This includes an understanding of the
-basic life cycle a bug goes through and in which state you can contribute
-in which way. It also clarifies some possible misunderstandings and gives a
-few best practices. In general, the bugs of a project (like <em>Nova</em>, <em>Cinder</em>,
-<em>Neutron</em> and others) can be found in our issue tracker <em>Launchpad</em>. The
-lists of bugs are available at <code class="docutils literal"><span class="pre">https://bugs.launchpad.net/&lt;projectname&gt;</span></code> for
-example <code class="docutils literal"><span class="pre">https://bugs.launchpad.net/nova</span></code> for the <em>Nova</em> project.</p>
 </li>
 </ul>
 <div class="toctree-wrapper compound">
