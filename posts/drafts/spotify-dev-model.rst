@@ -9,12 +9,12 @@
    foo
 
 
-=========================
-Spotify Development Model
-=========================
+===========================
+*Spotify* Development Model
+===========================
 
 
-* basically make an excerpt of the 2 videos from 2015 by spotify.
+* basically make an excerpt of the 2 videos from 2015 by *Spotify*.
 * relationship: tribe -- squad
 * squad consists of ...
 * misconceptions: department != tribe
