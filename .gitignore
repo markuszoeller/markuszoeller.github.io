@@ -3,3 +3,4 @@
 _website
 *.pyc
 .vagrant
+build
