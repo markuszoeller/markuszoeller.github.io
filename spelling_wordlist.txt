@@ -31,6 +31,9 @@ Oct
 openstack
 ops
 playbook
+Playbook
+playbooks
+Playbooks
 PoC
 predefine
 prometheus
