@@ -124,7 +124,7 @@ html_sidebars = {}
 
 # Link to `Font Awesome`_ at `Bootstrap CDN`_ and use icons in sidebars
 # and post footers.  Default: ``False``
-fontawesome_link_cdn = "http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+# fontawesome_link_cdn = "http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 
 # Sphinx_ theme already links to `Font Awesome`_.  Default: ``False``
 #fontawesome_included = False
@@ -363,3 +363,4 @@ htmlhelp_basename = 'MyBrainSwapSpacedoc'
 
 def setup(app):
     app.add_stylesheet('css/custom.css')  # may also be an URL
+    app.add_stylesheet('http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')  # may also be an URL
