@@ -13,14 +13,14 @@ python:
   - "2.7"
 
 before_install:
-  - sudo ./install-apt-packages.sh
+  - sudo make install_apt_deps
 
 install:
-  - sudo pip install -r requirements.txt
+  - make build_dir
   - sudo pip list
 
 script:
-  - ./build_sources.sh
+  - make build
 
 after_success:
   - bash publish-gh-pages.sh
