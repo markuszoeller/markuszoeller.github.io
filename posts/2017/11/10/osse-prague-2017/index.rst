@@ -8,9 +8,9 @@
 
 
 
-==============================================
-The 2017 *Open Source Summit Europe* in Praque
-==============================================
+================================================
+The 2017 *Open Source Summit Europe* in *Praque*
+================================================
 
 
 
@@ -67,7 +67,7 @@ of sessions I attended.
 Going Modular: Turning Legacy Docs into User-Story-Based Content
 ----------------------------------------------------------------
 
-Robert Kratky, Red Hat
+*Robert Kratky, Red Hat*
 
 http://sched.co/ByIP
 
@@ -96,7 +96,7 @@ assembly
 Code Detective: How to Investigate Linux Performance Issues
 -----------------------------------------------------------
 
-Gabriel Krisman, Collabora
+*Gabriel Krisman, Collabora*
 
 http://sched.co/BxIA
 
@@ -116,7 +116,7 @@ http://sched.co/BxIA
 Collaboration in Kernel Mailing Lists
 -------------------------------------
 
-Dawn Foster, The Scale Factory
+*Dawn Foster, The Scale Factory*
 
 http://sched.co/BxIH
 
@@ -130,7 +130,7 @@ http://sched.co/BxIH
 Applying Goals-Question-Metrics to Software Development Management
 ------------------------------------------------------------------
 
-Jose Manrique Lopez de la Fuente, Bitergia
+*Jose Manrique Lopez de la Fuente, Bitergia*
 
 http://sched.co/ByIM
 
@@ -144,7 +144,7 @@ http://sched.co/ByIM
 From Dockerfiles to Ansible Container
 -------------------------------------
 
-Tomas Tomecek, Red Hat
+*Tomas Tomecek, Red Hat*
 
 http://sched.co/BxIW
 
@@ -159,7 +159,7 @@ http://sched.co/BxIW
 EulerOS Isula: Born For Cloud, Drive Cloud Native
 -------------------------------------------------
 
-Wei Xiong, Huawei
+*Wei Xiong, Huawei*
 
 http://sched.co/Cflp
 
@@ -179,7 +179,7 @@ http://sched.co/Cflp
 Developer Tools for Kubernetes
 ------------------------------
 
-Michelle Noorali & Matt Butcher, Microsoft
+*Michelle Noorali & Matt Butcher, Microsoft*
 
 http://sched.co/CexK
 
@@ -198,7 +198,7 @@ http://sched.co/CexK
 Pipeline as Code For Your Infrastructure as Code
 ------------------------------------------------
 
-Kris Buytaert, Inuits.eu
+*Kris Buytaert, Inuits.eu*
 
 http://sched.co/BxIo
 
@@ -217,7 +217,7 @@ http://sched.co/BxIo
 Serverless - Is It For Your Organization?
 -----------------------------------------
 
-Michael Bright, HPE
+*Michael Bright, HPE*
 
 http://sched.co/BxIz
 
@@ -238,7 +238,7 @@ http://sched.co/BxIz
 360 Degree Observability
 ------------------------
 
-Ilan Rabinovitch, Datadog
+*Ilan Rabinovitch, Datadog*
 
 http://sched.co/ByIc
 
@@ -261,7 +261,7 @@ http://sched.co/ByIc
 Using Containers and Continuous Packaging to Build Native Fossology Packages
 ----------------------------------------------------------------------------
 
-Bruno Cornec, Hewlett Packard Enterprise and Michael Jaeger, Siemens
+*Bruno Cornec, Hewlett Packard Enterprise and Michael Jaeger, Siemens*
 
 http://sched.co/BxJC
 
@@ -279,7 +279,7 @@ http://sched.co/BxJC
 IBM LinuxONE: The Largest Scalable Linux Server
 -----------------------------------------------
 
-Jens Voelker & John Smith, IBM
+*Jens Voelker & John Smith, IBM*
 
 http://sched.co/Cgor
 
@@ -303,7 +303,7 @@ http://sched.co/Cgor
 No One Puts the JVM in a Container
 ----------------------------------
 
-Joerg Schad & Johannes Unterstein, Mesosphere
+*Joerg Schad & Johannes Unterstein, Mesosphere*
 
 http://sched.co/BxIl
 
@@ -324,7 +324,7 @@ http://sched.co/BxIl
 Docker, Moby is Killing Your #devops Efforts
 --------------------------------------------
 
-Kris Buytaert, Inuits.eu
+*Kris Buytaert, Inuits.eu*
 
 http://sched.co/BxJd
 
@@ -344,7 +344,7 @@ http://sched.co/BxJd
 Workshop: Continuous Integration with the Open Build Service
 ------------------------------------------------------------
 
-Eduardo Navarro & Björn Geuken, SUSE Linux GmbH
+*Eduardo Navarro & Björn Geuken, SUSE Linux GmbH*
 
 http://sched.co/ByRq
 
@@ -361,7 +361,7 @@ http://sched.co/ByRq
 Everything You Always Wanted to Know About Object Storage
 ---------------------------------------------------------
 
-Erit Wasserman, Red Hat
+*Erit Wasserman, Red Hat*
 
 http://sched.co/CnWI
 
@@ -385,7 +385,7 @@ http://sched.co/CnWI
 Open Source is Just About the Source, Isn't It?
 -----------------------------------------------
 
-Isabel Drost-Fromm, Europace AG
+*Isabel Drost-Fromm, Europace AG*
 
 http://sched.co/ByIo
 
@@ -408,7 +408,7 @@ http://sched.co/ByIo
 Transactional Updates with btrfs and RPMs
 -----------------------------------------
 
-Thorsten Kukuk, SUSE
+*Thorsten Kukuk, SUSE*
 
 http://sched.co/BxK2
 
@@ -423,7 +423,7 @@ http://sched.co/BxK2
 Tutorial: Container Orchestration with Kubernetes
 -------------------------------------------------
 
-Michael Steinfurth, B1 Systems GmbH
+*Michael Steinfurth, B1 Systems GmbH*
 
 http://sched.co/ByRs
 
