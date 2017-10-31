@@ -3,6 +3,8 @@ BUILD_DIR = .venv
 OUTPUT_DIR = _website
 SPHINX_DIR = .doctrees
 
+SPELLING_CMD = $(BUILD_DIR)/bin/sphinx-build -Q -b spelling -d .doctrees .
+SPELLING_OUT_DIR = build/spelling
 .DEFAULT_GOAL := help
 
 
@@ -10,7 +12,7 @@ help:              ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 remove:            ## Remove the build dir and all output.
-	@rm -rf $(OUTPUT_DIR) $(BUILD_DIR) $(SPHINX_DIR)
+	@rm -rf $(OUTPUT_DIR) $(BUILD_DIR) $(SPHINX_DIR) $(SPELLING_OUT_DIR)
 	@echo "===MAKE: Removed everything."
 
 clean:             ## Clean the built blog output.
@@ -33,9 +35,9 @@ build:             ## Build the blog sources.
 
 spelling:          ## Check the spelling of the posts.
 	@rm -rf build
-	@$(BUILD_DIR)/bin/sphinx-build -Q -b spelling -d .doctrees . build/spelling
+	@$(SPELLING_CMD) $(SPELLING_OUT_DIR)
 	# Show me all the spelling findings
-	@cat build/spelling/output.txt
+	@cat $(SPELLING_OUT_DIR)/output.txt
 	@rm -rf build
 	@echo "===MAKE: Checked the spelling."
 
@@ -58,6 +60,10 @@ install_rpm_deps:  ## Install the CentOS (*.rpm) OS packages needed.
 	@rpm install -y graphviz        # for sphinx directive graphviz
 	@echo "===MAKE: Installed the rpm OS packages."
 
-test:
+test:              ## Test for common mistakes.
+	# Test for sorted spelling word list
 	@sort -c spelling_wordlist.txt
+	# Test for spelling mistakes
+	@$(SPELLING_CMD) $(SPELLING_OUT_DIR)
+	@if [ -s $(SPELLING_OUT_DIR)/output.txt ] ; then exit 1 ; fi
 	@echo "===MAKE: Checked for common mistakes."
