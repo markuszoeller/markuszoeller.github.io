@@ -58,6 +58,14 @@ Check the spelling of the posts with::
     $ make spelling
 
 
+Testing
+=======
+
+Check for common mistakes (which can be detected by code)::
+
+    $ make test
+
+
 Release
 =======
 

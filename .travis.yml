@@ -21,6 +21,7 @@ install:
 
 script:
   - make build
+  - make test
 
 after_success:
   - bash publish-gh-pages.sh

@@ -57,3 +57,7 @@ install_rpm_deps:  ## Install the CentOS (*.rpm) OS packages needed.
 	@rpm install -y python-enchant  # for pypi package sphinxcontrib-spelling
 	@rpm install -y graphviz        # for sphinx directive graphviz
 	@echo "===MAKE: Installed the rpm OS packages."
+
+test:
+	@sort -c spelling_wordlist.txt
+	@echo "===MAKE: Checked for common mistakes."
