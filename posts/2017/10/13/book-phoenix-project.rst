@@ -16,7 +16,7 @@ Recommendation: The Phoenix Project
 
 This is my take on the book
 `The Phoenix Project: A  Novel about IT, DevOps, and Helping Your Business Win`
-from 2014 by Gene Kim; Kevin Behr; George Spafford. It's more of a personal 
+from 2014 by *Gene Kim*; *Kevin Behr*; *George Spafford*. It's more of a personal 
 reflection why I like the book -- and why I think you should read it too --
 and less of a review.
 
