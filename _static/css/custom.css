@@ -120,9 +120,3 @@ table.footnote.table tbody tr td {
 code.docutils.literal span.pre {
     word-break: break-all;
 }
-
-
-/* sphinx_tabs ============================================================ */
-.sphinx-tabs .sphinx-menu a.item {
-    color: #3E4349 !important;
-}

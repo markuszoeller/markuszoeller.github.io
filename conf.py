@@ -158,7 +158,6 @@ needs_sphinx = '1.2'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx_tabs.tabs',
     'sphinx.ext.extlinks',
     'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
@@ -306,7 +305,7 @@ html_static_path = ['_static']
 # typographically correct entities.
 #html_use_smartypants = True
 
-# This value determines the text for the permalink; it defaults to "¶". 
+# This value determines the text for the permalink; it defaults to "¶".
 # Set it to None or the empty string to disable permalinks.
 html_add_permalinks = " "
 
