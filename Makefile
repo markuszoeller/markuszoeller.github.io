@@ -7,6 +7,8 @@ SPELLING_CMD = $(BUILD_DIR)/bin/sphinx-build -Q -b spelling -d .doctrees .
 SPELLING_OUT_DIR = build/spelling
 .DEFAULT_GOAL := help
 
+.PHONY: remove clean build_dir build spelling start stop test
+
 
 help:              ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
