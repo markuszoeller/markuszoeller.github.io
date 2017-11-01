@@ -16,7 +16,7 @@ Recommendation: The Phoenix Project
 
 This is my take on the book
 `The Phoenix Project: A  Novel about IT, DevOps, and Helping Your Business Win`
-from 2014 by *Gene Kim*; *Kevin Behr*; *George Spafford*. It's more of a personal 
+from 2014 by *Gene Kim*; *Kevin Behr*; *George Spafford*. It's more of a personal
 reflection why I like the book -- and why I think you should read it too --
 and less of a review.
 
@@ -99,7 +99,7 @@ lessons** into the story, each time the protagonist and his team fail and
 recover. And the team faces obstacles over and over again. A short,
 non-exhaustive summary might be:
 
-* developers: get a system wide view; coding is only a part of a bigger 
+* developers: get a system wide view; coding is only a part of a bigger
   picture
 * security folks: don't follow the rules blindly, risk mitigation can
   have multiple forms
@@ -226,5 +226,4 @@ spent for the solution.
 ----
 
 This book gave me a lot of insights and I enjoyed reading and learning from
-it. 
-
+it.
