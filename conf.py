@@ -266,6 +266,7 @@ html_theme_options = {
     ],
     'globaltoc_includehidden': "false",
     'navbar_sidebarrel': False,
+    'navbar_pagenav': False,
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
