@@ -9,6 +9,55 @@ footer {
 }
 
 
+/* Admonitions ============================================================ */
+
+/*  How to pick the colors: Go to:
+    https://www.w3schools.com/colors/colors_picker.asp
+    light one (top):   90%
+    dark one (bottom): 85%
+    border:            70%
+*/
+
+/* Feedback needed (blue) */
+/* The CSS theme does this already correctly */
+
+/* Note (gray) */
+div.admonition.note.alert.alert-info {
+    background-image: -webkit-linear-gradient(top,#e6e6e6 0,#d9d9d9 100%);
+    background-image: -o-linear-gradient(top,#e6e6e6 0,#d9d9d9 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#e6e6e6),to(#d9d9d9));
+    background-image: linear-gradient(to bottom,#e6e6e6 0,#d9d9d9 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e6e6e6', endColorstr='#d9d9d9', GradientType=0);
+    background-repeat: repeat-x;
+    border-color: #b3b3b3;
+}
+
+/* Tip (green) */
+div.admonition.tip.alert.alert-info {
+    background-image: -webkit-linear-gradient(top,#ccffcc 0,#b3ffb3 100%);
+    background-image: -o-linear-gradient(top,#ccffcc 0,#b3ffb3 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#ccffcc),to(#b3ffb3));
+    background-image: linear-gradient(to bottom,#ccffcc 0,#b3ffb3 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccffcc', endColorstr='#b3ffb3', GradientType=0);
+    background-repeat: repeat-x;
+    border-color: #66ff66;
+}
+
+/* Warning (yellow) */
+/* The CSS theme does this already correctly */
+
+/* Important (red) */
+div.admonition.important.alert.alert-info {
+    background-image: -webkit-linear-gradient(top,#ffcccc 0,#ffb3b3 100%);
+    background-image: -o-linear-gradient(top,#ffcccc 0,#ffb3b3 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#ffcccc),to(#ffb3b3));
+    background-image: linear-gradient(to bottom,#ffcccc 0,#ffb3b3 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffcccc', endColorstr='#ffb3b3', GradientType=0);
+    background-repeat: repeat-x;
+    border-color: #ff6666;
+}
+
+
 /* Post list ============================================================== */
 ul.postlist > li > p.first {
     font-weight: bold;
