@@ -58,8 +58,8 @@ install_apt_deps:  ## Install the Ubuntu (*.deb) OS packages needed.
 	@echo "===MAKE: Installed the deb OS packages."
 
 install_rpm_deps:  ## Install the CentOS (*.rpm) OS packages needed.
-	@rpm install -y python-enchant  # for pypi package sphinxcontrib-spelling
-	@rpm install -y graphviz        # for sphinx directive graphviz
+	@yum install -y python-enchant  # for pypi package sphinxcontrib-spelling
+	@yum install -y graphviz        # for sphinx directive graphviz
 	@echo "===MAKE: Installed the rpm OS packages."
 
 test:              ## Test for common mistakes.
