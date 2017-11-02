@@ -34,9 +34,10 @@ cd $HOME
 git clone --branch=${publish_branch} https://${tok}@github.com/markuszoeller/markuszoeller.github.io.git ${publish_branch}
 
 cd ${publish_branch}
-rm -rf *
+rm -rf *  # This is troublesome for custom domain names; add a CNAME file later
 cp -Rf ${HOME}/${temp_dir}/* .
 echo "https://help.github.com/articles/files-that-start-with-an-underscore-are-missing/" > .nojekyll
+echo "www.markusz.io" > CNAME
 
 git add --all -f
 git commit -m "Docs build of commit ${commit}"
