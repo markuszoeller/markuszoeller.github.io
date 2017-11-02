@@ -19,6 +19,8 @@ handoffs
 haproxy
 HAProxy
 hypervisor
+inline
+Inline
 Jan
 Jul
 Jun
@@ -43,6 +45,10 @@ Nov
 Oct
 openstack
 ops
+permalink
+Permalink
+permalinks
+Permalinks
 playbook
 Playbook
 playbooks
@@ -53,6 +59,8 @@ prometheus
 Prometheus
 repo
 repos
+searchable
+Searchable
 Sep
 severities
 stateful

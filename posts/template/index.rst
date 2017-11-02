@@ -18,9 +18,9 @@ Each post should start with one paragraph which is an abstract of the post.
 This paragraph should be enough for a reader to decide if they want to
 read the post or not. It is best to keep this paragraph short and simple.
 100 words or less is the limit, as this abstract is used as excerpt in the
-postlist on the landing page and in the feed readers. This upper limit
+list on the landing page and in the feed readers. This upper limit
 of 100 words is also the amount of content someone should be able to read
-in less than 20 seconds. Additionally, it fits on one small smartphone screen.
+in less than 20 seconds. Additionally, it fits on one small mobile screen.
 
 .. contents::
     :local:
@@ -291,15 +291,15 @@ References and links
 External
 --------
 
-"External" is everthing outside of this blog.
-Reference to it with autonumbered footnotes [#footnotes]_
+"External" is everything outside of this blog.
+Reference to it with auto-numbered footnotes [#footnotes]_
 
 
 .. code-block:: rst
    :linenos:
    :emphasize-lines: 0
 
-   Reference to it with autonumbered footnotes [#footnotes]_
+   Reference to it with auto-numbered footnotes [#footnotes]_
 
 Internal
 --------
@@ -480,6 +480,7 @@ cross-reference each other.
          - Change description
        * - 2017-11-02
          - The first release
+
 
 
 References
