@@ -67,5 +67,5 @@ test:              ## Test for common mistakes.
 	@sort -c spelling_wordlist.txt
 	# Test for spelling mistakes
 	@$(SPELLING_CMD) $(SPELLING_OUT_DIR)
-	@if [ -s $(SPELLING_OUT_DIR)/output.txt ] ; then exit 1 ; fi
+	@if [ -s $(SPELLING_OUT_DIR)/output.txt ] ; then cat $(SPELLING_OUT_DIR)/output.txt && exit 1 ; fi
 	@echo "===MAKE: Checked for common mistakes."
