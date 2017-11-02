@@ -18,6 +18,19 @@ footer {
     border:            70%
 */
 
+/* Todo (red as hell) */
+div.admonition-todo.alert.alert-info {
+    background-image: -webkit-linear-gradient(top,red 0,red 100%);
+    background-image: -o-linear-gradient(top,red 0,red 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(red),to(red));
+    background-image: linear-gradient(to bottom,red 0,red 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='red', endColorstr='red', GradientType=0);
+    background-repeat: repeat-x;
+    border-color: black;
+    font-weight: bold;
+    color: white;
+}
+
 /* Feedback needed (blue) */
 /* The CSS theme does this already correctly */
 
