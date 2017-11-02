@@ -1,6 +1,4 @@
 
-.. todo:: date, tags, category and title of this post.
-
 .. post::
    :tags: template
    :title: Template for all posts
