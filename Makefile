@@ -65,6 +65,8 @@ install_rpm_deps:  ## Install the CentOS (*.rpm) OS packages needed.
 test:              ## Test for common mistakes.
 	# Test for sorted spelling word list
 	@sort -c spelling_wordlist.txt
+	# Test for too long URLs
+	@./scripts/test_url_lengths.sh
 	# Test for spelling mistakes
 	@$(SPELLING_CMD) $(SPELLING_OUT_DIR)
 	@if [ -s $(SPELLING_OUT_DIR)/output.txt ] ; then cat $(SPELLING_OUT_DIR)/output.txt && exit 1 ; fi
