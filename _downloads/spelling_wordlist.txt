@@ -1,4 +1,5 @@
 admin
+analytics
 ansible
 Ansible
 app
@@ -19,6 +20,8 @@ handoffs
 haproxy
 HAProxy
 hypervisor
+importances
+Importances
 inline
 Inline
 Jan
@@ -42,6 +45,8 @@ Namespace
 namespaces
 Namespaces
 Nov
+observability
+Observability
 Oct
 openstack
 ops
@@ -59,6 +64,12 @@ prometheus
 Prometheus
 repo
 repos
+runtime
+Runtime
+runtimes
+Runtimes
+scalable
+Scalable
 searchable
 Searchable
 Sep
@@ -73,7 +84,10 @@ Tarballs
 templated
 timestamp
 todo
+transactional
+Transactional
 unmaintainable
+unordered
 unserviceable
 username
 Vagrantfile

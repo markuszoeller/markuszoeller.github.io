@@ -13,8 +13,9 @@
    pastebin
    triager
    mgmt
-   assigne
+   assignee
    unassign
+   Triaged
 
 
 .. |tracker-name| replace:: *Launchpad*
@@ -420,7 +421,7 @@ progress in a long time for a variety of reasons, for example:
 * the was no review for that issue
 * the review was "left alone" with a ``-1``
 
-To enable other contributors to work on that issue, remove the assigne and
+To enable other contributors to work on that issue, remove the assignee and
 set the status to the last known before it was set to ``In Progress``. Every
 project will handle that policy in a somewhat different way.
 
