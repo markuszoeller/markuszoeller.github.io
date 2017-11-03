@@ -13,8 +13,9 @@
    pastebin
    triager
    mgmt
-   assigne
+   assignee
    unassign
+   Triaged
 
 
 .. |tracker-name| replace:: *Launchpad*

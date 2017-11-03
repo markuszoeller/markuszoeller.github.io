@@ -100,7 +100,7 @@ Code Detective: How to Investigate Linux Performance Issues
 
 http://sched.co/BxIA
 
-* Amdahl's law
+* *Amdahl's law*
 * hot code
 * **premature** optimization
 * ``perf`` profiling
@@ -307,7 +307,7 @@ No One Puts the JVM in a Container
 
 http://sched.co/BxIl
 
-* DC/OS based on apache *mesos* (container orchestration)
+* DC/OS based on *apache mesos* (container orchestration)
 * "feels" like a "lightweight VM"
 * see all process (of the host) inside the container (?)
 * namespaces are just views (mapping on the real things)
