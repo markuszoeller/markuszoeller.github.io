@@ -1,6 +1,6 @@
 
-.. post::
-   :tags: conferences
+.. post:: 10 Nov, 2017
+   :category: conferences
    :title: The 2017 Open Source Summit Europe in Praque
 
 .. spelling::
@@ -14,14 +14,17 @@ The 2017 *Open Source Summit Europe* in *Praque*
 
 
 
+This post is my recap of the *Open Source Summit Europe* conference which
+took place in *Praque (Czech Republic)* from October 23-26, 2017. I'll go
+briefly through the sessions I attended and the notes I took.
 
-.. todo:: abstract
+
 
 .. contents::
     :local:
     :backlinks: top
 
-.. todo:: date
+
 
 .. list-table:: Change history:
    :widths: 1 5
@@ -29,11 +32,13 @@ The 2017 *Open Source Summit Europe* in *Praque*
 
    * - Date
      - Change description
-   * - YYYY-MM-DD
+   * - 2017-11-10
      - The first release
 
-Intro
-=====
+
+
+Context
+=======
 
 The *Open Source Summit Europe* describes itself as:
 
@@ -43,14 +48,13 @@ The *Open Source Summit Europe* describes itself as:
     share information and learn across a wide variety of topics,
     with 2,000 technologists and community members.
 
-It's one of the many events of the *Linux Foundation*:
-http://events.linuxfoundation.org/
+It is one of the many events of the *Linux Foundation* [#lfe]_
+and the main page for the conference itself can be found at [#osself]_.
+The full schedule for the event I attended is at [#ossesched]_ and the
+videos to the keynotes can be found at [#osseyt]_.
 
-The main page for the conference itself is at:
-http://events.linuxfoundation.org/events/open-source-summit-europe
-
-The full schedule for the event I attended is at:
-https://osseu17.sched.com/
+.. image:: osse_2017_inspiration_everywhere.JPG
+   :height: 250px
 
 
 
@@ -59,7 +63,8 @@ Sessions
 
 At any given time I had two to four conflicting sessions in my bookmarks,
 so I had to decide which ones to go to. Here's the chronological list
-of sessions I attended.
+of sessions I attended. The linked sessions often have the used presentations,
+in case you like to have more details.
 
 
 
@@ -67,121 +72,124 @@ of sessions I attended.
 Going Modular: Turning Legacy Docs into User-Story-Based Content
 ----------------------------------------------------------------
 
-*Robert Kratky, Red Hat*
+*Robert Kratky (Red Hat)*: http://sched.co/ByIP
 
-http://sched.co/ByIP
+The usual measure of success for writing documentation is **comprehensiveness**.
+Everything needs to be documented. With shorter delivery cycles of the software
+to document, it got harder to achieve that level of comprehensiveness. It is
+also hard to read a monolithic document of dozens to **hundreds of pages**.
 
-issue:
+So they started to use a modular approach, based on the question, how to
+achieve a **specific goal**. He made a comparison to *StackOverflow*, which
+basically does exactly that. It's **not comprehensive**, but focuses on
+specific content and user stories to document. They created a documentation
+assembly based on action oriented, modular templates, which allowed them to
+deliver the **most important documentation** in each delivery cycle.
 
-* (legacy) measure of success: comprehensiveness
-* hard to read and write
-
-why:
-
-* less monolithic; smaller now
-* delivery cycles
-
-user story
-
-* measure of success: user achieves specific goals
-* very selective content
-
-assembly
-
-* templates
-* action oriented
-* modular
 
 
 Code Detective: How to Investigate Linux Performance Issues
 -----------------------------------------------------------
 
-*Gabriel Krisman, Collabora*
+*Gabriel Krisman (Collabora)*: http://sched.co/BxIA
 
-http://sched.co/BxIA
-
-* *Amdahl's law*
-* hot code
-* **premature** optimization
-* ``perf`` profiling
-* CPU cache gets destroyed / fetching from memory is expensive ``cache-misses``
-* "branch prediction" ``branch-misses``
-* compiler optimizes better than you
-* learn performance/profiling tools
-* use common algorithms / avoid being fancy
-* col.la/blog shows code snippets
+*Gabriel* mentioned *Amdahl's law* [#amdahl]_ and that you should not do
+**premature** optimization without knowing what parts of your code base
+is **hot code**. He recommends knowing the ``perf`` profiling tool and
+metrics like ``cache-misses`` and ``branch-misses``. It's probably also
+a good idea to stick to common algorithms and avoid being fancy, as the
+compiler most likely optimizes better than you. At [#colla]_, they show
+more tips and tricks.
 
 
 
 Collaboration in Kernel Mailing Lists
 -------------------------------------
 
-*Dawn Foster, The Scale Factory*
+*Dawn Foster (The Scale Factory)*: http://sched.co/BxIH
 
-http://sched.co/BxIH
+This was a presentation of *Dawn's* research for her PhD. Key findings where,
+that *task affiliation* is far greater than *company affiliation*. Also,
+that the **timezone pain** gets mitigated by the asynchronous nature of mailing
+lists. Lastly, **professional relationships** get stronger with face to face
+meetings like conferences.
 
-* task affiliation > company affiliation
-* timezone pain gets mitigated
-* professional relationships get stronger with f2f conferences
-* interesting visualization of (strength of) collaboration
+She chose a very interesting type of data visualization for (strength of)
+collaboration. I don't know the name of that diagram type; it's basically
+a dependency graph arranged in a cycle. Check out her slides at the link
+above.
 
 
 
 Applying Goals-Question-Metrics to Software Development Management
 ------------------------------------------------------------------
 
-*Jose Manrique Lopez de la Fuente, Bitergia*
+*Jose Manrique Lopez de la Fuente (Bitergia)*: http://sched.co/ByIM
 
-http://sched.co/ByIM
+I wasn't aware of the term **inner source** [#inner]_ , until *Jose* mentioned
+it in his talk. To move in that direction he discussed the use of
+*goal, question, metric* **(GQM)** [#gqm]_ and the *DevOps* framework **CALMS**:
 
-* https://en.wikipedia.org/wiki/GQM
-* inner source
-* DevOps framework CALMS
-* CHAOSS analytics software
+* Culture
+* Automation
+* Lean
+* Measurement
+* Sharing
+
+He mentioned that the *Community Health Analytics Open Source Software*
+**(CHAOSS)** can help you to navigate through the complex and very important
+non-code part of software development.
 
 
 
 From *Dockerfiles* to *Ansible Container*
 -----------------------------------------
 
-*Tomas Tomecek, Red Hat*
+*Tomas Tomecek (Red Hat)*: http://sched.co/BxIW
 
-http://sched.co/BxIW
+*Tomas* showed examples of non-trivial **hard-to-read Dockerfiles** and
+the problems he faces with parsing and linting them due to the missing
+spec of the **file format**. He worried about the **varying degrees** of
+quality, freshness and maintenance of the images at *DockerHub*.
 
-* *Dockerfiles* can get easily hard to read
-* parsing/linting is hard due to missing spec of the file format
-* quality/freshness/maintenance of images varies
-* ansible-container makes things readable/flexible/reusable
-* *Moby buildkit* could lift the limitations of *Dockerfile*
+His idea was to use **ansible-container** to make things more
+readable, flexible and reusable, until the **Moby buildkit** could lift
+some (or all) of the mentioned limitations of *Dockerfiles*.
 
 
 
 *EulerOS Isula*: Born For Cloud, Drive Cloud Native
 ---------------------------------------------------
 
-*Wei Xiong, Huawei*
+*Wei Xiong (Huawei)*: http://sched.co/Cflp
 
-http://sched.co/Cflp
+*Huawei* promotes a **cloud-pipe-device ecosystem** [#cpd]_. All the different
+parts which play a role until a service can be consumed, run on *Linux*.
+But the OS **package dependencies** get harder to maintain, especially across
+those very different parts:
 
-* unified platform for device, pipe, cloud (?)
-* OS package dependencies get hard to maintain
-* trend of moving away to generic Linux to single purpose Linux
-* crate multiple single purpose Linux instances
-* basically follows the divide and conquer strategy for problems
-* build assembly lines with the smaller parts
-* 30-50% are moving to container (target: ~90% in 2y)
-* *Huawei*'s public cloud *Atlas*
-* secured container based on KVM
-* https://github.com/euleros/isula
+* cloud (*Huawei*'s public cloud *Atlas*),
+* pipe (IIUC, the networking elements),
+* devices (on the end-consumer side)
+
+Instead of having one generic multi purpose *Linux* instance, they create
+multiple **single purpose** *Linux* instances, based on a common ancestor
+**EulerOS** [#euler]_. It's the divide and conquer strategy for problems,
+which means they build assembly lines with smaller parts with the goal to
+have better control.
+
+It was also interesting to hear that they target to have ~90% of the workload
+happening in containers within the next 2 years. Securing containers happens
+with *KVM*.
 
 
 
 Developer Tools for *Kubernetes*
 --------------------------------
 
-*Michelle Noorali & Matt Butcher, Microsoft*
+*Michelle Noorali & Matt Butcher (Microsoft)*: http://sched.co/CexK
 
-http://sched.co/CexK
+.. todo:: TODO
 
 * distinguish applications based on their lifespan (*serverless* vs. web app)
 * event-driven typically short-lived
@@ -198,9 +206,9 @@ http://sched.co/CexK
 Pipeline as Code For Your Infrastructure as Code
 ------------------------------------------------
 
-*Kris Buytaert, Inuits.eu*
+*Kris Buytaert (Inuits.eu)*: http://sched.co/BxIo
 
-http://sched.co/BxIo
+.. todo:: TODO
 
 * CLAMS: Culture, Lean, Automation, Measurement, Sharing
 * CI prerequisite of "continues delivery" prerequisite of "continues deployment"
@@ -217,9 +225,9 @@ http://sched.co/BxIo
 *Serverless* - Is It For Your Organization?
 -------------------------------------------
 
-*Michael Bright, HPE*
+*Michael Bright (HPE)*: http://sched.co/BxIz
 
-http://sched.co/BxIz
+.. todo:: TODO
 
 * don't care about servers
 * *backend as a service* (*BaaS*)
@@ -238,9 +246,9 @@ http://sched.co/BxIz
 360 Degree Observability
 ------------------------
 
-*Ilan Rabinovitch, Datadog*
+*Ilan Rabinovitch (Datadog)*: http://sched.co/ByIc
 
-http://sched.co/ByIc
+.. todo:: TODO
 
 * "monitoring driven development"
 * "the problem is not the right tool"
@@ -261,9 +269,9 @@ http://sched.co/ByIc
 Using Containers and Continuous Packaging to Build Native *Fossology* Packages
 ------------------------------------------------------------------------------
 
-*Bruno Cornec, Hewlett Packard Enterprise and Michael Jaeger, Siemens*
+*Bruno Cornec (HPE) and Michael Jaeger (Siemens)*: http://sched.co/BxJC
 
-http://sched.co/BxJC
+.. todo:: TODO
 
 * *project-creator.org* creates packages for different distributions and package managers
 * *fossology* scans for licenses
@@ -279,9 +287,9 @@ http://sched.co/BxJC
 IBM LinuxONE: The Largest Scalable Linux Server
 -----------------------------------------------
 
-*Jens Voelker & John Smith, IBM*
+*Jens Voelker & John Smith (IBM)*: http://sched.co/Cgor
 
-http://sched.co/Cgor
+.. todo:: TODO
 
 * license consolidation is still a thing
 * gov + banking ~= 50% of users
@@ -303,9 +311,9 @@ http://sched.co/Cgor
 No One Puts the JVM in a Container
 ----------------------------------
 
-*Joerg Schad & Johannes Unterstein, Mesosphere*
+*Joerg Schad & Johannes Unterstein (Mesosphere)*: http://sched.co/BxIl
 
-http://sched.co/BxIl
+.. todo:: TODO
 
 * DC/OS based on *apache mesos* (container orchestration)
 * "feels" like a "lightweight VM"
@@ -324,9 +332,9 @@ http://sched.co/BxIl
 *Docker*, *Moby* is Killing Your `#devops` Efforts
 --------------------------------------------------
 
-*Kris Buytaert, Inuits.eu*
+*Kris Buytaert (Inuits.eu)*: http://sched.co/BxJd
 
-http://sched.co/BxJd
+.. todo:: TODO
 
 * *Docker* -> *Moby*
 * Enterprises are afraid of (public) cloud
@@ -344,9 +352,9 @@ http://sched.co/BxJd
 Workshop: Continuous Integration with the Open Build Service
 ------------------------------------------------------------
 
-*Eduardo Navarro & Björn Geuken, SUSE Linux GmbH*
+*Eduardo Navarro & Björn Geuken (SUSE Linux GmbH)*: http://sched.co/ByRq
 
-http://sched.co/ByRq
+.. todo:: TODO
 
 * private installation of http://openbuildservice.org/ possible
 * build packages for different package manager and architectures and distributions
@@ -361,9 +369,9 @@ http://sched.co/ByRq
 Everything You Always Wanted to Know About Object Storage
 ---------------------------------------------------------
 
-*Erit Wasserman, Red Hat*
+*Erit Wasserman (Red Hat)*: http://sched.co/CnWI
 
-http://sched.co/CnWI
+.. todo:: TODO
 
 * block storage has no metadata but is fast
 * file system has hierarchy and metadata and in-place writes
@@ -385,9 +393,9 @@ http://sched.co/CnWI
 Open Source is Just About the Source, Isn't It?
 -----------------------------------------------
 
-*Isabel Drost-Fromm, Europace AG*
+*Isabel Drost-Fromm (Europace AG)*: http://sched.co/ByIo
 
-http://sched.co/ByIo
+.. todo:: TODO
 
 * the messy problems are people problems
 * the source code is only a small part of the project
@@ -408,9 +416,9 @@ http://sched.co/ByIo
 Transactional Updates with *btrfs* and RPMs
 -------------------------------------------
 
-*Thorsten Kukuk, SUSE*
+*Thorsten Kukuk (SUSE)*: http://sched.co/BxK2
 
-http://sched.co/BxK2
+.. todo:: TODO
 
 * *btrfs* == copy on write general purpose filesystem
 * *subvolumes* != LVM volumes
@@ -423,30 +431,52 @@ http://sched.co/BxK2
 Tutorial: Container Orchestration with *Kubernetes*
 ---------------------------------------------------
 
-*Michael Steinfurth, B1 Systems GmbH*
+*Michael Steinfurth (B1 Systems GmbH)*: http://sched.co/ByRs
 
-http://sched.co/ByRs
+This session showed how **kubernetes** uses *etcd* for saving data.
+You can run *etcd* on *kubernetes* itself or as dedicated servers
+and you need at least **3 etcd nodes** to have a **quorum**.
+The *etcd* clients have to advertise themselves to the peers.
+*Michael* used **flanneld** for networking overlay and stored the
+network configuration in *etcd* and the whole **etcd cluster** is then
+aware of this new value. For all that, you can use **kubectl**,
+a configuration tool and cluster CLI.
 
-* *kubernetes* uses *etcd* for saving data
-* *etcd* on *kubernetes* itself or as dedicated servers
-* >= 3 *etcd* nodes to have a quorum (odd numbers)
-* *etcd* clients have to advertise themselves to the peers
-* *flanneld* for networking overlay
-* network configuration (*flanneld*) saved in *etcd*
-* *etcd* cluster is then aware of this new value
-* never do a live coding session for people to repeat the steps live
-* *kubectl* is a configuration tool and cluster CLI
-* opinion: there are too many low-detail plumbing commands for the many
-  moving parts. I miss one or two abstraction levels with more goal
-  oriented (not task oriented) commands. opinionated stacks are fine!
-  Look into one car factory and you know them all, why? because
-  there are industry best practices; less freedom is fine sometimes.
-  You're goal should be to deliver value to the user, not being
-  fancy in the way you work. Boring is the new exciting.
 
 
 Event Recap
 ===========
 
-Very good event, I'm looking forward to the next one, October 22 - 24, 2018
-in Edinburgh, Scotland.
+It was a very good event; the quality of the sessions ans speakers was
+excellent. Everything was well organized. The evening event on Wednesday
+took place in the *Municipal House*, a gorgeous building (see image below).
+I'm looking forward to the next event, October 22 - 24, 2018 in Edinburgh,
+Scotland.
+
+.. image:: municipal_house_praque.JPG
+   :height: 250px
+
+
+
+References
+==========
+
+.. [#lfe] http://events.linuxfoundation.org/
+
+.. [#osself] http://events.linuxfoundation.org/events/open-source-summit-europe
+
+.. [#ossesched] https://osseu17.sched.com/
+
+.. [#osseyt] https://www.youtube.com/playlist?list=PLbzoR-pLrL6pISWAq-1cXP4_UZAyRtesk
+
+.. [#amdahl] https://en.wikipedia.org/wiki/Amdahl%27s_law
+
+.. [#colla] https://www.collabora.com/news-and-blog.html?blogs
+
+.. [#inner] https://en.wikipedia.org/wiki/Inner_source
+
+.. [#gqm] https://en.wikipedia.org/wiki/GQM
+
+.. [#cpd] http://www1.huawei.com/en/static/HW-104296.pdf
+
+.. [#euler] http://developer.huawei.com/ict/en/site-euleros/euleros-introduction

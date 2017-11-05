@@ -118,44 +118,40 @@
       
   <div class="section" id="the-2017-open-source-summit-europe-in-praque">
 <h1>The 2017 <em>Open Source Summit Europe</em> in <em>Praque</em><a class="headerlink" href="#the-2017-open-source-summit-europe-in-praque" title="Permalink to this headline"> </a></h1>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">abstract</p>
-</div>
+<p>This post is my recap of the <em>Open Source Summit Europe</em> conference which
+took place in <em>Praque (Czech Republic)</em> from October 23-26, 2017. I&#8217;ll go
+briefly through the sessions I attended and the notes I took.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#intro" id="id2">Intro</a></li>
-<li><a class="reference internal" href="#sessions" id="id3">Sessions</a><ul>
-<li><a class="reference internal" href="#going-modular-turning-legacy-docs-into-user-story-based-content" id="id4">Going Modular: Turning Legacy Docs into User-Story-Based Content</a></li>
-<li><a class="reference internal" href="#code-detective-how-to-investigate-linux-performance-issues" id="id5">Code Detective: How to Investigate Linux Performance Issues</a></li>
-<li><a class="reference internal" href="#collaboration-in-kernel-mailing-lists" id="id6">Collaboration in Kernel Mailing Lists</a></li>
-<li><a class="reference internal" href="#applying-goals-question-metrics-to-software-development-management" id="id7">Applying Goals-Question-Metrics to Software Development Management</a></li>
-<li><a class="reference internal" href="#from-dockerfiles-to-ansible-container" id="id8">From <em>Dockerfiles</em> to <em>Ansible Container</em></a></li>
-<li><a class="reference internal" href="#euleros-isula-born-for-cloud-drive-cloud-native" id="id9"><em>EulerOS Isula</em>: Born For Cloud, Drive Cloud Native</a></li>
-<li><a class="reference internal" href="#developer-tools-for-kubernetes" id="id10">Developer Tools for <em>Kubernetes</em></a></li>
-<li><a class="reference internal" href="#pipeline-as-code-for-your-infrastructure-as-code" id="id11">Pipeline as Code For Your Infrastructure as Code</a></li>
-<li><a class="reference internal" href="#serverless-is-it-for-your-organization" id="id12"><em>Serverless</em> - Is It For Your Organization?</a></li>
-<li><a class="reference internal" href="#degree-observability" id="id13">360 Degree Observability</a></li>
-<li><a class="reference internal" href="#using-containers-and-continuous-packaging-to-build-native-fossology-packages" id="id14">Using Containers and Continuous Packaging to Build Native <em>Fossology</em> Packages</a></li>
-<li><a class="reference internal" href="#ibm-linuxone-the-largest-scalable-linux-server" id="id15">IBM LinuxONE: The Largest Scalable Linux Server</a></li>
-<li><a class="reference internal" href="#no-one-puts-the-jvm-in-a-container" id="id16">No One Puts the JVM in a Container</a></li>
-<li><a class="reference internal" href="#docker-moby-is-killing-your-devops-efforts" id="id17"><em>Docker</em>, <em>Moby</em> is Killing Your <cite>#devops</cite> Efforts</a></li>
-<li><a class="reference internal" href="#workshop-continuous-integration-with-the-open-build-service" id="id18">Workshop: Continuous Integration with the Open Build Service</a></li>
-<li><a class="reference internal" href="#everything-you-always-wanted-to-know-about-object-storage" id="id19">Everything You Always Wanted to Know About Object Storage</a></li>
-<li><a class="reference internal" href="#open-source-is-just-about-the-source-isn-t-it" id="id20">Open Source is Just About the Source, Isn&#8217;t It?</a></li>
-<li><a class="reference internal" href="#transactional-updates-with-btrfs-and-rpms" id="id21">Transactional Updates with <em>btrfs</em> and RPMs</a></li>
-<li><a class="reference internal" href="#tutorial-container-orchestration-with-kubernetes" id="id22">Tutorial: Container Orchestration with <em>Kubernetes</em></a></li>
+<li><a class="reference internal" href="#context" id="id12">Context</a></li>
+<li><a class="reference internal" href="#sessions" id="id13">Sessions</a><ul>
+<li><a class="reference internal" href="#going-modular-turning-legacy-docs-into-user-story-based-content" id="id14">Going Modular: Turning Legacy Docs into User-Story-Based Content</a></li>
+<li><a class="reference internal" href="#code-detective-how-to-investigate-linux-performance-issues" id="id15">Code Detective: How to Investigate Linux Performance Issues</a></li>
+<li><a class="reference internal" href="#collaboration-in-kernel-mailing-lists" id="id16">Collaboration in Kernel Mailing Lists</a></li>
+<li><a class="reference internal" href="#applying-goals-question-metrics-to-software-development-management" id="id17">Applying Goals-Question-Metrics to Software Development Management</a></li>
+<li><a class="reference internal" href="#from-dockerfiles-to-ansible-container" id="id18">From <em>Dockerfiles</em> to <em>Ansible Container</em></a></li>
+<li><a class="reference internal" href="#euleros-isula-born-for-cloud-drive-cloud-native" id="id19"><em>EulerOS Isula</em>: Born For Cloud, Drive Cloud Native</a></li>
+<li><a class="reference internal" href="#developer-tools-for-kubernetes" id="id20">Developer Tools for <em>Kubernetes</em></a></li>
+<li><a class="reference internal" href="#pipeline-as-code-for-your-infrastructure-as-code" id="id21">Pipeline as Code For Your Infrastructure as Code</a></li>
+<li><a class="reference internal" href="#serverless-is-it-for-your-organization" id="id22"><em>Serverless</em> - Is It For Your Organization?</a></li>
+<li><a class="reference internal" href="#degree-observability" id="id23">360 Degree Observability</a></li>
+<li><a class="reference internal" href="#using-containers-and-continuous-packaging-to-build-native-fossology-packages" id="id24">Using Containers and Continuous Packaging to Build Native <em>Fossology</em> Packages</a></li>
+<li><a class="reference internal" href="#ibm-linuxone-the-largest-scalable-linux-server" id="id25">IBM LinuxONE: The Largest Scalable Linux Server</a></li>
+<li><a class="reference internal" href="#no-one-puts-the-jvm-in-a-container" id="id26">No One Puts the JVM in a Container</a></li>
+<li><a class="reference internal" href="#docker-moby-is-killing-your-devops-efforts" id="id27"><em>Docker</em>, <em>Moby</em> is Killing Your <cite>#devops</cite> Efforts</a></li>
+<li><a class="reference internal" href="#workshop-continuous-integration-with-the-open-build-service" id="id28">Workshop: Continuous Integration with the Open Build Service</a></li>
+<li><a class="reference internal" href="#everything-you-always-wanted-to-know-about-object-storage" id="id29">Everything You Always Wanted to Know About Object Storage</a></li>
+<li><a class="reference internal" href="#open-source-is-just-about-the-source-isn-t-it" id="id30">Open Source is Just About the Source, Isn&#8217;t It?</a></li>
+<li><a class="reference internal" href="#transactional-updates-with-btrfs-and-rpms" id="id31">Transactional Updates with <em>btrfs</em> and RPMs</a></li>
+<li><a class="reference internal" href="#tutorial-container-orchestration-with-kubernetes" id="id32">Tutorial: Container Orchestration with <em>Kubernetes</em></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#event-recap" id="id23">Event Recap</a></li>
+<li><a class="reference internal" href="#event-recap" id="id33">Event Recap</a></li>
+<li><a class="reference internal" href="#references" id="id34">References</a></li>
 </ul>
 </div>
-<div class="admonition-todo admonition" id="index-1">
-<p class="first admonition-title">Todo</p>
-<p class="last">date</p>
-</div>
-<table border="1" class="docutils" id="id1">
-<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id1" title="Permalink to this table"> </a></caption>
+<table border="1" class="docutils" id="id11">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id11" title="Permalink to this table"> </a></caption>
 <colgroup>
 <col width="17%" />
 <col width="83%" />
@@ -166,13 +162,13 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>YYYY-MM-DD</td>
+<tr class="row-even"><td>2017-11-10</td>
 <td>The first release</td>
 </tr>
 </tbody>
 </table>
-<div class="section" id="intro">
-<h2><a class="toc-backref" href="#contents">Intro</a><a class="headerlink" href="#intro" title="Permalink to this headline"> </a></h2>
+<div class="section" id="context">
+<h2><a class="toc-backref" href="#contents">Context</a><a class="headerlink" href="#context" title="Permalink to this headline"> </a></h2>
 <p>The <em>Open Source Summit Europe</em> describes itself as:</p>
 <blockquote>
 <div>LinuxCon, ContainerCon, CloudOpen and the new Open Community
@@ -180,116 +176,112 @@ Conference combine under one umbrella name in 2017 - the Open
 Source Summit. At the Open Source Summit, you will collaborate,
 share information and learn across a wide variety of topics,
 with 2,000 technologists and community members.</div></blockquote>
-<p>It&#8217;s one of the many events of the <em>Linux Foundation</em>:
-<a class="reference external" href="http://events.linuxfoundation.org/">http://events.linuxfoundation.org/</a></p>
-<p>The main page for the conference itself is at:
-<a class="reference external" href="http://events.linuxfoundation.org/events/open-source-summit-europe">http://events.linuxfoundation.org/events/open-source-summit-europe</a></p>
-<p>The full schedule for the event I attended is at:
-<a class="reference external" href="https://osseu17.sched.com/">https://osseu17.sched.com/</a></p>
+<p>It is one of the many events of the <em>Linux Foundation</em> <a class="footnote-reference" href="#lfe" id="id1">[1]</a>
+and the main page for the conference itself can be found at <a class="footnote-reference" href="#osself" id="id2">[2]</a>.
+The full schedule for the event I attended is at <a class="footnote-reference" href="#ossesched" id="id3">[3]</a> and the
+videos to the keynotes can be found at <a class="footnote-reference" href="#osseyt" id="id4">[4]</a>.</p>
+<a class="reference internal image-reference" href="../../../../../_images/osse_2017_inspiration_everywhere.JPG"><img alt="../../../../../_images/osse_2017_inspiration_everywhere.JPG" src="../../../../../_images/osse_2017_inspiration_everywhere.JPG" style="height: 250px;" /></a>
 </div>
 <div class="section" id="sessions">
 <h2><a class="toc-backref" href="#contents">Sessions</a><a class="headerlink" href="#sessions" title="Permalink to this headline"> </a></h2>
 <p>At any given time I had two to four conflicting sessions in my bookmarks,
 so I had to decide which ones to go to. Here&#8217;s the chronological list
-of sessions I attended.</p>
+of sessions I attended. The linked sessions often have the used presentations,
+in case you like to have more details.</p>
 <div class="section" id="going-modular-turning-legacy-docs-into-user-story-based-content">
 <h3><a class="toc-backref" href="#contents">Going Modular: Turning Legacy Docs into User-Story-Based Content</a><a class="headerlink" href="#going-modular-turning-legacy-docs-into-user-story-based-content" title="Permalink to this headline"> </a></h3>
-<p><em>Robert Kratky, Red Hat</em></p>
-<p><a class="reference external" href="http://sched.co/ByIP">http://sched.co/ByIP</a></p>
-<p>issue:</p>
-<ul class="simple">
-<li>(legacy) measure of success: comprehensiveness</li>
-<li>hard to read and write</li>
-</ul>
-<p>why:</p>
-<ul class="simple">
-<li>less monolithic; smaller now</li>
-<li>delivery cycles</li>
-</ul>
-<p>user story</p>
-<ul class="simple">
-<li>measure of success: user achieves specific goals</li>
-<li>very selective content</li>
-</ul>
-<p>assembly</p>
-<ul class="simple">
-<li>templates</li>
-<li>action oriented</li>
-<li>modular</li>
-</ul>
+<p><em>Robert Kratky (Red Hat)</em>: <a class="reference external" href="http://sched.co/ByIP">http://sched.co/ByIP</a></p>
+<p>The usual measure of success for writing documentation is <strong>comprehensiveness</strong>.
+Everything needs to be documented. With shorter delivery cycles of the software
+to document, it got harder to achieve that level of comprehensiveness. It is
+also hard to read a monolithic document of dozens to <strong>hundreds of pages</strong>.</p>
+<p>So they started to use a modular approach, based on the question, how to
+achieve a <strong>specific goal</strong>. He made a comparison to <em>StackOverflow</em>, which
+basically does exactly that. It&#8217;s <strong>not comprehensive</strong>, but focuses on
+specific content and user stories to document. They created a documentation
+assembly based on action oriented, modular templates, which allowed them to
+deliver the <strong>most important documentation</strong> in each delivery cycle.</p>
 </div>
 <div class="section" id="code-detective-how-to-investigate-linux-performance-issues">
 <h3><a class="toc-backref" href="#contents">Code Detective: How to Investigate Linux Performance Issues</a><a class="headerlink" href="#code-detective-how-to-investigate-linux-performance-issues" title="Permalink to this headline"> </a></h3>
-<p><em>Gabriel Krisman, Collabora</em></p>
-<p><a class="reference external" href="http://sched.co/BxIA">http://sched.co/BxIA</a></p>
-<ul class="simple">
-<li><em>Amdahl&#8217;s law</em></li>
-<li>hot code</li>
-<li><strong>premature</strong> optimization</li>
-<li><code class="docutils literal"><span class="pre">perf</span></code> profiling</li>
-<li>CPU cache gets destroyed / fetching from memory is expensive <code class="docutils literal"><span class="pre">cache-misses</span></code></li>
-<li>&#8220;branch prediction&#8221; <code class="docutils literal"><span class="pre">branch-misses</span></code></li>
-<li>compiler optimizes better than you</li>
-<li>learn performance/profiling tools</li>
-<li>use common algorithms / avoid being fancy</li>
-<li>col.la/blog shows code snippets</li>
-</ul>
+<p><em>Gabriel Krisman (Collabora)</em>: <a class="reference external" href="http://sched.co/BxIA">http://sched.co/BxIA</a></p>
+<p><em>Gabriel</em> mentioned <em>Amdahl&#8217;s law</em> <a class="footnote-reference" href="#amdahl" id="id5">[5]</a> and that you should not do
+<strong>premature</strong> optimization without knowing what parts of your code base
+is <strong>hot code</strong>. He recommends knowing the <code class="docutils literal"><span class="pre">perf</span></code> profiling tool and
+metrics like <code class="docutils literal"><span class="pre">cache-misses</span></code> and <code class="docutils literal"><span class="pre">branch-misses</span></code>. It&#8217;s probably also
+a good idea to stick to common algorithms and avoid being fancy, as the
+compiler most likely optimizes better than you. At <a class="footnote-reference" href="#colla" id="id6">[6]</a>, they show
+more tips and tricks.</p>
 </div>
 <div class="section" id="collaboration-in-kernel-mailing-lists">
 <h3><a class="toc-backref" href="#contents">Collaboration in Kernel Mailing Lists</a><a class="headerlink" href="#collaboration-in-kernel-mailing-lists" title="Permalink to this headline"> </a></h3>
-<p><em>Dawn Foster, The Scale Factory</em></p>
-<p><a class="reference external" href="http://sched.co/BxIH">http://sched.co/BxIH</a></p>
-<ul class="simple">
-<li>task affiliation &gt; company affiliation</li>
-<li>timezone pain gets mitigated</li>
-<li>professional relationships get stronger with f2f conferences</li>
-<li>interesting visualization of (strength of) collaboration</li>
-</ul>
+<p><em>Dawn Foster (The Scale Factory)</em>: <a class="reference external" href="http://sched.co/BxIH">http://sched.co/BxIH</a></p>
+<p>This was a presentation of <em>Dawn&#8217;s</em> research for her PhD. Key findings where,
+that <em>task affiliation</em> is far greater than <em>company affiliation</em>. Also,
+that the <strong>timezone pain</strong> gets mitigated by the asynchronous nature of mailing
+lists. Lastly, <strong>professional relationships</strong> get stronger with face to face
+meetings like conferences.</p>
+<p>She chose a very interesting type of data visualization for (strength of)
+collaboration. I don&#8217;t know the name of that diagram type; it&#8217;s basically
+a dependency graph arranged in a cycle. Check out her slides at the link
+above.</p>
 </div>
 <div class="section" id="applying-goals-question-metrics-to-software-development-management">
 <h3><a class="toc-backref" href="#contents">Applying Goals-Question-Metrics to Software Development Management</a><a class="headerlink" href="#applying-goals-question-metrics-to-software-development-management" title="Permalink to this headline"> </a></h3>
-<p><em>Jose Manrique Lopez de la Fuente, Bitergia</em></p>
-<p><a class="reference external" href="http://sched.co/ByIM">http://sched.co/ByIM</a></p>
+<p><em>Jose Manrique Lopez de la Fuente (Bitergia)</em>: <a class="reference external" href="http://sched.co/ByIM">http://sched.co/ByIM</a></p>
+<p>I wasn&#8217;t aware of the term <strong>inner source</strong> <a class="footnote-reference" href="#inner" id="id7">[7]</a> , until <em>Jose</em> mentioned
+it in his talk. To move in that direction he discussed the use of
+<em>goal, question, metric</em> <strong>(GQM)</strong> <a class="footnote-reference" href="#gqm" id="id8">[8]</a> and the <em>DevOps</em> framework <strong>CALMS</strong>:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://en.wikipedia.org/wiki/GQM">https://en.wikipedia.org/wiki/GQM</a></li>
-<li>inner source</li>
-<li>DevOps framework CALMS</li>
-<li>CHAOSS analytics software</li>
+<li>Culture</li>
+<li>Automation</li>
+<li>Lean</li>
+<li>Measurement</li>
+<li>Sharing</li>
 </ul>
+<p>He mentioned that the <em>Community Health Analytics Open Source Software</em>
+<strong>(CHAOSS)</strong> can help you to navigate through the complex and very important
+non-code part of software development.</p>
 </div>
 <div class="section" id="from-dockerfiles-to-ansible-container">
 <h3><a class="toc-backref" href="#contents">From <em>Dockerfiles</em> to <em>Ansible Container</em></a><a class="headerlink" href="#from-dockerfiles-to-ansible-container" title="Permalink to this headline"> </a></h3>
-<p><em>Tomas Tomecek, Red Hat</em></p>
-<p><a class="reference external" href="http://sched.co/BxIW">http://sched.co/BxIW</a></p>
-<ul class="simple">
-<li><em>Dockerfiles</em> can get easily hard to read</li>
-<li>parsing/linting is hard due to missing spec of the file format</li>
-<li>quality/freshness/maintenance of images varies</li>
-<li>ansible-container makes things readable/flexible/reusable</li>
-<li><em>Moby buildkit</em> could lift the limitations of <em>Dockerfile</em></li>
-</ul>
+<p><em>Tomas Tomecek (Red Hat)</em>: <a class="reference external" href="http://sched.co/BxIW">http://sched.co/BxIW</a></p>
+<p><em>Tomas</em> showed examples of non-trivial <strong>hard-to-read Dockerfiles</strong> and
+the problems he faces with parsing and linting them due to the missing
+spec of the <strong>file format</strong>. He worried about the <strong>varying degrees</strong> of
+quality, freshness and maintenance of the images at <em>DockerHub</em>.</p>
+<p>His idea was to use <strong>ansible-container</strong> to make things more
+readable, flexible and reusable, until the <strong>Moby buildkit</strong> could lift
+some (or all) of the mentioned limitations of <em>Dockerfiles</em>.</p>
 </div>
 <div class="section" id="euleros-isula-born-for-cloud-drive-cloud-native">
 <h3><a class="toc-backref" href="#contents"><em>EulerOS Isula</em>: Born For Cloud, Drive Cloud Native</a><a class="headerlink" href="#euleros-isula-born-for-cloud-drive-cloud-native" title="Permalink to this headline"> </a></h3>
-<p><em>Wei Xiong, Huawei</em></p>
-<p><a class="reference external" href="http://sched.co/Cflp">http://sched.co/Cflp</a></p>
+<p><em>Wei Xiong (Huawei)</em>: <a class="reference external" href="http://sched.co/Cflp">http://sched.co/Cflp</a></p>
+<p><em>Huawei</em> promotes a <strong>cloud-pipe-device ecosystem</strong> <a class="footnote-reference" href="#cpd" id="id9">[9]</a>. All the different
+parts which play a role until a service can be consumed, run on <em>Linux</em>.
+But the OS <strong>package dependencies</strong> get harder to maintain, especially across
+those very different parts:</p>
 <ul class="simple">
-<li>unified platform for device, pipe, cloud (?)</li>
-<li>OS package dependencies get hard to maintain</li>
-<li>trend of moving away to generic Linux to single purpose Linux</li>
-<li>crate multiple single purpose Linux instances</li>
-<li>basically follows the divide and conquer strategy for problems</li>
-<li>build assembly lines with the smaller parts</li>
-<li>30-50% are moving to container (target: ~90% in 2y)</li>
-<li><em>Huawei</em>&#8216;s public cloud <em>Atlas</em></li>
-<li>secured container based on KVM</li>
-<li><a class="reference external" href="https://github.com/euleros/isula">https://github.com/euleros/isula</a></li>
+<li>cloud (<em>Huawei</em>&#8216;s public cloud <em>Atlas</em>),</li>
+<li>pipe (IIUC, the networking elements),</li>
+<li>devices (on the end-consumer side)</li>
 </ul>
+<p>Instead of having one generic multi purpose <em>Linux</em> instance, they create
+multiple <strong>single purpose</strong> <em>Linux</em> instances, based on a common ancestor
+<strong>EulerOS</strong> <a class="footnote-reference" href="#euler" id="id10">[10]</a>. It&#8217;s the divide and conquer strategy for problems,
+which means they build assembly lines with smaller parts with the goal to
+have better control.</p>
+<p>It was also interesting to hear that they target to have ~90% of the workload
+happening in containers within the next 2 years. Securing containers happens
+with <em>KVM</em>.</p>
 </div>
 <div class="section" id="developer-tools-for-kubernetes">
 <h3><a class="toc-backref" href="#contents">Developer Tools for <em>Kubernetes</em></a><a class="headerlink" href="#developer-tools-for-kubernetes" title="Permalink to this headline"> </a></h3>
-<p><em>Michelle Noorali &amp; Matt Butcher, Microsoft</em></p>
-<p><a class="reference external" href="http://sched.co/CexK">http://sched.co/CexK</a></p>
+<p><em>Michelle Noorali &amp; Matt Butcher (Microsoft)</em>: <a class="reference external" href="http://sched.co/CexK">http://sched.co/CexK</a></p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">TODO</p>
+</div>
 <ul class="simple">
 <li>distinguish applications based on their lifespan (<em>serverless</em> vs. web app)</li>
 <li>event-driven typically short-lived</li>
@@ -304,8 +296,11 @@ of sessions I attended.</p>
 </div>
 <div class="section" id="pipeline-as-code-for-your-infrastructure-as-code">
 <h3><a class="toc-backref" href="#contents">Pipeline as Code For Your Infrastructure as Code</a><a class="headerlink" href="#pipeline-as-code-for-your-infrastructure-as-code" title="Permalink to this headline"> </a></h3>
-<p><em>Kris Buytaert, Inuits.eu</em></p>
-<p><a class="reference external" href="http://sched.co/BxIo">http://sched.co/BxIo</a></p>
+<p><em>Kris Buytaert (Inuits.eu)</em>: <a class="reference external" href="http://sched.co/BxIo">http://sched.co/BxIo</a></p>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">TODO</p>
+</div>
 <ul class="simple">
 <li>CLAMS: Culture, Lean, Automation, Measurement, Sharing</li>
 <li>CI prerequisite of &#8220;continues delivery&#8221; prerequisite of &#8220;continues deployment&#8221;</li>
@@ -320,8 +315,11 @@ of sessions I attended.</p>
 </div>
 <div class="section" id="serverless-is-it-for-your-organization">
 <h3><a class="toc-backref" href="#contents"><em>Serverless</em> - Is It For Your Organization?</a><a class="headerlink" href="#serverless-is-it-for-your-organization" title="Permalink to this headline"> </a></h3>
-<p><em>Michael Bright, HPE</em></p>
-<p><a class="reference external" href="http://sched.co/BxIz">http://sched.co/BxIz</a></p>
+<p><em>Michael Bright (HPE)</em>: <a class="reference external" href="http://sched.co/BxIz">http://sched.co/BxIz</a></p>
+<div class="admonition-todo admonition" id="index-2">
+<p class="first admonition-title">Todo</p>
+<p class="last">TODO</p>
+</div>
 <ul class="simple">
 <li>don&#8217;t care about servers</li>
 <li><em>backend as a service</em> (<em>BaaS</em>)</li>
@@ -334,8 +332,11 @@ of sessions I attended.</p>
 </div>
 <div class="section" id="degree-observability">
 <h3><a class="toc-backref" href="#contents">360 Degree Observability</a><a class="headerlink" href="#degree-observability" title="Permalink to this headline"> </a></h3>
-<p><em>Ilan Rabinovitch, Datadog</em></p>
-<p><a class="reference external" href="http://sched.co/ByIc">http://sched.co/ByIc</a></p>
+<p><em>Ilan Rabinovitch (Datadog)</em>: <a class="reference external" href="http://sched.co/ByIc">http://sched.co/ByIc</a></p>
+<div class="admonition-todo admonition" id="index-3">
+<p class="first admonition-title">Todo</p>
+<p class="last">TODO</p>
+</div>
 <ul class="simple">
 <li>&#8220;monitoring driven development&#8221;</li>
 <li>&#8220;the problem is not the right tool&#8221;</li>
@@ -353,8 +354,11 @@ of sessions I attended.</p>
 </div>
 <div class="section" id="using-containers-and-continuous-packaging-to-build-native-fossology-packages">
 <h3><a class="toc-backref" href="#contents">Using Containers and Continuous Packaging to Build Native <em>Fossology</em> Packages</a><a class="headerlink" href="#using-containers-and-continuous-packaging-to-build-native-fossology-packages" title="Permalink to this headline"> </a></h3>
-<p><em>Bruno Cornec, Hewlett Packard Enterprise and Michael Jaeger, Siemens</em></p>
-<p><a class="reference external" href="http://sched.co/BxJC">http://sched.co/BxJC</a></p>
+<p><em>Bruno Cornec (HPE) and Michael Jaeger (Siemens)</em>: <a class="reference external" href="http://sched.co/BxJC">http://sched.co/BxJC</a></p>
+<div class="admonition-todo admonition" id="index-4">
+<p class="first admonition-title">Todo</p>
+<p class="last">TODO</p>
+</div>
 <ul class="simple">
 <li><em>project-creator.org</em> creates packages for different distributions and package managers</li>
 <li><em>fossology</em> scans for licenses</li>
@@ -366,8 +370,11 @@ of sessions I attended.</p>
 </div>
 <div class="section" id="ibm-linuxone-the-largest-scalable-linux-server">
 <h3><a class="toc-backref" href="#contents">IBM LinuxONE: The Largest Scalable Linux Server</a><a class="headerlink" href="#ibm-linuxone-the-largest-scalable-linux-server" title="Permalink to this headline"> </a></h3>
-<p><em>Jens Voelker &amp; John Smith, IBM</em></p>
-<p><a class="reference external" href="http://sched.co/Cgor">http://sched.co/Cgor</a></p>
+<p><em>Jens Voelker &amp; John Smith (IBM)</em>: <a class="reference external" href="http://sched.co/Cgor">http://sched.co/Cgor</a></p>
+<div class="admonition-todo admonition" id="index-5">
+<p class="first admonition-title">Todo</p>
+<p class="last">TODO</p>
+</div>
 <ul class="simple">
 <li>license consolidation is still a thing</li>
 <li>gov + banking ~= 50% of users</li>
@@ -384,8 +391,11 @@ of sessions I attended.</p>
 </div>
 <div class="section" id="no-one-puts-the-jvm-in-a-container">
 <h3><a class="toc-backref" href="#contents">No One Puts the JVM in a Container</a><a class="headerlink" href="#no-one-puts-the-jvm-in-a-container" title="Permalink to this headline"> </a></h3>
-<p><em>Joerg Schad &amp; Johannes Unterstein, Mesosphere</em></p>
-<p><a class="reference external" href="http://sched.co/BxIl">http://sched.co/BxIl</a></p>
+<p><em>Joerg Schad &amp; Johannes Unterstein (Mesosphere)</em>: <a class="reference external" href="http://sched.co/BxIl">http://sched.co/BxIl</a></p>
+<div class="admonition-todo admonition" id="index-6">
+<p class="first admonition-title">Todo</p>
+<p class="last">TODO</p>
+</div>
 <ul class="simple">
 <li>DC/OS based on <em>apache mesos</em> (container orchestration)</li>
 <li>&#8220;feels&#8221; like a &#8220;lightweight VM&#8221;</li>
@@ -400,8 +410,11 @@ of sessions I attended.</p>
 </div>
 <div class="section" id="docker-moby-is-killing-your-devops-efforts">
 <h3><a class="toc-backref" href="#contents"><em>Docker</em>, <em>Moby</em> is Killing Your <cite>#devops</cite> Efforts</a><a class="headerlink" href="#docker-moby-is-killing-your-devops-efforts" title="Permalink to this headline"> </a></h3>
-<p><em>Kris Buytaert, Inuits.eu</em></p>
-<p><a class="reference external" href="http://sched.co/BxJd">http://sched.co/BxJd</a></p>
+<p><em>Kris Buytaert (Inuits.eu)</em>: <a class="reference external" href="http://sched.co/BxJd">http://sched.co/BxJd</a></p>
+<div class="admonition-todo admonition" id="index-7">
+<p class="first admonition-title">Todo</p>
+<p class="last">TODO</p>
+</div>
 <ul class="simple">
 <li><em>Docker</em> -&gt; <em>Moby</em></li>
 <li>Enterprises are afraid of (public) cloud</li>
@@ -415,8 +428,11 @@ VMs and run docker in it</li>
 </div>
 <div class="section" id="workshop-continuous-integration-with-the-open-build-service">
 <h3><a class="toc-backref" href="#contents">Workshop: Continuous Integration with the Open Build Service</a><a class="headerlink" href="#workshop-continuous-integration-with-the-open-build-service" title="Permalink to this headline"> </a></h3>
-<p><em>Eduardo Navarro &amp; Björn Geuken, SUSE Linux GmbH</em></p>
-<p><a class="reference external" href="http://sched.co/ByRq">http://sched.co/ByRq</a></p>
+<p><em>Eduardo Navarro &amp; Björn Geuken (SUSE Linux GmbH)</em>: <a class="reference external" href="http://sched.co/ByRq">http://sched.co/ByRq</a></p>
+<div class="admonition-todo admonition" id="index-8">
+<p class="first admonition-title">Todo</p>
+<p class="last">TODO</p>
+</div>
 <ul class="simple">
 <li>private installation of <a class="reference external" href="http://openbuildservice.org/">http://openbuildservice.org/</a> possible</li>
 <li>build packages for different package manager and architectures and distributions</li>
@@ -428,8 +444,11 @@ VMs and run docker in it</li>
 </div>
 <div class="section" id="everything-you-always-wanted-to-know-about-object-storage">
 <h3><a class="toc-backref" href="#contents">Everything You Always Wanted to Know About Object Storage</a><a class="headerlink" href="#everything-you-always-wanted-to-know-about-object-storage" title="Permalink to this headline"> </a></h3>
-<p><em>Erit Wasserman, Red Hat</em></p>
-<p><a class="reference external" href="http://sched.co/CnWI">http://sched.co/CnWI</a></p>
+<p><em>Erit Wasserman (Red Hat)</em>: <a class="reference external" href="http://sched.co/CnWI">http://sched.co/CnWI</a></p>
+<div class="admonition-todo admonition" id="index-9">
+<p class="first admonition-title">Todo</p>
+<p class="last">TODO</p>
+</div>
 <ul class="simple">
 <li>block storage has no metadata but is fast</li>
 <li>file system has hierarchy and metadata and in-place writes</li>
@@ -444,8 +463,11 @@ VMs and run docker in it</li>
 </div>
 <div class="section" id="open-source-is-just-about-the-source-isn-t-it">
 <h3><a class="toc-backref" href="#contents">Open Source is Just About the Source, Isn&#8217;t It?</a><a class="headerlink" href="#open-source-is-just-about-the-source-isn-t-it" title="Permalink to this headline"> </a></h3>
-<p><em>Isabel Drost-Fromm, Europace AG</em></p>
-<p><a class="reference external" href="http://sched.co/ByIo">http://sched.co/ByIo</a></p>
+<p><em>Isabel Drost-Fromm (Europace AG)</em>: <a class="reference external" href="http://sched.co/ByIo">http://sched.co/ByIo</a></p>
+<div class="admonition-todo admonition" id="index-10">
+<p class="first admonition-title">Todo</p>
+<p class="last">TODO</p>
+</div>
 <ul class="simple">
 <li>the messy problems are people problems</li>
 <li>the source code is only a small part of the project</li>
@@ -462,8 +484,11 @@ VMs and run docker in it</li>
 </div>
 <div class="section" id="transactional-updates-with-btrfs-and-rpms">
 <h3><a class="toc-backref" href="#contents">Transactional Updates with <em>btrfs</em> and RPMs</a><a class="headerlink" href="#transactional-updates-with-btrfs-and-rpms" title="Permalink to this headline"> </a></h3>
-<p><em>Thorsten Kukuk, SUSE</em></p>
-<p><a class="reference external" href="http://sched.co/BxK2">http://sched.co/BxK2</a></p>
+<p><em>Thorsten Kukuk (SUSE)</em>: <a class="reference external" href="http://sched.co/BxK2">http://sched.co/BxK2</a></p>
+<div class="admonition-todo admonition" id="index-11">
+<p class="first admonition-title">Todo</p>
+<p class="last">TODO</p>
+</div>
 <ul class="simple">
 <li><em>btrfs</em> == copy on write general purpose filesystem</li>
 <li><em>subvolumes</em> != LVM volumes</li>
@@ -472,32 +497,88 @@ VMs and run docker in it</li>
 </div>
 <div class="section" id="tutorial-container-orchestration-with-kubernetes">
 <h3><a class="toc-backref" href="#contents">Tutorial: Container Orchestration with <em>Kubernetes</em></a><a class="headerlink" href="#tutorial-container-orchestration-with-kubernetes" title="Permalink to this headline"> </a></h3>
-<p><em>Michael Steinfurth, B1 Systems GmbH</em></p>
-<p><a class="reference external" href="http://sched.co/ByRs">http://sched.co/ByRs</a></p>
-<ul class="simple">
-<li><em>kubernetes</em> uses <em>etcd</em> for saving data</li>
-<li><em>etcd</em> on <em>kubernetes</em> itself or as dedicated servers</li>
-<li>&gt;= 3 <em>etcd</em> nodes to have a quorum (odd numbers)</li>
-<li><em>etcd</em> clients have to advertise themselves to the peers</li>
-<li><em>flanneld</em> for networking overlay</li>
-<li>network configuration (<em>flanneld</em>) saved in <em>etcd</em></li>
-<li><em>etcd</em> cluster is then aware of this new value</li>
-<li>never do a live coding session for people to repeat the steps live</li>
-<li><em>kubectl</em> is a configuration tool and cluster CLI</li>
-<li>opinion: there are too many low-detail plumbing commands for the many
-moving parts. I miss one or two abstraction levels with more goal
-oriented (not task oriented) commands. opinionated stacks are fine!
-Look into one car factory and you know them all, why? because
-there are industry best practices; less freedom is fine sometimes.
-You&#8217;re goal should be to deliver value to the user, not being
-fancy in the way you work. Boring is the new exciting.</li>
-</ul>
+<p><em>Michael Steinfurth (B1 Systems GmbH)</em>: <a class="reference external" href="http://sched.co/ByRs">http://sched.co/ByRs</a></p>
+<p>This session showed how <strong>kubernetes</strong> uses <em>etcd</em> for saving data.
+You can run <em>etcd</em> on <em>kubernetes</em> itself or as dedicated servers
+and you need at least <strong>3 etcd nodes</strong> to have a <strong>quorum</strong>.
+The <em>etcd</em> clients have to advertise themselves to the peers.
+<em>Michael</em> used <strong>flanneld</strong> for networking overlay and stored the
+network configuration in <em>etcd</em> and the whole <strong>etcd cluster</strong> is then
+aware of this new value. For all that, you can use <strong>kubectl</strong>,
+a configuration tool and cluster CLI.</p>
 </div>
 </div>
 <div class="section" id="event-recap">
 <h2><a class="toc-backref" href="#contents">Event Recap</a><a class="headerlink" href="#event-recap" title="Permalink to this headline"> </a></h2>
-<p>Very good event, I&#8217;m looking forward to the next one, October 22 - 24, 2018
-in Edinburgh, Scotland.</p>
+<p>It was a very good event; the quality of the sessions ans speakers was
+excellent. Everything was well organized. The evening event on Wednesday
+took place in the <em>Municipal House</em>, a gorgeous building (see image below).
+I&#8217;m looking forward to the next event, October 22 - 24, 2018 in Edinburgh,
+Scotland.</p>
+<a class="reference internal image-reference" href="../../../../../_images/municipal_house_praque.JPG"><img alt="../../../../../_images/municipal_house_praque.JPG" src="../../../../../_images/municipal_house_praque.JPG" style="height: 250px;" /></a>
+</div>
+<div class="section" id="references">
+<h2><a class="toc-backref" href="#contents">References</a><a class="headerlink" href="#references" title="Permalink to this headline"> </a></h2>
+<table class="docutils footnote" frame="void" id="lfe" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://events.linuxfoundation.org/">http://events.linuxfoundation.org/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="osself" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="http://events.linuxfoundation.org/events/open-source-summit-europe">http://events.linuxfoundation.org/events/open-source-summit-europe</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="ossesched" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="https://osseu17.sched.com/">https://osseu17.sched.com/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="osseyt" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="https://www.youtube.com/playlist?list=PLbzoR-pLrL6pISWAq-1cXP4_UZAyRtesk">https://www.youtube.com/playlist?list=PLbzoR-pLrL6pISWAq-1cXP4_UZAyRtesk</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="amdahl" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><a class="reference external" href="https://en.wikipedia.org/wiki/Amdahl%27s_law">https://en.wikipedia.org/wiki/Amdahl%27s_law</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="colla" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td><a class="reference external" href="https://www.collabora.com/news-and-blog.html?blogs">https://www.collabora.com/news-and-blog.html?blogs</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="inner" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td><a class="reference external" href="https://en.wikipedia.org/wiki/Inner_source">https://en.wikipedia.org/wiki/Inner_source</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="gqm" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8">[8]</a></td><td><a class="reference external" href="https://en.wikipedia.org/wiki/GQM">https://en.wikipedia.org/wiki/GQM</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="cpd" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id9">[9]</a></td><td><a class="reference external" href="http://www1.huawei.com/en/static/HW-104296.pdf">http://www1.huawei.com/en/static/HW-104296.pdf</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="euler" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id10">[10]</a></td><td><a class="reference external" href="http://developer.huawei.com/ict/en/site-euleros/euleros-introduction">http://developer.huawei.com/ict/en/site-euleros/euleros-introduction</a></td></tr>
+</tbody>
+</table>
 </div>
 </div>
 
