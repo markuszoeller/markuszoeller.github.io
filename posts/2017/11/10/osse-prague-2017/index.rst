@@ -76,8 +76,8 @@ Going Modular: Turning Legacy Docs into User-Story-Based Content
 
 The usual measure of success for writing documentation is **comprehensiveness**.
 Everything needs to be documented. With shorter delivery cycles of the software
-to document, it got harder to achieve that level of comprehensivess. It is also
-hard to read a monolithic document of dozens to **hundreds of pages**.
+to document, it got harder to achieve that level of comprehensiveness. It is
+also hard to read a monolithic document of dozens to **hundreds of pages**.
 
 So they started to use a modular approach, based on the question, how to
 achieve a **specific goal**. He made a comparison to *StackOverflow*, which
@@ -108,15 +108,15 @@ Collaboration in Kernel Mailing Lists
 
 *Dawn Foster (The Scale Factory)*: http://sched.co/BxIH
 
-This was a presentation of *Dawn's* reasearch for her PhD. Key findings where,
+This was a presentation of *Dawn's* research for her PhD. Key findings where,
 that *task affiliation* is far greater than *company affiliation*. Also,
-that the **timezone pain** gets mitigated by the asynchrounous nature of mailing
+that the **timezone pain** gets mitigated by the asynchronous nature of mailing
 lists. Lastly, **professional relationships** get stronger with face to face
 meetings like conferences.
 
 She chose a very interesting type of data visualization for (strength of)
 collaboration. I don't know the name of that diagram type; it's basically
-a dependency graph aranged in a cycle. Check out her slides at the link
+a dependency graph arranged in a cycle. Check out her slides at the link
 above.
 
 
@@ -170,7 +170,7 @@ those very different parts:
 
 * cloud (*Huawei*'s public cloud *Atlas*),
 * pipe (IIUC, the networking elements),
-* devices (on the endconsumer side)
+* devices (on the end-consumer side)
 
 Instead of having one generic multi purpose *Linux* instance, they create
 multiple **single purpose** *Linux* instances, based on a common ancestor
