@@ -313,19 +313,15 @@ No One Puts the JVM in a Container
 
 *Joerg Schad & Johannes Unterstein (Mesosphere)*: http://sched.co/BxIl
 
-.. todo:: TODO
-
-* DC/OS based on *apache mesos* (container orchestration)
-* "feels" like a "lightweight VM"
-* see all process (of the host) inside the container (?)
-* namespaces are just views (mapping on the real things)
-* control groups *cgroups* v1 vs. v2
-* hard limit on memory + over-consumption kills the docker process
-* JNI and NIO consume non-heap space
-* before Java8, JRE is not aware of *cgroups* and uses host resources
-* UseCGroupMemoryLimitForHeap and UnlockExperimentalVMOptions flags
-
-
+The gist of this talk was, be very aware of what you pack into a container
+and what actually happens inside the container and on the host. An example
+was given with a *Java* application. Apparently, before *Java8*, the
+**JRE is not aware of cgroups** and uses host resources. And the hard limit on
+memory controlled by *cgroups* means, that the docker process gets killed
+when it reaches a state of over-consumption. With *Java8* and later, you
+can use the **flags** ``UseCGroupMemoryLimitForHeap`` and
+``UnlockExperimentalVMOptions``. With this, all the *namespace* and *cgroup*
+mapping on the real resources get considered.
 
 
 
@@ -334,18 +330,18 @@ No One Puts the JVM in a Container
 
 *Kris Buytaert (Inuits.eu)*: http://sched.co/BxJd
 
-.. todo:: TODO
+It was an opinionated talk (which is good, that's why I go to conferences)
+and *Kris* is obviously very passionate about **DevOps**. His main points
+were, that Enterprises are afraid of (public) clouds and are in favor of
+**"caged" private clouds**, where you emulate non-caged private clouds with huge
+VMs (previously requested with an internal ticketing system) and run *Docker*
+in it.
 
-* *Docker* -> *Moby*
-* Enterprises are afraid of (public) cloud
-* "caged" private clouds (request VMs)
-* emulating non-caged private clouds with huge
-  VMs and run docker in it
-* docker container is the new fancy tarball
-* "how do you build the hosts that run the containers?"
-* "SW development ends when your last end user is dead"
-
-
+The actual problem, that **developers and operators don't talk to each other**
+didn't get tackled, as a *Docker* container is treated now like a fancy tarball,
+which gets thrown over the wall with *"works on my machine, I'm done"*.
+To be precise, he didn't complain about **Docker** as a technology,
+he was more worried about **how we use** this technology.
 
 
 
@@ -354,15 +350,16 @@ Workshop: Continuous Integration with the Open Build Service
 
 *Eduardo Navarro & Björn Geuken (SUSE Linux GmbH)*: http://sched.co/ByRq
 
-.. todo:: TODO
+The **open build service (OBS)** [#obs]_ can build **OS packages** for different
+package managers and CPU architectures and distributions. It is based on
+*kiwi* [#kiwi]_, an OS image builder. A *github* webhook integration is
+available, so it should be possible to create a
+**continuous integration with continuous delivery**
+approach with it. A private installation of OBS is also possible.
 
-* private installation of http://openbuildservice.org/ possible
-* build packages for different package manager and architectures and distributions
-* *github* webhook/integration available
-* OBS is based on "kiwi"
-* https://github.com/chrisbr/workshop-obs-ci
-* *ppc64* is already there; *s390x* too?
-
+To be honest, I didn't fully attend this workshop, as it conflicted with
+another session I wanted to see, so I missed probably some information.
+It sounded very promising though.
 
 
 
@@ -371,22 +368,24 @@ Everything You Always Wanted to Know About Object Storage
 
 *Erit Wasserman (Red Hat)*: http://sched.co/CnWI
 
-.. todo:: TODO
+The fun fact first, *Erit* let us know that *Ceph* got its name from
+*Cephalopods* [#ceph]_ (squids, octopuses and suchlike). The high-level
+differences between the common ways to store data are:
 
-* block storage has no metadata but is fast
-* file system has hierarchy and metadata and in-place writes
-* object storage has flat namespace; objects are immutable
-* divide single large objects with *multipart upload*
-* each version of an object is a new object => space usage
-* *Ceph* == *Cephalopod*
-* *ceph* offers block, file and object storage
-* *rados* is the underlying distributed object storage
-* *radosgw* lifts limits of *rados*
+* **block storage** has no metadata but is fast
+* **file system** has hierarchy and metadata and in-place writes
+* **object storage** has flat namespace; objects are immutable
 
+At least that's what I noted down, I was never a storage guy.
+As the objects are immutable, each version of an object is a new object,
+which means you need a retention policy to deal with the needed disk space.
 
-
-
-
+Apparently, **Ceph** offers block, file and object storage and uses
+**rados** as the underlying distributed object storage, while
+**radosgw** lifts some limits of *rados* (I didn't get the details which
+limits). As the single objects can be big, you need a way to be resilient
+against network issues, so it divides single large objects into smaller ones
+and does a **multipart upload**.
 
 
 
@@ -395,21 +394,14 @@ Open Source is Just About the Source, Isn't It?
 
 *Isabel Drost-Fromm (Europace AG)*: http://sched.co/ByIo
 
-.. todo:: TODO
-
-* the messy problems are people problems
-* the source code is only a small part of the project
-* community over code
-* no one reads the FAQ, but you can copy the answers
-* newbies need a way to replicate correct behavior
-* think in "providing help to users"
-* *disqus* with ML interface (?)
-* explicit call to action brings out the lurkers
-* real time help requests
-* change management needs to be early in place
-* delegating work is crucial
-
-
+*Isabel* talked about everything development related but the code, which is
+great, as *"the messy problems are people problems"* and I have to agree.
+The source code is only a small part of the project and the **community** is at
+least as important as the code. She made excellent points about the
+**different ways of communication**, trademarking, licensing, change management,
+FAQs, work delegation and much more. Finding ways for newbies to replicate
+correct behavior is important too. A lot to think about when you start
+your next open source project.
 
 
 
@@ -418,13 +410,12 @@ Transactional Updates with *btrfs* and RPMs
 
 *Thorsten Kukuk (SUSE)*: http://sched.co/BxK2
 
-.. todo:: TODO
-
-* *btrfs* == copy on write general purpose filesystem
-* *subvolumes* != LVM volumes
-* snapshot capability
-
-
+*Thorsten* did a proof of concept with *btrfs*, a copy on write general
+purpose filesystem to enable **transactional operating system updates** without
+reboots. He uses the **btrfs subvolumes** (not to be confused with LVM volumes)
+and their **snapshot** capability to achieve this. Unfortunately I didn't get
+all the details, but having to never reboot again after an update sounds
+like operators would love it.
 
 
 
@@ -480,3 +471,9 @@ References
 .. [#cpd] http://www1.huawei.com/en/static/HW-104296.pdf
 
 .. [#euler] http://developer.huawei.com/ict/en/site-euleros/euleros-introduction
+
+.. [#obs] http://openbuildservice.org/
+
+.. [#ceph] https://en.wikipedia.org/wiki/Cephalopod
+
+.. [#kiwi] https://github.com/openSUSE/kiwi
