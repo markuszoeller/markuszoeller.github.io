@@ -31,5 +31,10 @@ spelling and/or grammar errors, tell me about it by opening an
          href='https://de.linkedin.com/in/markus-zoeller?trk=profile-badge'>LinkedIn: Markus Zoeller</a>
    </div>
 
-**Legal disclaimer**: Opinions are my own and not necessarily the views of my
-employer.
+**Legal disclaimer**:
+
+* Opinions are my own and not necessarily the views of my employer.
+
+* The fancy CSS shenanigans on the left and right (on wide screens) were
+  made possible by *Steve Schoger* from http://www.heropatterns.com/.
+  He has very nice examples there, check them out.
