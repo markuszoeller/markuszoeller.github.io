@@ -53,7 +53,7 @@ and the main page for the conference itself can be found at [#osself]_.
 The full schedule for the event I attended is at [#ossesched]_ and the
 videos to the keynotes can be found at [#osseyt]_.
 
-.. image:: osse_2017_inspiration_everywhere.JPG
+.. image:: osse_2017_inspiration_everywhere_Vrh34Wh.JPG
    :height: 250px
 
 
@@ -444,7 +444,7 @@ took place in the *Municipal House*, a gorgeous building (see image below).
 I'm looking forward to the next event, October 22 - 24, 2018 in Edinburgh,
 Scotland.
 
-.. image:: municipal_house_praque.JPG
+.. image:: municipal_house_praque_SXY5xEK.JPG
    :height: 250px
 
 
