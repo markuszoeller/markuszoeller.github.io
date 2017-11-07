@@ -66,6 +66,11 @@ so I had to decide which ones to go to. Here's the chronological list
 of sessions I attended. The linked sessions often have the used presentations,
 in case you like to have more details.
 
+If you're short on time, only read:
+
+* :ref:`sec_observability`
+* :ref:`sec_not_source`
+* :ref:`sec_devops_effort`
 
 
 
@@ -120,6 +125,8 @@ a dependency graph arranged in a cycle. Check out her slides at the link
 above.
 
 
+
+.. _sec_gqm:
 
 Applying Goals-Question-Metrics to Software Development Management
 ------------------------------------------------------------------
@@ -184,41 +191,50 @@ with *KVM*.
 
 
 
+.. _sec_kub_tools:
+
 Developer Tools for *Kubernetes*
 --------------------------------
 
 *Michelle Noorali & Matt Butcher (Microsoft)*: http://sched.co/CexK
 
-.. todo:: TODO
+*Michelle* and *Matt* started with a rough categorization of applications,
+based on their **lifespan** (short vs. long) and state
+(**stateless** vs. stateful). Stateless, short living (mostly **event driven**)
+applications are a good match for **serverless** technology, whereas web
+applications are your typical long running, **stateful** applications.
 
-* distinguish applications based on their lifespan (*serverless* vs. web app)
-* event-driven typically short-lived
-* stateful vs. stateless
-* *helm* packages stuff for *kubernetes*
-* *draft* automates the *helm* stuff
-* *draft* hides complexity of *kubernetes*
-* *cognitive load* as a complexity unit?
-* *pack* does ???
-* *brigage* is event-driven pipeline action stuff for k8s
+To package your application ready for **kubernetes**, you can use **helm**.
+With **draft** you can automate the *helm* packaging and reduce the cognitive
+load, as it hides some of the complexity. Your event driven pipeline can
+be simplified with **brigade**. They also mentioned a tool called **pack**,
+but I didn't find more information with a short google search, so maybe
+I misheard.
 
 
+.. _sec_iac:
 
 Pipeline as Code For Your Infrastructure as Code
 ------------------------------------------------
 
 *Kris Buytaert (Inuits.eu)*: http://sched.co/BxIo
 
-.. todo:: TODO
+*Kris* also mentioned *CLAMS*, like *Jose* did in :ref:`sec_gqm`.
+He pointed out that it is very important to **version your automation code**
+and that you **should not click around in the UI** to set something up.
+An interesting measure of success was:
 
-* CLAMS: Culture, Lean, Automation, Measurement, Sharing
-* CI prerequisite of "continues delivery" prerequisite of "continues deployment"
-* measure of success: deploy FR at 5pm and go home and be confident
-* version your automation code
-* testing for *IaC* equals monitoring (== acceptance test)
-* "pipeline sprawl" (same issue like "image sprawl")
-* *pipelineDSL*  vs. *Jenkins Job DSL*
-* don't click around in the UI!
-* *IaC* as a means to do DR (in case the user data is saved)
+  Deploy your Infrastructure as Code (*IaC*) on a Friday afternoon
+  at 5pm and go home confidently.
+
+He suggested to use the **monitoring** you set up as the **acceptance tests**
+for your *IaC* efforts. For all that, a **Continuous Integration (CI)** system
+is the basis, as it is the prerequisite for **Continuous Delivery**, which is
+the prerequisite for **Continuous Deployment**.
+Apparently, **pipelineDSL**  and **Jenkins Job DSL** are popular ways
+to implement your pipelines.
+At the end, he warned from a *"pipeline sprawl"*, a state where you have so
+many pipelines that it becomes unmanageable.
 
 
 
@@ -227,42 +243,42 @@ Pipeline as Code For Your Infrastructure as Code
 
 *Michael Bright (HPE)*: http://sched.co/BxIz
 
-.. todo:: TODO
-
-* don't care about servers
-* *backend as a service* (*BaaS*)
-* billing as you go on a very granular level
-* event driven
-* useful for glue-logic / periodic tasks / short-lived
-* mostly based on re-used / recycled containers
-* ~3 years old
-
-
+As already mentioned in :ref:`sec_kub_tools`, **serverless** is useful
+for short lived applications, like periodic tasks or event driven logic.
+It's also useful for glue logic between different systems. The main
+philosophy behind *serverless* seems to be, that you don't care about servers
+anymore and use **Backend as a Service (BaaS)**, which is mostly based
+on re-used (recycled) containers nowadays. Another advantage might be
+the **billing as you go** on a very granular level. It's still a young
+technology (**~3 years old**), I'm curious how this technology will evolve
+in the next years.
 
 
 
-
+.. _sec_observability:
 
 360 Degree Observability
 ------------------------
 
 *Ilan Rabinovitch (Datadog)*: http://sched.co/ByIc
 
-.. todo:: TODO
+*Ilan's* talk was my personal highlight of this conference. Like in
+:ref:`sec_iac`, he suggested a **monitoring driven development**.
+As the **things to monitor** he listed:
 
-* "monitoring driven development"
-* "the problem is not the right tool"
-* "unknown unknowns"
-* application performance monitoring (APM)
-* Real User Monitoring (RUM)
-* synthetics (simulate user interactions)
-* RUM + synthetics work best together
-* Example: Amazon down march 2016 == 3.75M USD loss
-* twitter: honest status updates
-* anomaly detection (algorithmic approach)
-* forecasting
-* "work metric" (work -> resource -> events)
+* *Application Performance Monitoring* (**APM**)
+* *Real User Monitoring* (**RUM**)
+* **Synthetics** (simulate user interactions)
 
+In his experience RUM and synthetics work best together. The monitoring
+can be extended with an algorithmic approach of **anomaly detection**
+and **forecasting**.
+
+He reminded the audience, that **the problem is not the right tool**
+it's the **unknown unknowns** [#unknown]_ you don't know you should measure.
+
+As a side note, check out the *Twitter* *honest status page* [#honest]_,
+it's hilarious (because it's true).
 
 
 
@@ -271,16 +287,17 @@ Using Containers and Continuous Packaging to Build Native *Fossology* Packages
 
 *Bruno Cornec (HPE) and Michael Jaeger (Siemens)*: http://sched.co/BxJC
 
-.. todo:: TODO
-
-* *project-creator.org* creates packages for different distributions and package managers
-* *fossology* scans for licenses
-* "package early, package always"
-* create a package without committing the code first
-* one templated spec file with macros; configuration on the outside of this file
-* there are differences with an impact even between minor versions of distributions
-
-
+*Bruno* and *Michael* work on the **Fossology** project, a tool and database
+to scan software for all the **licensing details** you need to specify when
+building and offering a package.
+Their advice was to **package early, package always**. You should also be
+able to create a package without committing the code first.
+The way they do it, is to have one **templated spec file** with macros, where
+the configuration is done on the outside of this file.
+They do the build continuously inside of containers with different
+operating system versions, as there are
+**differences between minor versions of distributions** which have a
+significant impact on the package build process. Something I wasn't aware of.
 
 
 
@@ -289,22 +306,25 @@ IBM LinuxONE: The Largest Scalable Linux Server
 
 *Jens Voelker & John Smith (IBM)*: http://sched.co/Cgor
 
-.. todo:: TODO
+**Disclaimer:** I work in this area at *IBM*.
 
-* license consolidation is still a thing
-* gov + banking ~= 50% of users
-* 12 machines with ~ 6000 Oracle databases ~= biggest deployment
-* *sCaaS* and IBM Private Cloud are already on the slides
-* DockerEE integrated LinuxONE into its CI pipeline
-* microservice meshes and latency; throughput benefits from internal IO
-* the scale cube
-* Nov. 2017: DockerEE fully supported on Z
-* SSC == Secure System Container
-* large databases: avoid *sharding* as it adds performance penalties
-* "open mainframe" project
+*Jens* and *John* presented the **LinuxOne**, an **IBM Z Mainframe**
+especially for *Linux* server hosting. Mainly used by governments and
+banks because of the **security** aspects, it's use case also includes
+**license consolidation**. Its design fits perfectly for **huge databases**
+as it can **avoid sharding**, which otherwise would result in performance
+penalties.
 
+The traditional use cases got extended in the past by making it ready for
+the **(private) cloud** [#icp]_ and container based applications. For example,
+**Docker Enterprise** integrated LinuxONE into its CI pipeline and is fully
+supported on **IBM Z** since this month. Your **microservice meshes**
+also benefit from the high bandwidth inside the machine, which results in
+low latency. For even more data protection, use the
+**Secure Service Containers (SSC)**.
 
-
+Academics and researcher can do their first steps with the
+**Open Mainframe Project** [#openz]_.
 
 
 
@@ -324,6 +344,7 @@ can use the **flags** ``UseCGroupMemoryLimitForHeap`` and
 mapping on the real resources get considered.
 
 
+.. _sec_devops_effort:
 
 *Docker*, *Moby* is Killing Your `#devops` Efforts
 --------------------------------------------------
@@ -388,6 +409,8 @@ against network issues, so it divides single large objects into smaller ones
 and does a **multipart upload**.
 
 
+
+.. _sec_not_source:
 
 Open Source is Just About the Source, Isn't It?
 -----------------------------------------------
@@ -472,8 +495,16 @@ References
 
 .. [#euler] http://developer.huawei.com/ict/en/site-euleros/euleros-introduction
 
+.. [#unknown] https://en.wikipedia.org/wiki/There_are_known_knowns
+
+.. [#honest] https://twitter.com/honest_update
+
+.. [#icp] https://www.ibm.com/cloud-computing/products/ibm-cloud-private/
+
+.. [#openz] https://www.openmainframeproject.org/
+
 .. [#obs] http://openbuildservice.org/
 
-.. [#ceph] https://en.wikipedia.org/wiki/Cephalopod
-
 .. [#kiwi] https://github.com/openSUSE/kiwi
+
+.. [#ceph] https://en.wikipedia.org/wiki/Cephalopod
