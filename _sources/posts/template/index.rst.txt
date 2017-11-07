@@ -242,10 +242,11 @@ Images
 ======
 
 Favor vector graphics (``.svg``) over raster maps (``.png``).
+Always do a scaling of the images (``:height:`` or ``:width:`` or ``:scale:``),
+this enables the "click on the thumbnail to show the full image" logic.
 
-
-.. image:: drawing.svg
-   :target: /_images/drawing.svg
+.. image:: drawing_TOelDqK.svg
+   :height: 150px
    :alt: Example drawing with Inkscape.
 
 
@@ -253,14 +254,15 @@ Favor vector graphics (``.svg``) over raster maps (``.png``).
   :linenos:
   :emphasize-lines: 0
 
-  .. image:: drawing.svg
-     :target: /_images/drawing.svg
+  .. image:: drawing_TOelDqK.svg
+     :height: 150px
      :alt: Example drawing with Inkscape.
 
 .. important::
 
    All images of all posts will be copied to ``_images``. This means
-   unique image names are needed to avoid collisions.
+   unique image names are needed to avoid collisions. Use the script
+   to generate unique (enough) identifiers.
 
 
 
