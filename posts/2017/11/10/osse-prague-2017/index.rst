@@ -3,9 +3,6 @@
    :category: conferences
    :title: The 2017 Open Source Summit Europe in Praque
 
-.. spelling::
-   todo
-
 
 
 ================================================
@@ -63,14 +60,16 @@ Sessions
 
 At any given time I had two to four conflicting sessions in my bookmarks,
 so I had to decide which ones to go to. Here's the chronological list
-of sessions I attended. The linked sessions often have the used presentations,
-in case you like to have more details.
+of sessions I attended. The session, reachable via the *sched* links,
+often have their presentations attached.
 
 If you're short on time, only read:
 
 * :ref:`sec_observability`
 * :ref:`sec_not_source`
 * :ref:`sec_devops_effort`
+
+These were my top 3 session of this conference.
 
 
 
@@ -114,7 +113,7 @@ Collaboration in Kernel Mailing Lists
 *Dawn Foster (The Scale Factory)*: http://sched.co/BxIH
 
 This was a presentation of *Dawn's* research for her PhD. Key findings where,
-that *task affiliation* is far greater than *company affiliation*. Also,
+that **task affiliation** is far greater than *company affiliation*. Also,
 that the **timezone pain** gets mitigated by the asynchronous nature of mailing
 lists. Lastly, **professional relationships** get stronger with face to face
 meetings like conferences.
@@ -133,7 +132,7 @@ Applying Goals-Question-Metrics to Software Development Management
 
 *Jose Manrique Lopez de la Fuente (Bitergia)*: http://sched.co/ByIM
 
-I wasn't aware of the term **inner source** [#inner]_ , until *Jose* mentioned
+I wasn't aware of the term **inner source** [#inner]_, until *Jose* mentioned
 it in his talk. To move in that direction he discussed the use of
 *goal, question, metric* **(GQM)** [#gqm]_ and the *DevOps* framework **CALMS**:
 
@@ -155,7 +154,7 @@ From *Dockerfiles* to *Ansible Container*
 *Tomas Tomecek (Red Hat)*: http://sched.co/BxIW
 
 *Tomas* showed examples of non-trivial **hard-to-read Dockerfiles** and
-the problems he faces with parsing and linting them due to the missing
+the problems he faced with parsing and linting them due to the missing
 spec of the **file format**. He worried about the **varying degrees** of
 quality, freshness and maintenance of the images at *DockerHub*.
 
@@ -245,7 +244,7 @@ many pipelines that it becomes unmanageable.
 
 As already mentioned in :ref:`sec_kub_tools`, **serverless** is useful
 for short lived applications, like periodic tasks or event driven logic.
-It's also useful for glue logic between different systems. The main
+It's also useful for **glue logic** between different systems. The main
 philosophy behind *serverless* seems to be, that you don't care about servers
 anymore and use **Backend as a Service (BaaS)**, which is mostly based
 on re-used (recycled) containers nowadays. Another advantage might be
@@ -395,11 +394,10 @@ differences between the common ways to store data are:
 
 * **block storage** has no metadata but is fast
 * **file system** has hierarchy and metadata and in-place writes
-* **object storage** has flat namespace; objects are immutable
+* **object storage** has flat namespace; objects are **immutable**
 
-At least that's what I noted down, I was never a storage guy.
 As the objects are immutable, each version of an object is a new object,
-which means you need a retention policy to deal with the needed disk space.
+which means you need a **retention policy** to deal with the needed disk space.
 
 Apparently, **Ceph** offers block, file and object storage and uses
 **rados** as the underlying distributed object storage, while
