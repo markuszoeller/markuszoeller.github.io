@@ -186,14 +186,15 @@ videos to the keynotes can be found at <a class="footnote-reference" href="#osse
 <h2><a class="toc-backref" href="#contents">Sessions</a><a class="headerlink" href="#sessions" title="Permalink to this headline"> </a></h2>
 <p>At any given time I had two to four conflicting sessions in my bookmarks,
 so I had to decide which ones to go to. Here&#8217;s the chronological list
-of sessions I attended. The linked sessions often have the used presentations,
-in case you like to have more details.</p>
+of sessions I attended. The session, reachable via the <em>sched</em> links,
+often have their presentations attached.</p>
 <p>If you&#8217;re short on time, only read:</p>
 <ul class="simple">
 <li><a class="reference internal" href="#sec-observability"><span class="std std-ref">360 Degree Observability</span></a></li>
 <li><a class="reference internal" href="#sec-not-source"><span class="std std-ref">Open Source is Just About the Source, Isn&#8217;t It?</span></a></li>
 <li><a class="reference internal" href="#sec-devops-effort"><span class="std std-ref">Docker, Moby is Killing Your #devops Efforts</span></a></li>
 </ul>
+<p>These were my top 3 session of this conference.</p>
 <div class="section" id="going-modular-turning-legacy-docs-into-user-story-based-content">
 <h3><a class="toc-backref" href="#contents">Going Modular: Turning Legacy Docs into User-Story-Based Content</a><a class="headerlink" href="#going-modular-turning-legacy-docs-into-user-story-based-content" title="Permalink to this headline"> </a></h3>
 <p><em>Robert Kratky (Red Hat)</em>: <a class="reference external" href="http://sched.co/ByIP">http://sched.co/ByIP</a></p>
@@ -223,7 +224,7 @@ more tips and tricks.</p>
 <h3><a class="toc-backref" href="#contents">Collaboration in Kernel Mailing Lists</a><a class="headerlink" href="#collaboration-in-kernel-mailing-lists" title="Permalink to this headline"> </a></h3>
 <p><em>Dawn Foster (The Scale Factory)</em>: <a class="reference external" href="http://sched.co/BxIH">http://sched.co/BxIH</a></p>
 <p>This was a presentation of <em>Dawn&#8217;s</em> research for her PhD. Key findings where,
-that <em>task affiliation</em> is far greater than <em>company affiliation</em>. Also,
+that <strong>task affiliation</strong> is far greater than <em>company affiliation</em>. Also,
 that the <strong>timezone pain</strong> gets mitigated by the asynchronous nature of mailing
 lists. Lastly, <strong>professional relationships</strong> get stronger with face to face
 meetings like conferences.</p>
@@ -235,7 +236,7 @@ above.</p>
 <div class="section" id="applying-goals-question-metrics-to-software-development-management">
 <span id="sec-gqm"></span><h3><a class="toc-backref" href="#contents">Applying Goals-Question-Metrics to Software Development Management</a><a class="headerlink" href="#applying-goals-question-metrics-to-software-development-management" title="Permalink to this headline"> </a></h3>
 <p><em>Jose Manrique Lopez de la Fuente (Bitergia)</em>: <a class="reference external" href="http://sched.co/ByIM">http://sched.co/ByIM</a></p>
-<p>I wasn&#8217;t aware of the term <strong>inner source</strong> <a class="footnote-reference" href="#inner" id="id7">[7]</a> , until <em>Jose</em> mentioned
+<p>I wasn&#8217;t aware of the term <strong>inner source</strong> <a class="footnote-reference" href="#inner" id="id7">[7]</a>, until <em>Jose</em> mentioned
 it in his talk. To move in that direction he discussed the use of
 <em>goal, question, metric</em> <strong>(GQM)</strong> <a class="footnote-reference" href="#gqm" id="id8">[8]</a> and the <em>DevOps</em> framework <strong>CALMS</strong>:</p>
 <ul class="simple">
@@ -253,7 +254,7 @@ non-code part of software development.</p>
 <h3><a class="toc-backref" href="#contents">From <em>Dockerfiles</em> to <em>Ansible Container</em></a><a class="headerlink" href="#from-dockerfiles-to-ansible-container" title="Permalink to this headline"> </a></h3>
 <p><em>Tomas Tomecek (Red Hat)</em>: <a class="reference external" href="http://sched.co/BxIW">http://sched.co/BxIW</a></p>
 <p><em>Tomas</em> showed examples of non-trivial <strong>hard-to-read Dockerfiles</strong> and
-the problems he faces with parsing and linting them due to the missing
+the problems he faced with parsing and linting them due to the missing
 spec of the <strong>file format</strong>. He worried about the <strong>varying degrees</strong> of
 quality, freshness and maintenance of the images at <em>DockerHub</em>.</p>
 <p>His idea was to use <strong>ansible-container</strong> to make things more
@@ -320,7 +321,7 @@ many pipelines that it becomes unmanageable.</p>
 <p><em>Michael Bright (HPE)</em>: <a class="reference external" href="http://sched.co/BxIz">http://sched.co/BxIz</a></p>
 <p>As already mentioned in <a class="reference internal" href="#sec-kub-tools"><span class="std std-ref">Developer Tools for Kubernetes</span></a>, <strong>serverless</strong> is useful
 for short lived applications, like periodic tasks or event driven logic.
-It&#8217;s also useful for glue logic between different systems. The main
+It&#8217;s also useful for <strong>glue logic</strong> between different systems. The main
 philosophy behind <em>serverless</em> seems to be, that you don&#8217;t care about servers
 anymore and use <strong>Backend as a Service (BaaS)</strong>, which is mostly based
 on re-used (recycled) containers nowadays. Another advantage might be
@@ -432,11 +433,10 @@ differences between the common ways to store data are:</p>
 <ul class="simple">
 <li><strong>block storage</strong> has no metadata but is fast</li>
 <li><strong>file system</strong> has hierarchy and metadata and in-place writes</li>
-<li><strong>object storage</strong> has flat namespace; objects are immutable</li>
+<li><strong>object storage</strong> has flat namespace; objects are <strong>immutable</strong></li>
 </ul>
-<p>At least that&#8217;s what I noted down, I was never a storage guy.
-As the objects are immutable, each version of an object is a new object,
-which means you need a retention policy to deal with the needed disk space.</p>
+<p>As the objects are immutable, each version of an object is a new object,
+which means you need a <strong>retention policy</strong> to deal with the needed disk space.</p>
 <p>Apparently, <strong>Ceph</strong> offers block, file and object storage and uses
 <strong>rados</strong> as the underlying distributed object storage, while
 <strong>radosgw</strong> lifts some limits of <em>rados</em> (I didn&#8217;t get the details which
