@@ -69,7 +69,7 @@ If you're short on time, only read:
 * :ref:`sec_not_source`
 * :ref:`sec_devops_effort`
 
-These were my top 3 session of this conference.
+These were my top 3 sessions of this conference.
 
 
 
