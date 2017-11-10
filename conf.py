@@ -22,7 +22,7 @@ blog_title = u'Markus\'s Brain Swap Space'
 
 # Base URL for the website, required for generating feeds.
 # e.g. blog_baseurl = "http://example.com/"
-blog_baseurl = "http://markuszoeller.github.io/"
+blog_baseurl = "http://www.markusz.io/"
 
 # GitHub username for deploying to GitHub pages
 github_pages = "markuszoeller"
