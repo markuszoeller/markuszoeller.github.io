@@ -9,17 +9,6 @@ Markus's Brain Swap Space
 
 This is Markus Zoeller's blog about software development related topics.
 
-.. list-table::
-   :header-rows: 1
-
-   * - Feeds
-     - Me
-     - Future
-     - Sources
-   * - `Atom <posts/atom.xml>`_
-     - :ref:`about`
-     - :ref:`blog-drafts`
-     - `Github <https://github.com/markuszoeller/markuszoeller.github.io>`_
 
 
 Recent posts
