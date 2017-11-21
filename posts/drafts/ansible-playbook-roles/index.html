@@ -183,7 +183,14 @@ which contained all the logic. This post will show how to do a refactoring of
 a playbook into smaller, reusable ansible roles, which hide complexity and
 provide defined interfaces.</p>
 <hr class="docutils" />
-<asciinema-player src="../../../_static/asciinema/vagrant-up_Kr5l0uz.json" cols="80" rows="24"></asciinema-player><div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">defaults</span><span class="p">]</span>
+<p>Start the virtual machines which will be our targets for the playbook later:</p>
+<asciinema-player src="../../../_static/asciinema/asciinema_vagrant-up_c671UQ5.json" cols="120" rows="15"></asciinema-player><p>Start the playbook (without any encapsulation in roles):</p>
+<asciinema-player src="../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="15"></asciinema-player><p>Do the encapsulation in roles:</p>
+<div class="admonition-todo admonition" id="index-2">
+<p class="first admonition-title">Todo</p>
+<p class="last">Move into roles</p>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">defaults</span><span class="p">]</span>
 <span class="n">host_key_checking</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">callback_whitelist</span> <span class="o">=</span> <span class="n">profile_tasks</span>
 <span class="n">inventory</span> <span class="o">=</span> <span class="n">hosts</span><span class="o">.</span><span class="n">ini</span>
@@ -445,7 +452,7 @@ For example the <a class="reference internal" href="../../../about/#about"><span
 </div>
 <div class="section" id="highlighted-info-boxes">
 <h2><a class="toc-backref" href="#contents">Highlighted info boxes</a><a class="headerlink" href="#highlighted-info-boxes" title="Permalink to this headline"> </a></h2>
-<div class="admonition-todo admonition" id="index-2">
+<div class="admonition-todo admonition" id="index-3">
 <p class="first admonition-title">Todo</p>
 <p class="last">Reminder for the author to do this here before publishing.</p>
 </div>
