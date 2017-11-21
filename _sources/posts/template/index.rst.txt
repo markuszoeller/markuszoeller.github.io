@@ -84,7 +84,7 @@ don't change once published permalinks (aka altering sections).
    =======
 
    sub-section
-   ===========
+   -----------
 
    **paragraph header**
 
