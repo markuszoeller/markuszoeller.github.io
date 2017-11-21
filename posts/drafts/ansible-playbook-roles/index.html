@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/asciinema-player.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -25,6 +26,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/asciinema-player.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -181,6 +183,14 @@ which contained all the logic. This post will show how to do a refactoring of
 a playbook into smaller, reusable ansible roles, which hide complexity and
 provide defined interfaces.</p>
 <hr class="docutils" />
+<asciinema-player src="../../../_static/asciinema/vagrant-up_Kr5l0uz.json" cols="80" rows="24"></asciinema-player><div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">defaults</span><span class="p">]</span>
+<span class="n">host_key_checking</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">callback_whitelist</span> <span class="o">=</span> <span class="n">profile_tasks</span>
+<span class="n">inventory</span> <span class="o">=</span> <span class="n">hosts</span><span class="o">.</span><span class="n">ini</span>
+<span class="n">roles_path</span> <span class="o">=</span> <span class="n">roles</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ansible</span><span class="o">/</span><span class="n">roles</span>
+<span class="n">retry_files_enabled</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
 <div class="section" id="general-advice">
 <h2><a class="toc-backref" href="#contents">General advice</a><a class="headerlink" href="#general-advice" title="Permalink to this headline"> </a></h2>
 <ul class="simple">

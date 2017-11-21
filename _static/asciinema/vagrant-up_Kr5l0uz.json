@@ -1,0 +1,526 @@
+{
+  "width": 145,
+  "duration": 100.62245,
+  "command": null,
+  "stdout": [
+    [
+      0.099063,
+      "\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007"
+    ],
+    [
+      0.000569,
+      "\u001b[?1034h"
+    ],
+    [
+      1.7e-05,
+      "[\u001b[37m16:18:55 markus@local ] $ "
+    ],
+    [
+      2.531693,
+      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37m16:18:57 markus@local ] $ "
+    ],
+    [
+      0.118347,
+      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37m16:18:58 markus@local ] $ "
+    ],
+    [
+      0.593907,
+      "v"
+    ],
+    [
+      0.059327,
+      "a"
+    ],
+    [
+      0.217699,
+      "g"
+    ],
+    [
+      0.180837,
+      "r"
+    ],
+    [
+      0.058413,
+      "a"
+    ],
+    [
+      0.060886,
+      "n"
+    ],
+    [
+      0.15379,
+      "t"
+    ],
+    [
+      0.102535,
+      " "
+    ],
+    [
+      0.209418,
+      "u"
+    ],
+    [
+      0.061333,
+      "p"
+    ],
+    [
+      1.152063,
+      "\r\n"
+    ],
+    [
+      2.138768,
+      "\u001b[0mBringing machine 'monitoring' up with 'virtualbox' provider...\u001b[0m\r\n"
+    ],
+    [
+      0.001078,
+      "\u001b[0mBringing machine 'app-server-1' up with 'virtualbox' provider...\u001b[0m\r\n"
+    ],
+    [
+      0.000842,
+      "\u001b[0mBringing machine 'app-server-2' up with 'virtualbox' provider...\u001b[0m\r\n"
+    ],
+    [
+      0.750508,
+      "\u001b[1m==> monitoring: Cloning VM...\u001b[0m\r\n"
+    ],
+    [
+      0.293274,
+      "\u001b[0m\r\u001b[K\u001b[0m"
+    ],
+    [
+      0.086671,
+      "\u001b[1m==> monitoring: Matching MAC address for NAT networking...\u001b[0m\r\n"
+    ],
+    [
+      0.221101,
+      "\u001b[1m==> monitoring: Checking if box 'geerlingguy/ubuntu1604' is up to date...\u001b[0m\r\n"
+    ],
+    [
+      1.555084,
+      "\u001b[1m==> monitoring: Setting the name of the VM: ansible-playbook-roles_monitoring_1510499945888_1215\u001b[0m\r\n"
+    ],
+    [
+      0.992142,
+      "\u001b[1m==> monitoring: Clearing any previously set network interfaces...\u001b[0m\r\n"
+    ],
+    [
+      0.548762,
+      "\u001b[1m==> monitoring: Preparing network interfaces based on configuration...\u001b[0m\r\n"
+    ],
+    [
+      0.00022,
+      "\u001b[0m    monitoring: Adapter 1: nat\u001b[0m\r\n"
+    ],
+    [
+      0.000236,
+      "\u001b[0m    monitoring: Adapter 2: hostonly\u001b[0m\r\n"
+    ],
+    [
+      0.080584,
+      "\u001b[1m==> monitoring: Forwarding ports...\u001b[0m\r\n"
+    ],
+    [
+      0.079596,
+      "\u001b[0m    monitoring: 22 (guest) => 50011 (host) (adapter 1)\u001b[0m\r\n"
+    ],
+    [
+      0.220491,
+      "\u001b[1m==> monitoring: Running 'pre-boot' VM customizations...\u001b[0m\r\n"
+    ],
+    [
+      0.150152,
+      "\u001b[1m==> monitoring: Booting VM...\u001b[0m\r\n"
+    ],
+    [
+      0.342929,
+      "\u001b[1m==> monitoring: Waiting for machine to boot. This may take a few minutes...\u001b[0m\r\n"
+    ],
+    [
+      0.311776,
+      "\u001b[0m    monitoring: SSH address: 127.0.0.1:50011\u001b[0m\r\n"
+    ],
+    [
+      0.000152,
+      "\u001b[0m    monitoring: SSH username: vagrant\u001b[0m\r\n"
+    ],
+    [
+      0.000149,
+      "\u001b[0m    monitoring: SSH auth method: private key\u001b[0m\r\n"
+    ],
+    [
+      16.05501,
+      "\u001b[0m    monitoring: \r\n    monitoring: Vagrant insecure key detected. Vagrant will automatically replace\r\n    monitoring: this with a newly generated keypair for better security.\u001b[0m\r\n"
+    ],
+    [
+      1.124671,
+      "\u001b[0m    monitoring: \r\n    monitoring: Inserting generated public key within guest...\u001b[0m\r\n"
+    ],
+    [
+      0.375247,
+      "\u001b[0m    monitoring: Removing insecure key from the guest if it's present...\u001b[0m\r\n"
+    ],
+    [
+      0.409763,
+      "\u001b[0m    monitoring: Key inserted! Disconnecting and reconnecting using new SSH key...\u001b[0m\r\n"
+    ],
+    [
+      0.737829,
+      "\u001b[1m==> monitoring: Machine booted and ready!\u001b[0m\r\n"
+    ],
+    [
+      0.002052,
+      "\u001b[1m==> monitoring: Checking for guest additions in VM...\u001b[0m\r\n"
+    ],
+    [
+      0.119323,
+      "\u001b[1m==> monitoring: Setting hostname...\u001b[0m\r\n"
+    ],
+    [
+      0.474325,
+      "\u001b[1m==> monitoring: Configuring and enabling network interfaces...\u001b[0m\r\n"
+    ],
+    [
+      0.931353,
+      "\u001b[1m==> monitoring: Mounting shared folders...\u001b[0m\r\n"
+    ],
+    [
+      0.000341,
+      "\u001b[0m    monitoring: /vagrant => /home/markus/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u001b[0m\r\n"
+    ],
+    [
+      1.374065,
+      "\u001b[1m==> app-server-1: Cloning VM...\u001b[0m\r\n"
+    ],
+    [
+      0.273239,
+      "\u001b[0m\r\u001b[K\u001b[0m"
+    ],
+    [
+      0.090765,
+      "\u001b[1m==> app-server-1: Matching MAC address for NAT networking...\u001b[0m\r\n"
+    ],
+    [
+      0.238124,
+      "\u001b[1m==> app-server-1: Checking if box 'geerlingguy/ubuntu1604' is up to date...\u001b[0m\r\n"
+    ],
+    [
+      1.486387,
+      "\u001b[1m==> app-server-1: Setting the name of the VM: ansible-playbook-roles_app-server-1_1510499972306_83934\u001b[0m\r\n"
+    ],
+    [
+      1.176614,
+      "\u001b[1m==> app-server-1: Clearing any previously set network interfaces...\u001b[0m\r\n"
+    ],
+    [
+      0.378993,
+      "\u001b[1m==> app-server-1: Preparing network interfaces based on configuration...\u001b[0m\r\n"
+    ],
+    [
+      0.000514,
+      "\u001b[0m    app-server-1: Adapter 1: nat\u001b[0m\r\n"
+    ],
+    [
+      0.000362,
+      "\u001b[0m    app-server-1: Adapter 2: hostonly\u001b[0m\r\n"
+    ],
+    [
+      0.076891,
+      "\u001b[1m==> app-server-1: Forwarding ports...\u001b[0m\r\n"
+    ],
+    [
+      0.079819,
+      "\u001b[0m    app-server-1: 22 (guest) => 50012 (host) (adapter 1)\u001b[0m\r\n"
+    ],
+    [
+      0.29071,
+      "\u001b[1m==> app-server-1: Running 'pre-boot' VM customizations...\u001b[0m\r\n"
+    ],
+    [
+      0.23696,
+      "\u001b[1m==> app-server-1: Booting VM...\u001b[0m\r\n"
+    ],
+    [
+      0.288447,
+      "\u001b[1m==> app-server-1: Waiting for machine to boot. This may take a few minutes...\u001b[0m\r\n"
+    ],
+    [
+      0.207798,
+      "\u001b[0m    app-server-1: SSH address: 127.0.0.1:50012\u001b[0m\r\n"
+    ],
+    [
+      0.000106,
+      "\u001b[0m    app-server-1: SSH username: vagrant\u001b[0m\r\n"
+    ],
+    [
+      0.00012,
+      "\u001b[0m    app-server-1: SSH auth method: private key\u001b[0m\r\n"
+    ],
+    [
+      16.019716,
+      "\u001b[0m    app-server-1: \r\n    app-server-1: Vagrant insecure key detected. Vagrant will automatically replace\r\n    app-server-1: this with a newly generated keypair for better security.\u001b[0m\r\n"
+    ],
+    [
+      0.989816,
+      "\u001b[0m    app-server-1: \r\n    app-server-1: Inserting generated public key within guest...\u001b[0m\r\n"
+    ],
+    [
+      0.343138,
+      "\u001b[0m    app-server-1: Removing insecure key from the guest if it's present...\u001b[0m\r\n"
+    ],
+    [
+      0.395925,
+      "\u001b[0m    app-server-1: Key inserted! Disconnecting and reconnecting using new SSH key...\u001b[0m\r\n"
+    ],
+    [
+      1.057252,
+      "\u001b[1m==> app-server-1: Machine booted and ready!\u001b[0m\r\n"
+    ],
+    [
+      0.001448,
+      "\u001b[1m==> app-server-1: Checking for guest additions in VM...\u001b[0m\r\n"
+    ],
+    [
+      0.127548,
+      "\u001b[1m==> app-server-1: Setting hostname...\u001b[0m\r\n"
+    ],
+    [
+      0.461596,
+      "\u001b[1m==> app-server-1: Configuring and enabling network interfaces...\u001b[0m\r\n"
+    ],
+    [
+      0.864707,
+      "\u001b[1m==> app-server-1: Mounting shared folders...\u001b[0m\r\n"
+    ],
+    [
+      0.000784,
+      "\u001b[0m    app-server-1: /vagrant => /home/markus/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u001b[0m\r\n"
+    ],
+    [
+      1.384445,
+      "\u001b[1m==> app-server-2: Cloning VM...\u001b[0m\r\n"
+    ],
+    [
+      0.335728,
+      "\u001b[0m\r\u001b[K\u001b[0m"
+    ],
+    [
+      0.087701,
+      "\u001b[1m==> app-server-2: Matching MAC address for NAT networking...\u001b[0m\r\n"
+    ],
+    [
+      0.215466,
+      "\u001b[1m==> app-server-2: Checking if box 'geerlingguy/ubuntu1604' is up to date...\u001b[0m\r\n"
+    ],
+    [
+      1.777203,
+      "\u001b[1m==> app-server-2: Setting the name of the VM: ansible-playbook-roles_app-server-2_1510499999106_70898\u001b[0m\r\n"
+    ],
+    [
+      1.286241,
+      "\u001b[1m==> app-server-2: Clearing any previously set network interfaces...\u001b[0m\r\n"
+    ],
+    [
+      0.352426,
+      "\u001b[1m==> app-server-2: Preparing network interfaces based on configuration...\u001b[0m\r\n"
+    ],
+    [
+      0.000247,
+      "\u001b[0m    app-server-2: Adapter 1: nat\u001b[0m\r\n"
+    ],
+    [
+      0.000297,
+      "\u001b[0m    app-server-2: Adapter 2: hostonly\u001b[0m\r\n"
+    ],
+    [
+      0.076226,
+      "\u001b[1m==> app-server-2: Forwarding ports...\u001b[0m\r\n"
+    ],
+    [
+      0.079825,
+      "\u001b[0m    app-server-2: 22 (guest) => 50013 (host) (adapter 1)\u001b[0m\r\n"
+    ],
+    [
+      0.297854,
+      "\u001b[1m==> app-server-2: Running 'pre-boot' VM customizations...\u001b[0m\r\n"
+    ],
+    [
+      0.238973,
+      "\u001b[1m==> app-server-2: Booting VM...\u001b[0m\r\n"
+    ],
+    [
+      0.339426,
+      "\u001b[1m==> app-server-2: Waiting for machine to boot. This may take a few minutes...\u001b[0m"
+    ],
+    [
+      0.004878,
+      "\r\n"
+    ],
+    [
+      0.160934,
+      "\u001b[0m    app-server-2: SSH address: 127.0.0.1:50013\u001b[0m\r\n"
+    ],
+    [
+      0.000153,
+      "\u001b[0m    app-server-2: SSH username: vagrant\u001b[0m\r\n"
+    ],
+    [
+      0.000139,
+      "\u001b[0m    app-server-2: SSH auth method: private key\u001b[0m\r\n"
+    ],
+    [
+      15.9191,
+      "\u001b[0m    app-server-2: \r\n    app-server-2: Vagrant insecure key detected. Vagrant will automatically replace\r\n    app-server-2: this with a newly generated keypair for better security.\u001b[0m\r\n"
+    ],
+    [
+      0.943265,
+      "\u001b[0m    app-server-2: \r\n    app-server-2: Inserting generated public key within guest...\u001b[0m\r\n"
+    ],
+    [
+      0.396566,
+      "\u001b[0m    app-server-2: Removing insecure key from the guest if it's present...\u001b[0m\r\n"
+    ],
+    [
+      0.426684,
+      "\u001b[0m    app-server-2: Key inserted! Disconnecting and reconnecting using new SSH key...\u001b[0m\r\n"
+    ],
+    [
+      1.165782,
+      "\u001b[1m==> app-server-2: Machine booted and ready!\u001b[0m\r\n"
+    ],
+    [
+      0.000509,
+      "\u001b[1m==> app-server-2: Checking for guest additions in VM...\u001b[0m\r\n"
+    ],
+    [
+      0.080154,
+      "\u001b[1m==> app-server-2: Setting hostname...\u001b[0m\r\n"
+    ],
+    [
+      0.479164,
+      "\u001b[1m==> app-server-2: Configuring and enabling network interfaces...\u001b[0m\r\n"
+    ],
+    [
+      0.871605,
+      "\u001b[1m==> app-server-2: Mounting shared folders...\u001b[0m\r\n"
+    ],
+    [
+      0.000358,
+      "\u001b[0m    app-server-2: /vagrant => /home/markus/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u001b[0m\r\n"
+    ],
+    [
+      1.053649,
+      "\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37m16:20:23 markus@local ] $ "
+    ],
+    [
+      2.226499,
+      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37m16:20:25 markus@local ] $ "
+    ],
+    [
+      0.133885,
+      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37m16:20:25 markus@local ] $ "
+    ],
+    [
+      0.65122,
+      "v"
+    ],
+    [
+      0.086091,
+      "a"
+    ],
+    [
+      0.214469,
+      "g"
+    ],
+    [
+      0.297981,
+      "r"
+    ],
+    [
+      0.060128,
+      "a"
+    ],
+    [
+      0.110751,
+      "n"
+    ],
+    [
+      0.104967,
+      "t"
+    ],
+    [
+      0.103044,
+      " "
+    ],
+    [
+      0.149198,
+      "s"
+    ],
+    [
+      0.131633,
+      "t"
+    ],
+    [
+      0.112592,
+      "a"
+    ],
+    [
+      0.105494,
+      "t"
+    ],
+    [
+      0.209681,
+      "u"
+    ],
+    [
+      0.138274,
+      "s"
+    ],
+    [
+      0.390571,
+      "\r\n"
+    ],
+    [
+      3.59605,
+      "\u001b[0mCurrent machine states:\r\n\r\nmonitoring                running (virtualbox)\r\napp-server-1              running (virtualbox)\r\napp-server-2              running (virtualbox)\r\n\r\nThis environment represents multiple VMs. The VMs are all listed\r\nabove with their current state. For more information about a specific\r\nVM, run `vagrant status NAME`.\u001b[0m\r\n"
+    ],
+    [
+      0.021334,
+      "\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37m16:20:32 markus@local ] $ "
+    ],
+    [
+      1.548645,
+      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37m16:20:33 markus@local ] $ "
+    ],
+    [
+      0.148218,
+      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37m16:20:33 markus@local ] $ "
+    ],
+    [
+      1.166095,
+      "e"
+    ],
+    [
+      0.195561,
+      "x"
+    ],
+    [
+      0.165796,
+      "i"
+    ],
+    [
+      0.09357,
+      "t"
+    ],
+    [
+      0.41158,
+      "\r\nexit\r\n"
+    ]
+  ],
+  "title": null,
+  "height": 42,
+  "env": {
+    "SHELL": "/bin/bash",
+    "TERM": "xterm-256color"
+  },
+  "version": 1
+}
