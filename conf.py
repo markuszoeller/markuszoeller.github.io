@@ -364,3 +364,5 @@ htmlhelp_basename = 'MyBrainSwapSpacedoc'
 def setup(app):
     app.add_stylesheet('css/custom.css')  # may also be an URL
     app.add_stylesheet('http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')  # may also be an URL
+    app.add_stylesheet('css/asciinema-player.css')
+    app.add_javascript('js/asciinema-player.js')
