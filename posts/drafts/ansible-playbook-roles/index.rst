@@ -44,6 +44,27 @@ provide defined interfaces.
 
 ----
 
+.. FIXME: This is a undesirable way to use the asciinema files. I had to
+   create the "_static/asciinema" directory by hand and also copy the
+   asciinema source "vagrant-up.json" into that directory. This will be an
+   issue when I move this post into the appropriate release directory,
+   as I navigate in the directories here. Also, I have to use raw HTML,
+   which is also not the best solution.
+   An ideal solution would have a sphinx asciinema directive which handles
+   the CSS/JS copying into the _static directory and also creates the proper
+   HTML and deals with the source file itself, like this:
+   .. asciinema:: vagrant-up.json
+      :cols: 80
+      :rows: 24
+
+.. raw:: html
+
+   <asciinema-player src="../../../_static/asciinema/vagrant-up_Kr5l0uz.json" cols="80" rows="24"></asciinema-player>
+
+
+
+
+.. literalinclude:: ansible.cfg
 
 General advice
 ==============
