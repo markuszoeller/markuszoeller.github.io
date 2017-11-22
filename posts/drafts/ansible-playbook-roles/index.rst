@@ -116,8 +116,7 @@ time, but they are not absolutely necessary.
    :linenos:
    :emphasize-lines: 0
 
-    [markus@local]$ cd roles/
-    [markus@local]$ ansible-galaxy init node-exporter
+    [markus@local]$ ansible-galaxy init roles/node-exporter
     [markus@local]$ tree
     .
     |-- ansible.cfg
@@ -272,8 +271,7 @@ With this basic step, let's create another role, this time for the
    :linenos:
    :emphasize-lines: 0
 
-    [markus@local]$ cd roles/
-    [markus@local]$ ansible-galaxy init prometheus
+    [markus@local]$ ansible-galaxy init roles/prometheus
 
 Add the role to the playbook (see the highlighted lines below),
 and move the tasks to ``roles/prometheus/tasks/main.yml`` and the
@@ -342,8 +340,7 @@ We do the very same to the tasks to install the *Grafana* service:
    :linenos:
    :emphasize-lines: 0
 
-    [markus@local]$ cd roles/
-    [markus@local]$ ansible-galaxy init grafana
+    [markus@local]$ ansible-galaxy init roles/grafana
 
 Same procedure as before:
 
@@ -424,6 +421,56 @@ rearrange the two roles we have so far, and could use the ``grafana`` role
 before the ``prometheus`` role, it wouldn't matter as they are independent.
 Establishing the dependency is its own logical unit in my opinion. To
 encapsulate that, we create another role:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+    $ ansible-galaxy init roles/grafana-prometheus-datasource
+
+Now move the code, which establishes the datasource to
+``roles/grafana-prometheus-datasource/tasks/main.yml`` and add the
+new role to the playbook:
+
+.. code-block:: diff
+   :linenos:
+   :emphasize-lines: 7
+
+    --- a/playbook.yml
+    +++ b/playbook.yml
+    @@ -55,30 +55,9 @@
+       roles:
+         - prometheus
+         - grafana
+    +    - grafana-prometheus-datasource
+
+       tasks:
+    -    - name: "Add Prometheus as datasource to Grafana."
+    -      vars:
+    -        prometheus_datasource:
+    -          name: "prometheus"
+    -          type: "prometheus"
+    -          url: "http://127.0.0.1:9090"
+    -          access: "proxy"
+    -          isDefault: true
+    -          basicAuth: false
+    -      uri:
+    -        url: http://127.0.0.1:3000/api/datasources
+    -        method: POST
+    -        body: "{{ prometheus_datasource | to_json }}"
+    -        body_format: json
+    -        user: admin
+    -        password: admin
+    -        force_basic_auth: yes
+    -        status_code: 200,500  # 500 means, the datasource is already added
+    -        headers:
+    -          Content-Type: "application/json"
+    -          Accept: "application/json"
+    -
+         - name: "Upload the example Grafana dashboard."
+           uri:
+             url: http://127.0.0.1:3000/api/dashboards/db
+
 
 -----------------------
 
