@@ -217,7 +217,7 @@ Move the node-exporter related tasks from the playbook into the file
        status_code: 200
 
 
-Use the role in the playbook instead of the moved tasks. See this diff
+Use the role in the playbook instead of the moved tasks. See this *diff*
 to see the difference:
 
 .. code-block:: diff
