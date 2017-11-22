@@ -52,31 +52,10 @@
 - hosts: monitoring
   become: true
 
+  roles:
+    - prometheus
 
   tasks:
-    # --- Prometheus --------------------------------------------------------
-    - name: "Install the Prometheus server."
-      apt:
-        name: prometheus
-
-    - name: "Configure the Prometheus server."
-      copy:
-        src: prometheus.yml
-        dest: /etc/prometheus/prometheus.yml
-      notify: event_restart_prometheus
-
-    - name: "Ensure Prometheus is started and starts at host boot."
-      service:
-        name: prometheus
-        enabled: true
-        state: started
-
-    - name: "Check if Prometheus is accessible."
-      uri:
-        url: http://127.0.0.1:9090/graph
-        method: GET
-        status_code: 200
-
     # --- Grafana -----------------------------------------------------------
     - name: "Install the Grafana server."
       apt:
@@ -139,12 +118,6 @@
 
   # --- After all tasks are executed (if notified) --------------------------
   handlers:
-    - name: "Restart the Prometheus service."
-      service:
-        name: prometheus
-        state: restarted
-      listen: event_restart_prometheus
-
     - name: "Restart the Grafana service."
       service:
         name: grafana

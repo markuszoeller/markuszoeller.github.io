@@ -57,6 +57,7 @@ provide defined interfaces.
       :cols: 80
       :rows: 24
 
+We start with this layout of our project:
 
 .. code-block:: bash
    :linenos:
@@ -91,11 +92,24 @@ Start the playbook (without any encapsulation in roles):
 
    <asciinema-player src="../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="30"></asciinema-player>
 
-Do the encapsulation in roles:
 
-.. todo:: Move into roles
+When I start to refactor roles out of a playbook, I usually do
+it by adding a new directory ``roles`` to the project. The *Ansible*
+configuration file ``ansible.cfg`` [#ansconf]_ needs to be created and an
+entry to the ``roles_path`` key needs to be added:
 
 .. literalinclude:: ansible.cfg
+   :language: ini
+   :linenos:
+   :emphasize-lines: 5
+
+The other settings in this file make my life a little easier most of the
+time, but they are not absolutely necessary.
+
+.. note::
+    Later steps can be, to put a role in a dedicated git repo only for that
+    role and use it in your company only, or push it to *Ansible Galaxy*
+    for reuse by others.
 
 
 .. code-block:: bash
@@ -250,6 +264,79 @@ more roles to encapsulate logic.
     You can influence that with the ``include_role`` module [#includerole]_
     or the ``import_role`` module [#importrole]_,
     which let you tread roles like a task.
+
+With this basic step, let's create another role, this time for the
+*Prometheus* service:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+    [markus@local]$ cd roles/
+    [markus@local]$ ansible-galaxy init prometheus
+
+Add the role to the playbook (see the highlighted lines below),
+and move the tasks to ``roles/prometheus/tasks/main.yml`` and the
+*Prometheus* related handler to ``roles/prometheus/handlers/main.yml``
+and the ``prometheus.yml`` file into ``roles/prometheus/files/``.
+
+.. code-block:: diff
+   :linenos:
+   :emphasize-lines: 7-8
+
+    --- a/playbook.yml
+    +++ b/playbook.yml
+    @@ -52,31 +52,10 @@
+     - hosts: monitoring
+       become: true
+
+    +  roles:
+    +    - prometheus
+
+       tasks:
+    -    # --- Prometheus --------------------------------------------------------
+    -    - name: "Install the Prometheus server."
+    -      apt:
+    -        name: prometheus
+    -
+    -    - name: "Configure the Prometheus server."
+    -      copy:
+    -        src: prometheus.yml
+    -        dest: /etc/prometheus/prometheus.yml
+    -      notify: event_restart_prometheus
+    -
+    -    - name: "Ensure Prometheus is started and starts at host boot."
+    -      service:
+    -        name: prometheus
+    -        enabled: true
+    -        state: started
+    -
+    -    - name: "Check if Prometheus is accessible."
+    -      uri:
+    -        url: http://127.0.0.1:9090/graph
+    -        method: GET
+    -        status_code: 200
+    -
+         # --- Grafana -----------------------------------------------------------
+         - name: "Install the Grafana server."
+           apt:
+    @@ -139,12 +118,6 @@
+
+       # --- After all tasks are executed (if notified) --------------------------
+       handlers:
+    -    - name: "Restart the Prometheus service."
+    -      service:
+    -        name: prometheus
+    -        state: restarted
+    -      listen: event_restart_prometheus
+    -
+         - name: "Restart the Grafana service."
+           service:
+             name: grafana
+
+
+
+
 
 -----------------------
 
@@ -695,6 +782,8 @@ References
 .. [#pygments] http://pygments.org/
 
 .. [#footnotes] http://www.sphinx-doc.org/en/stable/rest.html#footnotes
+
+.. [#ansconf] http://docs.ansible.com/ansible/latest/intro_configuration.html
 
 .. [#ansidirbug] https://github.com/ansible/ansible/issues/23597
 
