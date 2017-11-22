@@ -61,14 +61,14 @@ Start the virtual machines which will be our targets for the playbook later:
 
 .. raw:: html
 
-   <asciinema-player src="../../../_static/asciinema/asciinema_vagrant-up_c671UQ5.json" cols="120" rows="15"></asciinema-player>
+   <asciinema-player src="../../../_static/asciinema/asciinema_vagrant-up_c671UQ5.json" cols="120" rows="30"></asciinema-player>
 
 
 Start the playbook (without any encapsulation in roles):
 
 .. raw:: html
 
-   <asciinema-player src="../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="15"></asciinema-player>
+   <asciinema-player src="../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="30"></asciinema-player>
 
 Do the encapsulation in roles:
 
