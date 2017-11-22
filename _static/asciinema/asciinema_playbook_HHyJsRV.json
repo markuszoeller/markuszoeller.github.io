@@ -1,618 +1,654 @@
 {
-  "duration": 31.525491,
-  "width": 220,
-  "command": null,
   "stdout": [
     [
-      0.104886,
+      0.107825,
       "\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007"
     ],
     [
-      0.000317,
+      0.000255,
       "\u001b[?1034h"
     ],
     [
-      1.5e-05,
-      "[\u001b[37mmarkus@local ] $ "
+      1.3e-05,
+      "[\u001b[37mmarkus@local\u001b(B\u001b[m]$ "
     ],
     [
-      0.876743,
+      1.20131,
       "\r\n"
     ],
     [
-      0.000565,
+      0.000253,
       "\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007"
     ],
     [
-      8.6e-05,
-      "[\u001b[37mmarkus@local ] $ "
+      3.5e-05,
+      "[\u001b[37mmarkus@local\u001b(B\u001b[m]$ "
     ],
     [
-      0.152235,
-      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37mmarkus@local ] $ "
-    ],
-    [
-      0.143835,
-      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37mmarkus@local ] $ "
-    ],
-    [
-      0.255937,
-      "a"
-    ],
-    [
-      0.057327,
-      "n"
-    ],
-    [
-      0.110811,
-      "s"
-    ],
-    [
-      0.047783,
-      "i"
-    ],
-    [
-      0.161554,
-      "\u0007ble"
-    ],
-    [
-      0.646519,
-      " "
-    ],
-    [
-      1.064596,
-      "\b\u001b[K"
-    ],
-    [
-      0.19949,
-      "-"
-    ],
-    [
-      0.196889,
-      "p"
-    ],
-    [
-      0.170855,
-      "l"
-    ],
-    [
-      0.159713,
-      "a"
-    ],
-    [
-      0.198921,
-      "ybook "
-    ],
-    [
-      0.929885,
-      "p"
-    ],
-    [
-      0.167898,
-      "l"
-    ],
-    [
-      0.325856,
-      "aybook.yml "
-    ],
-    [
-      0.881849,
+      0.159183,
       "\r\n"
     ],
     [
-      1.023523,
-      "\r\nPLAY [all] *****************************************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      0.036304,
-      "\r\nTASK [Wait for SSH to be ready.] *******************************************************************************************************************************************************************************************\r\n"
+      0.000439,
+      "\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007"
     ],
     [
       5.4e-05,
-      "Tuesday 21 November 2017  14:50:22 +0100 (0:00:00.091)       0:00:00.091 ****** \r\n"
+      "[\u001b[37mmarkus@local\u001b(B\u001b[m]$ "
     ],
     [
-      2.0,
-      "\u001b[0;32mok: [app-server-2 -> localhost]\u001b[0m\r\n"
-    ],
-    [
-      0.007151,
-      "\u001b[0;32mok: [app-server-1 -> localhost]\u001b[0m\r\n"
-    ],
-    [
-      0.00473,
-      "\u001b[0;32mok: [monitoring -> localhost]\u001b[0m\r\n\r\nTASK [Add our servers to the hosts file.] **********************************************************************************************************************************************************************************\r\nTuesday 21 November 2017  14:50:36 +0100 (0:00:14.366)       0:00:14.458 ****** \r\n"
-    ],
-    [
-      0.535257,
-      "\u001b[0;33mchanged: [app-server-2] => (item=monitoring)\u001b[0m\r\n"
-    ],
-    [
-      0.000399,
-      "\u001b[0;33mchanged: [app-server-1] => (item=monitoring)\u001b[0m\r\n"
-    ],
-    [
-      0.003692,
-      "\u001b[0;33mchanged: [monitoring] => (item=monitoring)\u001b[0m\r\n"
-    ],
-    [
-      0.194165,
-      "\u001b[0;33mchanged: [app-server-1] => (item=app-server-1)\u001b[0m\r\n"
-    ],
-    [
-      0.001293,
-      "\u001b[0;33mchanged: [app-server-2] => (item=app-server-1)\u001b[0m\r\n"
-    ],
-    [
-      0.009162,
-      "\u001b[0;33mchanged: [monitoring] => (item=app-server-1)\u001b[0m\r\n"
-    ],
-    [
-      0.190607,
-      "\u001b[0;33mchanged: [app-server-2] => (item=app-server-2)\u001b[0m\r\n"
-    ],
-    [
-      0.029368,
-      "\u001b[0;33mchanged: [app-server-1] => (item=app-server-2)\u001b[0m\r\n"
-    ],
-    [
-      0.010373,
-      "\u001b[0;33mchanged: [monitoring] => (item=app-server-2)\u001b[0m\r\n"
-    ],
-    [
-      0.001767,
-      "\r\nTASK [Ping each other via DNS names.] **************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      6.3e-05,
-      "Tuesday 21 November 2017  14:50:37 +0100 (0:00:00.976)       0:00:15.434 ****** \r\n"
-    ],
-    [
-      0.281728,
-      "\u001b[0;32mok: [app-server-2] => (item=monitoring)\u001b[0m\r\n"
-    ],
-    [
-      0.003618,
-      "\u001b[0;32mok: [monitoring] => (item=monitoring)\u001b[0m\r\n"
-    ],
-    [
-      0.000363,
-      "\u001b[0;32mok: [app-server-1] => (item=monitoring)\u001b[0m\r\n"
-    ],
-    [
-      0.188894,
-      "\u001b[0;32mok: [app-server-2] => (item=app-server-1)\u001b[0m\r\n"
-    ],
-    [
-      0.002502,
-      "\u001b[0;32mok: [monitoring] => (item=app-server-1)\u001b[0m\r\n"
-    ],
-    [
-      0.000231,
-      "\u001b[0;32mok: [app-server-1] => (item=app-server-1)\u001b[0m\r\n"
-    ],
-    [
-      0.195308,
-      "\u001b[0;32mok: [app-server-1] => (item=app-server-2)\u001b[0m\r\n\u001b[0;32mok: [app-server-2] => (item=app-server-2)\u001b[0m\r\n\u001b[0;32mok: [monitoring] => (item=app-server-2)\u001b[0m\r\n\r\nTASK [Ensure system package cache is updated.] *****************************************************************************************************************************************************************************\r\nTuesday 21 November 2017  14:50:38 +0100 (0:00:00.668)       0:00:16.102 ****** \r\n"
-    ],
-    [
-      2.0,
-      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.074773,
-      "\u001b[0;33mchanged: [app-server-2]\u001b[0m\r\n"
-    ],
-    [
-      0.007014,
-      "\u001b[0;33mchanged: [app-server-1]\u001b[0m\r\n"
-    ],
-    [
-      0.008975,
-      "\r\nPLAY [all] *****************************************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      0.00299,
-      "\r\nTASK [Gathering Facts] *****************************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      0.000107,
-      "Tuesday 21 November 2017  14:50:48 +0100 (0:00:10.186)       0:00:26.289 ****** \r\n"
-    ],
-    [
-      0.554591,
-      "\u001b[0;32mok: [app-server-2]\u001b[0m\r\n"
-    ],
-    [
-      0.001758,
-      "\u001b[0;32mok: [app-server-1]\u001b[0m\r\n"
-    ],
-    [
-      0.004095,
-      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.003043,
-      "\r\nTASK [Install Prometheus Node Exporter package.] ***************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      8.5e-05,
-      "Tuesday 21 November 2017  14:50:48 +0100 (0:00:00.563)       0:00:26.853 ****** \r\n"
-    ],
-    [
-      2.0,
-      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.008224,
-      "\u001b[0;33mchanged: [app-server-2]\u001b[0m\r\n"
-    ],
-    [
-      0.487183,
-      "\u001b[0;33mchanged: [app-server-1]\u001b[0m\r\n"
-    ],
-    [
-      0.003336,
-      "\r\nTASK [Ensure the Node Exporter is started and starts at host boot.] ********************************************************************************************************************************************************\r\n"
-    ],
-    [
-      7.8e-05,
-      "Tuesday 21 November 2017  14:50:56 +0100 (0:00:07.495)       0:00:34.349 ****** \r\n"
-    ],
-    [
-      0.33051,
-      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.00018,
-      "\u001b[0;32mok: [app-server-1]\u001b[0m\r\n"
-    ],
-    [
-      0.00134,
-      "\u001b[0;32mok: [app-server-2]\u001b[0m\r\n"
-    ],
-    [
-      0.002826,
-      "\r\nTASK [Check if the service emits metrics.] *********************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      3.9e-05,
-      "Tuesday 21 November 2017  14:50:56 +0100 (0:00:00.334)       0:00:34.684 ****** \r\n"
-    ],
-    [
-      0.359626,
-      "\u001b[0;32mok: [app-server-1]\u001b[0m\r\n"
-    ],
-    [
-      0.000252,
-      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.0002,
-      "\u001b[0;32mok: [app-server-2]\u001b[0m\r\n"
-    ],
-    [
-      0.005972,
-      "\r\nPLAY [monitoring] **********************************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      0.003754,
-      "\r\nTASK [Gathering Facts] *****************************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      4.8e-05,
-      "Tuesday 21 November 2017  14:50:57 +0100 (0:00:00.369)       0:00:35.054 ****** \r\n"
-    ],
-    [
-      0.304619,
-      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.002467,
-      "\r\nTASK [Install the Prometheus server.] **************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      0.000102,
-      "Tuesday 21 November 2017  14:50:57 +0100 (0:00:00.307)       0:00:35.361 ****** \r\n"
-    ],
-    [
-      2.0,
-      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.003352,
-      "\r\nTASK [Configure the Prometheus server.] ************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      4e-05,
-      "Tuesday 21 November 2017  14:51:06 +0100 (0:00:08.570)       0:00:43.932 ****** \r\n"
-    ],
-    [
-      0.603923,
-      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.002065,
-      "\r\nTASK [Ensure Prometheus is started and starts at host boot.] ***************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      0.000107,
-      "Tuesday 21 November 2017  14:51:06 +0100 (0:00:00.606)       0:00:44.538 ****** \r\n"
-    ],
-    [
-      0.212667,
-      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.00247,
-      "\r\nTASK [Check if Prometheus is accessible.] **********************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      9.3e-05,
-      "Tuesday 21 November 2017  14:51:06 +0100 (0:00:00.215)       0:00:44.753 ****** \r\n"
-    ],
-    [
-      0.215536,
-      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.002472,
-      "\r\nTASK [Install the Grafana server.] *****************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      4e-05,
-      "Tuesday 21 November 2017  14:51:07 +0100 (0:00:00.218)       0:00:44.971 ****** \r\n"
-    ],
-    [
-      2.0,
-      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.002466,
-      "\r\nTASK [Copy Grafana configuration file.] ************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      0.0001,
-      "Tuesday 21 November 2017  14:52:00 +0100 (0:00:53.532)       0:01:38.503 ****** \r\n"
-    ],
-    [
-      0.443369,
-      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.002074,
-      "\r\nTASK [Ensure Grafana is started and starts at host boot.] ******************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      6e-05,
-      "Tuesday 21 November 2017  14:52:01 +0100 (0:00:00.445)       0:01:38.949 ****** \r\n"
-    ],
-    [
-      0.212141,
-      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.002619,
-      "\r\nTASK [Check if Grafana is accessible.] *************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      7.7e-05,
-      "Tuesday 21 November 2017  14:52:01 +0100 (0:00:00.214)       0:01:39.164 ****** \r\n"
-    ],
-    [
-      0.22575,
-      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.002566,
-      "\r\nTASK [Add Prometheus as datasource to Grafana.] ****************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      0.000156,
-      "Tuesday 21 November 2017  14:52:01 +0100 (0:00:00.228)       0:01:39.392 ****** \r\n"
-    ],
-    [
-      0.268538,
-      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.002498,
-      "\r\nTASK [Upload the example Grafana dashboard.] *******************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      7.2e-05,
-      "Tuesday 21 November 2017  14:52:01 +0100 (0:00:00.271)       0:01:39.663 ****** \r\n"
-    ],
-    [
-      0.286116,
-      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.000333,
-      "\r\nRUNNING HANDLER [Restart the Prometheus service.] **************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      3.4e-05,
-      "Tuesday 21 November 2017  14:52:02 +0100 (0:00:00.286)       0:01:39.950 ****** \r\n"
-    ],
-    [
-      1.273845,
-      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      2.2e-05,
-      "\r\nRUNNING HANDLER [Restart the Grafana service.] *****************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      0.000134,
-      "Tuesday 21 November 2017  14:52:03 +0100 (0:00:01.273)       0:01:41.224 ****** \r\n"
-    ],
-    [
-      0.236618,
-      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
-    ],
-    [
-      0.007616,
-      "\r\nPLAY [application-servers] *************************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      0.003357,
-      "\r\nTASK [Copy the applications to the servers.] *******************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      8.9e-05,
-      "Tuesday 21 November 2017  14:52:03 +0100 (0:00:00.247)       0:01:41.471 ****** \r\n"
-    ],
-    [
-      0.666279,
-      "\u001b[0;33mchanged: [app-server-1] => (item=eat_cpu.py)\u001b[0m\r\n"
-    ],
-    [
-      0.002504,
-      "\u001b[0;33mchanged: [app-server-2] => (item=eat_cpu.py)\u001b[0m\r\n"
-    ],
-    [
-      0.40782,
-      "\u001b[0;33mchanged: [app-server-1] => (item=eat_disk.py)\u001b[0m\r\n"
-    ],
-    [
-      0.00466,
-      "\u001b[0;33mchanged: [app-server-2] => (item=eat_disk.py)\u001b[0m\r\n"
-    ],
-    [
-      0.430284,
-      "\u001b[0;33mchanged: [app-server-1] => (item=eat_memory.py)\u001b[0m\r\n"
-    ],
-    [
-      0.001614,
-      "\u001b[0;33mchanged: [app-server-2] => (item=eat_memory.py)\u001b[0m\r\n"
-    ],
-    [
-      0.001123,
-      "\r\nPLAY RECAP *****************************************************************************************************************************************************************************************************************\r\n"
-    ],
-    [
-      8e-05,
-      "\u001b[0;33mapp-server-1\u001b[0m               : \u001b[0;32mok=9   \u001b[0m \u001b[0;33mchanged=4   \u001b[0m unreachable=0    failed=0   \r\n"
-    ],
-    [
-      7.5e-05,
-      "\u001b[0;33mapp-server-2\u001b[0m               : \u001b[0;32mok=9   \u001b[0m \u001b[0;33mchanged=4   \u001b[0m unreachable=0    failed=0   \r\n"
-    ],
-    [
-      7.1e-05,
-      "\u001b[0;33mmonitoring\u001b[0m                 : \u001b[0;32mok=21  \u001b[0m \u001b[0;33mchanged=9   \u001b[0m unreachable=0    failed=0   \r\n"
-    ],
-    [
-      3.8e-05,
+      0.15129,
       "\r\n"
     ],
     [
-      9.8e-05,
-      "Tuesday 21 November 2017  14:52:05 +0100 (0:00:01.514)       0:01:42.986 ****** \r\n"
+      0.000353,
+      "\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007"
     ],
     [
-      7.3e-05,
-      "=============================================================================== \r\n"
+      7.5e-05,
+      "[\u001b[37mmarkus@local\u001b(B\u001b[m]$ "
     ],
     [
-      0.000107,
-      "Install the Grafana server. -------------------------------------------- 53.53s\r\nWait for SSH to be ready. ---------------------------------------------- 14.37s\r\nEnsure system package cache is updated. -------------------------------- 10.19s\r\n"
+      1.167865,
+      "a"
     ],
     [
-      1.6e-05,
-      "Install the Prometheus server. ------------------------------------------ 8.57s\r\n"
+      0.087322,
+      "n"
     ],
     [
-      4.2e-05,
-      "Install Prometheus Node Exporter package. ------------------------------- 7.50s\r\n"
+      0.096483,
+      "s"
     ],
     [
-      2.4e-05,
-      "Copy the applications to the servers. ----------------------------------- 1.51s\r\nRestart the Prometheus service. ----------------------------------------- 1.27s\r\n"
-    ],
-    [
-      1.1e-05,
-      "Add our servers to the hosts file. -------------------------------------- 0.98s\r\n"
-    ],
-    [
-      2.4e-05,
-      "Ping each other via DNS names. ------------------------------------------ 0.67s\r\n"
-    ],
-    [
-      6.6e-05,
-      "Configure the Prometheus server. ---------------------------------------- 0.61s\r\nGathering Facts --------------------------------------------------------- 0.56s\r\nCopy Grafana configuration file. ---------------------------------------- 0.45s\r\n"
-    ],
-    [
-      1.6e-05,
-      "Check if the service emits metrics. ------------------------------------- 0.37s\r\n"
-    ],
-    [
-      1.1e-05,
-      "Ensure the Node Exporter is started and starts at host boot. ------------ 0.33s\r\n"
-    ],
-    [
-      3e-05,
-      "Gathering Facts --------------------------------------------------------- 0.31s\r\n"
-    ],
-    [
-      1e-05,
-      "Upload the example Grafana dashboard. ----------------------------------- 0.29s\r\n"
-    ],
-    [
-      2.8e-05,
-      "Add Prometheus as datasource to Grafana. -------------------------------- 0.27s\r\n"
-    ],
-    [
-      1e-05,
-      "Restart the Grafana service. -------------------------------------------- 0.25s\r\n"
-    ],
-    [
-      8.3e-05,
-      "Check if Grafana is accessible. ----------------------------------------- 0.23s\r\nCheck if Prometheus is accessible. -------------------------------------- 0.22s\r\n"
-    ],
-    [
-      0.033369,
-      "\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37mmarkus@local ] $ "
-    ],
-    [
-      2.0,
-      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37mmarkus@local ] $ "
-    ],
-    [
-      0.150914,
-      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37mmarkus@local ] $ "
-    ],
-    [
-      0.143495,
-      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37mmarkus@local ] $ "
-    ],
-    [
-      0.928307,
-      "e"
-    ],
-    [
-      0.175896,
-      "x"
-    ],
-    [
-      0.119932,
+      0.095775,
       "i"
     ],
     [
-      0.111881,
+      0.384267,
+      "l"
+    ],
+    [
+      0.214056,
+      "\u0007"
+    ],
+    [
+      0.337936,
+      "\b\u001b[K"
+    ],
+    [
+      0.080023,
+      "b"
+    ],
+    [
+      0.253568,
+      "\u0007le"
+    ],
+    [
+      0.530329,
+      "-"
+    ],
+    [
+      0.183888,
+      "p"
+    ],
+    [
+      0.15194,
+      "l"
+    ],
+    [
+      0.117739,
+      "aybook "
+    ],
+    [
+      0.658611,
+      "p"
+    ],
+    [
+      0.160058,
+      "l"
+    ],
+    [
+      0.095886,
+      "a"
+    ],
+    [
+      0.215525,
+      "ybook.yml "
+    ],
+    [
+      0.937204,
+      "\r\n"
+    ],
+    [
+      1.1674,
+      "\r\nPLAY [all] *************************************************************************************************************\r\n"
+    ],
+    [
+      0.039942,
+      "\r\nTASK [Wait for SSH to be ready.] ***************************************************************************************\r\n"
+    ],
+    [
+      1.8e-05,
+      "Wednesday 22 November 2017  08:50:38 +0100 (0:00:00.106)       0:00:00.106 **** \r\n"
+    ],
+    [
+      2.0,
+      "\u001b[0;32mok: [app-server-1 -> localhost]\u001b[0m\r\n"
+    ],
+    [
+      0.00032,
+      "\u001b[0;32mok: [app-server-2 -> localhost]\u001b[0m\r\n"
+    ],
+    [
+      0.000242,
+      "\u001b[0;32mok: [monitoring -> localhost]\u001b[0m\r\n"
+    ],
+    [
+      0.001883,
+      "\r\nTASK [Add our servers to the hosts file.] ******************************************************************************\r\n"
+    ],
+    [
+      0.000106,
+      "Wednesday 22 November 2017  08:50:44 +0100 (0:00:05.337)       0:00:05.443 **** \r\n"
+    ],
+    [
+      0.620044,
+      "\u001b[0;33mchanged: [monitoring] => (item=monitoring)\u001b[0m\r\n"
+    ],
+    [
+      0.001483,
+      "\u001b[0;33mchanged: [app-server-2] => (item=monitoring)\u001b[0m\r\n\u001b[0;33mchanged: [app-server-1] => (item=monitoring)\u001b[0m\r\n"
+    ],
+    [
+      0.198553,
+      "\u001b[0;33mchanged: [monitoring] => (item=app-server-1)\u001b[0m\r\n"
+    ],
+    [
+      0.00478,
+      "\u001b[0;33mchanged: [app-server-1] => (item=app-server-1)\u001b[0m\r\n"
+    ],
+    [
+      0.000215,
+      "\u001b[0;33mchanged: [app-server-2] => (item=app-server-1)\u001b[0m\r\n"
+    ],
+    [
+      0.200899,
+      "\u001b[0;33mchanged: [app-server-1] => (item=app-server-2)\u001b[0m\r\n"
+    ],
+    [
+      0.000333,
+      "\u001b[0;33mchanged: [app-server-2] => (item=app-server-2)\u001b[0m\r\n"
+    ],
+    [
+      0.000659,
+      "\u001b[0;33mchanged: [monitoring] => (item=app-server-2)\u001b[0m\r\n"
+    ],
+    [
+      0.001965,
+      "\r\nTASK [Ping each other via DNS names.] **********************************************************************************\r\n"
+    ],
+    [
+      8.9e-05,
+      "Wednesday 22 November 2017  08:50:45 +0100 (0:00:01.029)       0:00:06.472 **** \r\n"
+    ],
+    [
+      0.294851,
+      "\u001b[0;32mok: [monitoring] => (item=monitoring)\u001b[0m\r\n"
+    ],
+    [
+      0.002161,
+      "\u001b[0;32mok: [app-server-2] => (item=monitoring)\u001b[0m\r\n\u001b[0;32mok: [app-server-1] => (item=monitoring)\u001b[0m\r\n"
+    ],
+    [
+      0.191368,
+      "\u001b[0;32mok: [monitoring] => (item=app-server-1)\u001b[0m\r\n"
+    ],
+    [
+      0.004759,
+      "\u001b[0;32mok: [app-server-2] => (item=app-server-1)\u001b[0m\r\n"
+    ],
+    [
+      0.001371,
+      "\u001b[0;32mok: [app-server-1] => (item=app-server-1)\u001b[0m\r\n"
+    ],
+    [
+      0.188493,
+      "\u001b[0;32mok: [app-server-1] => (item=app-server-2)\u001b[0m\r\n"
+    ],
+    [
+      0.000423,
+      "\u001b[0;32mok: [monitoring] => (item=app-server-2)\u001b[0m\r\n"
+    ],
+    [
+      0.000221,
+      "\u001b[0;32mok: [app-server-2] => (item=app-server-2)\u001b[0m\r\n"
+    ],
+    [
+      0.00195,
+      "\r\nTASK [Ensure system package cache is updated.] *************************************************************************\r\n"
+    ],
+    [
+      4.5e-05,
+      "Wednesday 22 November 2017  08:50:46 +0100 (0:00:00.685)       0:00:07.158 **** \r\n"
+    ],
+    [
+      2.0,
+      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.028593,
+      "\u001b[0;33mchanged: [app-server-1]\u001b[0m\r\n"
+    ],
+    [
+      0.029136,
+      "\u001b[0;33mchanged: [app-server-2]\u001b[0m\r\n"
+    ],
+    [
+      0.011068,
+      "\r\nPLAY [all] *************************************************************************************************************\r\n"
+    ],
+    [
+      0.002829,
+      "\r\nTASK [Gathering Facts] *************************************************************************************************\r\n"
+    ],
+    [
+      0.00025,
+      "Wednesday 22 November 2017  08:50:51 +0100 (0:00:05.027)       0:00:12.186 **** \r\n"
+    ],
+    [
+      0.552078,
+      "\u001b[0;32mok: [app-server-1]\u001b[0m\r\n"
+    ],
+    [
+      0.000976,
+      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.001369,
+      "\u001b[0;32mok: [app-server-2]\u001b[0m\r\n"
+    ],
+    [
+      0.003047,
+      "\r\nTASK [Install Prometheus Node Exporter package.] ***********************************************************************\r\n"
+    ],
+    [
+      8.7e-05,
+      "Wednesday 22 November 2017  08:50:51 +0100 (0:00:00.557)       0:00:12.744 **** \r\n"
+    ],
+    [
+      2.0,
+      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.011393,
+      "\u001b[0;33mchanged: [app-server-1]\u001b[0m\r\n"
+    ],
+    [
+      0.006321,
+      "\u001b[0;33mchanged: [app-server-2]\u001b[0m\r\n"
+    ],
+    [
+      0.004789,
+      "\r\nTASK [Ensure the Node Exporter is started and starts at host boot.] ****************************************************\r\n"
+    ],
+    [
+      6.1e-05,
+      "Wednesday 22 November 2017  08:50:57 +0100 (0:00:05.592)       0:00:18.336 **** \r\n"
+    ],
+    [
+      0.317006,
+      "\u001b[0;32mok: [app-server-1]\u001b[0m\r\n"
+    ],
+    [
+      0.000355,
+      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.000173,
+      "\u001b[0;32mok: [app-server-2]\u001b[0m\r\n"
+    ],
+    [
+      0.003011,
+      "\r\nTASK [Check if the service emits metrics.] *****************************************************************************\r\n"
+    ],
+    [
+      4e-05,
+      "Wednesday 22 November 2017  08:50:57 +0100 (0:00:00.320)       0:00:18.657 **** \r\n"
+    ],
+    [
+      0.344225,
+      "\u001b[0;32mok: [monitoring]\u001b[0m"
+    ],
+    [
+      4e-05,
+      "\r\n"
+    ],
+    [
+      0.000289,
+      "\u001b[0;32mok: [app-server-1]\u001b[0m\r\n"
+    ],
+    [
+      0.000206,
+      "\u001b[0;32mok: [app-server-2]\u001b[0m\r\n"
+    ],
+    [
+      0.006779,
+      "\r\nPLAY [monitoring] ******************************************************************************************************\r\n"
+    ],
+    [
+      0.003766,
+      "\r\nTASK [Gathering Facts] *************************************************************************************************\r\n"
+    ],
+    [
+      0.000106,
+      "Wednesday 22 November 2017  08:50:57 +0100 (0:00:00.355)       0:00:19.012 **** \r\n"
+    ],
+    [
+      0.30587,
+      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.002357,
+      "\r\nTASK [Install the Prometheus server.] **********************************************************************************\r\n"
+    ],
+    [
+      3.6e-05,
+      "Wednesday 22 November 2017  08:50:58 +0100 (0:00:00.308)       0:00:19.321 **** \r\n"
+    ],
+    [
+      2.0,
+      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.004944,
+      "\r\nTASK [Configure the Prometheus server.] ********************************************************************************\r\n"
+    ],
+    [
+      4.3e-05,
+      "Wednesday 22 November 2017  08:51:11 +0100 (0:00:13.305)       0:00:32.626 **** \r\n"
+    ],
+    [
+      0.619976,
+      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.001989,
+      "\r\nTASK [Ensure Prometheus is started and starts at host boot.] ***********************************************************\r\n"
+    ],
+    [
+      4.4e-05,
+      "Wednesday 22 November 2017  08:51:12 +0100 (0:00:00.621)       0:00:33.248 **** \r\n"
+    ],
+    [
+      0.205017,
+      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.002532,
+      "\r\nTASK [Check if Prometheus is accessible.] ******************************************************************************\r\n"
+    ],
+    [
+      8.7e-05,
+      "Wednesday 22 November 2017  08:51:12 +0100 (0:00:00.207)       0:00:33.456 **** \r\n"
+    ],
+    [
+      0.212325,
+      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.002379,
+      "\r\nTASK [Install the Grafana server.] *************************************************************************************\r\n"
+    ],
+    [
+      4.5e-05,
+      "Wednesday 22 November 2017  08:51:12 +0100 (0:00:00.214)       0:00:33.671 **** \r\n"
+    ],
+    [
+      2.0,
+      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.002522,
+      "\r\nTASK [Copy Grafana configuration file.] ********************************************************************************\r\n"
+    ],
+    [
+      9.3e-05,
+      "Wednesday 22 November 2017  08:51:50 +0100 (0:00:37.757)       0:01:11.428 **** \r\n"
+    ],
+    [
+      0.43686,
+      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.002037,
+      "\r\nTASK [Ensure Grafana is started and starts at host boot.] **************************************************************\r\n"
+    ],
+    [
+      8.9e-05,
+      "Wednesday 22 November 2017  08:51:50 +0100 (0:00:00.439)       0:01:11.867 **** \r\n"
+    ],
+    [
+      0.208112,
+      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.002287,
+      "\r\nTASK [Check if Grafana is accessible.] *********************************************************************************\r\n"
+    ],
+    [
+      4e-05,
+      "Wednesday 22 November 2017  08:51:50 +0100 (0:00:00.210)       0:01:12.078 **** \r\n"
+    ],
+    [
+      0.214005,
+      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.002468,
+      "\r\nTASK [Add Prometheus as datasource to Grafana.] ************************************************************************\r\n"
+    ],
+    [
+      4.2e-05,
+      "Wednesday 22 November 2017  08:51:51 +0100 (0:00:00.216)       0:01:12.294 **** \r\n"
+    ],
+    [
+      0.252388,
+      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.002563,
+      "\r\nTASK [Upload the example Grafana dashboard.] ***************************************************************************\r\n"
+    ],
+    [
+      4e-05,
+      "Wednesday 22 November 2017  08:51:51 +0100 (0:00:00.254)       0:01:12.549 **** \r\n"
+    ],
+    [
+      0.28378,
+      "\u001b[0;32mok: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.000331,
+      "\r\nRUNNING HANDLER [Restart the Prometheus service.] **********************************************************************\r\n"
+    ],
+    [
+      0.00015,
+      "Wednesday 22 November 2017  08:51:51 +0100 (0:00:00.284)       0:01:12.834 **** \r\n"
+    ],
+    [
+      1.263595,
+      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.000133,
+      "\r\nRUNNING HANDLER [Restart the Grafana service.] *************************************************************************\r\n"
+    ],
+    [
+      0.00013,
+      "Wednesday 22 November 2017  08:51:52 +0100 (0:00:01.263)       0:01:14.097 **** \r\n"
+    ],
+    [
+      0.235958,
+      "\u001b[0;33mchanged: [monitoring]\u001b[0m\r\n"
+    ],
+    [
+      0.008492,
+      "\r\nPLAY [application-servers] *********************************************************************************************\r\n"
+    ],
+    [
+      0.003445,
+      "\r\nTASK [Copy the applications to the servers.] ***************************************************************************\r\n"
+    ],
+    [
+      6.6e-05,
+      "Wednesday 22 November 2017  08:51:53 +0100 (0:00:00.247)       0:01:14.345 **** \r\n"
+    ],
+    [
+      0.436419,
+      "\u001b[0;33mchanged: [app-server-1] => (item=eat_cpu.py)\u001b[0m\r\n"
+    ],
+    [
+      0.000153,
+      "\u001b[0;33mchanged: [app-server-2] => (item=eat_cpu.py)\u001b[0m\r\n"
+    ],
+    [
+      0.47244,
+      "\u001b[0;33mchanged: [app-server-2] => (item=eat_disk.py)\u001b[0m\r\n"
+    ],
+    [
+      0.010243,
+      "\u001b[0;33mchanged: [app-server-1] => (item=eat_disk.py)\u001b[0m\r\n"
+    ],
+    [
+      0.438392,
+      "\u001b[0;33mchanged: [app-server-2] => (item=eat_memory.py)\u001b[0m\r\n"
+    ],
+    [
+      0.004861,
+      "\u001b[0;33mchanged: [app-server-1] => (item=eat_memory.py)\u001b[0m\r\n"
+    ],
+    [
+      0.001111,
+      "\r\nPLAY RECAP *************************************************************************************************************\r\n"
+    ],
+    [
+      1.7e-05,
+      "\u001b[0;33mapp-server-1\u001b[0m               : \u001b[0;32mok=9   \u001b[0m \u001b[0;33mchanged=4   \u001b[0m unreachable=0    failed=0   \r\n"
+    ],
+    [
+      7.1e-05,
+      "\u001b[0;33mapp-server-2\u001b[0m               : \u001b[0;32mok=9   \u001b[0m \u001b[0;33mchanged=4   \u001b[0m unreachable=0    failed=0   \r\n"
+    ],
+    [
+      6.2e-05,
+      "\u001b[0;33mmonitoring\u001b[0m                 : \u001b[0;32mok=21  \u001b[0m \u001b[0;33mchanged=9   \u001b[0m unreachable=0    failed=0   \r\n"
+    ],
+    [
+      3.3e-05,
+      "\r\n"
+    ],
+    [
+      0.000151,
+      "Wednesday 22 November 2017  08:51:54 +0100 (0:00:01.363)       0:01:15.709 **** \r\n=============================================================================== \r\n"
+    ],
+    [
+      0.000103,
+      "Install the Grafana server. -------------------------------------------- 37.76s\r\n"
+    ],
+    [
+      1.7e-05,
+      "Install the Prometheus server. ----------------------------------------- 13.31s\r\n"
+    ],
+    [
+      7.4e-05,
+      "Install Prometheus Node Exporter package. ------------------------------- 5.59s\r\nWait for SSH to be ready. ----------------------------------------------- 5.34s\r\n"
+    ],
+    [
+      7.1e-05,
+      "Ensure system package cache is updated. --------------------------------- 5.03s\r\nCopy the applications to the servers. ----------------------------------- 1.36s\r\nRestart the Prometheus service. ----------------------------------------- 1.26s\r\n"
+    ],
+    [
+      6.9e-05,
+      "Add our servers to the hosts file. -------------------------------------- 1.03s\r\nPing each other via DNS names. ------------------------------------------ 0.69s\r\nConfigure the Prometheus server. ---------------------------------------- 0.62s\r\n"
+    ],
+    [
+      2e-05,
+      "Gathering Facts --------------------------------------------------------- 0.56s\r\n"
+    ],
+    [
+      1.1e-05,
+      "Copy Grafana configuration file. ---------------------------------------- 0.44s\r\n"
+    ],
+    [
+      3e-05,
+      "Check if the service emits metrics. ------------------------------------- 0.36s\r\n"
+    ],
+    [
+      2.3e-05,
+      "Ensure the Node Exporter is started and starts at host boot. ------------ 0.32s\r\n"
+    ],
+    [
+      8.5e-05,
+      "Gathering Facts --------------------------------------------------------- 0.31s\r\nUpload the example Grafana dashboard. ----------------------------------- 0.28s\r\nAdd Prometheus as datasource to Grafana. -------------------------------- 0.25s\r\n"
+    ],
+    [
+      1.6e-05,
+      "Restart the Grafana service. -------------------------------------------- 0.25s\r\n"
+    ],
+    [
+      1.2e-05,
+      "Check if Grafana is accessible. ----------------------------------------- 0.22s\r\n"
+    ],
+    [
+      2.5e-05,
+      "Check if Prometheus is accessible. -------------------------------------- 0.21s\r\n"
+    ],
+    [
+      0.221516,
+      "\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37mmarkus@local\u001b(B\u001b[m]$ "
+    ],
+    [
+      2.0,
+      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37mmarkus@local\u001b(B\u001b[m]$ "
+    ],
+    [
+      0.156491,
+      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37mmarkus@local\u001b(B\u001b[m]$ "
+    ],
+    [
+      0.128123,
+      "\r\n\u001b]0;markus@p50:~/git/markuszoeller/markuszoeller.github.io/posts/drafts/ansible-playbook-roles\u0007[\u001b[37mmarkus@local\u001b(B\u001b[m]$ "
+    ],
+    [
+      0.391441,
+      "e"
+    ],
+    [
+      0.184014,
+      "x"
+    ],
+    [
+      0.127979,
+      "i"
+    ],
+    [
+      0.096118,
       "t"
     ],
     [
-      0.585815,
+      0.752143,
       "\r\nexit\r\n"
     ]
   ],
-  "height": 15,
-  "version": 1,
   "title": null,
+  "command": null,
+  "height": 30,
+  "width": 120,
+  "version": 1,
   "env": {
-    "SHELL": "/bin/bash",
-    "TERM": "xterm-256color"
-  }
+    "TERM": "xterm-256color",
+    "SHELL": "/bin/bash"
+  },
+  "duration": 31.349251
 }

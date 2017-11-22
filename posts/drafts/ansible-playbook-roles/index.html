@@ -129,36 +129,36 @@ of 100 words is also the amount of content someone should be able to read
 in less than 20 seconds. Additionally, it fits on one small mobile screen.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#general-advice" id="id4">General advice</a></li>
-<li><a class="reference internal" href="#structure" id="id5">Structure</a></li>
-<li><a class="reference internal" href="#table-of-contents" id="id6">Table of contents</a></li>
-<li><a class="reference internal" href="#categories-and-labels" id="id7">Categories and labels</a></li>
-<li><a class="reference internal" href="#code-examples" id="id8">Code examples</a><ul>
-<li><a class="reference internal" href="#text" id="id9">Text</a></li>
-<li><a class="reference internal" href="#blocks" id="id10">Blocks</a></li>
-<li><a class="reference internal" href="#files" id="id11">Files</a></li>
+<li><a class="reference internal" href="#general-advice" id="id10">General advice</a></li>
+<li><a class="reference internal" href="#structure" id="id11">Structure</a></li>
+<li><a class="reference internal" href="#table-of-contents" id="id12">Table of contents</a></li>
+<li><a class="reference internal" href="#categories-and-labels" id="id13">Categories and labels</a></li>
+<li><a class="reference internal" href="#code-examples" id="id14">Code examples</a><ul>
+<li><a class="reference internal" href="#text" id="id15">Text</a></li>
+<li><a class="reference internal" href="#blocks" id="id16">Blocks</a></li>
+<li><a class="reference internal" href="#files" id="id17">Files</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#text-format" id="id12">Text format</a></li>
-<li><a class="reference internal" href="#images" id="id13">Images</a></li>
-<li><a class="reference internal" href="#spelling" id="id14">Spelling</a></li>
-<li><a class="reference internal" href="#references-and-links" id="id15">References and links</a><ul>
-<li><a class="reference internal" href="#external" id="id16">External</a></li>
-<li><a class="reference internal" href="#internal" id="id17">Internal</a></li>
+<li><a class="reference internal" href="#text-format" id="id18">Text format</a></li>
+<li><a class="reference internal" href="#images" id="id19">Images</a></li>
+<li><a class="reference internal" href="#spelling" id="id20">Spelling</a></li>
+<li><a class="reference internal" href="#references-and-links" id="id21">References and links</a><ul>
+<li><a class="reference internal" href="#external" id="id22">External</a></li>
+<li><a class="reference internal" href="#internal" id="id23">Internal</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#lists" id="id18">Lists</a></li>
-<li><a class="reference internal" href="#highlighted-info-boxes" id="id19">Highlighted info boxes</a></li>
-<li><a class="reference internal" href="#change-history" id="id20">Change history</a></li>
-<li><a class="reference internal" href="#references" id="id21">References</a></li>
+<li><a class="reference internal" href="#lists" id="id24">Lists</a></li>
+<li><a class="reference internal" href="#highlighted-info-boxes" id="id25">Highlighted info boxes</a></li>
+<li><a class="reference internal" href="#change-history" id="id26">Change history</a></li>
+<li><a class="reference internal" href="#references" id="id27">References</a></li>
 </ul>
 </div>
 <div class="admonition-todo admonition" id="index-0">
 <p class="first admonition-title">Todo</p>
 <p class="last">date of the change history</p>
 </div>
-<table border="1" class="docutils" id="id3">
-<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id3" title="Permalink to this table"> </a></caption>
+<table border="1" class="docutils" id="id9">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id9" title="Permalink to this table"> </a></caption>
 <colgroup>
 <col width="17%" />
 <col width="83%" />
@@ -183,21 +183,1231 @@ which contained all the logic. This post will show how to do a refactoring of
 a playbook into smaller, reusable ansible roles, which hide complexity and
 provide defined interfaces.</p>
 <hr class="docutils" />
-<p>Start the virtual machines which will be our targets for the playbook later:</p>
-<asciinema-player src="../../../_static/asciinema/asciinema_vagrant-up_c671UQ5.json" cols="120" rows="15"></asciinema-player><p>Start the playbook (without any encapsulation in roles):</p>
-<asciinema-player src="../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="15"></asciinema-player><p>Do the encapsulation in roles:</p>
-<div class="admonition-todo admonition" id="index-2">
-<p class="first admonition-title">Todo</p>
-<p class="last">Move into roles</p>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">defaults</span><span class="p">]</span>
-<span class="n">host_key_checking</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="n">callback_whitelist</span> <span class="o">=</span> <span class="n">profile_tasks</span>
-<span class="n">inventory</span> <span class="o">=</span> <span class="n">hosts</span><span class="o">.</span><span class="n">ini</span>
-<span class="n">roles_path</span> <span class="o">=</span> <span class="n">roles</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ansible</span><span class="o">/</span><span class="n">roles</span>
-<span class="n">retry_files_enabled</span> <span class="o">=</span> <span class="kc">False</span>
+<p>We start with this layout of our project:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ tree
+.
+<span class="p">|</span>-- ansible.cfg
+<span class="p">|</span>-- eat_cpu.py
+<span class="p">|</span>-- eat_disk.py
+<span class="p">|</span>-- eat_memory.py
+<span class="p">|</span>-- grafana.ini
+<span class="p">|</span>-- hosts.ini
+<span class="p">|</span>-- infra-node-metrics.json
+<span class="p">|</span>-- playbook.yml
+<span class="p">|</span>-- prometheus.yml
+<span class="sb">`</span>-- Vagrantfile
+
+<span class="m">0</span> directories, <span class="m">11</span> files
 </pre></div>
+</td></tr></table></div>
+<p>Start the virtual machines which will be our targets for the playbook later:</p>
+<asciinema-player src="../../../_static/asciinema/asciinema_vagrant-up_c671UQ5.json" cols="120" rows="30"></asciinema-player><p>Start the playbook (without any encapsulation in roles):</p>
+<asciinema-player src="../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="30"></asciinema-player><p>When I start to refactor roles out of a playbook, I usually do
+it by adding a new directory <code class="docutils literal"><span class="pre">roles</span></code> to the project. The <em>Ansible</em>
+configuration file <code class="docutils literal"><span class="pre">ansible.cfg</span></code> <a class="footnote-reference" href="#ansconf" id="id1">[3]</a> needs to be created and an
+entry to the <code class="docutils literal"><span class="pre">roles_path</span></code> key needs to be added:</p>
+<div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[defaults]</span>
+<span class="na">host_key_checking</span> <span class="o">=</span> <span class="s">False</span>
+<span class="na">callback_whitelist</span> <span class="o">=</span> <span class="s">profile_tasks</span>
+<span class="na">inventory</span> <span class="o">=</span> <span class="s">hosts.ini</span>
+<span class="hll"><span class="na">roles_path</span> <span class="o">=</span> <span class="s">roles:/etc/ansible/roles</span>
+</span><span class="na">retry_files_enabled</span> <span class="o">=</span> <span class="s">False</span>
+</pre></div>
+</td></tr></table></div>
+<p>The other settings in this file make my life a little easier most of the
+time, but they are not absolutely necessary.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Later steps can be, to put a role in a dedicated git repo only for that
+role and use it in your company only, or push it to <em>Ansible Galaxy</em>
+for reuse by others.</p>
 </div>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ ansible-galaxy init roles/node-exporter
+<span class="o">[</span>markus@local<span class="o">]</span>$ tree --dirsfirst
+.
+<span class="p">|</span>-- roles
+<span class="p">|</span>   <span class="sb">`</span>-- node-exporter
+<span class="p">|</span>       <span class="p">|</span>-- defaults
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>       <span class="p">|</span>-- handlers
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>       <span class="p">|</span>-- meta
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>       <span class="p">|</span>-- tasks
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>       <span class="p">|</span>-- tests
+<span class="p">|</span>       <span class="p">|</span>   <span class="p">|</span>-- inventory
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- test.yml
+<span class="p">|</span>       <span class="p">|</span>-- vars
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>       <span class="sb">`</span>-- README.md
+<span class="p">|</span>-- ansible.cfg
+<span class="p">|</span>-- eat_cpu.py
+<span class="p">|</span>-- eat_disk.py
+<span class="p">|</span>-- eat_memory.py
+<span class="p">|</span>-- grafana.ini
+<span class="p">|</span>-- hosts.ini
+<span class="p">|</span>-- infra-node-metrics.json
+<span class="p">|</span>-- playbook.yml
+<span class="p">|</span>-- prometheus.yml
+<span class="sb">`</span>-- Vagrantfile
+</pre></div>
+</td></tr></table></div>
+<p>The <code class="docutils literal"><span class="pre">ansible-galaxy</span> <span class="pre">init</span></code> command uses a template to create a directory for
+the role and uses a naming convention for the sub-directories
+and files.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Two directories are missing here, namely <code class="docutils literal"><span class="pre">templates</span></code> and <code class="docutils literal"><span class="pre">files</span></code>.
+This is already reported <a class="footnote-reference" href="#ansidirbug" id="id2">[4]</a> but not yet solved (at least
+in my version 2.3.1, installed via <em>pypi</em>).</p>
+</div>
+<p>The responsibilities of those directories of a role in short:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">tasks</span></code>:
+Contains the tasks which do the work like you already know from a
+normal playbook.</li>
+<li><code class="docutils literal"><span class="pre">handlers</span></code>:
+Contains handlers, which, when notified, trigger actions.</li>
+<li><code class="docutils literal"><span class="pre">defaults</span></code>
+Role specific variables, which have a default, but are intended
+to get overridden from the role user (a play in a playbook).</li>
+<li><code class="docutils literal"><span class="pre">vars</span></code>
+Role specific variables, which are <strong>not</strong> intended to get overridden.</li>
+<li><code class="docutils literal"><span class="pre">templates</span></code>
+With <em>jinja2</em> templated files. The <code class="docutils literal"><span class="pre">template</span></code> module <a class="footnote-reference" href="#templatemod" id="id3">[7]</a>
+searches in that directory by default.</li>
+<li><code class="docutils literal"><span class="pre">files</span></code>
+The default directory for the <code class="docutils literal"><span class="pre">copy</span></code> module <a class="footnote-reference" href="#copymod" id="id4">[8]</a>.</li>
+<li><code class="docutils literal"><span class="pre">meta</span></code>
+Meta information for this role. This is the place where you can
+define dependencies to other roles, for example.</li>
+<li><code class="docutils literal"><span class="pre">tests</span></code>
+Contains everything necessary to test this role in isolation.
+I haven&#8217;t yet used this like I should. I&#8217;m going to explore this
+in another post later.</li>
+</ul>
+<p>Move the node-exporter related tasks from the playbook into the file
+<code class="docutils literal"><span class="pre">roles/node-exporter/tasks/main.yml</span></code>:</p>
+<div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># tasks file for node-exporter</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">Node</span><span class="nv"> </span><span class="s">Exporter</span><span class="nv"> </span><span class="s">package.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus-node-exporter</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Node</span><span class="nv"> </span><span class="s">Exporter</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">started</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">starts</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">host</span><span class="nv"> </span><span class="s">boot.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus-node-exporter</span>
+    <span class="l l-Scalar l-Scalar-Plain">enabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">started</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Check</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">service</span><span class="nv"> </span><span class="s">emits</span><span class="nv"> </span><span class="s">metrics.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">uri</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:9100/metrics</span>
+    <span class="l l-Scalar l-Scalar-Plain">method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">GET</span>
+    <span class="l l-Scalar l-Scalar-Plain">status_code</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+</pre></div>
+</td></tr></table></div>
+<p>Use the role in the playbook instead of the moved tasks. See this <em>diff</em>
+to see the difference:</p>
+<div class="highlight-diff"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/playbook.yml</span>
+<span class="gi">+++ b/playbook.yml</span>
+<span class="gu">@@ -41,22 +41,9 @@</span>
+ - hosts: all  # we want the metrics of the monitoring server too
+   become: true
+
+<span class="gd">-  tasks:</span>
+<span class="gd">-    - name: &quot;Install Prometheus Node Exporter package.&quot;</span>
+<span class="gd">-      apt:</span>
+<span class="gd">-        name: prometheus-node-exporter</span>
+<span class="gi">+  roles:</span>
+<span class="gi">+    - node-exporter</span>
+
+<span class="gd">-    - name: &quot;Ensure the Node Exporter is started and starts at host boot.&quot;</span>
+<span class="gd">-      service:</span>
+<span class="gd">-        name: prometheus-node-exporter</span>
+<span class="gd">-        enabled: true</span>
+<span class="gd">-        state: started</span>
+<span class="gd">-</span>
+<span class="gd">-    - name: &quot;Check if the service emits metrics.&quot;</span>
+<span class="gd">-      uri:</span>
+<span class="gd">-        url: http://127.0.0.1:9100/metrics</span>
+<span class="gd">-        method: GET</span>
+<span class="gd">-        status_code: 200</span>
+</pre></div>
+</td></tr></table></div>
+<p>That&#8217;s the basic recipe. Tasks, which build a logical unit of work,
+get moved into a role. The difficulty is, to define what a <em>logical unit</em> is.
+The difficulty will become more obvious in the next steps, when I create
+more roles to encapsulate logic.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Keep in mind that within a play, the
+<strong>roles get executed before the tasks</strong>,
+despite how you order it in the play.
+You can influence that with the <code class="docutils literal"><span class="pre">include_role</span></code> module <a class="footnote-reference" href="#includerole" id="id5">[5]</a>
+or the <code class="docutils literal"><span class="pre">import_role</span></code> module <a class="footnote-reference" href="#importrole" id="id6">[6]</a>,
+which let you tread roles like a task.</p>
+</div>
+<p>With this basic step, let&#8217;s create another role, this time for the
+<em>Prometheus</em> service:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ ansible-galaxy init roles/prometheus
+</pre></div>
+</td></tr></table></div>
+<p>Add the role to the playbook (see the highlighted lines below),
+and move the tasks to <code class="docutils literal"><span class="pre">roles/prometheus/tasks/main.yml</span></code> and the
+<em>Prometheus</em> related handler to <code class="docutils literal"><span class="pre">roles/prometheus/handlers/main.yml</span></code>
+and the <code class="docutils literal"><span class="pre">prometheus.yml</span></code> file into <code class="docutils literal"><span class="pre">roles/prometheus/files/</span></code>.</p>
+<div class="highlight-diff"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/playbook.yml</span>
+<span class="gi">+++ b/playbook.yml</span>
+<span class="gu">@@ -52,31 +52,10 @@</span>
+ - hosts: monitoring
+   become: true
+
+<span class="gi">+  roles:</span>
+<span class="gi">+    - prometheus</span>
+
+   tasks:
+<span class="gd">-    # --- Prometheus --------------------------------------------------------</span>
+<span class="gd">-    - name: &quot;Install the Prometheus server.&quot;</span>
+<span class="gd">-      apt:</span>
+<span class="gd">-        name: prometheus</span>
+<span class="gd">-</span>
+<span class="gd">-    - name: &quot;Configure the Prometheus server.&quot;</span>
+<span class="gd">-      copy:</span>
+<span class="gd">-        src: prometheus.yml</span>
+<span class="gd">-        dest: /etc/prometheus/prometheus.yml</span>
+<span class="gd">-      notify: event_restart_prometheus</span>
+<span class="gd">-</span>
+<span class="gd">-    - name: &quot;Ensure Prometheus is started and starts at host boot.&quot;</span>
+<span class="gd">-      service:</span>
+<span class="gd">-        name: prometheus</span>
+<span class="gd">-        enabled: true</span>
+<span class="gd">-        state: started</span>
+<span class="gd">-</span>
+<span class="gd">-    - name: &quot;Check if Prometheus is accessible.&quot;</span>
+<span class="gd">-      uri:</span>
+<span class="gd">-        url: http://127.0.0.1:9090/graph</span>
+<span class="gd">-        method: GET</span>
+<span class="gd">-        status_code: 200</span>
+<span class="gd">-</span>
+     # --- Grafana -----------------------------------------------------------
+     - name: &quot;Install the Grafana server.&quot;
+       apt:
+<span class="gu">@@ -139,12 +118,6 @@</span>
+
+   # --- After all tasks are executed (if notified) --------------------------
+   handlers:
+<span class="gd">-    - name: &quot;Restart the Prometheus service.&quot;</span>
+<span class="gd">-      service:</span>
+<span class="gd">-        name: prometheus</span>
+<span class="gd">-        state: restarted</span>
+<span class="gd">-      listen: event_restart_prometheus</span>
+<span class="gd">-</span>
+     - name: &quot;Restart the Grafana service.&quot;
+       service:
+         name: grafana
+</pre></div>
+</td></tr></table></div>
+<p>We do the very same to the tasks to install the <em>Grafana</em> service:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ ansible-galaxy init roles/grafana
+</pre></div>
+</td></tr></table></div>
+<p>Same procedure as before:</p>
+<ol class="arabic simple">
+<li>move the <code class="docutils literal"><span class="pre">grafana.ini</span></code> file into <code class="docutils literal"><span class="pre">roles/grafana/files/</span></code></li>
+<li>move the <em>Grafana</em> related tasks to <code class="docutils literal"><span class="pre">roles/grafana/tasks/main.yml</span></code></li>
+<li>move the <em>Grafana</em> related handler to <code class="docutils literal"><span class="pre">roles/grafana/handlers/main.yml</span></code></li>
+<li>add the new <code class="docutils literal"><span class="pre">grafana</span></code> role to the playbook</li>
+</ol>
+<div class="highlight-diff"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/playbook.yml</span>
+<span class="gi">+++ b/playbook.yml</span>
+<span class="gu">@@ -54,31 +54,9 @@</span>
+
+   roles:
+     - prometheus
+<span class="gi">+    - grafana</span>
+
+   tasks:
+<span class="gd">-    # --- Grafana -----------------------------------------------------------</span>
+<span class="gd">-    - name: &quot;Install the Grafana server.&quot;</span>
+<span class="gd">-      apt:</span>
+<span class="gd">-        name: grafana</span>
+<span class="gd">-</span>
+<span class="gd">-    - name: &quot;Copy Grafana configuration file.&quot;</span>
+<span class="gd">-      copy:</span>
+<span class="gd">-        src: grafana.ini</span>
+<span class="gd">-        dest: /etc/grafana/grafana.ini</span>
+<span class="gd">-      notify: event_restart_grafana</span>
+<span class="gd">-</span>
+<span class="gd">-    - name: &quot;Ensure Grafana is started and starts at host boot.&quot;</span>
+<span class="gd">-      service:</span>
+<span class="gd">-        name: grafana</span>
+<span class="gd">-        enabled: true</span>
+<span class="gd">-        state: started</span>
+<span class="gd">-</span>
+<span class="gd">-    - name: &quot;Check if Grafana is accessible.&quot;</span>
+<span class="gd">-      uri:</span>
+<span class="gd">-        url: http://127.0.0.1:3000</span>
+<span class="gd">-        method: GET</span>
+<span class="gd">-        status_code: 200</span>
+<span class="gd">-</span>
+     - name: &quot;Add Prometheus as datasource to Grafana.&quot;
+       vars:
+         prometheus_datasource:
+<span class="gu">@@ -116,15 +94,6 @@</span>
+           Accept: &quot;application/json&quot;
+
+
+<span class="gd">-  # --- After all tasks are executed (if notified) --------------------------</span>
+<span class="gd">-  handlers:</span>
+<span class="gd">-    - name: &quot;Restart the Grafana service.&quot;</span>
+<span class="gd">-      service:</span>
+<span class="gd">-        name: grafana</span>
+<span class="gd">-        state: restarted</span>
+<span class="gd">-      listen: event_restart_grafana</span>
+<span class="gd">-</span>
+<span class="gd">-</span>
+ # ===========================================================================
+ # Push the &quot;applications&quot; to the application servers
+ # ===========================================================================
+</pre></div>
+</td></tr></table></div>
+<p>At this point you might wonder why I didn&#8217;t move the setup of the
+<em>Grafana</em> datasource and dashboard into the <code class="docutils literal"><span class="pre">grafana</span></code> role too.
+It would work, no doubt about that. My two reasons are:</p>
+<ul class="simple">
+<li>keep it small and simple</li>
+<li>dependency management</li>
+</ul>
+<p>Adding <em>Prometheus</em> as a datasource to <em>Grafana</em>, creates a <strong>dependency</strong>
+between those two. So far they were independent from each other. We could
+rearrange the two roles we have so far, and could use the <code class="docutils literal"><span class="pre">grafana</span></code> role
+before the <code class="docutils literal"><span class="pre">prometheus</span></code> role, it wouldn&#8217;t matter as they are independent.
+Establishing the dependency is its own logical unit in my opinion. To
+encapsulate that, we create another role:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ansible-galaxy init roles/grafana-prometheus-datasource
+</pre></div>
+</td></tr></table></div>
+<p>Now move the code, which establishes the datasource to
+<code class="docutils literal"><span class="pre">roles/grafana-prometheus-datasource/tasks/main.yml</span></code> and add the
+new role to the playbook:</p>
+<div class="highlight-diff"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/playbook.yml</span>
+<span class="gi">+++ b/playbook.yml</span>
+<span class="gu">@@ -55,30 +55,9 @@</span>
+   roles:
+     - prometheus
+     - grafana
+<span class="gi">+    - grafana-prometheus-datasource</span>
+
+   tasks:
+<span class="gd">-    - name: &quot;Add Prometheus as datasource to Grafana.&quot;</span>
+<span class="gd">-      vars:</span>
+<span class="gd">-        prometheus_datasource:</span>
+<span class="gd">-          name: &quot;prometheus&quot;</span>
+<span class="gd">-          type: &quot;prometheus&quot;</span>
+<span class="gd">-          url: &quot;http://127.0.0.1:9090&quot;</span>
+<span class="gd">-          access: &quot;proxy&quot;</span>
+<span class="gd">-          isDefault: true</span>
+<span class="gd">-          basicAuth: false</span>
+<span class="gd">-      uri:</span>
+<span class="gd">-        url: http://127.0.0.1:3000/api/datasources</span>
+<span class="gd">-        method: POST</span>
+<span class="gd">-        body: &quot;{{ prometheus_datasource | to_json }}&quot;</span>
+<span class="gd">-        body_format: json</span>
+<span class="gd">-        user: admin</span>
+<span class="gd">-        password: admin</span>
+<span class="gd">-        force_basic_auth: yes</span>
+<span class="gd">-        status_code: 200,500  # 500 means, the datasource is already added</span>
+<span class="gd">-        headers:</span>
+<span class="gd">-          Content-Type: &quot;application/json&quot;</span>
+<span class="gd">-          Accept: &quot;application/json&quot;</span>
+<span class="gd">-</span>
+     - name: &quot;Upload the example Grafana dashboard.&quot;
+       uri:
+         url: http://127.0.0.1:3000/api/dashboards/db
+</pre></div>
+</td></tr></table></div>
+<p>Next one is the dashboard of <em>Grafana</em>.</p>
+<ol class="arabic simple">
+<li>create a new role with <code class="docutils literal"><span class="pre">ansible-galaxy</span></code></li>
+<li>move the files into that role</li>
+<li>move the tasks into <code class="docutils literal"><span class="pre">tasks/main.yml</span></code></li>
+<li>move the handlers into <code class="docutils literal"><span class="pre">handlers/main.yml</span></code></li>
+<li>add the role to the playbook</li>
+</ol>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ansible-galaxy init roles/grafana-dashboard
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-diff"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/playbook.yml</span>
+<span class="gi">+++ b/playbook.yml</span>
+<span class="gu">@@ -56,21 +56,7 @@</span>
+   - prometheus
+   - grafana
+   - grafana-prometheus-datasource
+<span class="gi">+    - grafana-dashboard</span>
+<span class="gd">-</span>
+<span class="gd">-  tasks:</span>
+<span class="gd">-    - name: &quot;Upload the example Grafana dashboard.&quot;</span>
+<span class="gd">-      uri:</span>
+<span class="gd">-        url: http://127.0.0.1:3000/api/dashboards/db</span>
+<span class="gd">-        method: POST</span>
+<span class="gd">-        body: &quot;{{ lookup(&#39;file&#39;, &#39;infra-node-metrics.json&#39;) }}&quot;</span>
+<span class="gd">-        body_format: json</span>
+<span class="gd">-        user: admin</span>
+<span class="gd">-        password: admin</span>
+<span class="gd">-        force_basic_auth: yes</span>
+<span class="gd">-        status_code: 200</span>
+<span class="gd">-        headers:</span>
+<span class="gd">-          Content-Type: &quot;application/json&quot;</span>
+<span class="gd">-          Accept: &quot;application/json&quot;</span>
+</pre></div>
+</td></tr></table></div>
+<p>Let&#8217;s move the deployment of the applications into a role too:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ansible-galaxy init roles/workload-deploy
+</pre></div>
+</td></tr></table></div>
+<p>Again, move the code and files, add the new role to the playbook:</p>
+<div class="highlight-diff"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/posts/drafts/ansible-playbook-roles/playbook.yml</span>
+<span class="gi">+++ b/posts/drafts/ansible-playbook-roles/playbook.yml</span>
+<span class="gu">@@ -66,12 +66,5 @@</span>
+ become: true
+ gather_facts: false
+
+<span class="gi">+  roles:</span>
+<span class="gi">+    - workload-deploy</span>
+<span class="gd">-  tasks:</span>
+<span class="gd">-     - name: &quot;Copy the applications to the servers.&quot;</span>
+<span class="gd">-       copy:</span>
+<span class="gd">-         src: &quot;{{ item }}&quot;</span>
+<span class="gd">-         dest: &quot;/root/{{ item }}&quot;</span>
+<span class="gd">-       with_items:</span>
+<span class="gd">-         - eat_cpu.py</span>
+<span class="gd">-         - eat_disk.py</span>
+<span class="gd">-         - eat_memory.py</span>
+</pre></div>
+</td></tr></table></div>
+<p>When you take a look at your playbook, you note that there is a nice
+layer of abstraction. You&#8217;ll also spot a violation: The update of the
+APT repository cache.</p>
+<div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">system</span><span class="nv"> </span><span class="s">package</span><span class="nv"> </span><span class="s">cache</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">updated.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">update_cache</span><span class="p p-Indicator">:</span> <span class="s">&quot;yes&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">cache_valid_time</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3600</span>
+</pre></div>
+</td></tr></table></div>
+<p>This task is only necessary because we install <em>Node-Exporter</em>, <em>Grafana</em>
+and <em>Prometheus</em> from the <em>APT</em> repository of <em>Ubuntu</em>. We have two
+choices here:</p>
+<ul class="simple">
+<li>copy this tasks into the roles which need it</li>
+<li>create a new role which does only this task and let others depend on it</li>
+</ul>
+<p>While I prefer the first solution, let&#8217;s do the second one for the sake
+of example of creating dependencies between roles.</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ansible-galaxy init roles/apt-update
+</pre></div>
+</td></tr></table></div>
+<p>Move the task into <code class="docutils literal"><span class="pre">roles/apt-update/tasks/main.yml</span></code>.</p>
+<div class="highlight-diff"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/posts/drafts/ansible-playbook-roles/playbook.yml</span>
+<span class="gi">+++ b/posts/drafts/ansible-playbook-roles/playbook.yml</span>
+<span class="gu">@@ -29,10 +29,6 @@</span>
+       ping:
+       with_items: &#39;{{ groups[&quot;all&quot;] }}&#39;
+
+<span class="gd">-    - name: &quot;Ensure system package cache is updated.&quot;</span>
+<span class="gd">-      apt:</span>
+<span class="gd">-        update_cache: &quot;yes&quot;</span>
+<span class="gd">-        cache_valid_time: 3600</span>
+</pre></div>
+</td></tr></table></div>
+<p>Establish the dependency in:</p>
+<ol class="arabic simple">
+<li><code class="docutils literal"><span class="pre">roles/grafana/meta/main.yml</span></code></li>
+<li><code class="docutils literal"><span class="pre">roles/prometheus/meta/main.yml</span></code></li>
+<li><code class="docutils literal"><span class="pre">roles/node-exporter/meta/main.yml</span></code></li>
+</ol>
+<p>like this:</p>
+<div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">dependencies</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">apt-update</span>
+</pre></div>
+</td></tr></table></div>
+<p>Later, when I show you the recording of the playbook execution, you&#8217;ll
+notice that the APT update occurs right before the roles which depend
+on it.</p>
+<p>Let&#8217;s go excessive and refactor the rest of the tasks into roles.</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ansible-galaxy init roles/ssh-accessible
+</pre></div>
+</td></tr></table></div>
+<p>Move the SSH task into the role and add the role to the playbook:</p>
+<div class="highlight-diff"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/playbook.yml</span>
+<span class="gi">+++ b/playbook.yml</span>
+<span class="gu">@@ -7,17 +7,10 @@</span>
+   become: true
+   gather_facts: false
+
+<span class="gd">-  tasks:</span>
+<span class="gd">-    - name: &quot;Wait for SSH to be ready.&quot;</span>
+<span class="gd">-      become: false</span>
+<span class="gd">-      delegate_to: localhost</span>
+<span class="gd">-      wait_for:</span>
+<span class="gd">-        port: 22</span>
+<span class="gd">-        host: &#39;{{ ansible_host }}&#39;</span>
+<span class="gd">-        search_regex: &quot;OpenSSH&quot;</span>
+<span class="gd">-        delay: 5</span>
+<span class="gd">-        timeout: 300</span>
+<span class="gi">+  roles:</span>
+<span class="gi">+    - ssh-accessible</span>
+
+<span class="gi">+  tasks:</span>
+     - name: &quot;Add our servers to the hosts file.&quot;
+       lineinfile:
+         dest: /etc/hosts
+</pre></div>
+</td></tr></table></div>
+<p>To go to an extreme, extract the IP address to name mapping too:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ansible-galaxy init roles/name-ip-mapping
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-diff"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/posts/drafts/ansible-playbook-roles/playbook.yml</span>
+<span class="gi">+++ b/posts/drafts/ansible-playbook-roles/playbook.yml</span>
+<span class="gu">@@ -9,19 +9,7 @@</span>
+
+   roles:
+     - ssh-accessible
+<span class="gi">+    - name-ip-mapping</span>
+<span class="gd">-</span>
+<span class="gd">-  tasks:</span>
+<span class="gd">-    - name: &quot;Add our servers to the hosts file.&quot;</span>
+<span class="gd">-      lineinfile:</span>
+<span class="gd">-        dest: /etc/hosts</span>
+<span class="gd">-        # use the IP address we specified in the Vagrantfile</span>
+<span class="gd">-        line: &#39;{{ hostvars[item].ansible_host }} {{item}}&#39;</span>
+<span class="gd">-      with_items: &#39;{{ groups[&quot;all&quot;] }}&#39;</span>
+<span class="gd">-</span>
+<span class="gd">-    - name: &quot;Ping each other via DNS names.&quot;</span>
+<span class="gd">-      ping:</span>
+<span class="gd">-      with_items: &#39;{{ groups[&quot;all&quot;] }}&#39;</span>
+<span class="gd">-</span>
+</pre></div>
+</td></tr></table></div>
+<p>Nothing more to extract out of the playbook. We have this end result:</p>
+<div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="c1"># ===========================================================================</span>
+<span class="c1"># Do basic setup on all hosts</span>
+<span class="c1"># ===========================================================================</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ssh-accessible</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name-ip-mapping</span>
+
+
+<span class="c1"># ===========================================================================</span>
+<span class="c1"># Do setup on all hosts we want to monitor</span>
+<span class="c1"># ===========================================================================</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>  <span class="c1"># we want the metrics of the monitoring server too</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">node-exporter</span>
+
+
+<span class="c1"># ===========================================================================</span>
+<span class="c1"># Do prometheus server specific setup only on the monitoring server</span>
+<span class="c1"># ===========================================================================</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grafana</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grafana-prometheus-datasource</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grafana-dashboard</span>
+
+
+<span class="c1"># ===========================================================================</span>
+<span class="c1"># Push the &quot;applications&quot; to the application servers</span>
+<span class="c1"># ===========================================================================</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">application-servers</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">workload-deploy</span>
+</pre></div>
+</td></tr></table></div>
+<p>Our project structure looks like this:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ tree --dirsfirst
+.
+<span class="p">|</span>-- roles
+<span class="p">|</span>   <span class="p">|</span>-- apt-update
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- defaults
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- handlers
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meta
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tasks
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tests
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- inventory
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- test.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- vars
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- README.md
+<span class="p">|</span>   <span class="p">|</span>-- grafana
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- defaults
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- files
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- grafana.ini
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- handlers
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meta
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tasks
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tests
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- inventory
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- test.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- vars
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- README.md
+<span class="p">|</span>   <span class="p">|</span>-- grafana-dashboard
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- defaults
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- files
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- infra-node-metrics.json
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- handlers
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meta
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tasks
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tests
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- inventory
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- test.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- vars
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- README.md
+<span class="p">|</span>   <span class="p">|</span>-- grafana-prometheus-datasource
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- defaults
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- handlers
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meta
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tasks
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tests
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- inventory
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- test.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- vars
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- README.md
+<span class="p">|</span>   <span class="p">|</span>-- name-ip-mapping
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- defaults
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- handlers
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meta
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tasks
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tests
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- inventory
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- test.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- vars
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- README.md
+<span class="p">|</span>   <span class="p">|</span>-- node-exporter
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- defaults
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- handlers
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meta
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tasks
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tests
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- inventory
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- test.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- vars
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- README.md
+<span class="p">|</span>   <span class="p">|</span>-- prometheus
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- defaults
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- files
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- prometheus.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- handlers
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meta
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tasks
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tests
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- inventory
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- test.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- vars
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- README.md
+<span class="p">|</span>   <span class="p">|</span>-- ssh-accessible
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- defaults
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- handlers
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meta
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tasks
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- tests
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- inventory
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- test.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- vars
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>   <span class="p">|</span>   <span class="sb">`</span>-- README.md
+<span class="p">|</span>   <span class="sb">`</span>-- workload-deploy
+<span class="p">|</span>       <span class="p">|</span>-- defaults
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>       <span class="p">|</span>-- files
+<span class="p">|</span>       <span class="p">|</span>   <span class="p">|</span>-- eat_cpu.py
+<span class="p">|</span>       <span class="p">|</span>   <span class="p">|</span>-- eat_disk.py
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- eat_memory.py
+<span class="p">|</span>       <span class="p">|</span>-- handlers
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>       <span class="p">|</span>-- meta
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>       <span class="p">|</span>-- tasks
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>       <span class="p">|</span>-- tests
+<span class="p">|</span>       <span class="p">|</span>   <span class="p">|</span>-- inventory
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- test.yml
+<span class="p">|</span>       <span class="p">|</span>-- vars
+<span class="p">|</span>       <span class="p">|</span>   <span class="sb">`</span>-- main.yml
+<span class="p">|</span>       <span class="sb">`</span>-- README.md
+<span class="p">|</span>-- ansible.cfg
+<span class="p">|</span>-- hosts.ini
+<span class="p">|</span>-- playbook.yml
+<span class="sb">`</span>-- Vagrantfile
+
+<span class="m">68</span> directories, <span class="m">83</span> files
+</pre></div>
+</td></tr></table></div>
+<p>Let&#8217;s take a look at the <em>playbook</em> execution with roles:</p>
+<asciinema-player src="../../../_static/asciinema/asciinema_playbook_roles_etwQtsN.json" cols="120" rows="30"></asciinema-player><p>The name of the roles are now part of the displayed tasks (as prefixes),
+which makes it easier to spot what&#8217;s happening.</p>
+<hr class="docutils" />
 <div class="section" id="general-advice">
 <h2><a class="toc-backref" href="#contents">General advice</a><a class="headerlink" href="#general-advice" title="Permalink to this headline"> </a></h2>
 <ul class="simple">
@@ -291,7 +1501,7 @@ it&#8217;s then seen as being miscellaneous until a category evolves over time.<
 <ul class="simple">
 <li>blocks always with line numbers</li>
 <li>emphasize lines to set focus</li>
-<li>use the proper highlighting language <a class="footnote-reference" href="#pygments" id="id1">[1]</a></li>
+<li>use the proper highlighting language <a class="footnote-reference" href="#pygments" id="id7">[1]</a></li>
 </ul>
 <div class="section" id="text">
 <h3><a class="toc-backref" href="#contents">Text</a><a class="headerlink" href="#text" title="Permalink to this headline"> </a></h3>
@@ -398,7 +1608,7 @@ to generate unique (enough) identifiers.</p>
 <div class="section" id="external">
 <h3><a class="toc-backref" href="#contents">External</a><a class="headerlink" href="#external" title="Permalink to this headline"> </a></h3>
 <p>&#8220;External&#8221; is everything outside of this blog.
-Reference to it with auto-numbered footnotes <a class="footnote-reference" href="#footnotes" id="id2">[2]</a></p>
+Reference to it with auto-numbered footnotes <a class="footnote-reference" href="#footnotes" id="id8">[2]</a></p>
 <div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>Reference to it with auto-numbered footnotes <span class="s">[#footnotes]_</span>
 </pre></div>
 </td></tr></table></div>
@@ -452,7 +1662,7 @@ For example the <a class="reference internal" href="../../../about/#about"><span
 </div>
 <div class="section" id="highlighted-info-boxes">
 <h2><a class="toc-backref" href="#contents">Highlighted info boxes</a><a class="headerlink" href="#highlighted-info-boxes" title="Permalink to this headline"> </a></h2>
-<div class="admonition-todo admonition" id="index-3">
+<div class="admonition-todo admonition" id="index-2">
 <p class="first admonition-title">Todo</p>
 <p class="last">Reminder for the author to do this here before publishing.</p>
 </div>
@@ -564,13 +1774,49 @@ cross-reference each other.</p>
 <table class="docutils footnote" frame="void" id="pygments" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://pygments.org/">http://pygments.org/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id7">[1]</a></td><td><a class="reference external" href="http://pygments.org/">http://pygments.org/</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="footnotes" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html#footnotes">http://www.sphinx-doc.org/en/stable/rest.html#footnotes</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id8">[2]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html#footnotes">http://www.sphinx-doc.org/en/stable/rest.html#footnotes</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="ansconf" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[3]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/intro_configuration.html">http://docs.ansible.com/ansible/latest/intro_configuration.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="ansidirbug" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[4]</a></td><td><a class="reference external" href="https://github.com/ansible/ansible/issues/23597">https://github.com/ansible/ansible/issues/23597</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="includerole" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/include_role_module.html">http://docs.ansible.com/ansible/latest/include_role_module.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="importrole" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/import_role_module.html">http://docs.ansible.com/ansible/latest/import_role_module.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="templatemod" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[7]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/template_module.html">http://docs.ansible.com/ansible/latest/template_module.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="copymod" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[8]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/copy_module.html">http://docs.ansible.com/ansible/latest/copy_module.html</a></td></tr>
 </tbody>
 </table>
 </div>
