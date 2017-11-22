@@ -142,7 +142,6 @@ time, but they are not absolutely necessary.
    |-- eat_memory.py
    |-- grafana.ini
    |-- hosts.ini
-   |-- index.rst
    |-- infra-node-metrics.json
    |-- playbook.yml
    |-- prometheus.yml
@@ -694,6 +693,176 @@ Nothing more to extract out of the playbook. We have this end result:
    :language: yaml
    :linenos:
    :emphasize-lines: 0
+
+Our project structure looks like this:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   [markus@local]$ tree --dirsfirst
+   .
+   |-- roles
+   |   |-- apt-update
+   |   |   |-- defaults
+   |   |   |   `-- main.yml
+   |   |   |-- handlers
+   |   |   |   `-- main.yml
+   |   |   |-- meta
+   |   |   |   `-- main.yml
+   |   |   |-- tasks
+   |   |   |   `-- main.yml
+   |   |   |-- tests
+   |   |   |   |-- inventory
+   |   |   |   `-- test.yml
+   |   |   |-- vars
+   |   |   |   `-- main.yml
+   |   |   `-- README.md
+   |   |-- grafana
+   |   |   |-- defaults
+   |   |   |   `-- main.yml
+   |   |   |-- files
+   |   |   |   `-- grafana.ini
+   |   |   |-- handlers
+   |   |   |   `-- main.yml
+   |   |   |-- meta
+   |   |   |   `-- main.yml
+   |   |   |-- tasks
+   |   |   |   `-- main.yml
+   |   |   |-- tests
+   |   |   |   |-- inventory
+   |   |   |   `-- test.yml
+   |   |   |-- vars
+   |   |   |   `-- main.yml
+   |   |   `-- README.md
+   |   |-- grafana-dashboard
+   |   |   |-- defaults
+   |   |   |   `-- main.yml
+   |   |   |-- files
+   |   |   |   `-- infra-node-metrics.json
+   |   |   |-- handlers
+   |   |   |   `-- main.yml
+   |   |   |-- meta
+   |   |   |   `-- main.yml
+   |   |   |-- tasks
+   |   |   |   `-- main.yml
+   |   |   |-- tests
+   |   |   |   |-- inventory
+   |   |   |   `-- test.yml
+   |   |   |-- vars
+   |   |   |   `-- main.yml
+   |   |   `-- README.md
+   |   |-- grafana-prometheus-datasource
+   |   |   |-- defaults
+   |   |   |   `-- main.yml
+   |   |   |-- handlers
+   |   |   |   `-- main.yml
+   |   |   |-- meta
+   |   |   |   `-- main.yml
+   |   |   |-- tasks
+   |   |   |   `-- main.yml
+   |   |   |-- tests
+   |   |   |   |-- inventory
+   |   |   |   `-- test.yml
+   |   |   |-- vars
+   |   |   |   `-- main.yml
+   |   |   `-- README.md
+   |   |-- name-ip-mapping
+   |   |   |-- defaults
+   |   |   |   `-- main.yml
+   |   |   |-- handlers
+   |   |   |   `-- main.yml
+   |   |   |-- meta
+   |   |   |   `-- main.yml
+   |   |   |-- tasks
+   |   |   |   `-- main.yml
+   |   |   |-- tests
+   |   |   |   |-- inventory
+   |   |   |   `-- test.yml
+   |   |   |-- vars
+   |   |   |   `-- main.yml
+   |   |   `-- README.md
+   |   |-- node-exporter
+   |   |   |-- defaults
+   |   |   |   `-- main.yml
+   |   |   |-- handlers
+   |   |   |   `-- main.yml
+   |   |   |-- meta
+   |   |   |   `-- main.yml
+   |   |   |-- tasks
+   |   |   |   `-- main.yml
+   |   |   |-- tests
+   |   |   |   |-- inventory
+   |   |   |   `-- test.yml
+   |   |   |-- vars
+   |   |   |   `-- main.yml
+   |   |   `-- README.md
+   |   |-- prometheus
+   |   |   |-- defaults
+   |   |   |   `-- main.yml
+   |   |   |-- files
+   |   |   |   `-- prometheus.yml
+   |   |   |-- handlers
+   |   |   |   `-- main.yml
+   |   |   |-- meta
+   |   |   |   `-- main.yml
+   |   |   |-- tasks
+   |   |   |   `-- main.yml
+   |   |   |-- tests
+   |   |   |   |-- inventory
+   |   |   |   `-- test.yml
+   |   |   |-- vars
+   |   |   |   `-- main.yml
+   |   |   `-- README.md
+   |   |-- ssh-accessible
+   |   |   |-- defaults
+   |   |   |   `-- main.yml
+   |   |   |-- handlers
+   |   |   |   `-- main.yml
+   |   |   |-- meta
+   |   |   |   `-- main.yml
+   |   |   |-- tasks
+   |   |   |   `-- main.yml
+   |   |   |-- tests
+   |   |   |   |-- inventory
+   |   |   |   `-- test.yml
+   |   |   |-- vars
+   |   |   |   `-- main.yml
+   |   |   `-- README.md
+   |   `-- workload-deploy
+   |       |-- defaults
+   |       |   `-- main.yml
+   |       |-- files
+   |       |   |-- eat_cpu.py
+   |       |   |-- eat_disk.py
+   |       |   `-- eat_memory.py
+   |       |-- handlers
+   |       |   `-- main.yml
+   |       |-- meta
+   |       |   `-- main.yml
+   |       |-- tasks
+   |       |   `-- main.yml
+   |       |-- tests
+   |       |   |-- inventory
+   |       |   `-- test.yml
+   |       |-- vars
+   |       |   `-- main.yml
+   |       `-- README.md
+   |-- ansible.cfg
+   |-- hosts.ini
+   |-- playbook.yml
+   `-- Vagrantfile
+
+   68 directories, 83 files
+
+Let's take a look at the *playbook* execution with roles:
+
+.. raw:: html
+
+   <asciinema-player src="../../../_static/asciinema/asciinema_playbook_roles_etwQtsN.json" cols="120" rows="30"></asciinema-player>
+
+The name of the roles are now part of the displayed tasks (as prefixes),
+which makes it easier to spot what's happening.
 
 
 -----------------------
