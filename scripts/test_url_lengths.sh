@@ -13,15 +13,18 @@
 #    "http://www.markusz.io/"                     == 22 chars
 #    "posts/YYYY/MM/DD/"                          == 17 chars
 #    "permalink-to-the-referenced-post/"          == 33 chars
-# This means we have to check for 50 chars (17+33). To be precise, only the
-# last part of 33 chars is flexible (the name of the post), the rest is fix.
+# This means we have to check for 33 chars.
 
-URL_LEN_MAX=50
+POST_DIR_NAME_LEN_MAX=33
 
-LONG_URLS=$(find posts/ -type d | awk "length>$URL_LEN_MAX")
+# only the directories with an "index.rst" file are posts
+for POST_DIR_PATH in $(find posts/ -type f -name index.rst -printf '%h\n')
+do
+    POST_DIR_NAME=`basename "$POST_DIR_PATH"`
+    size=${#POST_DIR_NAME}
+    if [ ${size} -ge ${POST_DIR_NAME_LEN_MAX} ]
+    then
+        echo "$POST_DIR_NAME is longer than $POST_DIR_NAME_LEN_MAX chars."
+    fi
+done
 
-if [[ ! -z "$LONG_URLS" ]]; then
-  echo "$LONG_URLS"
-  echo "These URLs are longer than the allowed $URL_LEN_MAX chars."
-  exit 1
-fi
