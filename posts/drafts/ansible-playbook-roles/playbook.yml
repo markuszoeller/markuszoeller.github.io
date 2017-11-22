@@ -7,17 +7,10 @@
   become: true
   gather_facts: false
 
-  tasks:
-    - name: "Wait for SSH to be ready."
-      become: false
-      delegate_to: localhost
-      wait_for:
-        port: 22
-        host: '{{ ansible_host }}'
-        search_regex: "OpenSSH"
-        delay: 5
-        timeout: 300
+  roles:
+    - ssh-accessible
 
+  tasks:
     - name: "Add our servers to the hosts file."
       lineinfile:
         dest: /etc/hosts

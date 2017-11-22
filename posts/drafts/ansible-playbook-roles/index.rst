@@ -613,6 +613,46 @@ Later, when I show you the recording of the playbook execution, you'll
 notice that the APT update occurs right before the roles which depend
 on it.
 
+Let's go excessive and refactor the rest of the tasks into roles.
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ ansible-galaxy init roles/ssh-accessible
+
+Move the SSH task into the role and add the role to the playbook:
+
+.. code-block:: diff
+   :linenos:
+   :emphasize-lines: 0
+
+   --- a/playbook.yml
+   +++ b/playbook.yml
+   @@ -7,17 +7,10 @@
+      become: true
+      gather_facts: false
+
+   -  tasks:
+   -    - name: "Wait for SSH to be ready."
+   -      become: false
+   -      delegate_to: localhost
+   -      wait_for:
+   -        port: 22
+   -        host: '{{ ansible_host }}'
+   -        search_regex: "OpenSSH"
+   -        delay: 5
+   -        timeout: 300
+   +  roles:
+   +    - ssh-accessible
+
+   +  tasks:
+        - name: "Add our servers to the hosts file."
+          lineinfile:
+            dest: /etc/hosts
+
+
+
 
 -----------------------
 
