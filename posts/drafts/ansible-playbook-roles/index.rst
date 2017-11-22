@@ -517,6 +517,37 @@ dashboard of *Grafana*.
     -          Accept: "application/json"
 
 
+Lastly, let's move the deployment of the applications into a role too:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ ansible-galaxy init roles/workload-deploy
+
+Again, move the code and files, add the new role to the playbook:
+
+.. code-block:: diff
+   :linenos:
+   :emphasize-lines: 7-8
+
+    --- a/posts/drafts/ansible-playbook-roles/playbook.yml
+    +++ b/posts/drafts/ansible-playbook-roles/playbook.yml
+    @@ -66,12 +66,5 @@
+       become: true
+       gather_facts: false
+
+    +  roles:
+    +    - workload-deploy
+    -  tasks:
+    -     - name: "Copy the applications to the servers."
+    -       copy:
+    -         src: "{{ item }}"
+    -         dest: "/root/{{ item }}"
+    -       with_items:
+    -         - eat_cpu.py
+    -         - eat_disk.py
+    -         - eat_memory.py
 
 
 
