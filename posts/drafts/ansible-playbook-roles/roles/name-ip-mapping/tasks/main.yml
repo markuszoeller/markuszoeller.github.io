@@ -1,0 +1,13 @@
+---
+# tasks file for roles/name-ip-mapping
+
+- name: "Add our servers to the hosts file."
+  lineinfile:
+    dest: /etc/hosts
+    # use the IP address we specified in the Vagrantfile
+    line: '{{ hostvars[item].ansible_host }} {{item}}'
+  with_items: '{{ groups["all"] }}'
+
+- name: "Ping each other via DNS names."
+  ping:
+  with_items: '{{ groups["all"] }}'

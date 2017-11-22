@@ -528,7 +528,7 @@ Again, move the code and files, add the new role to the playbook:
 
 .. code-block:: diff
    :linenos:
-   :emphasize-lines: 7-8
+   :emphasize-lines: 0
 
     --- a/posts/drafts/ansible-playbook-roles/playbook.yml
     +++ b/posts/drafts/ansible-playbook-roles/playbook.yml
@@ -652,6 +652,47 @@ Move the SSH task into the role and add the role to the playbook:
             dest: /etc/hosts
 
 
+To go to an extreme, extract the IP address to name mapping too:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ ansible-galaxy init roles/name-ip-mapping
+
+
+.. code-block:: diff
+   :linenos:
+   :emphasize-lines: 0
+
+   --- a/posts/drafts/ansible-playbook-roles/playbook.yml
+   +++ b/posts/drafts/ansible-playbook-roles/playbook.yml
+   @@ -9,19 +9,7 @@
+
+      roles:
+        - ssh-accessible
+   +    - name-ip-mapping
+   -
+   -  tasks:
+   -    - name: "Add our servers to the hosts file."
+   -      lineinfile:
+   -        dest: /etc/hosts
+   -        # use the IP address we specified in the Vagrantfile
+   -        line: '{{ hostvars[item].ansible_host }} {{item}}'
+   -      with_items: '{{ groups["all"] }}'
+   -
+   -    - name: "Ping each other via DNS names."
+   -      ping:
+   -      with_items: '{{ groups["all"] }}'
+   -
+
+
+Nothing more to extract out of the playbook. We have this end result:
+
+.. literalinclude:: playbook.yml
+   :language: yaml
+   :linenos:
+   :emphasize-lines: 0
 
 
 -----------------------
