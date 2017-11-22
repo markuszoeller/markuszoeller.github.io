@@ -1,0 +1,24 @@
+---
+# tasks file for grafana
+
+- name: "Install the Grafana server."
+  apt:
+    name: grafana
+
+- name: "Copy Grafana configuration file."
+  copy:
+    src: grafana.ini
+    dest: /etc/grafana/grafana.ini
+  notify: event_restart_grafana
+
+- name: "Ensure Grafana is started and starts at host boot."
+  service:
+    name: grafana
+    enabled: true
+    state: started
+
+- name: "Check if Grafana is accessible."
+  uri:
+    url: http://127.0.0.1:3000
+    method: GET
+    status_code: 200

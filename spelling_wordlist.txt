@@ -62,6 +62,8 @@ PoC
 predefine
 prometheus
 Prometheus
+refactor
+Refactor
 refactoring
 Refactoring
 repo

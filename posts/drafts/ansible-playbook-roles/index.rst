@@ -335,8 +335,95 @@ and the ``prometheus.yml`` file into ``roles/prometheus/files/``.
              name: grafana
 
 
+We do the very same to the tasks to install the *Grafana* service:
 
 
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+    [markus@local]$ cd roles/
+    [markus@local]$ ansible-galaxy init grafana
+
+Same procedure as before:
+
+#. move the ``grafana.ini`` file into ``roles/grafana/files/``
+#. move the *Grafana* related tasks to ``roles/grafana/tasks/main.yml``
+#. move the *Grafana* related handler to ``roles/grafana/handlers/main.yml``
+#. add the new ``grafana`` role to the playbook
+
+
+.. code-block:: diff
+   :linenos:
+   :emphasize-lines: 7
+
+    --- a/playbook.yml
+    +++ b/playbook.yml
+    @@ -54,31 +54,9 @@
+
+       roles:
+         - prometheus
+    +    - grafana
+
+       tasks:
+    -    # --- Grafana -----------------------------------------------------------
+    -    - name: "Install the Grafana server."
+    -      apt:
+    -        name: grafana
+    -
+    -    - name: "Copy Grafana configuration file."
+    -      copy:
+    -        src: grafana.ini
+    -        dest: /etc/grafana/grafana.ini
+    -      notify: event_restart_grafana
+    -
+    -    - name: "Ensure Grafana is started and starts at host boot."
+    -      service:
+    -        name: grafana
+    -        enabled: true
+    -        state: started
+    -
+    -    - name: "Check if Grafana is accessible."
+    -      uri:
+    -        url: http://127.0.0.1:3000
+    -        method: GET
+    -        status_code: 200
+    -
+         - name: "Add Prometheus as datasource to Grafana."
+           vars:
+             prometheus_datasource:
+    @@ -116,15 +94,6 @@
+               Accept: "application/json"
+
+
+    -  # --- After all tasks are executed (if notified) --------------------------
+    -  handlers:
+    -    - name: "Restart the Grafana service."
+    -      service:
+    -        name: grafana
+    -        state: restarted
+    -      listen: event_restart_grafana
+    -
+    -
+     # ===========================================================================
+     # Push the "applications" to the application servers
+     # ===========================================================================
+
+
+
+At this point you might wonder why I didn't move the setup of the
+*Grafana* datasource and dashboard into the ``grafana`` role too.
+It would work, no doubt about that. My two reasons are:
+
+* keep it small and simple
+* dependency management
+
+Adding *Prometheus* as a datasource to *Grafana*, creates a **dependency**
+between those two. So far they were independent from each other. We could
+rearrange the two roles we have so far, and could use the ``grafana`` role
+before the ``prometheus`` role, it wouldn't matter as they are independent.
+Establishing the dependency is its own logical unit in my opinion. To
+encapsulate that, we create another role:
 
 -----------------------
 

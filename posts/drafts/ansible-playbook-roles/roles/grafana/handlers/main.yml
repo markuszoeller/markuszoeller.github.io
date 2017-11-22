@@ -1,0 +1,9 @@
+---
+# handlers file for grafana
+
+- name: "Restart the Grafana service."
+  service:
+    name: grafana
+    state: restarted
+  listen: event_restart_grafana
+
