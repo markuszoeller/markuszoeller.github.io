@@ -63,20 +63,20 @@ We start with this layout of our project:
    :linenos:
    :emphasize-lines: 0
 
-    [markus@local]$ tree
-    .
-    |-- ansible.cfg
-    |-- eat_cpu.py
-    |-- eat_disk.py
-    |-- eat_memory.py
-    |-- grafana.ini
-    |-- hosts.ini
-    |-- infra-node-metrics.json
-    |-- playbook.yml
-    |-- prometheus.yml
-    `-- Vagrantfile
+   [markus@local]$ tree
+   .
+   |-- ansible.cfg
+   |-- eat_cpu.py
+   |-- eat_disk.py
+   |-- eat_memory.py
+   |-- grafana.ini
+   |-- hosts.ini
+   |-- infra-node-metrics.json
+   |-- playbook.yml
+   |-- prometheus.yml
+   `-- Vagrantfile
 
-    0 directories, 11 files
+   0 directories, 11 files
 
 
 Start the virtual machines which will be our targets for the playbook later:
@@ -107,45 +107,46 @@ The other settings in this file make my life a little easier most of the
 time, but they are not absolutely necessary.
 
 .. note::
-    Later steps can be, to put a role in a dedicated git repo only for that
-    role and use it in your company only, or push it to *Ansible Galaxy*
-    for reuse by others.
+
+   Later steps can be, to put a role in a dedicated git repo only for that
+   role and use it in your company only, or push it to *Ansible Galaxy*
+   for reuse by others.
 
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-    [markus@local]$ ansible-galaxy init roles/node-exporter
-    [markus@local]$ tree --dirsfirst
-    .
-    |-- roles
-    |   `-- node-exporter
-    |       |-- defaults
-    |       |   `-- main.yml
-    |       |-- handlers
-    |       |   `-- main.yml
-    |       |-- meta
-    |       |   `-- main.yml
-    |       |-- tasks
-    |       |   `-- main.yml
-    |       |-- tests
-    |       |   |-- inventory
-    |       |   `-- test.yml
-    |       |-- vars
-    |       |   `-- main.yml
-    |       `-- README.md
-    |-- ansible.cfg
-    |-- eat_cpu.py
-    |-- eat_disk.py
-    |-- eat_memory.py
-    |-- grafana.ini
-    |-- hosts.ini
-    |-- index.rst
-    |-- infra-node-metrics.json
-    |-- playbook.yml
-    |-- prometheus.yml
-    `-- Vagrantfile
+   [markus@local]$ ansible-galaxy init roles/node-exporter
+   [markus@local]$ tree --dirsfirst
+   .
+   |-- roles
+   |   `-- node-exporter
+   |       |-- defaults
+   |       |   `-- main.yml
+   |       |-- handlers
+   |       |   `-- main.yml
+   |       |-- meta
+   |       |   `-- main.yml
+   |       |-- tasks
+   |       |   `-- main.yml
+   |       |-- tests
+   |       |   |-- inventory
+   |       |   `-- test.yml
+   |       |-- vars
+   |       |   `-- main.yml
+   |       `-- README.md
+   |-- ansible.cfg
+   |-- eat_cpu.py
+   |-- eat_disk.py
+   |-- eat_memory.py
+   |-- grafana.ini
+   |-- hosts.ini
+   |-- index.rst
+   |-- infra-node-metrics.json
+   |-- playbook.yml
+   |-- prometheus.yml
+   `-- Vagrantfile
 
 
 The ``ansible-galaxy init`` command uses a template to create a directory for
@@ -197,24 +198,24 @@ Move the node-exporter related tasks from the playbook into the file
    :linenos:
    :emphasize-lines: 0
 
-    ---
-    # tasks file for node-exporter
+   ---
+   # tasks file for node-exporter
 
-    - name: "Install Prometheus Node Exporter package."
-      apt:
-        name: prometheus-node-exporter
+   - name: "Install Prometheus Node Exporter package."
+     apt:
+       name: prometheus-node-exporter
 
-    - name: "Ensure the Node Exporter is started and starts at host boot."
-      service:
-        name: prometheus-node-exporter
-        enabled: true
-        state: started
+   - name: "Ensure the Node Exporter is started and starts at host boot."
+     service:
+       name: prometheus-node-exporter
+       enabled: true
+       state: started
 
-    - name: "Check if the service emits metrics."
-      uri:
-        url: http://127.0.0.1:9100/metrics
-        method: GET
-        status_code: 200
+   - name: "Check if the service emits metrics."
+     uri:
+       url: http://127.0.0.1:9100/metrics
+       method: GET
+       status_code: 200
 
 
 Use the role in the playbook instead of the moved tasks. See this diff
@@ -222,32 +223,32 @@ to see the difference:
 
 .. code-block:: diff
    :linenos:
-   :emphasize-lines: 11-12
+   :emphasize-lines: 0
 
-    --- a/playbook.yml
-    +++ b/playbook.yml
-    @@ -41,22 +41,9 @@
-     - hosts: all  # we want the metrics of the monitoring server too
-       become: true
+   --- a/playbook.yml
+   +++ b/playbook.yml
+   @@ -41,22 +41,9 @@
+    - hosts: all  # we want the metrics of the monitoring server too
+      become: true
 
-    -  tasks:
-    -    - name: "Install Prometheus Node Exporter package."
-    -      apt:
-    -        name: prometheus-node-exporter
-    +  roles:
-    +    - node-exporter
+   -  tasks:
+   -    - name: "Install Prometheus Node Exporter package."
+   -      apt:
+   -        name: prometheus-node-exporter
+   +  roles:
+   +    - node-exporter
 
-    -    - name: "Ensure the Node Exporter is started and starts at host boot."
-    -      service:
-    -        name: prometheus-node-exporter
-    -        enabled: true
-    -        state: started
-    -
-    -    - name: "Check if the service emits metrics."
-    -      uri:
-    -        url: http://127.0.0.1:9100/metrics
-    -        method: GET
-    -        status_code: 200
+   -    - name: "Ensure the Node Exporter is started and starts at host boot."
+   -      service:
+   -        name: prometheus-node-exporter
+   -        enabled: true
+   -        state: started
+   -
+   -    - name: "Check if the service emits metrics."
+   -      uri:
+   -        url: http://127.0.0.1:9100/metrics
+   -        method: GET
+   -        status_code: 200
 
 
 That's the basic recipe. Tasks, which build a logical unit of work,
@@ -257,12 +258,12 @@ more roles to encapsulate logic.
 
 .. tip::
 
-    Keep in mind that within a play, the
-    **roles get executed before the tasks**,
-    despite how you order it in the play.
-    You can influence that with the ``include_role`` module [#includerole]_
-    or the ``import_role`` module [#importrole]_,
-    which let you tread roles like a task.
+   Keep in mind that within a play, the
+   **roles get executed before the tasks**,
+   despite how you order it in the play.
+   You can influence that with the ``include_role`` module [#includerole]_
+   or the ``import_role`` module [#importrole]_,
+   which let you tread roles like a task.
 
 With this basic step, let's create another role, this time for the
 *Prometheus* service:
@@ -271,7 +272,7 @@ With this basic step, let's create another role, this time for the
    :linenos:
    :emphasize-lines: 0
 
-    [markus@local]$ ansible-galaxy init roles/prometheus
+   [markus@local]$ ansible-galaxy init roles/prometheus
 
 Add the role to the playbook (see the highlighted lines below),
 and move the tasks to ``roles/prometheus/tasks/main.yml`` and the
@@ -280,57 +281,57 @@ and the ``prometheus.yml`` file into ``roles/prometheus/files/``.
 
 .. code-block:: diff
    :linenos:
-   :emphasize-lines: 7-8
+   :emphasize-lines: 0
 
-    --- a/playbook.yml
-    +++ b/playbook.yml
-    @@ -52,31 +52,10 @@
-     - hosts: monitoring
-       become: true
+   --- a/playbook.yml
+   +++ b/playbook.yml
+   @@ -52,31 +52,10 @@
+    - hosts: monitoring
+      become: true
 
-    +  roles:
-    +    - prometheus
+   +  roles:
+   +    - prometheus
 
-       tasks:
-    -    # --- Prometheus --------------------------------------------------------
-    -    - name: "Install the Prometheus server."
-    -      apt:
-    -        name: prometheus
-    -
-    -    - name: "Configure the Prometheus server."
-    -      copy:
-    -        src: prometheus.yml
-    -        dest: /etc/prometheus/prometheus.yml
-    -      notify: event_restart_prometheus
-    -
-    -    - name: "Ensure Prometheus is started and starts at host boot."
-    -      service:
-    -        name: prometheus
-    -        enabled: true
-    -        state: started
-    -
-    -    - name: "Check if Prometheus is accessible."
-    -      uri:
-    -        url: http://127.0.0.1:9090/graph
-    -        method: GET
-    -        status_code: 200
-    -
-         # --- Grafana -----------------------------------------------------------
-         - name: "Install the Grafana server."
-           apt:
-    @@ -139,12 +118,6 @@
+      tasks:
+   -    # --- Prometheus --------------------------------------------------------
+   -    - name: "Install the Prometheus server."
+   -      apt:
+   -        name: prometheus
+   -
+   -    - name: "Configure the Prometheus server."
+   -      copy:
+   -        src: prometheus.yml
+   -        dest: /etc/prometheus/prometheus.yml
+   -      notify: event_restart_prometheus
+   -
+   -    - name: "Ensure Prometheus is started and starts at host boot."
+   -      service:
+   -        name: prometheus
+   -        enabled: true
+   -        state: started
+   -
+   -    - name: "Check if Prometheus is accessible."
+   -      uri:
+   -        url: http://127.0.0.1:9090/graph
+   -        method: GET
+   -        status_code: 200
+   -
+        # --- Grafana -----------------------------------------------------------
+        - name: "Install the Grafana server."
+          apt:
+   @@ -139,12 +118,6 @@
 
-       # --- After all tasks are executed (if notified) --------------------------
-       handlers:
-    -    - name: "Restart the Prometheus service."
-    -      service:
-    -        name: prometheus
-    -        state: restarted
-    -      listen: event_restart_prometheus
-    -
-         - name: "Restart the Grafana service."
-           service:
-             name: grafana
+      # --- After all tasks are executed (if notified) --------------------------
+      handlers:
+   -    - name: "Restart the Prometheus service."
+   -      service:
+   -        name: prometheus
+   -        state: restarted
+   -      listen: event_restart_prometheus
+   -
+        - name: "Restart the Grafana service."
+          service:
+            name: grafana
 
 
 We do the very same to the tasks to install the *Grafana* service:
@@ -340,7 +341,7 @@ We do the very same to the tasks to install the *Grafana* service:
    :linenos:
    :emphasize-lines: 0
 
-    [markus@local]$ ansible-galaxy init roles/grafana
+   [markus@local]$ ansible-galaxy init roles/grafana
 
 Same procedure as before:
 
@@ -352,59 +353,59 @@ Same procedure as before:
 
 .. code-block:: diff
    :linenos:
-   :emphasize-lines: 7
+   :emphasize-lines: 0
 
-    --- a/playbook.yml
-    +++ b/playbook.yml
-    @@ -54,31 +54,9 @@
+   --- a/playbook.yml
+   +++ b/playbook.yml
+   @@ -54,31 +54,9 @@
 
-       roles:
-         - prometheus
-    +    - grafana
+      roles:
+        - prometheus
+   +    - grafana
 
-       tasks:
-    -    # --- Grafana -----------------------------------------------------------
-    -    - name: "Install the Grafana server."
-    -      apt:
-    -        name: grafana
-    -
-    -    - name: "Copy Grafana configuration file."
-    -      copy:
-    -        src: grafana.ini
-    -        dest: /etc/grafana/grafana.ini
-    -      notify: event_restart_grafana
-    -
-    -    - name: "Ensure Grafana is started and starts at host boot."
-    -      service:
-    -        name: grafana
-    -        enabled: true
-    -        state: started
-    -
-    -    - name: "Check if Grafana is accessible."
-    -      uri:
-    -        url: http://127.0.0.1:3000
-    -        method: GET
-    -        status_code: 200
-    -
-         - name: "Add Prometheus as datasource to Grafana."
-           vars:
-             prometheus_datasource:
-    @@ -116,15 +94,6 @@
-               Accept: "application/json"
+      tasks:
+   -    # --- Grafana -----------------------------------------------------------
+   -    - name: "Install the Grafana server."
+   -      apt:
+   -        name: grafana
+   -
+   -    - name: "Copy Grafana configuration file."
+   -      copy:
+   -        src: grafana.ini
+   -        dest: /etc/grafana/grafana.ini
+   -      notify: event_restart_grafana
+   -
+   -    - name: "Ensure Grafana is started and starts at host boot."
+   -      service:
+   -        name: grafana
+   -        enabled: true
+   -        state: started
+   -
+   -    - name: "Check if Grafana is accessible."
+   -      uri:
+   -        url: http://127.0.0.1:3000
+   -        method: GET
+   -        status_code: 200
+   -
+        - name: "Add Prometheus as datasource to Grafana."
+          vars:
+            prometheus_datasource:
+   @@ -116,15 +94,6 @@
+              Accept: "application/json"
 
 
-    -  # --- After all tasks are executed (if notified) --------------------------
-    -  handlers:
-    -    - name: "Restart the Grafana service."
-    -      service:
-    -        name: grafana
-    -        state: restarted
-    -      listen: event_restart_grafana
-    -
-    -
-     # ===========================================================================
-     # Push the "applications" to the application servers
-     # ===========================================================================
+   -  # --- After all tasks are executed (if notified) --------------------------
+   -  handlers:
+   -    - name: "Restart the Grafana service."
+   -      service:
+   -        name: grafana
+   -        state: restarted
+   -      listen: event_restart_grafana
+   -
+   -
+    # ===========================================================================
+    # Push the "applications" to the application servers
+    # ===========================================================================
 
 
 
@@ -426,7 +427,7 @@ encapsulate that, we create another role:
    :linenos:
    :emphasize-lines: 0
 
-    $ ansible-galaxy init roles/grafana-prometheus-datasource
+   $ ansible-galaxy init roles/grafana-prometheus-datasource
 
 Now move the code, which establishes the datasource to
 ``roles/grafana-prometheus-datasource/tasks/main.yml`` and add the
@@ -434,42 +435,42 @@ new role to the playbook:
 
 .. code-block:: diff
    :linenos:
-   :emphasize-lines: 7
+   :emphasize-lines: 0
 
-    --- a/playbook.yml
-    +++ b/playbook.yml
-    @@ -55,30 +55,9 @@
-       roles:
-         - prometheus
-         - grafana
-    +    - grafana-prometheus-datasource
+   --- a/playbook.yml
+   +++ b/playbook.yml
+   @@ -55,30 +55,9 @@
+      roles:
+        - prometheus
+        - grafana
+   +    - grafana-prometheus-datasource
 
-       tasks:
-    -    - name: "Add Prometheus as datasource to Grafana."
-    -      vars:
-    -        prometheus_datasource:
-    -          name: "prometheus"
-    -          type: "prometheus"
-    -          url: "http://127.0.0.1:9090"
-    -          access: "proxy"
-    -          isDefault: true
-    -          basicAuth: false
-    -      uri:
-    -        url: http://127.0.0.1:3000/api/datasources
-    -        method: POST
-    -        body: "{{ prometheus_datasource | to_json }}"
-    -        body_format: json
-    -        user: admin
-    -        password: admin
-    -        force_basic_auth: yes
-    -        status_code: 200,500  # 500 means, the datasource is already added
-    -        headers:
-    -          Content-Type: "application/json"
-    -          Accept: "application/json"
-    -
-         - name: "Upload the example Grafana dashboard."
-           uri:
-             url: http://127.0.0.1:3000/api/dashboards/db
+      tasks:
+   -    - name: "Add Prometheus as datasource to Grafana."
+   -      vars:
+   -        prometheus_datasource:
+   -          name: "prometheus"
+   -          type: "prometheus"
+   -          url: "http://127.0.0.1:9090"
+   -          access: "proxy"
+   -          isDefault: true
+   -          basicAuth: false
+   -      uri:
+   -        url: http://127.0.0.1:3000/api/datasources
+   -        method: POST
+   -        body: "{{ prometheus_datasource | to_json }}"
+   -        body_format: json
+   -        user: admin
+   -        password: admin
+   -        force_basic_auth: yes
+   -        status_code: 200,500  # 500 means, the datasource is already added
+   -        headers:
+   -          Content-Type: "application/json"
+   -          Accept: "application/json"
+   -
+        - name: "Upload the example Grafana dashboard."
+          uri:
+            url: http://127.0.0.1:3000/api/dashboards/db
 
 
 Next one is the dashboard of *Grafana*.
@@ -485,35 +486,35 @@ Next one is the dashboard of *Grafana*.
    :linenos:
    :emphasize-lines: 0
 
-    ansible-galaxy init roles/grafana-dashboard
+   ansible-galaxy init roles/grafana-dashboard
 
 
 .. code-block:: diff
    :linenos:
-   :emphasize-lines: 7
+   :emphasize-lines: 0
 
-    --- a/playbook.yml
-    +++ b/playbook.yml
-    @@ -56,21 +56,7 @@
-         - prometheus
-         - grafana
-         - grafana-prometheus-datasource
-    +    - grafana-dashboard
-    -
-    -  tasks:
-    -    - name: "Upload the example Grafana dashboard."
-    -      uri:
-    -        url: http://127.0.0.1:3000/api/dashboards/db
-    -        method: POST
-    -        body: "{{ lookup('file', 'infra-node-metrics.json') }}"
-    -        body_format: json
-    -        user: admin
-    -        password: admin
-    -        force_basic_auth: yes
-    -        status_code: 200
-    -        headers:
-    -          Content-Type: "application/json"
-    -          Accept: "application/json"
+   --- a/playbook.yml
+   +++ b/playbook.yml
+   @@ -56,21 +56,7 @@
+      - prometheus
+      - grafana
+      - grafana-prometheus-datasource
+   +    - grafana-dashboard
+   -
+   -  tasks:
+   -    - name: "Upload the example Grafana dashboard."
+   -      uri:
+   -        url: http://127.0.0.1:3000/api/dashboards/db
+   -        method: POST
+   -        body: "{{ lookup('file', 'infra-node-metrics.json') }}"
+   -        body_format: json
+   -        user: admin
+   -        password: admin
+   -        force_basic_auth: yes
+   -        status_code: 200
+   -        headers:
+   -          Content-Type: "application/json"
+   -          Accept: "application/json"
 
 
 Let's move the deployment of the applications into a role too:
@@ -530,23 +531,23 @@ Again, move the code and files, add the new role to the playbook:
    :linenos:
    :emphasize-lines: 0
 
-    --- a/posts/drafts/ansible-playbook-roles/playbook.yml
-    +++ b/posts/drafts/ansible-playbook-roles/playbook.yml
-    @@ -66,12 +66,5 @@
-       become: true
-       gather_facts: false
+   --- a/posts/drafts/ansible-playbook-roles/playbook.yml
+   +++ b/posts/drafts/ansible-playbook-roles/playbook.yml
+   @@ -66,12 +66,5 @@
+    become: true
+    gather_facts: false
 
-    +  roles:
-    +    - workload-deploy
-    -  tasks:
-    -     - name: "Copy the applications to the servers."
-    -       copy:
-    -         src: "{{ item }}"
-    -         dest: "/root/{{ item }}"
-    -       with_items:
-    -         - eat_cpu.py
-    -         - eat_disk.py
-    -         - eat_memory.py
+   +  roles:
+   +    - workload-deploy
+   -  tasks:
+   -     - name: "Copy the applications to the servers."
+   -       copy:
+   -         src: "{{ item }}"
+   -         dest: "/root/{{ item }}"
+   -       with_items:
+   -         - eat_cpu.py
+   -         - eat_disk.py
+   -         - eat_memory.py
 
 When you take a look at your playbook, you note that there is a nice
 layer of abstraction. You'll also spot a violation: The update of the
@@ -556,10 +557,10 @@ APT repository cache.
    :linenos:
    :emphasize-lines: 0
 
-    - name: "Ensure system package cache is updated."
-      apt:
-        update_cache: "yes"
-        cache_valid_time: 3600
+   - name: "Ensure system package cache is updated."
+     apt:
+       update_cache: "yes"
+       cache_valid_time: 3600
 
 This task is only necessary because we install *Node-Exporter*, *Grafana*
 and *Prometheus* from the *APT* repository of *Ubuntu*. We have two
