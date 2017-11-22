@@ -66,6 +66,8 @@ refactor
 Refactor
 refactoring
 Refactoring
+refactorings
+Refactorings
 repo
 repos
 runtime

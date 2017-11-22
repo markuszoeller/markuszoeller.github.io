@@ -56,21 +56,7 @@
     - prometheus
     - grafana
     - grafana-prometheus-datasource
-
-  tasks:
-    - name: "Upload the example Grafana dashboard."
-      uri:
-        url: http://127.0.0.1:3000/api/dashboards/db
-        method: POST
-        body: "{{ lookup('file', 'infra-node-metrics.json') }}"
-        body_format: json
-        user: admin
-        password: admin
-        force_basic_auth: yes
-        status_code: 200
-        headers:
-          Content-Type: "application/json"
-          Accept: "application/json"
+    - grafana-dashboard
 
 
 # ===========================================================================

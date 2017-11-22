@@ -472,6 +472,54 @@ new role to the playbook:
              url: http://127.0.0.1:3000/api/dashboards/db
 
 
+Only two refactorings more, than we're done. Next one is the
+dashboard of *Grafana*.
+
+#. create a new role with ``ansible-galaxy``
+#. move the files into that role
+#. move the tasks into ``tasks/main.yml``
+#. move the handlers into ``handlers/main.yml``
+#. add the role to the playbook
+
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+    ansible-galaxy init roles/grafana-dashboard
+
+
+.. code-block:: diff
+   :linenos:
+   :emphasize-lines: 7
+
+    --- a/playbook.yml
+    +++ b/playbook.yml
+    @@ -56,21 +56,7 @@
+         - prometheus
+         - grafana
+         - grafana-prometheus-datasource
+    +    - grafana-dashboard
+    -
+    -  tasks:
+    -    - name: "Upload the example Grafana dashboard."
+    -      uri:
+    -        url: http://127.0.0.1:3000/api/dashboards/db
+    -        method: POST
+    -        body: "{{ lookup('file', 'infra-node-metrics.json') }}"
+    -        body_format: json
+    -        user: admin
+    -        password: admin
+    -        force_basic_auth: yes
+    -        status_code: 200
+    -        headers:
+    -          Content-Type: "application/json"
+    -          Accept: "application/json"
+
+
+
+
+
 -----------------------
 
 
