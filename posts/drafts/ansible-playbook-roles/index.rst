@@ -57,6 +57,27 @@ provide defined interfaces.
       :cols: 80
       :rows: 24
 
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+    [markus@local]$ tree
+    .
+    |-- ansible.cfg
+    |-- eat_cpu.py
+    |-- eat_disk.py
+    |-- eat_memory.py
+    |-- grafana.ini
+    |-- hosts.ini
+    |-- infra-node-metrics.json
+    |-- playbook.yml
+    |-- prometheus.yml
+    `-- Vagrantfile
+
+    0 directories, 11 files
+
+
 Start the virtual machines which will be our targets for the playbook later:
 
 .. raw:: html
@@ -75,6 +96,163 @@ Do the encapsulation in roles:
 .. todo:: Move into roles
 
 .. literalinclude:: ansible.cfg
+
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+    [markus@local]$ cd roles/
+    [markus@local]$ ansible-galaxy init node-exporter
+    [markus@local]$ tree
+    .
+    |-- ansible.cfg
+    |-- eat_cpu.py
+    |-- eat_disk.py
+    |-- eat_memory.py
+    |-- grafana.ini
+    |-- hosts.ini
+    |-- index.rst
+    |-- infra-node-metrics.json
+    |-- playbook.yml
+    |-- prometheus.yml
+    |-- roles
+    |   `-- node-exporter
+    |       |-- defaults
+    |       |   `-- main.yml
+    |       |-- handlers
+    |       |   `-- main.yml
+    |       |-- meta
+    |       |   `-- main.yml
+    |       |-- README.md
+    |       |-- tasks
+    |       |   `-- main.yml
+    |       |-- tests
+    |       |   |-- inventory
+    |       |   `-- test.yml
+    |       `-- vars
+    |           `-- main.yml
+    `-- Vagrantfile
+
+
+The ``ansible-galaxy init`` command uses a template to create a directory for
+the role and uses a naming convention for the sub-directories
+and files.
+
+.. note::
+
+   Two directories are missing here, namely ``templates`` and ``files``.
+   This is already reported [#ansidirbug]_ but not yet solved (at least
+   in my version 2.3.1, installed via *pypi*).
+
+The responsibilities of those directories of a role in short:
+
+* ``tasks``:
+  Contains the tasks which do the work like you already know from a
+  normal playbook.
+
+* ``handlers``:
+  Contains handlers, which, when notified, trigger actions.
+
+* ``defaults``
+  Role specific variables, which have a default, but are intended
+  to get overridden from the role user (a play in a playbook).
+
+* ``vars``
+  Role specific variables, which are **not** intended to get overridden.
+
+* ``templates``
+  With *jinja2* templated files. The ``template`` module [#templatemod]_
+  searches in that directory by default.
+
+* ``files``
+  The default directory for the ``copy`` module [#copymod]_.
+
+* ``meta``
+  Meta information for this role. This is the place where you can
+  define dependencies to other roles, for example.
+
+* ``tests``
+  Contains everything necessary to test this role in isolation.
+  I haven't yet used this like I should. I'm going to explore this
+  in another post later.
+
+Move the node-exporter related tasks from the playbook into the file
+``roles/node-exporter/tasks/main.yml``:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 0
+
+    ---
+    # tasks file for node-exporter
+
+    - name: "Install Prometheus Node Exporter package."
+      apt:
+        name: prometheus-node-exporter
+
+    - name: "Ensure the Node Exporter is started and starts at host boot."
+      service:
+        name: prometheus-node-exporter
+        enabled: true
+        state: started
+
+    - name: "Check if the service emits metrics."
+      uri:
+        url: http://127.0.0.1:9100/metrics
+        method: GET
+        status_code: 200
+
+
+Use the role in the playbook instead of the moved tasks. See this diff
+to see the difference:
+
+.. code-block:: diff
+   :linenos:
+   :emphasize-lines: 11-12
+
+    --- a/playbook.yml
+    +++ b/playbook.yml
+    @@ -41,22 +41,9 @@
+     - hosts: all  # we want the metrics of the monitoring server too
+       become: true
+
+    -  tasks:
+    -    - name: "Install Prometheus Node Exporter package."
+    -      apt:
+    -        name: prometheus-node-exporter
+    +  roles:
+    +    - node-exporter
+
+    -    - name: "Ensure the Node Exporter is started and starts at host boot."
+    -      service:
+    -        name: prometheus-node-exporter
+    -        enabled: true
+    -        state: started
+    -
+    -    - name: "Check if the service emits metrics."
+    -      uri:
+    -        url: http://127.0.0.1:9100/metrics
+    -        method: GET
+    -        status_code: 200
+
+
+That's the basic recipe. Tasks, which build a logical unit of work,
+get moved into a role. The difficulty is, to define what a *logical unit* is.
+The difficulty will become more obvious in the next steps, when I create
+more roles to encapsulate logic.
+
+.. tip::
+
+    Keep in mind that within a play, the
+    **roles get executed before the tasks**,
+    despite how you order it in the play.
+    You can influence that with the ``include_role`` module [#includerole]_
+    or the ``import_role`` module [#importrole]_,
+    which let you tread roles like a task.
+
+-----------------------
+
 
 General advice
 ==============
@@ -517,3 +695,13 @@ References
 .. [#pygments] http://pygments.org/
 
 .. [#footnotes] http://www.sphinx-doc.org/en/stable/rest.html#footnotes
+
+.. [#ansidirbug] https://github.com/ansible/ansible/issues/23597
+
+.. [#includerole] http://docs.ansible.com/ansible/latest/include_role_module.html
+
+.. [#importrole] http://docs.ansible.com/ansible/latest/import_role_module.html
+
+.. [#templatemod] http://docs.ansible.com/ansible/latest/template_module.html
+
+.. [#copymod] http://docs.ansible.com/ansible/latest/copy_module.html
