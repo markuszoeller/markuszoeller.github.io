@@ -117,8 +117,24 @@ time, but they are not absolutely necessary.
    :emphasize-lines: 0
 
     [markus@local]$ ansible-galaxy init roles/node-exporter
-    [markus@local]$ tree
+    [markus@local]$ tree --dirsfirst
     .
+    |-- roles
+    |   `-- node-exporter
+    |       |-- defaults
+    |       |   `-- main.yml
+    |       |-- handlers
+    |       |   `-- main.yml
+    |       |-- meta
+    |       |   `-- main.yml
+    |       |-- tasks
+    |       |   `-- main.yml
+    |       |-- tests
+    |       |   |-- inventory
+    |       |   `-- test.yml
+    |       |-- vars
+    |       |   `-- main.yml
+    |       `-- README.md
     |-- ansible.cfg
     |-- eat_cpu.py
     |-- eat_disk.py
@@ -129,22 +145,6 @@ time, but they are not absolutely necessary.
     |-- infra-node-metrics.json
     |-- playbook.yml
     |-- prometheus.yml
-    |-- roles
-    |   `-- node-exporter
-    |       |-- defaults
-    |       |   `-- main.yml
-    |       |-- handlers
-    |       |   `-- main.yml
-    |       |-- meta
-    |       |   `-- main.yml
-    |       |-- README.md
-    |       |-- tasks
-    |       |   `-- main.yml
-    |       |-- tests
-    |       |   |-- inventory
-    |       |   `-- test.yml
-    |       `-- vars
-    |           `-- main.yml
     `-- Vagrantfile
 
 
@@ -472,8 +472,7 @@ new role to the playbook:
              url: http://127.0.0.1:3000/api/dashboards/db
 
 
-Only two refactorings more, than we're done. Next one is the
-dashboard of *Grafana*.
+Next one is the dashboard of *Grafana*.
 
 #. create a new role with ``ansible-galaxy``
 #. move the files into that role
@@ -517,7 +516,7 @@ dashboard of *Grafana*.
     -          Accept: "application/json"
 
 
-Lastly, let's move the deployment of the applications into a role too:
+Let's move the deployment of the applications into a role too:
 
 .. code-block:: bash
    :linenos:
@@ -549,6 +548,70 @@ Again, move the code and files, add the new role to the playbook:
     -         - eat_disk.py
     -         - eat_memory.py
 
+When you take a look at your playbook, you note that there is a nice
+layer of abstraction. You'll also spot a violation: The update of the
+APT repository cache.
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 0
+
+    - name: "Ensure system package cache is updated."
+      apt:
+        update_cache: "yes"
+        cache_valid_time: 3600
+
+This task is only necessary because we install *Node-Exporter*, *Grafana*
+and *Prometheus* from the *APT* repository of *Ubuntu*. We have two
+choices here:
+
+* copy this tasks into the roles which need it
+* create a new role which does only this task and let others depend on it
+
+While I prefer the first solution, let's do the second one for the sake
+of example of creating dependencies between roles.
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ ansible-galaxy init roles/apt-update
+
+Move the task into ``roles/apt-update/tasks/main.yml``.
+
+.. code-block:: diff
+   :linenos:
+   :emphasize-lines: 0
+
+   --- a/posts/drafts/ansible-playbook-roles/playbook.yml
+   +++ b/posts/drafts/ansible-playbook-roles/playbook.yml
+   @@ -29,10 +29,6 @@
+          ping:
+          with_items: '{{ groups["all"] }}'
+
+   -    - name: "Ensure system package cache is updated."
+   -      apt:
+   -        update_cache: "yes"
+   -        cache_valid_time: 3600
+
+Establish the dependency in:
+
+#. ``roles/grafana/meta/main.yml``
+#. ``roles/prometheus/meta/main.yml``
+#. ``roles/node-exporter/meta/main.yml``
+
+like this:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 0
+
+   dependencies:
+     - apt-update
+
+Later, when I show you the recording of the playbook execution, you'll
+notice that the APT update occurs right before the roles which depend
+on it.
 
 
 -----------------------
