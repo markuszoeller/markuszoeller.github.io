@@ -545,9 +545,9 @@ Next one is the dashboard upload into *Grafana*.
    --- a/playbook.yml
    +++ b/playbook.yml
    @@ -56,21 +56,7 @@
-      - prometheus
-      - grafana
-      - grafana-prometheus-datasource
+        - prometheus
+        - grafana
+        - grafana-prometheus-datasource
    +    - grafana-dashboard
    -
    -  tasks:
