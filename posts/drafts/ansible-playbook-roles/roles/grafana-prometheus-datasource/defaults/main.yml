@@ -1,2 +1,4 @@
 ---
 # defaults file for roles/grafana-prometheus-datasource
+
+prometheus_datasource_url: "http://127.0.0.1:9090"

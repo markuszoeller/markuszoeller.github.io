@@ -33,10 +33,8 @@ move *Playbook* logic step by step into project specific roles.
 
    * - Date
      - Change description
-   * - TODO
+   * - 2017-11-24
      - The first release
-
-.. todo:: publishing date
 
 
 .. FIXME: This is a undesirable way to use the asciinema files. I had to
@@ -945,6 +943,16 @@ Define configuration interfaces
 
 At this point, we did an as-is extraction and relied on the defaults
 we used. There was no way to configure roles from a users point of view.
+We'll take a look at role variables from two aspects:
+
+* to get used in a conditional
+* to be a placeholder for actual value
+
+
+
+Role variable in a conditional
+------------------------------
+
 Let's look at a real-world example with the *Grafana* role. As explained
 in a previous post (:ref:`monitoring-prometheus`), the *Ubuntu*
 package for it got removed with *Ubuntu 17.10* and we need some kind
@@ -1079,24 +1087,100 @@ Let's execute the playbook again:
    Thursday 23 November 2017  11:50:33 +0100 (0:00:00.014)
    fatal: [monitoring]: FAILED! => {"changed": false, "failed": true, "msg": "TODO not yet done!"}
 
-The conditional matched and the task fails like expected.
+The conditional has matched and the task failed like expected.
 
-**Homework**
 
-.. todo:: readers could do this and that to test themselves
+
+Role variable as placeholder
+----------------------------
+
+The most common usage for role variables is in providing the actual
+values to use, because they cannot be known upfront. In our example,
+we assumed that *Prometheus* and *Grafana* run on the same host.
+That's why using ``127.0.0.1`` as IP address for the datasource was
+working. To make your roles more flexible, you can promote that
+to a role variable and make it configurable. That way you could deploy
+*Prometheus* and *Grafana* on different hosts. As we decided to put
+the logic which creates the dependency between them in a separate role,
+we have to edit the file
+``roles/grafana-prometheus-datasource/defaults/main.yml``:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 0
+
+   ---
+   # defaults file for roles/grafana-prometheus-datasource
+
+   prometheus_datasource_url: "http://127.0.0.1:9090"
+
+Now we can make use of that in our existing logic in the task of that
+role:
+
+.. code-block:: diff
+   :linenos:
+   :emphasize-lines: 0
+
+   --- a/roles/grafana-prometheus-datasource/tasks/main.yml
+   +++ b/roles/grafana-prometheus-datasource/tasks/main.yml
+   @@ -6,7 +6,7 @@
+        prometheus_datasource:
+          name: "prometheus"
+          type: "prometheus"
+   -      url: "http://127.0.0.1:9090"
+   +      url: "{{ prometheus_datasource_url }}"
+          access: "proxy"
+          isDefault: true
+          basicAuth: false
+
+This role variable can be set like in the example before. For the sake
+of example, here another way you can set the role variable, which is
+more readable when you have more variables to set:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 0
+
+   - hosts: monitoring
+     vars:
+       prometheus_datasource_url: "http://192.168.101.10:9090"
+
+     roles:
+       - grafana-prometheus-datasource
+
+
+.. hint::
+
+   There are even more ways to do it, but it's fine to start this way
+   and to explore other ways and variable precedence later [#ansvars]_.
 
 
 
 Conclusion
 ==========
 
-.. todo:: conclude something here
+This post showed a basic recipe how you can refactor your *Ansible*
+playbooks by extracting logical units of work into *Ansible roles*.
+Roles are reusable, configurable and encapsulated units of work.
+The readability of playbooks get increased, like we saw after
+the refactoring of our previously long playbook.
+Roles can also be shared with others in your company (or on
+*Ansible Galaxy*), which avoids that the same work gets done twice.
+
+I think of roles as the *Ansible* equivalent to classes of object
+oriented programming languages, e.g. *Python*. Sure, you can hack down
+everything in one long *Python* script, but at some point you're life
+gets a lot easier when you start moving logical units into classes
+and use their public interfaces. Just like we did with *Ansible roles* here.
+
+There are even more hard-coded values in our project. Download the
+:download:`project source files <ansible-playbook-roles.tar.gz>`
+and try yourself on it.
 
 
 
 References
 ==========
-
 
 .. [#ansconf] http://docs.ansible.com/ansible/latest/intro_configuration.html
 
@@ -1110,4 +1194,4 @@ References
 
 .. [#importrole] http://docs.ansible.com/ansible/latest/import_role_module.html
 
-
+.. [#ansvars] http://docs.ansible.com/ansible/latest/playbooks_variables.html

@@ -28,6 +28,9 @@
 - hosts: monitoring
   become: true
 
+  vars:
+    prometheus_datasource_url: "http://192.168.101.10:9090"
+
   roles:
     - prometheus
     - { role: grafana, install_method: os-package }

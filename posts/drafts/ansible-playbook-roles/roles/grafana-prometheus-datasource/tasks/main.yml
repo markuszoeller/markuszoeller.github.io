@@ -6,7 +6,7 @@
     prometheus_datasource:
       name: "prometheus"
       type: "prometheus"
-      url: "http://127.0.0.1:9090"
+      url: "{{ prometheus_datasource_url }}"
       access: "proxy"
       isDefault: true
       basicAuth: false
