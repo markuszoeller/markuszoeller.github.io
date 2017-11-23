@@ -104,7 +104,7 @@ entry to the ``roles_path`` key needs to be added:
    :linenos:
    :emphasize-lines: 5
 
-The higlighted line tells *Ansible* to look for roles in the relative
+The highlighted line tells *Ansible* to look for roles in the relative
 directory ``roles`` and the absolute directory ``/etc/ansible/roles``,
 which is the default directory when you use roles from others.
 
@@ -309,8 +309,8 @@ recipe explained before. You'll see the recurring pattern pretty quickly.
 
 
 
-Extract a prometheus role
--------------------------
+Extract a ``prometheus`` role
+-----------------------------
 
 With this basic step, let's create another role, this time for the
 *Prometheus* service:
@@ -382,8 +382,8 @@ and the ``prometheus.yml`` file into ``roles/prometheus/files/``.
 
 
 
-Extract a grafana role
-----------------------
+Extract a ``grafana`` role
+--------------------------
 
 We do the very same to the tasks to install the *Grafana* service:
 
@@ -460,8 +460,8 @@ Same procedure as before:
 
 
 
-Extract a grafana-prometheus-datasource role
---------------------------------------------
+Extract a ``grafana-prometheus-datasource`` role
+------------------------------------------------
 
 At this point you might wonder why I didn't move the setup of the
 *Grafana* datasource and dashboard into the ``grafana`` role too.
@@ -528,8 +528,8 @@ new role to the playbook:
 
 
 
-Extract a grafana-dashboard role
---------------------------------
+Extract a ``grafana-dashboard`` role
+------------------------------------
 
 Next one is the dashboard upload into *Grafana*.
 
@@ -568,8 +568,8 @@ Next one is the dashboard upload into *Grafana*.
    -          Accept: "application/json"
 
 
-Extract a workload-deploy role
-------------------------------
+Extract a ``workload-deploy`` role
+----------------------------------
 
 Let's move the deployment of the applications into a role too:
 
@@ -605,8 +605,8 @@ Again, move the code and files, add the new role to the playbook:
 
 
 
-Extract an apt-update role
---------------------------
+Extract an ``apt-update`` role
+------------------------------
 
 When you take a look at your playbook, you note that there is a nice
 layer of abstraction. You'll also spot a violation: The update of the
@@ -677,8 +677,8 @@ on it.
 
 
 
-Extract a ssh-accessible role
------------------------------
+Extract a ``ssh-accessible`` role
+---------------------------------
 
 Let's go excessive and refactor the rest of the tasks into roles.
 
@@ -720,8 +720,8 @@ Move the SSH task into the role and add the role to the playbook:
 
 
 
-Extract an ip-name-mapping role
--------------------------------
+Extract an ``ip-name-mapping`` role
+-----------------------------------
 
 Extract the IP address to name mapping too:
 
@@ -943,7 +943,7 @@ which makes it easier to spot what's happening.
 Define configuration interfaces
 ===============================
 
-.. todo:: add a variable to defaults main.yml
+.. todo:: add a variable to defaults main
 
 
 References
