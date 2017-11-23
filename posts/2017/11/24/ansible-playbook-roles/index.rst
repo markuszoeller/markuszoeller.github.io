@@ -1,5 +1,5 @@
 
-.. post::
+.. post:: 24 Nov, 2017
    :tags: ansible, iac
    :title: Ansible Playbook Refactoring into Roles
 
