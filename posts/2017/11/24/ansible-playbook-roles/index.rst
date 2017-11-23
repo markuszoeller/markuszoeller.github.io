@@ -25,7 +25,6 @@ move *Playbook* logic step by step into project specific roles.
     :local:
     :backlinks: top
 
-.. todo:: date of the change history
 
 .. list-table:: Change history:
    :widths: 1 5
