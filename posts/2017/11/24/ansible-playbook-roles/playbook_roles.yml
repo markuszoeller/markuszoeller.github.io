@@ -1,0 +1,46 @@
+---
+
+# ===========================================================================
+# Do basic setup on all hosts
+# ===========================================================================
+- hosts: all
+  become: true
+  gather_facts: false
+
+  roles:
+    - ssh-accessible
+    - name-ip-mapping
+
+
+# ===========================================================================
+# Do setup on all hosts we want to monitor
+# ===========================================================================
+- hosts: all  # we want the metrics of the monitoring server too
+  become: true
+
+  roles:
+    - node-exporter
+
+
+# ===========================================================================
+# Do prometheus server specific setup only on the monitoring server
+# ===========================================================================
+- hosts: monitoring
+  become: true
+
+  roles:
+    - prometheus
+    - grafana
+    - grafana-prometheus-datasource
+    - grafana-dashboard
+
+
+# ===========================================================================
+# Push the "applications" to the application servers
+# ===========================================================================
+- hosts: application-servers
+  become: true
+  gather_facts: false
+
+  roles:
+    - workload-deploy

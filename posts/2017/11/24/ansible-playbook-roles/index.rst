@@ -757,12 +757,12 @@ Extract the IP address to name mapping too:
 
 
 
-The end result of the as-is extraction
-======================================
+The result of the as-is extraction
+==================================
 
-Nothing more to extract out of the playbook. We have this end result:
+Nothing more to extract out of the playbook. We have this result:
 
-.. literalinclude:: playbook.yml
+.. literalinclude:: playbook_roles.yml
    :language: yaml
    :linenos:
    :emphasize-lines: 0
@@ -923,7 +923,7 @@ In the playbook, we used the role like this:
 
 .. code-block:: yaml
    :linenos:
-   :emphasize-lines: 0
+   :emphasize-lines: 6
 
    - hosts: monitoring
      become: true
@@ -949,7 +949,7 @@ Now let's configure the role by overwriting the role's variable:
 
 .. code-block:: yaml
    :linenos:
-   :emphasize-lines: 0
+   :emphasize-lines: 6
 
    - hosts: monitoring
      become: true
@@ -1020,7 +1020,7 @@ more readable when you have more variables to set:
 
 .. code-block:: yaml
    :linenos:
-   :emphasize-lines: 0
+   :emphasize-lines: 2-3
 
    - hosts: monitoring
      vars:
