@@ -954,10 +954,12 @@ References
 
 .. [#ansidirbug] https://github.com/ansible/ansible/issues/23597
 
+.. [#templatemod] http://docs.ansible.com/ansible/latest/template_module.html
+
+.. [#copymod] http://docs.ansible.com/ansible/latest/copy_module.html
+
 .. [#includerole] http://docs.ansible.com/ansible/latest/include_role_module.html
 
 .. [#importrole] http://docs.ansible.com/ansible/latest/import_role_module.html
 
-.. [#templatemod] http://docs.ansible.com/ansible/latest/template_module.html
 
-.. [#copymod] http://docs.ansible.com/ansible/latest/copy_module.html
