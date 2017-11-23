@@ -12,13 +12,14 @@
 Ansible Playbook Refactoring into Roles
 =======================================
 
-Each post should start with one paragraph which is an abstract of the post.
-This paragraph should be enough for a reader to decide if they want to
-read the post or not. It is best to keep this paragraph short and simple.
-100 words or less is the limit, as this abstract is used as excerpt in the
-list on the landing page and in the feed readers. This upper limit
-of 100 words is also the amount of content someone should be able to read
-in less than 20 seconds. Additionally, it fits on one small mobile screen.
+In a previous post (:ref:`monitoring-prometheus`), we created one playbook
+which contained all the logic. This post will show how to do a refactoring of
+a playbook into smaller, reusable *Ansible Roles*. This allows us to hide
+complexity and to provide defined interfaces. It also increases the
+ability to work in parallel on different parts of your
+*Infrastructure as Code (IaC)* project. I won't explore how you publish
+your roles to *Ansible Galaxy* but merely show a basic recipe how you
+move *Playbook* logic step by step into project specific roles.
 
 .. contents::
     :local:
@@ -37,12 +38,6 @@ in less than 20 seconds. Additionally, it fits on one small mobile screen.
 
 .. todo:: publishing date
 
-In the previous post :ref:`monitoring-prometheus`, we created one playbook
-which contained all the logic. This post will show how to do a refactoring of
-a playbook into smaller, reusable ansible roles, which hide complexity and
-provide defined interfaces.
-
-----
 
 .. FIXME: This is a undesirable way to use the asciinema files. I had to
    create the "_static/asciinema" directory by hand and also copy the
@@ -56,6 +51,9 @@ provide defined interfaces.
    .. asciinema:: vagrant-up.json
       :cols: 80
       :rows: 24
+
+Starting point
+==============
 
 We start with this layout of our project:
 
@@ -93,6 +91,9 @@ Start the playbook (without any encapsulation in roles):
    <asciinema-player src="../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="30"></asciinema-player>
 
 
+Enable *Ansible* to use local roles
+===================================
+
 When I start to refactor roles out of a playbook, I usually do
 it by adding a new directory ``roles`` to the project. The *Ansible*
 configuration file ``ansible.cfg`` [#ansconf]_ needs to be created and an
@@ -103,6 +104,10 @@ entry to the ``roles_path`` key needs to be added:
    :linenos:
    :emphasize-lines: 5
 
+The higlighted line tells *Ansible* to look for roles in the relative
+directory ``roles`` and the absolute directory ``/etc/ansible/roles``,
+which is the default directory when you use roles from others.
+
 The other settings in this file make my life a little easier most of the
 time, but they are not absolutely necessary.
 
@@ -112,6 +117,11 @@ time, but they are not absolutely necessary.
    role and use it in your company only, or push it to *Ansible Galaxy*
    for reuse by others.
 
+
+The basic recipe
+================
+
+We do an *as-is* extraction of the logical units.
 
 .. code-block:: bash
    :linenos:
@@ -264,6 +274,16 @@ more roles to encapsulate logic.
    or the ``import_role`` module [#importrole]_,
    which let you tread roles like a task.
 
+
+
+Extract more logical units
+==========================
+
+
+
+Extract a prometheus role
+-------------------------
+
 With this basic step, let's create another role, this time for the
 *Prometheus* service:
 
@@ -332,6 +352,9 @@ and the ``prometheus.yml`` file into ``roles/prometheus/files/``.
           service:
             name: grafana
 
+
+Extract a grafana role
+----------------------
 
 We do the very same to the tasks to install the *Grafana* service:
 
@@ -408,6 +431,10 @@ Same procedure as before:
 
 
 
+Extract a grafana-prometheus-datasource role
+--------------------------------------------
+
+
 At this point you might wonder why I didn't move the setup of the
 *Grafana* datasource and dashboard into the ``grafana`` role too.
 It would work, no doubt about that. My two reasons are:
@@ -472,6 +499,9 @@ new role to the playbook:
             url: http://127.0.0.1:3000/api/dashboards/db
 
 
+Extract a grafana-dashboard role
+--------------------------------
+
 Next one is the dashboard of *Grafana*.
 
 #. create a new role with ``ansible-galaxy``
@@ -516,6 +546,9 @@ Next one is the dashboard of *Grafana*.
    -          Accept: "application/json"
 
 
+Extract a workload-deploy role
+------------------------------
+
 Let's move the deployment of the applications into a role too:
 
 .. code-block:: bash
@@ -547,6 +580,11 @@ Again, move the code and files, add the new role to the playbook:
    -         - eat_cpu.py
    -         - eat_disk.py
    -         - eat_memory.py
+
+
+
+Extract an apt-update role
+--------------------------
 
 When you take a look at your playbook, you note that there is a nice
 layer of abstraction. You'll also spot a violation: The update of the
@@ -594,6 +632,8 @@ Move the task into ``roles/apt-update/tasks/main.yml``.
    -        update_cache: "yes"
    -        cache_valid_time: 3600
 
+**Define a role dependency**
+
 Establish the dependency in:
 
 #. ``roles/grafana/meta/main.yml``
@@ -612,6 +652,10 @@ like this:
 Later, when I show you the recording of the playbook execution, you'll
 notice that the APT update occurs right before the roles which depend
 on it.
+
+
+Extract a ssh-accessible role
+-----------------------------
 
 Let's go excessive and refactor the rest of the tasks into roles.
 
@@ -652,6 +696,9 @@ Move the SSH task into the role and add the role to the playbook:
             dest: /etc/hosts
 
 
+Extract an ip-name-mapping role
+-------------------------------
+
 To go to an extreme, extract the IP address to name mapping too:
 
 .. code-block:: bash
@@ -686,6 +733,9 @@ To go to an extreme, extract the IP address to name mapping too:
    -      with_items: '{{ groups["all"] }}'
    -
 
+
+The end result of the as-is extraction
+======================================
 
 Nothing more to extract out of the playbook. We have this end result:
 
@@ -865,12 +915,15 @@ The name of the roles are now part of the displayed tasks (as prefixes),
 which makes it easier to spot what's happening.
 
 
+Define configuration interfaces
+===============================
+
+.. todo:: add a variable to defaults main.yml
+
+
 References
 ==========
 
-.. [#pygments] http://pygments.org/
-
-.. [#footnotes] http://www.sphinx-doc.org/en/stable/rest.html#footnotes
 
 .. [#ansconf] http://docs.ansible.com/ansible/latest/intro_configuration.html
 
