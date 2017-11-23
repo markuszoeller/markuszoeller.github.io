@@ -79,14 +79,14 @@ Start the virtual machines which will be our targets for the playbook later:
 
 .. raw:: html
 
-   <asciinema-player src="../../../_static/asciinema/asciinema_vagrant-up_c671UQ5.json" cols="120" rows="30" poster="npt:0:09"></asciinema-player>
+   <asciinema-player src="../../../../../_static/asciinema/asciinema_vagrant-up_c671UQ5.json" cols="120" rows="30" poster="npt:0:09"></asciinema-player>
 
 
 Start the playbook (without any encapsulation in roles):
 
 .. raw:: html
 
-   <asciinema-player src="../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="30" poster="npt:0:12"></asciinema-player>
+   <asciinema-player src="../../../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="30" poster="npt:0:12"></asciinema-player>
 
 
 Enable *Ansible* to use local roles
@@ -932,7 +932,7 @@ Let's take a look at the *playbook* execution with roles:
 
 .. raw:: html
 
-   <asciinema-player src="../../../_static/asciinema/asciinema_playbook_roles_etwQtsN.json" cols="120" rows="30" poster="npt:0:10"></asciinema-player>
+   <asciinema-player src="../../../../../_static/asciinema/asciinema_playbook_roles_etwQtsN.json" cols="120" rows="30" poster="npt:0:10"></asciinema-player>
 
 The name of the roles are now part of the displayed tasks (as prefixes),
 which makes it easier to spot what's happening.
