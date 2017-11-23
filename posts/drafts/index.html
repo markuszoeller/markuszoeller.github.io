@@ -894,13 +894,14 @@ in less than 20 seconds. Additionally, it fits on one small mobile screen.</p>
     </li>
   
   </ul>
-      <p>Each post should start with one paragraph which is an abstract of the post.
-This paragraph should be enough for a reader to decide if they want to
-read the post or not. It is best to keep this paragraph short and simple.
-100 words or less is the limit, as this abstract is used as excerpt in the
-list on the landing page and in the feed readers. This upper limit
-of 100 words is also the amount of content someone should be able to read
-in less than 20 seconds. Additionally, it fits on one small mobile screen.</p>
+      <p>In a previous post (<a class="reference internal" href="../2017/10/27/monitoring-prometheus/#monitoring-prometheus"><span class="std std-ref">Monitoring with Prometheus</span></a>), we created one playbook
+which contained all the logic. This post will show how to do a refactoring of
+a playbook into smaller, reusable <em>Ansible Roles</em>. This allows us to hide
+complexity and to provide defined interfaces. It also increases the
+ability to work in parallel on different parts of your
+<em>Infrastructure as Code (IaC)</em> project. I won&#8217;t explore how you publish
+your roles to <em>Ansible Galaxy</em> but merely show a basic recipe how you
+move <em>Playbook</em> logic step by step into project specific roles.</p>
 
       <p><a href="ansible-playbook-roles/">Read more ...</a></p>
       <hr>

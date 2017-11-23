@@ -120,45 +120,42 @@
       
   <div class="section" id="ansible-playbook-refactoring-into-roles">
 <h1>Ansible Playbook Refactoring into Roles<a class="headerlink" href="#ansible-playbook-refactoring-into-roles" title="Permalink to this headline"> </a></h1>
-<p>Each post should start with one paragraph which is an abstract of the post.
-This paragraph should be enough for a reader to decide if they want to
-read the post or not. It is best to keep this paragraph short and simple.
-100 words or less is the limit, as this abstract is used as excerpt in the
-list on the landing page and in the feed readers. This upper limit
-of 100 words is also the amount of content someone should be able to read
-in less than 20 seconds. Additionally, it fits on one small mobile screen.</p>
+<p>In a previous post (<a class="reference internal" href="../../2017/10/27/monitoring-prometheus/#monitoring-prometheus"><span class="std std-ref">Monitoring with Prometheus</span></a>), we created one playbook
+which contained all the logic. This post will show how to do a refactoring of
+a playbook into smaller, reusable <em>Ansible Roles</em>. This allows us to hide
+complexity and to provide defined interfaces. It also increases the
+ability to work in parallel on different parts of your
+<em>Infrastructure as Code (IaC)</em> project. I won&#8217;t explore how you publish
+your roles to <em>Ansible Galaxy</em> but merely show a basic recipe how you
+move <em>Playbook</em> logic step by step into project specific roles.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#general-advice" id="id10">General advice</a></li>
-<li><a class="reference internal" href="#structure" id="id11">Structure</a></li>
-<li><a class="reference internal" href="#table-of-contents" id="id12">Table of contents</a></li>
-<li><a class="reference internal" href="#categories-and-labels" id="id13">Categories and labels</a></li>
-<li><a class="reference internal" href="#code-examples" id="id14">Code examples</a><ul>
-<li><a class="reference internal" href="#text" id="id15">Text</a></li>
-<li><a class="reference internal" href="#blocks" id="id16">Blocks</a></li>
-<li><a class="reference internal" href="#files" id="id17">Files</a></li>
+<li><a class="reference internal" href="#starting-point" id="id8">Starting point</a></li>
+<li><a class="reference internal" href="#enable-ansible-to-use-local-roles" id="id9">Enable <em>Ansible</em> to use local roles</a></li>
+<li><a class="reference internal" href="#the-basic-recipe" id="id10">The basic recipe</a></li>
+<li><a class="reference internal" href="#extract-more-logical-units" id="id11">Extract more logical units</a><ul>
+<li><a class="reference internal" href="#extract-a-prometheus-role" id="id12">Extract a <code class="docutils literal"><span class="pre">prometheus</span></code> role</a></li>
+<li><a class="reference internal" href="#extract-a-grafana-role" id="id13">Extract a <code class="docutils literal"><span class="pre">grafana</span></code> role</a></li>
+<li><a class="reference internal" href="#extract-a-grafana-prometheus-datasource-role" id="id14">Extract a <code class="docutils literal"><span class="pre">grafana-prometheus-datasource</span></code> role</a></li>
+<li><a class="reference internal" href="#extract-a-grafana-dashboard-role" id="id15">Extract a <code class="docutils literal"><span class="pre">grafana-dashboard</span></code> role</a></li>
+<li><a class="reference internal" href="#extract-a-workload-deploy-role" id="id16">Extract a <code class="docutils literal"><span class="pre">workload-deploy</span></code> role</a></li>
+<li><a class="reference internal" href="#extract-an-apt-update-role" id="id17">Extract an <code class="docutils literal"><span class="pre">apt-update</span></code> role</a></li>
+<li><a class="reference internal" href="#extract-a-ssh-accessible-role" id="id18">Extract a <code class="docutils literal"><span class="pre">ssh-accessible</span></code> role</a></li>
+<li><a class="reference internal" href="#extract-an-ip-name-mapping-role" id="id19">Extract an <code class="docutils literal"><span class="pre">ip-name-mapping</span></code> role</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#text-format" id="id18">Text format</a></li>
-<li><a class="reference internal" href="#images" id="id19">Images</a></li>
-<li><a class="reference internal" href="#spelling" id="id20">Spelling</a></li>
-<li><a class="reference internal" href="#references-and-links" id="id21">References and links</a><ul>
-<li><a class="reference internal" href="#external" id="id22">External</a></li>
-<li><a class="reference internal" href="#internal" id="id23">Internal</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#lists" id="id24">Lists</a></li>
-<li><a class="reference internal" href="#highlighted-info-boxes" id="id25">Highlighted info boxes</a></li>
-<li><a class="reference internal" href="#change-history" id="id26">Change history</a></li>
-<li><a class="reference internal" href="#references" id="id27">References</a></li>
+<li><a class="reference internal" href="#the-end-result-of-the-as-is-extraction" id="id20">The end result of the as-is extraction</a></li>
+<li><a class="reference internal" href="#define-configuration-interfaces" id="id21">Define configuration interfaces</a></li>
+<li><a class="reference internal" href="#conclusion" id="id22">Conclusion</a></li>
+<li><a class="reference internal" href="#references" id="id23">References</a></li>
 </ul>
 </div>
 <div class="admonition-todo admonition" id="index-0">
 <p class="first admonition-title">Todo</p>
 <p class="last">date of the change history</p>
 </div>
-<table border="1" class="docutils" id="id9">
-<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id9" title="Permalink to this table"> </a></caption>
+<table border="1" class="docutils" id="id7">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id7" title="Permalink to this table"> </a></caption>
 <colgroup>
 <col width="17%" />
 <col width="83%" />
@@ -178,11 +175,8 @@ in less than 20 seconds. Additionally, it fits on one small mobile screen.</p>
 <p class="first admonition-title">Todo</p>
 <p class="last">publishing date</p>
 </div>
-<p>In the previous post <a class="reference internal" href="../../2017/10/27/monitoring-prometheus/#monitoring-prometheus"><span class="std std-ref">Monitoring with Prometheus</span></a>, we created one playbook
-which contained all the logic. This post will show how to do a refactoring of
-a playbook into smaller, reusable ansible roles, which hide complexity and
-provide defined interfaces.</p>
-<hr class="docutils" />
+<div class="section" id="starting-point">
+<h2><a class="toc-backref" href="#contents">Starting point</a><a class="headerlink" href="#starting-point" title="Permalink to this headline"> </a></h2>
 <p>We start with this layout of our project:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -214,10 +208,13 @@ provide defined interfaces.</p>
 </pre></div>
 </td></tr></table></div>
 <p>Start the virtual machines which will be our targets for the playbook later:</p>
-<asciinema-player src="../../../_static/asciinema/asciinema_vagrant-up_c671UQ5.json" cols="120" rows="30"></asciinema-player><p>Start the playbook (without any encapsulation in roles):</p>
-<asciinema-player src="../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="30"></asciinema-player><p>When I start to refactor roles out of a playbook, I usually do
+<asciinema-player src="../../../_static/asciinema/asciinema_vagrant-up_c671UQ5.json" cols="120" rows="30" poster="npt:0:09"></asciinema-player><p>Start the playbook (without any encapsulation in roles):</p>
+<asciinema-player src="../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="30" poster="npt:0:12"></asciinema-player></div>
+<div class="section" id="enable-ansible-to-use-local-roles">
+<h2><a class="toc-backref" href="#contents">Enable <em>Ansible</em> to use local roles</a><a class="headerlink" href="#enable-ansible-to-use-local-roles" title="Permalink to this headline"> </a></h2>
+<p>When I start to refactor roles out of a playbook, I usually do
 it by adding a new directory <code class="docutils literal"><span class="pre">roles</span></code> to the project. The <em>Ansible</em>
-configuration file <code class="docutils literal"><span class="pre">ansible.cfg</span></code> <a class="footnote-reference" href="#ansconf" id="id1">[3]</a> needs to be created and an
+configuration file <code class="docutils literal"><span class="pre">ansible.cfg</span></code> <a class="footnote-reference" href="#ansconf" id="id1">[1]</a> needs to be created and an
 entry to the <code class="docutils literal"><span class="pre">roles_path</span></code> key needs to be added:</p>
 <div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -232,6 +229,9 @@ entry to the <code class="docutils literal"><span class="pre">roles_path</span><
 </span><span class="na">retry_files_enabled</span> <span class="o">=</span> <span class="s">False</span>
 </pre></div>
 </td></tr></table></div>
+<p>The highlighted line tells <em>Ansible</em> to look for roles in the relative
+directory <code class="docutils literal"><span class="pre">roles</span></code> and the absolute directory <code class="docutils literal"><span class="pre">/etc/ansible/roles</span></code>,
+which is the default directory when you use roles from others.</p>
 <p>The other settings in this file make my life a little easier most of the
 time, but they are not absolutely necessary.</p>
 <div class="admonition note">
@@ -240,6 +240,24 @@ time, but they are not absolutely necessary.</p>
 role and use it in your company only, or push it to <em>Ansible Galaxy</em>
 for reuse by others.</p>
 </div>
+</div>
+<div class="section" id="the-basic-recipe">
+<h2><a class="toc-backref" href="#contents">The basic recipe</a><a class="headerlink" href="#the-basic-recipe" title="Permalink to this headline"> </a></h2>
+<p>When doing an <em>as-is</em> extraction of the logical units (like we do in
+this post), follow these steps:</p>
+<ol class="arabic simple">
+<li>create a new role with <code class="docutils literal"><span class="pre">ansible-galaxy</span> <span class="pre">init</span> <span class="pre">roles/&lt;role-name&gt;</span></code></li>
+<li>add the role to the <code class="docutils literal"><span class="pre">playbook.yml</span></code></li>
+<li>move the tasks into <code class="docutils literal"><span class="pre">roles/&lt;role-name&gt;/tasks/main.yml</span></code></li>
+<li>move the handlers into <code class="docutils literal"><span class="pre">roles/&lt;role-name&gt;/handlers/main.yml</span></code></li>
+<li>move the static files used by those tasks and handlers
+into <code class="docutils literal"><span class="pre">roles/&lt;role-name&gt;/files/</span></code></li>
+<li>move the template files used by those tasks and handlers into
+<code class="docutils literal"><span class="pre">roles/&lt;role-name&gt;/templates/</span></code></li>
+<li>run the playbook to verify we didn&#8217;t introduce an error</li>
+</ol>
+<p>Let&#8217;s use this basic recipe with the logic of installing the
+<em>Node Exporter</em>.</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -305,8 +323,8 @@ and files.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Two directories are missing here, namely <code class="docutils literal"><span class="pre">templates</span></code> and <code class="docutils literal"><span class="pre">files</span></code>.
-This is already reported <a class="footnote-reference" href="#ansidirbug" id="id2">[4]</a> but not yet solved (at least
-in my version 2.3.1, installed via <em>pypi</em>).</p>
+This is an already reported bug <a class="footnote-reference" href="#ansidirbug" id="id2">[2]</a> but it&#8217;s not solved yet
+(at least in my version 2.3.1, installed via <em>pypi</em>).</p>
 </div>
 <p>The responsibilities of those directories of a role in short:</p>
 <ul class="simple">
@@ -321,10 +339,10 @@ to get overridden from the role user (a play in a playbook).</li>
 <li><code class="docutils literal"><span class="pre">vars</span></code>
 Role specific variables, which are <strong>not</strong> intended to get overridden.</li>
 <li><code class="docutils literal"><span class="pre">templates</span></code>
-With <em>jinja2</em> templated files. The <code class="docutils literal"><span class="pre">template</span></code> module <a class="footnote-reference" href="#templatemod" id="id3">[7]</a>
+With <em>jinja2</em> templated files. The <code class="docutils literal"><span class="pre">template</span></code> module <a class="footnote-reference" href="#templatemod" id="id3">[3]</a>
 searches in that directory by default.</li>
 <li><code class="docutils literal"><span class="pre">files</span></code>
-The default directory for the <code class="docutils literal"><span class="pre">copy</span></code> module <a class="footnote-reference" href="#copymod" id="id4">[8]</a>.</li>
+The default directory for the <code class="docutils literal"><span class="pre">copy</span></code> module <a class="footnote-reference" href="#copymod" id="id4">[4]</a>.</li>
 <li><code class="docutils literal"><span class="pre">meta</span></code>
 Meta information for this role. This is the place where you can
 define dependencies to other roles, for example.</li>
@@ -333,6 +351,15 @@ Contains everything necessary to test this role in isolation.
 I haven&#8217;t yet used this like I should. I&#8217;m going to explore this
 in another post later.</li>
 </ul>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You can delete the directories and files you don&#8217;t need for that role.
+<em>Ansible</em> can handle that. I usually keep them to have some kind of
+uniformity among the roles and the superfluous directories don&#8217;t
+bother me.</p>
+</div>
+<p>The <code class="docutils literal"><span class="pre">README.md</span></code> is also worth taking a look at an filling in the missing
+documentation pieces. I&#8217;m omitting it in this post.</p>
 <p>Move the node-exporter related tasks from the playbook into the file
 <code class="docutils literal"><span class="pre">roles/node-exporter/tasks/main.yml</span></code>:</p>
 <div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -436,6 +463,14 @@ You can influence that with the <code class="docutils literal"><span class="pre"
 or the <code class="docutils literal"><span class="pre">import_role</span></code> module <a class="footnote-reference" href="#importrole" id="id6">[6]</a>,
 which let you tread roles like a task.</p>
 </div>
+</div>
+<div class="section" id="extract-more-logical-units">
+<h2><a class="toc-backref" href="#contents">Extract more logical units</a><a class="headerlink" href="#extract-more-logical-units" title="Permalink to this headline"> </a></h2>
+<p>For the sake of example, I&#8217;ll go excessive here and refactor every logic
+in that <em>playbook</em> into their own <em>roles</em>, following the basic refactoring
+recipe explained before. You&#8217;ll see the recurring pattern pretty quickly.</p>
+<div class="section" id="extract-a-prometheus-role">
+<h3><a class="toc-backref" href="#contents">Extract a <code class="docutils literal"><span class="pre">prometheus</span></code> role</a><a class="headerlink" href="#extract-a-prometheus-role" title="Permalink to this headline"> </a></h3>
 <p>With this basic step, let&#8217;s create another role, this time for the
 <em>Prometheus</em> service:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ ansible-galaxy init roles/prometheus
@@ -544,6 +579,9 @@ and the <code class="docutils literal"><span class="pre">prometheus.yml</span></
          name: grafana
 </pre></div>
 </td></tr></table></div>
+</div>
+<div class="section" id="extract-a-grafana-role">
+<h3><a class="toc-backref" href="#contents">Extract a <code class="docutils literal"><span class="pre">grafana</span></code> role</a><a class="headerlink" href="#extract-a-grafana-role" title="Permalink to this headline"> </a></h3>
 <p>We do the very same to the tasks to install the <em>Grafana</em> service:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ ansible-galaxy init roles/grafana
 </pre></div>
@@ -658,6 +696,9 @@ and the <code class="docutils literal"><span class="pre">prometheus.yml</span></
  # ===========================================================================
 </pre></div>
 </td></tr></table></div>
+</div>
+<div class="section" id="extract-a-grafana-prometheus-datasource-role">
+<h3><a class="toc-backref" href="#contents">Extract a <code class="docutils literal"><span class="pre">grafana-prometheus-datasource</span></code> role</a><a class="headerlink" href="#extract-a-grafana-prometheus-datasource-role" title="Permalink to this headline"> </a></h3>
 <p>At this point you might wonder why I didn&#8217;t move the setup of the
 <em>Grafana</em> datasource and dashboard into the <code class="docutils literal"><span class="pre">grafana</span></code> role too.
 It would work, no doubt about that. My two reasons are:</p>
@@ -671,7 +712,7 @@ rearrange the two roles we have so far, and could use the <code class="docutils 
 before the <code class="docutils literal"><span class="pre">prometheus</span></code> role, it wouldn&#8217;t matter as they are independent.
 Establishing the dependency is its own logical unit in my opinion. To
 encapsulate that, we create another role:</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ansible-galaxy init roles/grafana-prometheus-datasource
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ ansible-galaxy init roles/grafana-prometheus-datasource
 </pre></div>
 </td></tr></table></div>
 <p>Now move the code, which establishes the datasource to
@@ -746,15 +787,11 @@ new role to the playbook:</p>
          url: http://127.0.0.1:3000/api/dashboards/db
 </pre></div>
 </td></tr></table></div>
-<p>Next one is the dashboard of <em>Grafana</em>.</p>
-<ol class="arabic simple">
-<li>create a new role with <code class="docutils literal"><span class="pre">ansible-galaxy</span></code></li>
-<li>move the files into that role</li>
-<li>move the tasks into <code class="docutils literal"><span class="pre">tasks/main.yml</span></code></li>
-<li>move the handlers into <code class="docutils literal"><span class="pre">handlers/main.yml</span></code></li>
-<li>add the role to the playbook</li>
-</ol>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ansible-galaxy init roles/grafana-dashboard
+</div>
+<div class="section" id="extract-a-grafana-dashboard-role">
+<h3><a class="toc-backref" href="#contents">Extract a <code class="docutils literal"><span class="pre">grafana-dashboard</span></code> role</a><a class="headerlink" href="#extract-a-grafana-dashboard-role" title="Permalink to this headline"> </a></h3>
+<p>Next one is the dashboard upload into <em>Grafana</em>.</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ ansible-galaxy init roles/grafana-dashboard
 </pre></div>
 </td></tr></table></div>
 <div class="highlight-diff"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -802,8 +839,11 @@ new role to the playbook:</p>
 <span class="gd">-          Accept: &quot;application/json&quot;</span>
 </pre></div>
 </td></tr></table></div>
+</div>
+<div class="section" id="extract-a-workload-deploy-role">
+<h3><a class="toc-backref" href="#contents">Extract a <code class="docutils literal"><span class="pre">workload-deploy</span></code> role</a><a class="headerlink" href="#extract-a-workload-deploy-role" title="Permalink to this headline"> </a></h3>
 <p>Let&#8217;s move the deployment of the applications into a role too:</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ansible-galaxy init roles/workload-deploy
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ ansible-galaxy init roles/workload-deploy
 </pre></div>
 </td></tr></table></div>
 <p>Again, move the code and files, add the new role to the playbook:</p>
@@ -823,8 +863,8 @@ new role to the playbook:</p>
 14
 15
 16
-17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/posts/drafts/ansible-playbook-roles/playbook.yml</span>
-<span class="gi">+++ b/posts/drafts/ansible-playbook-roles/playbook.yml</span>
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/playbook.yml</span>
+<span class="gi">+++ b/playbook.yml</span>
 <span class="gu">@@ -66,12 +66,5 @@</span>
  become: true
  gather_facts: false
@@ -842,6 +882,9 @@ new role to the playbook:</p>
 <span class="gd">-         - eat_memory.py</span>
 </pre></div>
 </td></tr></table></div>
+</div>
+<div class="section" id="extract-an-apt-update-role">
+<h3><a class="toc-backref" href="#contents">Extract an <code class="docutils literal"><span class="pre">apt-update</span></code> role</a><a class="headerlink" href="#extract-an-apt-update-role" title="Permalink to this headline"> </a></h3>
 <p>When you take a look at your playbook, you note that there is a nice
 layer of abstraction. You&#8217;ll also spot a violation: The update of the
 APT repository cache.</p>
@@ -863,7 +906,7 @@ choices here:</p>
 </ul>
 <p>While I prefer the first solution, let&#8217;s do the second one for the sake
 of example of creating dependencies between roles.</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ansible-galaxy init roles/apt-update
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ ansible-galaxy init roles/apt-update
 </pre></div>
 </td></tr></table></div>
 <p>Move the task into <code class="docutils literal"><span class="pre">roles/apt-update/tasks/main.yml</span></code>.</p>
@@ -876,8 +919,8 @@ of example of creating dependencies between roles.</p>
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/posts/drafts/ansible-playbook-roles/playbook.yml</span>
-<span class="gi">+++ b/posts/drafts/ansible-playbook-roles/playbook.yml</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/playbook.yml</span>
+<span class="gi">+++ b/playbook.yml</span>
 <span class="gu">@@ -29,10 +29,6 @@</span>
        ping:
        with_items: &#39;{{ groups[&quot;all&quot;] }}&#39;
@@ -888,6 +931,7 @@ of example of creating dependencies between roles.</p>
 <span class="gd">-        cache_valid_time: 3600</span>
 </pre></div>
 </td></tr></table></div>
+<p><strong>Define a role dependency</strong></p>
 <p>Establish the dependency in:</p>
 <ol class="arabic simple">
 <li><code class="docutils literal"><span class="pre">roles/grafana/meta/main.yml</span></code></li>
@@ -903,8 +947,11 @@ of example of creating dependencies between roles.</p>
 <p>Later, when I show you the recording of the playbook execution, you&#8217;ll
 notice that the APT update occurs right before the roles which depend
 on it.</p>
+</div>
+<div class="section" id="extract-a-ssh-accessible-role">
+<h3><a class="toc-backref" href="#contents">Extract a <code class="docutils literal"><span class="pre">ssh-accessible</span></code> role</a><a class="headerlink" href="#extract-a-ssh-accessible-role" title="Permalink to this headline"> </a></h3>
 <p>Let&#8217;s go excessive and refactor the rest of the tasks into roles.</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ansible-galaxy init roles/ssh-accessible
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ ansible-galaxy init roles/ssh-accessible
 </pre></div>
 </td></tr></table></div>
 <p>Move the SSH task into the role and add the role to the playbook:</p>
@@ -955,8 +1002,11 @@ on it.</p>
          dest: /etc/hosts
 </pre></div>
 </td></tr></table></div>
-<p>To go to an extreme, extract the IP address to name mapping too:</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ansible-galaxy init roles/name-ip-mapping
+</div>
+<div class="section" id="extract-an-ip-name-mapping-role">
+<h3><a class="toc-backref" href="#contents">Extract an <code class="docutils literal"><span class="pre">ip-name-mapping</span></code> role</a><a class="headerlink" href="#extract-an-ip-name-mapping-role" title="Permalink to this headline"> </a></h3>
+<p>Extract the IP address to name mapping too:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ ansible-galaxy init roles/name-ip-mapping
 </pre></div>
 </td></tr></table></div>
 <div class="highlight-diff"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -978,8 +1028,8 @@ on it.</p>
 17
 18
 19
-20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/posts/drafts/ansible-playbook-roles/playbook.yml</span>
-<span class="gi">+++ b/posts/drafts/ansible-playbook-roles/playbook.yml</span>
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gd">--- a/playbook.yml</span>
+<span class="gi">+++ b/playbook.yml</span>
 <span class="gu">@@ -9,19 +9,7 @@</span>
 
    roles:
@@ -1000,6 +1050,10 @@ on it.</p>
 <span class="gd">-</span>
 </pre></div>
 </td></tr></table></div>
+</div>
+</div>
+<div class="section" id="the-end-result-of-the-as-is-extraction">
+<h2><a class="toc-backref" href="#contents">The end result of the as-is extraction</a><a class="headerlink" href="#the-end-result-of-the-as-is-extraction" title="Permalink to this headline"> </a></h2>
 <p>Nothing more to extract out of the playbook. We have this end result:</p>
 <div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1078,7 +1132,7 @@ on it.</p>
 
   <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grafana</span>
+    <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">role</span><span class="p p-Indicator">:</span> <span class="nv">grafana</span><span class="p p-Indicator">,</span> <span class="nv">install_method</span><span class="p p-Indicator">:</span> <span class="nv">os-package</span> <span class="p p-Indicator">}</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grafana-prometheus-datasource</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grafana-dashboard</span>
 
@@ -1405,41 +1459,58 @@ on it.</p>
 </pre></div>
 </td></tr></table></div>
 <p>Let&#8217;s take a look at the <em>playbook</em> execution with roles:</p>
-<asciinema-player src="../../../_static/asciinema/asciinema_playbook_roles_etwQtsN.json" cols="120" rows="30"></asciinema-player><p>The name of the roles are now part of the displayed tasks (as prefixes),
+<asciinema-player src="../../../_static/asciinema/asciinema_playbook_roles_etwQtsN.json" cols="120" rows="30" poster="npt:0:10"></asciinema-player><p>The name of the roles are now part of the displayed tasks (as prefixes),
 which makes it easier to spot what&#8217;s happening.</p>
-<hr class="docutils" />
-<div class="section" id="general-advice">
-<h2><a class="toc-backref" href="#contents">General advice</a><a class="headerlink" href="#general-advice" title="Permalink to this headline"> </a></h2>
-<ul class="simple">
-<li>the complete URL must not be longer than 78 chars</li>
-<li>the initial release date is in the URL</li>
-<li>post directory is part of the URL (make it searchable, don&#8217;t be fancy)</li>
-<li>aim for less than 15h per post, otherwise the releases will become unstable</li>
-<li>the spelling check is done frequently and at the very end</li>
-<li>add the release date only if confident enough</li>
-<li>start with a brain dump, refine from there</li>
-<li>consider touch screens (mobile phones). CSS hover text magic doesn&#8217;t work</li>
-</ul>
 </div>
-<div class="section" id="structure">
-<h2><a class="toc-backref" href="#contents">Structure</a><a class="headerlink" href="#structure" title="Permalink to this headline"> </a></h2>
-<ol class="arabic simple">
-<li>title</li>
-<li>abstract</li>
-<li>table of contents</li>
-<li>change history table</li>
-<li>TL;DR (if applicable)</li>
-<li>use case</li>
-<li>content</li>
-<li>summary / conclusion</li>
-<li>references</li>
-<li>appendix</li>
-</ol>
-<p>This is only the first level. Add another level if necessary. Let 2 levels
-be the maximum.</p>
-<p>Each section is a permalink and therefore a published resource. That means,
-don&#8217;t change once published permalinks (aka altering sections).</p>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="section" id="define-configuration-interfaces">
+<h2><a class="toc-backref" href="#contents">Define configuration interfaces</a><a class="headerlink" href="#define-configuration-interfaces" title="Permalink to this headline"> </a></h2>
+<p>At this point, we did an as-is extraction and relied on the defaults
+we used. There was no way to configure roles from a users point of view.
+Let&#8217;s look at a real-world example with the <em>Grafana</em> role. As explained
+in a previous post (<a class="reference internal" href="../../2017/10/27/monitoring-prometheus/#monitoring-prometheus"><span class="std std-ref">Monitoring with Prometheus</span></a>), the <em>Ubuntu</em>
+package for it got removed with <em>Ubuntu 17.10</em> and we need some kind
+of transition strategy. We have different choices to do this:</p>
+<ul class="simple">
+<li>create a new <em>Grafana</em> role which installs from source</li>
+<li>extend the existing <em>Grafana</em> role to install from APT or source,
+depending on a configured variable</li>
+</ul>
+<p>Honestly, both choices are valid in my opinion, each with advantages and
+disadvantages. I&#8217;ve chosen the latter approach here to demo how a separation
+of concerns could be done with <em>Ansible</em> role variables. To elaborate on
+that, imagine you&#8217;re the <em>Grafana</em> expert in your company and two different
+groups want to use your role. One group uses <em>Ubuntu 16.04</em> until the long
+term support expires, the other group upgrades every time to a new LTS
+release, e.g. <em>Ubuntu 18.04</em> in April next year, which doesn&#8217;t have
+the OS package anymore. The users mostly don&#8217;t care how the installation
+happens, the just want to have the service available in their setup and
+you&#8217;re the person responsible to make that happen and deal with their
+different setups.</p>
+<p>Let&#8217;s add a variable to the <em>Grafana</em> role, which has a default value,
+but is supposed to get overridden if needed. The file
+<code class="docutils literal"><span class="pre">roles/grafana/defaults/main.yml</span></code> could look like this:</p>
+<div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># defaults file for grafana</span>
+
+<span class="l l-Scalar l-Scalar-Plain">install_method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">os-package</span>
+</pre></div>
+</td></tr></table></div>
+<p><code class="docutils literal"><span class="pre">os-package</span></code> is the default value for the variable <code class="docutils literal"><span class="pre">install_method</span></code>.
+Another valid value, to override the default one, could then be <code class="docutils literal"><span class="pre">source</span></code>.
+I&#8217;ve chosen those names arbitrarily, there is no naming convention.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">At this point you should strongly consider to fill out the section
+<em>&#8220;Role Variables&#8221;</em> in the <em>README</em> file of that role.</p>
+</div>
+<p>Before we make use of that new variable, move the contents of
+<code class="docutils literal"><span class="pre">roles/grafana/tasks/main.yml</span></code> into a newly created file
+<code class="docutils literal"><span class="pre">roles/grafana/tasks/apt_install.yml</span></code>. Now we add this conditional
+to the empty <code class="docutils literal"><span class="pre">roles/grafana/tasks/main.yml</span></code>:</p>
+<div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1448,351 +1519,120 @@ don&#8217;t change once published permalinks (aka altering sections).</p>
  7
  8
  9
-10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gh">=====</span>
-<span class="gh">title</span>
-<span class="gh">=====</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># tasks file for grafana</span>
 
-<span class="gh">section</span>
-<span class="gh">=======</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">operating</span><span class="nv"> </span><span class="s">system</span><span class="nv"> </span><span class="s">package.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">apt_install.yml</span>
+  <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">install_method == &quot;os-package&quot;</span>
 
-<span class="gh">sub-section</span>
-<span class="gh">===========</span>
-
-<span class="gs">**paragraph header**</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">source.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">source_install.yml</span>
+  <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">install_method == &quot;source&quot;</span>
 </pre></div>
 </td></tr></table></div>
-</div>
-<div class="section" id="table-of-contents">
-<h2><a class="toc-backref" href="#contents">Table of contents</a><a class="headerlink" href="#table-of-contents" title="Permalink to this headline"> </a></h2>
-<p>Every post has a table of contents. The sections link back to the
-table of contents. This makes jumps back and forth easy.</p>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p"> ..</span> <span class="ow">contents</span><span class="p">::</span>
-     <span class="nc">:local:</span>
-     <span class="nc">:backlinks:</span> <span class="nf">top</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="categories-and-labels">
-<h2><a class="toc-backref" href="#contents">Categories and labels</a><a class="headerlink" href="#categories-and-labels" title="Permalink to this headline"> </a></h2>
-<p>There are 3 categories:</p>
-<ul class="simple">
-<li>books</li>
-<li>conferences</li>
-<li>openstack</li>
-</ul>
-<p>Categories are more coarse grained than labels. Having no category is fine,
-it&#8217;s then seen as being miscellaneous until a category evolves over time.</p>
-<p>Add labels as you see fit. Check the existing ones. Use one to three labels.</p>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p"> ..</span> <span class="ow">post</span><span class="p">::</span> 25 Aug, 2017
-    <span class="nc">:category:</span> <span class="nf">openstack</span>
-    <span class="nc">:tags:</span> <span class="nf">nova, scheduling, cpu-architecture</span>
-    <span class="nc">:title:</span> <span class="nf">OpenStack Nova Scheduling based on CPU architecture</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="code-examples">
-<h2><a class="toc-backref" href="#contents">Code examples</a><a class="headerlink" href="#code-examples" title="Permalink to this headline"> </a></h2>
-<ul class="simple">
-<li>blocks always with line numbers</li>
-<li>emphasize lines to set focus</li>
-<li>use the proper highlighting language <a class="footnote-reference" href="#pygments" id="id7">[1]</a></li>
-</ul>
-<div class="section" id="text">
-<h3><a class="toc-backref" href="#contents">Text</a><a class="headerlink" href="#text" title="Permalink to this headline"> </a></h3>
-<p>The config option <code class="docutils literal"><span class="pre">key2</span></code> has value <code class="docutils literal"><span class="pre">value2</span></code>.</p>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>The config option <span class="s">``key2``</span> has value <span class="s">``value2``</span>.
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="blocks">
-<h3><a class="toc-backref" href="#contents">Blocks</a><a class="headerlink" href="#blocks" title="Permalink to this headline"> </a></h3>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;hello blog&quot;</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<p>The important part here is, that we are <strong>backwards compatible</strong>.
+The default value <code class="docutils literal"><span class="pre">os-package</span></code> enables the conditional to hit
+which includes and executes the old logic to install from APT.</p>
+<p>The new code path in <code class="docutils literal"><span class="pre">roles/grafana/tasks/source_install.yml</span></code> is
+rather unspectacular:</p>
+<div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> python
-   <span class="nc">:linenos:</span>
-   <span class="nc">:emphasize-lines:</span> <span class="nf">0</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
 
-   print(&quot;hello blog&quot;)
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">source.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">fail</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">msg</span><span class="p p-Indicator">:</span> <span class="s">&quot;TODO</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">yet</span><span class="nv"> </span><span class="s">done!&quot;</span>
 </pre></div>
 </td></tr></table></div>
-</div>
-<div class="section" id="files">
-<h3><a class="toc-backref" href="#contents">Files</a><a class="headerlink" href="#files" title="Permalink to this headline"> </a></h3>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p"> ..</span> <span class="ow">literalinclude</span><span class="p">::</span> example.ini
-    <span class="nc">:language:</span> <span class="nf">ini</span>
-    <span class="nc">:linenos:</span>
-    <span class="nc">:emphasize-lines:</span> <span class="nf">5</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-</div>
-<div class="section" id="text-format">
-<h2><a class="toc-backref" href="#contents">Text format</a><a class="headerlink" href="#text-format" title="Permalink to this headline"> </a></h2>
-<p>Use <strong>strongly emphasized</strong> to make a point.</p>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>Use <span class="gs">**strongly emphasized**</span> to make a point.
-</pre></div>
-</td></tr></table></div>
-<hr class="docutils" />
-<p>Use <em>proper names</em> for people companies and software.
-For example, <em>Kubernetes</em>.</p>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>Use <span class="ge">*proper names*</span> for people companies and software.
-For example, <span class="ge">*Kubernetes*</span>.
-</pre></div>
-</td></tr></table></div>
-<hr class="docutils" />
-<p>Use an <cite>inline quote</cite> for inline referencing an external source
-(like books) or small direct quotes of cited sources.</p>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>Use an <span class="nv">`inline quote`</span> for inline referencing an external source
-(like books) or small direct quotes of cited sources.
-</pre></div>
-</td></tr></table></div>
-<hr class="docutils" />
-<blockquote>
-<div>Use a block quote for multi line
-direct quotes of cited resources.</div></blockquote>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>    Use a block quote for multi line
-    direct quotes of cited resources.
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="images">
-<h2><a class="toc-backref" href="#contents">Images</a><a class="headerlink" href="#images" title="Permalink to this headline"> </a></h2>
-<p>Favor vector graphics (<code class="docutils literal"><span class="pre">.svg</span></code>) over raster maps (<code class="docutils literal"><span class="pre">.png</span></code>).
-Always do a scaling of the images (<code class="docutils literal"><span class="pre">:height:</span></code> or <code class="docutils literal"><span class="pre">:width:</span></code> or <code class="docutils literal"><span class="pre">:scale:</span></code>),
-this enables the &#8220;click on the thumbnail to show the full image&#8221; logic.</p>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">image</span><span class="p">::</span> drawing_TOelDqK.svg
-   <span class="nc">:height:</span> <span class="nf">150px</span>
-   <span class="nc">:alt:</span> <span class="nf">Example drawing with Inkscape.</span>
-</pre></div>
-</td></tr></table></div>
-<div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">All images of all posts will be copied to <code class="docutils literal"><span class="pre">_images</span></code>. This means
-unique image names are needed to avoid collisions. Use the script
-to generate unique (enough) identifiers.</p>
-</div>
-</div>
-<div class="section" id="spelling">
-<h2><a class="toc-backref" href="#contents">Spelling</a><a class="headerlink" href="#spelling" title="Permalink to this headline"> </a></h2>
-<p>Use the spelling directive if it is only needed for one post:</p>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">spelling</span><span class="p">::</span>
-
-   foo
-</pre></div>
-</td></tr></table></div>
-<p>In either case, take care of upper and lower case, singular and plural.</p>
-</div>
-<div class="section" id="references-and-links">
-<h2><a class="toc-backref" href="#contents">References and links</a><a class="headerlink" href="#references-and-links" title="Permalink to this headline"> </a></h2>
-<div class="section" id="external">
-<h3><a class="toc-backref" href="#contents">External</a><a class="headerlink" href="#external" title="Permalink to this headline"> </a></h3>
-<p>&#8220;External&#8221; is everything outside of this blog.
-Reference to it with auto-numbered footnotes <a class="footnote-reference" href="#footnotes" id="id8">[2]</a></p>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>Reference to it with auto-numbered footnotes <span class="s">[#footnotes]_</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="internal">
-<h3><a class="toc-backref" href="#contents">Internal</a><a class="headerlink" href="#internal" title="Permalink to this headline"> </a></h3>
-<p>&#8220;Internal&#8221; is everything inside of this blog.
-For example the <a class="reference internal" href="../../../about/#about"><span class="std std-ref">About</span></a> page.</p>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>For example the <span class="na">:ref:</span><span class="nv">`about`</span> page.
-</pre></div>
-</td></tr></table></div>
-</div>
-</div>
-<div class="section" id="lists">
-<h2><a class="toc-backref" href="#contents">Lists</a><a class="headerlink" href="#lists" title="Permalink to this headline"> </a></h2>
-<p>Numbered lists for ordered items:</p>
-<ol class="arabic simple">
-<li>first do this,</li>
-<li>then you can do that,</li>
-<li>lastly you do another thing.</li>
-</ol>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span>Numbered lists for ordered items:
-
-<span class="m">#.</span> first do this,
-<span class="m">#.</span> then you can do that,
-<span class="m">#.</span> lastly you do another thing.
-</pre></div>
-</td></tr></table></div>
-<hr class="docutils" />
-<p>Bullet lists for (unordered) items:</p>
-<ul class="simple">
-<li>a hat</li>
-<li>a walking stick</li>
-<li>an umbrella</li>
-</ul>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span>Bullet lists for (unordered) items:
-
-<span class="m">*</span> a hat
-<span class="m">*</span> a walking stick
-<span class="m">*</span> an umbrella
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="highlighted-info-boxes">
-<h2><a class="toc-backref" href="#contents">Highlighted info boxes</a><a class="headerlink" href="#highlighted-info-boxes" title="Permalink to this headline"> </a></h2>
-<div class="admonition-todo admonition" id="index-2">
-<p class="first admonition-title">Todo</p>
-<p class="last">Reminder for the author to do this here before publishing.</p>
-</div>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">todo</span><span class="p">::</span>
-
-    Reminder for the author to do this here before publishing.
-</pre></div>
-</td></tr></table></div>
-<hr class="docutils" />
-<div class="admonition-feedback-needed admonition">
-<p class="first admonition-title">Feedback needed</p>
-<p class="last">Use this for actively asking for feedback from the reader.</p>
-</div>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">admonition</span><span class="p">::</span> Feedback needed
-
-    Use this for actively asking for feedback from the reader.
-</pre></div>
-</td></tr></table></div>
-<hr class="docutils" />
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This is a &#8220;mild&#8221; highlight. No biggie if the reader misses it.</p>
-</div>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">note</span><span class="p">::</span>
-
-    This is a &quot;mild&quot; highlight. No biggie if the reader misses it.
-</pre></div>
-</td></tr></table></div>
-<hr class="docutils" />
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">This gives advice to the reader.</p>
-</div>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">tip</span><span class="p">::</span>
-
-    This gives advice to the reader.
-</pre></div>
-</td></tr></table></div>
-<hr class="docutils" />
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Don&#8217;t do this. This is a common mistake.</p>
-</div>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">warning</span><span class="p">::</span>
-
-    Don&#39;t do this. This is a common mistake.
-</pre></div>
-</td></tr></table></div>
-<hr class="docutils" />
-<div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">Do this (really) / Be aware of this (really).</p>
-</div>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">important</span><span class="p">::</span>
-
-    Do this (really) / Be aware of this (really).
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="change-history">
-<h2><a class="toc-backref" href="#contents">Change history</a><a class="headerlink" href="#change-history" title="Permalink to this headline"> </a></h2>
-<p>The publish date is the very first entry. Append another entry below the
-previous one when:</p>
-<ul class="simple">
-<li>the structure got changed</li>
-<li>a paragraph got added or removed</li>
-<li>content got altered which changed the meaning of something</li>
-</ul>
-<p>In general, think twice before changing a published post. If a big change
-would be necessary, maybe a follow up post is the better choice. If so,
-cross-reference each other.</p>
-<p><strong>No addition</strong> needed when:</p>
-<ul class="simple">
-<li>typo fix</li>
-<li>small format change (bold, italics, ...)</li>
-</ul>
-<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<p>I haven&#8217;t yet found time to develop the logic to install <em>Grafana</em>
+from source, so I let the task simply fail.</p>
+<p>In the playbook, we used the role like this:</p>
+<div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
-6
-7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p"> ..</span> <span class="ow">list-table</span><span class="p">::</span> Change history:
-    <span class="nc">:widths:</span> <span class="nf">1 5</span>
-    <span class="nc">:header-rows:</span> <span class="nf">1</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
-    <span class="m">*</span> - Date
-      <span class="m">-</span> Change description
-<span class="hll">    <span class="m">*</span> - 2017-11-02
-</span><span class="hll">      <span class="m">-</span> The first release
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grafana</span>
+</pre></div>
+</td></tr></table></div>
+<p>Executed, you&#8217;ll see this in the output:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>TASK <span class="o">[</span>grafana : Install from source.<span class="o">]</span> ************************
+Thursday <span class="m">23</span> November <span class="m">2017</span>  <span class="m">11</span>:46:55 +0100 <span class="o">(</span><span class="m">0</span>:00:00.227<span class="o">)</span>
+<span class="hll">skipping: <span class="o">[</span>monitoring<span class="o">]</span>
 </span></pre></div>
 </td></tr></table></div>
+<p>Notice that we skipped the task to install from source, as our
+conditional worked.</p>
+<p>Now let&#8217;s configure the role by overwriting the role&#8217;s variable:</p>
+<div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
+    <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">role</span><span class="p p-Indicator">:</span> <span class="nv">grafana</span><span class="p p-Indicator">,</span> <span class="nv">install_method</span><span class="p p-Indicator">:</span> <span class="nv">source</span> <span class="p p-Indicator">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>Let&#8217;s execute the playbook again:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>TASK <span class="o">[</span>grafana : Install from source.<span class="o">]</span> ************************
+Thursday <span class="m">23</span> November <span class="m">2017</span>  <span class="m">11</span>:50:33 +0100 <span class="o">(</span><span class="m">0</span>:00:00.014<span class="o">)</span>
+<span class="hll">fatal: <span class="o">[</span>monitoring<span class="o">]</span>: FAILED! <span class="o">=</span>&gt; <span class="o">{</span><span class="s2">&quot;changed&quot;</span>: false, <span class="s2">&quot;failed&quot;</span>: true, <span class="s2">&quot;msg&quot;</span>: <span class="s2">&quot;TODO not yet done!&quot;</span><span class="o">}</span>
+</span></pre></div>
+</td></tr></table></div>
+<p>The conditional matched and the task fails like expected.</p>
+<p><strong>Homework</strong></p>
+<div class="admonition-todo admonition" id="index-2">
+<p class="first admonition-title">Todo</p>
+<p class="last">readers could do this and that to test themselves</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2><a class="toc-backref" href="#contents">Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this headline"> </a></h2>
+<div class="admonition-todo admonition" id="index-3">
+<p class="first admonition-title">Todo</p>
+<p class="last">conclude something here</p>
+</div>
 </div>
 <div class="section" id="references">
 <h2><a class="toc-backref" href="#contents">References</a><a class="headerlink" href="#references" title="Permalink to this headline"> </a></h2>
-<table class="docutils footnote" frame="void" id="pygments" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[1]</a></td><td><a class="reference external" href="http://pygments.org/">http://pygments.org/</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="footnotes" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[2]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html#footnotes">http://www.sphinx-doc.org/en/stable/rest.html#footnotes</a></td></tr>
-</tbody>
-</table>
 <table class="docutils footnote" frame="void" id="ansconf" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[3]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/intro_configuration.html">http://docs.ansible.com/ansible/latest/intro_configuration.html</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/intro_configuration.html">http://docs.ansible.com/ansible/latest/intro_configuration.html</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="ansidirbug" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[4]</a></td><td><a class="reference external" href="https://github.com/ansible/ansible/issues/23597">https://github.com/ansible/ansible/issues/23597</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="https://github.com/ansible/ansible/issues/23597">https://github.com/ansible/ansible/issues/23597</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="templatemod" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/template_module.html">http://docs.ansible.com/ansible/latest/template_module.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="copymod" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/copy_module.html">http://docs.ansible.com/ansible/latest/copy_module.html</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="includerole" rules="none">
@@ -1805,18 +1645,6 @@ cross-reference each other.</p>
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/import_role_module.html">http://docs.ansible.com/ansible/latest/import_role_module.html</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="templatemod" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[7]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/template_module.html">http://docs.ansible.com/ansible/latest/template_module.html</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="copymod" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[8]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/copy_module.html">http://docs.ansible.com/ansible/latest/copy_module.html</a></td></tr>
 </tbody>
 </table>
 </div>

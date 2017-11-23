@@ -12,13 +12,14 @@
 Ansible Playbook Refactoring into Roles
 =======================================
 
-Each post should start with one paragraph which is an abstract of the post.
-This paragraph should be enough for a reader to decide if they want to
-read the post or not. It is best to keep this paragraph short and simple.
-100 words or less is the limit, as this abstract is used as excerpt in the
-list on the landing page and in the feed readers. This upper limit
-of 100 words is also the amount of content someone should be able to read
-in less than 20 seconds. Additionally, it fits on one small mobile screen.
+In a previous post (:ref:`monitoring-prometheus`), we created one playbook
+which contained all the logic. This post will show how to do a refactoring of
+a playbook into smaller, reusable *Ansible Roles*. This allows us to hide
+complexity and to provide defined interfaces. It also increases the
+ability to work in parallel on different parts of your
+*Infrastructure as Code (IaC)* project. I won't explore how you publish
+your roles to *Ansible Galaxy* but merely show a basic recipe how you
+move *Playbook* logic step by step into project specific roles.
 
 .. contents::
     :local:
@@ -37,12 +38,6 @@ in less than 20 seconds. Additionally, it fits on one small mobile screen.
 
 .. todo:: publishing date
 
-In the previous post :ref:`monitoring-prometheus`, we created one playbook
-which contained all the logic. This post will show how to do a refactoring of
-a playbook into smaller, reusable ansible roles, which hide complexity and
-provide defined interfaces.
-
-----
 
 .. FIXME: This is a undesirable way to use the asciinema files. I had to
    create the "_static/asciinema" directory by hand and also copy the
@@ -56,6 +51,9 @@ provide defined interfaces.
    .. asciinema:: vagrant-up.json
       :cols: 80
       :rows: 24
+
+Starting point
+==============
 
 We start with this layout of our project:
 
@@ -83,15 +81,18 @@ Start the virtual machines which will be our targets for the playbook later:
 
 .. raw:: html
 
-   <asciinema-player src="../../../_static/asciinema/asciinema_vagrant-up_c671UQ5.json" cols="120" rows="30"></asciinema-player>
+   <asciinema-player src="../../../_static/asciinema/asciinema_vagrant-up_c671UQ5.json" cols="120" rows="30" poster="npt:0:09"></asciinema-player>
 
 
 Start the playbook (without any encapsulation in roles):
 
 .. raw:: html
 
-   <asciinema-player src="../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="30"></asciinema-player>
+   <asciinema-player src="../../../_static/asciinema/asciinema_playbook_HHyJsRV.json" cols="120" rows="30" poster="npt:0:12"></asciinema-player>
 
+
+Enable *Ansible* to use local roles
+===================================
 
 When I start to refactor roles out of a playbook, I usually do
 it by adding a new directory ``roles`` to the project. The *Ansible*
@@ -103,6 +104,10 @@ entry to the ``roles_path`` key needs to be added:
    :linenos:
    :emphasize-lines: 5
 
+The highlighted line tells *Ansible* to look for roles in the relative
+directory ``roles`` and the absolute directory ``/etc/ansible/roles``,
+which is the default directory when you use roles from others.
+
 The other settings in this file make my life a little easier most of the
 time, but they are not absolutely necessary.
 
@@ -112,6 +117,25 @@ time, but they are not absolutely necessary.
    role and use it in your company only, or push it to *Ansible Galaxy*
    for reuse by others.
 
+
+The basic recipe
+================
+
+When doing an *as-is* extraction of the logical units (like we do in
+this post), follow these steps:
+
+#. create a new role with ``ansible-galaxy init roles/<role-name>``
+#. add the role to the ``playbook.yml``
+#. move the tasks into ``roles/<role-name>/tasks/main.yml``
+#. move the handlers into ``roles/<role-name>/handlers/main.yml``
+#. move the static files used by those tasks and handlers
+   into ``roles/<role-name>/files/``
+#. move the template files used by those tasks and handlers into
+   ``roles/<role-name>/templates/``
+#. run the playbook to verify we didn't introduce an error
+
+Let's use this basic recipe with the logic of installing the
+*Node Exporter*.
 
 .. code-block:: bash
    :linenos:
@@ -155,8 +179,8 @@ and files.
 .. note::
 
    Two directories are missing here, namely ``templates`` and ``files``.
-   This is already reported [#ansidirbug]_ but not yet solved (at least
-   in my version 2.3.1, installed via *pypi*).
+   This is an already reported bug [#ansidirbug]_ but it's not solved yet
+   (at least in my version 2.3.1, installed via *pypi*).
 
 The responsibilities of those directories of a role in short:
 
@@ -189,6 +213,16 @@ The responsibilities of those directories of a role in short:
   Contains everything necessary to test this role in isolation.
   I haven't yet used this like I should. I'm going to explore this
   in another post later.
+
+.. hint::
+
+   You can delete the directories and files you don't need for that role.
+   *Ansible* can handle that. I usually keep them to have some kind of
+   uniformity among the roles and the superfluous directories don't
+   bother me.
+
+The ``README.md`` is also worth taking a look at an filling in the missing
+documentation pieces. I'm omitting it in this post.
 
 Move the node-exporter related tasks from the playbook into the file
 ``roles/node-exporter/tasks/main.yml``:
@@ -264,6 +298,20 @@ more roles to encapsulate logic.
    or the ``import_role`` module [#importrole]_,
    which let you tread roles like a task.
 
+
+
+Extract more logical units
+==========================
+
+For the sake of example, I'll go excessive here and refactor every logic
+in that *playbook* into their own *roles*, following the basic refactoring
+recipe explained before. You'll see the recurring pattern pretty quickly.
+
+
+
+Extract a ``prometheus`` role
+-----------------------------
+
 With this basic step, let's create another role, this time for the
 *Prometheus* service:
 
@@ -332,6 +380,10 @@ and the ``prometheus.yml`` file into ``roles/prometheus/files/``.
           service:
             name: grafana
 
+
+
+Extract a ``grafana`` role
+--------------------------
 
 We do the very same to the tasks to install the *Grafana* service:
 
@@ -408,6 +460,9 @@ Same procedure as before:
 
 
 
+Extract a ``grafana-prometheus-datasource`` role
+------------------------------------------------
+
 At this point you might wonder why I didn't move the setup of the
 *Grafana* datasource and dashboard into the ``grafana`` role too.
 It would work, no doubt about that. My two reasons are:
@@ -426,7 +481,7 @@ encapsulate that, we create another role:
    :linenos:
    :emphasize-lines: 0
 
-   $ ansible-galaxy init roles/grafana-prometheus-datasource
+   [markus@local]$ ansible-galaxy init roles/grafana-prometheus-datasource
 
 Now move the code, which establishes the datasource to
 ``roles/grafana-prometheus-datasource/tasks/main.yml`` and add the
@@ -472,20 +527,17 @@ new role to the playbook:
             url: http://127.0.0.1:3000/api/dashboards/db
 
 
-Next one is the dashboard of *Grafana*.
 
-#. create a new role with ``ansible-galaxy``
-#. move the files into that role
-#. move the tasks into ``tasks/main.yml``
-#. move the handlers into ``handlers/main.yml``
-#. add the role to the playbook
+Extract a ``grafana-dashboard`` role
+------------------------------------
 
+Next one is the dashboard upload into *Grafana*.
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   ansible-galaxy init roles/grafana-dashboard
+   [markus@local]$ ansible-galaxy init roles/grafana-dashboard
 
 
 .. code-block:: diff
@@ -516,13 +568,16 @@ Next one is the dashboard of *Grafana*.
    -          Accept: "application/json"
 
 
+Extract a ``workload-deploy`` role
+----------------------------------
+
 Let's move the deployment of the applications into a role too:
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   $ ansible-galaxy init roles/workload-deploy
+   [markus@local]$ ansible-galaxy init roles/workload-deploy
 
 Again, move the code and files, add the new role to the playbook:
 
@@ -530,8 +585,8 @@ Again, move the code and files, add the new role to the playbook:
    :linenos:
    :emphasize-lines: 0
 
-   --- a/posts/drafts/ansible-playbook-roles/playbook.yml
-   +++ b/posts/drafts/ansible-playbook-roles/playbook.yml
+   --- a/playbook.yml
+   +++ b/playbook.yml
    @@ -66,12 +66,5 @@
     become: true
     gather_facts: false
@@ -547,6 +602,11 @@ Again, move the code and files, add the new role to the playbook:
    -         - eat_cpu.py
    -         - eat_disk.py
    -         - eat_memory.py
+
+
+
+Extract an ``apt-update`` role
+------------------------------
 
 When you take a look at your playbook, you note that there is a nice
 layer of abstraction. You'll also spot a violation: The update of the
@@ -575,7 +635,7 @@ of example of creating dependencies between roles.
    :linenos:
    :emphasize-lines: 0
 
-   $ ansible-galaxy init roles/apt-update
+   [markus@local]$ ansible-galaxy init roles/apt-update
 
 Move the task into ``roles/apt-update/tasks/main.yml``.
 
@@ -583,8 +643,8 @@ Move the task into ``roles/apt-update/tasks/main.yml``.
    :linenos:
    :emphasize-lines: 0
 
-   --- a/posts/drafts/ansible-playbook-roles/playbook.yml
-   +++ b/posts/drafts/ansible-playbook-roles/playbook.yml
+   --- a/playbook.yml
+   +++ b/playbook.yml
    @@ -29,10 +29,6 @@
           ping:
           with_items: '{{ groups["all"] }}'
@@ -593,6 +653,8 @@ Move the task into ``roles/apt-update/tasks/main.yml``.
    -      apt:
    -        update_cache: "yes"
    -        cache_valid_time: 3600
+
+**Define a role dependency**
 
 Establish the dependency in:
 
@@ -613,13 +675,18 @@ Later, when I show you the recording of the playbook execution, you'll
 notice that the APT update occurs right before the roles which depend
 on it.
 
+
+
+Extract a ``ssh-accessible`` role
+---------------------------------
+
 Let's go excessive and refactor the rest of the tasks into roles.
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   $ ansible-galaxy init roles/ssh-accessible
+   [markus@local]$ ansible-galaxy init roles/ssh-accessible
 
 Move the SSH task into the role and add the role to the playbook:
 
@@ -652,21 +719,25 @@ Move the SSH task into the role and add the role to the playbook:
             dest: /etc/hosts
 
 
-To go to an extreme, extract the IP address to name mapping too:
+
+Extract an ``ip-name-mapping`` role
+-----------------------------------
+
+Extract the IP address to name mapping too:
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   $ ansible-galaxy init roles/name-ip-mapping
+   [markus@local]$ ansible-galaxy init roles/name-ip-mapping
 
 
 .. code-block:: diff
    :linenos:
    :emphasize-lines: 0
 
-   --- a/posts/drafts/ansible-playbook-roles/playbook.yml
-   +++ b/posts/drafts/ansible-playbook-roles/playbook.yml
+   --- a/playbook.yml
+   +++ b/playbook.yml
    @@ -9,19 +9,7 @@
 
       roles:
@@ -686,6 +757,10 @@ To go to an extreme, extract the IP address to name mapping too:
    -      with_items: '{{ groups["all"] }}'
    -
 
+
+
+The end result of the as-is extraction
+======================================
 
 Nothing more to extract out of the playbook. We have this end result:
 
@@ -859,465 +934,180 @@ Let's take a look at the *playbook* execution with roles:
 
 .. raw:: html
 
-   <asciinema-player src="../../../_static/asciinema/asciinema_playbook_roles_etwQtsN.json" cols="120" rows="30"></asciinema-player>
+   <asciinema-player src="../../../_static/asciinema/asciinema_playbook_roles_etwQtsN.json" cols="120" rows="30" poster="npt:0:10"></asciinema-player>
 
 The name of the roles are now part of the displayed tasks (as prefixes),
 which makes it easier to spot what's happening.
 
 
------------------------
+Define configuration interfaces
+===============================
+
+At this point, we did an as-is extraction and relied on the defaults
+we used. There was no way to configure roles from a users point of view.
+Let's look at a real-world example with the *Grafana* role. As explained
+in a previous post (:ref:`monitoring-prometheus`), the *Ubuntu*
+package for it got removed with *Ubuntu 17.10* and we need some kind
+of transition strategy. We have different choices to do this:
+
+* create a new *Grafana* role which installs from source
+* extend the existing *Grafana* role to install from APT or source,
+  depending on a configured variable
+
+Honestly, both choices are valid in my opinion, each with advantages and
+disadvantages. I've chosen the latter approach here to demo how a separation
+of concerns could be done with *Ansible* role variables. To elaborate on
+that, imagine you're the *Grafana* expert in your company and two different
+groups want to use your role. One group uses *Ubuntu 16.04* until the long
+term support expires, the other group upgrades every time to a new LTS
+release, e.g. *Ubuntu 18.04* in April next year, which doesn't have
+the OS package anymore. The users mostly don't care how the installation
+happens, the just want to have the service available in their setup and
+you're the person responsible to make that happen and deal with their
+different setups.
+
+Let's add a variable to the *Grafana* role, which has a default value,
+but is supposed to get overridden if needed. The file
+``roles/grafana/defaults/main.yml`` could look like this:
 
 
-General advice
-==============
-
-* the complete URL must not be longer than 78 chars
-* the initial release date is in the URL
-* post directory is part of the URL (make it searchable, don't be fancy)
-* aim for less than 15h per post, otherwise the releases will become unstable
-* the spelling check is done frequently and at the very end
-* add the release date only if confident enough
-* start with a brain dump, refine from there
-* consider touch screens (mobile phones). CSS hover text magic doesn't work
-
-
-
-Structure
-=========
-
-#. title
-#. abstract
-#. table of contents
-#. change history table
-#. TL;DR (if applicable)
-#. use case
-#. content
-#. summary / conclusion
-#. references
-#. appendix
-
-This is only the first level. Add another level if necessary. Let 2 levels
-be the maximum.
-
-Each section is a permalink and therefore a published resource. That means,
-don't change once published permalinks (aka altering sections).
-
-
-.. code-block:: rst
+.. code-block:: yaml
    :linenos:
    :emphasize-lines: 0
 
-   =====
-   title
-   =====
+   ---
+   # defaults file for grafana
 
-   section
-   =======
+   install_method: os-package
 
-   sub-section
-   ===========
-
-   **paragraph header**
-
-
-
-Table of contents
-=================
-
-Every post has a table of contents. The sections link back to the
-table of contents. This makes jumps back and forth easy.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-    .. contents::
-        :local:
-        :backlinks: top
-
-
-
-Categories and labels
-=====================
-
-There are 3 categories:
-
-* books
-* conferences
-* openstack
-
-Categories are more coarse grained than labels. Having no category is fine,
-it's then seen as being miscellaneous until a category evolves over time.
-
-Add labels as you see fit. Check the existing ones. Use one to three labels.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-    .. post:: 25 Aug, 2017
-       :category: openstack
-       :tags: nova, scheduling, cpu-architecture
-       :title: OpenStack Nova Scheduling based on CPU architecture
-
-
-Code examples
-=============
-
-* blocks always with line numbers
-* emphasize lines to set focus
-* use the proper highlighting language [#pygments]_
-
-Text
-----
-
-The config option ``key2`` has value ``value2``.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   The config option ``key2`` has value ``value2``.
-
-
-Blocks
-------
-
-.. code-block:: python
-   :linenos:
-   :emphasize-lines: 0
-
-   print("hello blog")
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   .. code-block:: python
-      :linenos:
-      :emphasize-lines: 0
-
-      print("hello blog")
-
-Files
------
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-    .. literalinclude:: example.ini
-       :language: ini
-       :linenos:
-       :emphasize-lines: 5
-
-
-
-Text format
-===========
-
-Use **strongly emphasized** to make a point.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   Use **strongly emphasized** to make a point.
-
-
-----
-
-Use *proper names* for people companies and software.
-For example, *Kubernetes*.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   Use *proper names* for people companies and software.
-   For example, *Kubernetes*.
-
-----
-
-Use an `inline quote` for inline referencing an external source
-(like books) or small direct quotes of cited sources.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   Use an `inline quote` for inline referencing an external source
-   (like books) or small direct quotes of cited sources.
-
-
-----
-
-    Use a block quote for multi line
-    direct quotes of cited resources.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-       Use a block quote for multi line
-       direct quotes of cited resources.
-
-
-
-Images
-======
-
-Favor vector graphics (``.svg``) over raster maps (``.png``).
-Always do a scaling of the images (``:height:`` or ``:width:`` or ``:scale:``),
-this enables the "click on the thumbnail to show the full image" logic.
-
-
-.. code-block:: rst
-  :linenos:
-  :emphasize-lines: 0
-
-  .. image:: drawing_TOelDqK.svg
-     :height: 150px
-     :alt: Example drawing with Inkscape.
-
-.. important::
-
-   All images of all posts will be copied to ``_images``. This means
-   unique image names are needed to avoid collisions. Use the script
-   to generate unique (enough) identifiers.
-
-
-
-Spelling
-========
-
-Use the spelling directive if it is only needed for one post:
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   .. spelling::
-
-      foo
-
-In either case, take care of upper and lower case, singular and plural.
-
-
-
-References and links
-====================
-
-External
---------
-
-"External" is everything outside of this blog.
-Reference to it with auto-numbered footnotes [#footnotes]_
-
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   Reference to it with auto-numbered footnotes [#footnotes]_
-
-Internal
---------
-
-"Internal" is everything inside of this blog.
-For example the :ref:`about` page.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   For example the :ref:`about` page.
-
-
-
-Lists
-=====
-
-Numbered lists for ordered items:
-
-#. first do this,
-#. then you can do that,
-#. lastly you do another thing.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   Numbered lists for ordered items:
-
-   #. first do this,
-   #. then you can do that,
-   #. lastly you do another thing.
-
-
-----
-
-Bullet lists for (unordered) items:
-
-* a hat
-* a walking stick
-* an umbrella
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   Bullet lists for (unordered) items:
-
-   * a hat
-   * a walking stick
-   * an umbrella
-
-
-
-Highlighted info boxes
-======================
-
-.. todo::
-
-    Reminder for the author to do this here before publishing.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   .. todo::
-
-       Reminder for the author to do this here before publishing.
-
-----
-
-.. admonition:: Feedback needed
-
-    Use this for actively asking for feedback from the reader.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   .. admonition:: Feedback needed
-
-       Use this for actively asking for feedback from the reader.
-
-
-----
-
-.. note::
-
-    This is a "mild" highlight. No biggie if the reader misses it.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   .. note::
-
-       This is a "mild" highlight. No biggie if the reader misses it.
-
-
-
-----
+``os-package`` is the default value for the variable ``install_method``.
+Another valid value, to override the default one, could then be ``source``.
+I've chosen those names arbitrarily, there is no naming convention.
 
 .. tip::
 
-    This gives advice to the reader.
+   At this point you should strongly consider to fill out the section
+   *"Role Variables"* in the *README* file of that role.
 
-.. code-block:: rst
+
+Before we make use of that new variable, move the contents of
+``roles/grafana/tasks/main.yml`` into a newly created file
+``roles/grafana/tasks/apt_install.yml``. Now we add this conditional
+to the empty ``roles/grafana/tasks/main.yml``:
+
+.. code-block:: yaml
    :linenos:
    :emphasize-lines: 0
 
-   .. tip::
+   ---
+   # tasks file for grafana
 
-       This gives advice to the reader.
+   - name: "Install from operating system package."
+     include: apt_install.yml
+     when: install_method == "os-package"
 
+   - name: "Install from source."
+     include: source_install.yml
+     when: install_method == "source"
 
-----
+The important part here is, that we are **backwards compatible**.
+The default value ``os-package`` enables the conditional to hit
+which includes and executes the old logic to install from APT.
 
+The new code path in ``roles/grafana/tasks/source_install.yml`` is
+rather unspectacular:
 
-.. warning::
-
-    Don't do this. This is a common mistake.
-
-
-.. code-block:: rst
+.. code-block:: yaml
    :linenos:
    :emphasize-lines: 0
 
-   .. warning::
+   ---
 
-       Don't do this. This is a common mistake.
+   - name: "Install from source."
+     fail:
+       msg: "TODO not yet done!"
 
+I haven't yet found time to develop the logic to install *Grafana*
+from source, so I let the task simply fail.
 
-----
+In the playbook, we used the role like this:
 
-.. important::
-
-    Do this (really) / Be aware of this (really).
-
-
-.. code-block:: rst
+.. code-block:: yaml
    :linenos:
    :emphasize-lines: 0
 
-   .. important::
+   - hosts: monitoring
+     become: true
 
-       Do this (really) / Be aware of this (really).
+     roles:
+       - prometheus
+       - grafana
 
+Executed, you'll see this in the output:
 
-Change history
-==============
-
-The publish date is the very first entry. Append another entry below the
-previous one when:
-
-* the structure got changed
-* a paragraph got added or removed
-* content got altered which changed the meaning of something
-
-In general, think twice before changing a published post. If a big change
-would be necessary, maybe a follow up post is the better choice. If so,
-cross-reference each other.
-
-**No addition** needed when:
-
-* typo fix
-* small format change (bold, italics, ...)
-
-.. code-block:: rst
+.. code-block:: bash
    :linenos:
-   :emphasize-lines: 7-8
+   :emphasize-lines: 3
 
-    .. list-table:: Change history:
-       :widths: 1 5
-       :header-rows: 1
+   TASK [grafana : Install from source.] ************************
+   Thursday 23 November 2017  11:46:55 +0100 (0:00:00.227)
+   skipping: [monitoring]
 
-       * - Date
-         - Change description
-       * - 2017-11-02
-         - The first release
+Notice that we skipped the task to install from source, as our
+conditional worked.
+
+Now let's configure the role by overwriting the role's variable:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 0
+
+   - hosts: monitoring
+     become: true
+
+     roles:
+       - prometheus
+       - { role: grafana, install_method: source }
+
+Let's execute the playbook again:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 3
+
+   TASK [grafana : Install from source.] ************************
+   Thursday 23 November 2017  11:50:33 +0100 (0:00:00.014)
+   fatal: [monitoring]: FAILED! => {"changed": false, "failed": true, "msg": "TODO not yet done!"}
+
+The conditional matched and the task fails like expected.
+
+**Homework**
+
+.. todo:: readers could do this and that to test themselves
+
+
+
+Conclusion
+==========
+
+.. todo:: conclude something here
 
 
 
 References
 ==========
 
-.. [#pygments] http://pygments.org/
-
-.. [#footnotes] http://www.sphinx-doc.org/en/stable/rest.html#footnotes
 
 .. [#ansconf] http://docs.ansible.com/ansible/latest/intro_configuration.html
 
 .. [#ansidirbug] https://github.com/ansible/ansible/issues/23597
 
+.. [#templatemod] http://docs.ansible.com/ansible/latest/template_module.html
+
+.. [#copymod] http://docs.ansible.com/ansible/latest/copy_module.html
+
 .. [#includerole] http://docs.ansible.com/ansible/latest/include_role_module.html
 
 .. [#importrole] http://docs.ansible.com/ansible/latest/import_role_module.html
 
-.. [#templatemod] http://docs.ansible.com/ansible/latest/template_module.html
 
-.. [#copymod] http://docs.ansible.com/ansible/latest/copy_module.html
