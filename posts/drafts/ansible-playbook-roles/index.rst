@@ -121,7 +121,21 @@ time, but they are not absolutely necessary.
 The basic recipe
 ================
 
-We do an *as-is* extraction of the logical units.
+When doing an *as-is* extraction of the logical units (like we do in
+this post), follow these steps:
+
+#. create a new role with ``ansible-galaxy init roles/<role-name>``
+#. add the role to the ``playbook.yml``
+#. move the tasks into ``roles/<role-name>/tasks/main.yml``
+#. move the handlers into ``roles/<role-name>/handlers/main.yml``
+#. move the static files used by those tasks and handlers
+   into ``roles/<role-name>/files/``
+#. move the template files used by those tasks and handlers into
+   ``roles/<role-name>/templates/``
+#. run the playbook to verify we didn't introduce an error
+
+Let's use this basic recipe with the logic of installing the
+*Node Exporter*.
 
 .. code-block:: bash
    :linenos:
@@ -165,8 +179,8 @@ and files.
 .. note::
 
    Two directories are missing here, namely ``templates`` and ``files``.
-   This is already reported [#ansidirbug]_ but not yet solved (at least
-   in my version 2.3.1, installed via *pypi*).
+   This is an already reported bug [#ansidirbug]_ but it's not solved yet
+   (at least in my version 2.3.1, installed via *pypi*).
 
 The responsibilities of those directories of a role in short:
 
@@ -199,6 +213,16 @@ The responsibilities of those directories of a role in short:
   Contains everything necessary to test this role in isolation.
   I haven't yet used this like I should. I'm going to explore this
   in another post later.
+
+.. hint::
+
+   You can delete the directories and files you don't need for that role.
+   *Ansible* can handle that. I usually keep them to have some kind of
+   uniformity among the roles and the superfluous directories don't
+   bother me.
+
+The ``README.md`` is also worth taking a look at an filling in the missing
+documentation pieces. I'm omitting it in this post.
 
 Move the node-exporter related tasks from the playbook into the file
 ``roles/node-exporter/tasks/main.yml``:
@@ -279,6 +303,10 @@ more roles to encapsulate logic.
 Extract more logical units
 ==========================
 
+For the sake of example, I'll go excessive here and refactor every logic
+in that *playbook* into their own *roles*, following the basic refactoring
+recipe explained before. You'll see the recurring pattern pretty quickly.
+
 
 
 Extract a prometheus role
@@ -351,6 +379,7 @@ and the ``prometheus.yml`` file into ``roles/prometheus/files/``.
         - name: "Restart the Grafana service."
           service:
             name: grafana
+
 
 
 Extract a grafana role
@@ -434,7 +463,6 @@ Same procedure as before:
 Extract a grafana-prometheus-datasource role
 --------------------------------------------
 
-
 At this point you might wonder why I didn't move the setup of the
 *Grafana* datasource and dashboard into the ``grafana`` role too.
 It would work, no doubt about that. My two reasons are:
@@ -453,7 +481,7 @@ encapsulate that, we create another role:
    :linenos:
    :emphasize-lines: 0
 
-   $ ansible-galaxy init roles/grafana-prometheus-datasource
+   [markus@local]$ ansible-galaxy init roles/grafana-prometheus-datasource
 
 Now move the code, which establishes the datasource to
 ``roles/grafana-prometheus-datasource/tasks/main.yml`` and add the
@@ -499,23 +527,17 @@ new role to the playbook:
             url: http://127.0.0.1:3000/api/dashboards/db
 
 
+
 Extract a grafana-dashboard role
 --------------------------------
 
-Next one is the dashboard of *Grafana*.
-
-#. create a new role with ``ansible-galaxy``
-#. move the files into that role
-#. move the tasks into ``tasks/main.yml``
-#. move the handlers into ``handlers/main.yml``
-#. add the role to the playbook
-
+Next one is the dashboard upload into *Grafana*.
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   ansible-galaxy init roles/grafana-dashboard
+   [markus@local]$ ansible-galaxy init roles/grafana-dashboard
 
 
 .. code-block:: diff
@@ -555,7 +577,7 @@ Let's move the deployment of the applications into a role too:
    :linenos:
    :emphasize-lines: 0
 
-   $ ansible-galaxy init roles/workload-deploy
+   [markus@local]$ ansible-galaxy init roles/workload-deploy
 
 Again, move the code and files, add the new role to the playbook:
 
@@ -563,8 +585,8 @@ Again, move the code and files, add the new role to the playbook:
    :linenos:
    :emphasize-lines: 0
 
-   --- a/posts/drafts/ansible-playbook-roles/playbook.yml
-   +++ b/posts/drafts/ansible-playbook-roles/playbook.yml
+   --- a/playbook.yml
+   +++ b/playbook.yml
    @@ -66,12 +66,5 @@
     become: true
     gather_facts: false
@@ -613,7 +635,7 @@ of example of creating dependencies between roles.
    :linenos:
    :emphasize-lines: 0
 
-   $ ansible-galaxy init roles/apt-update
+   [markus@local]$ ansible-galaxy init roles/apt-update
 
 Move the task into ``roles/apt-update/tasks/main.yml``.
 
@@ -621,8 +643,8 @@ Move the task into ``roles/apt-update/tasks/main.yml``.
    :linenos:
    :emphasize-lines: 0
 
-   --- a/posts/drafts/ansible-playbook-roles/playbook.yml
-   +++ b/posts/drafts/ansible-playbook-roles/playbook.yml
+   --- a/playbook.yml
+   +++ b/playbook.yml
    @@ -29,10 +29,6 @@
           ping:
           with_items: '{{ groups["all"] }}'
@@ -654,6 +676,7 @@ notice that the APT update occurs right before the roles which depend
 on it.
 
 
+
 Extract a ssh-accessible role
 -----------------------------
 
@@ -663,7 +686,7 @@ Let's go excessive and refactor the rest of the tasks into roles.
    :linenos:
    :emphasize-lines: 0
 
-   $ ansible-galaxy init roles/ssh-accessible
+   [markus@local]$ ansible-galaxy init roles/ssh-accessible
 
 Move the SSH task into the role and add the role to the playbook:
 
@@ -696,24 +719,25 @@ Move the SSH task into the role and add the role to the playbook:
             dest: /etc/hosts
 
 
+
 Extract an ip-name-mapping role
 -------------------------------
 
-To go to an extreme, extract the IP address to name mapping too:
+Extract the IP address to name mapping too:
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   $ ansible-galaxy init roles/name-ip-mapping
+   [markus@local]$ ansible-galaxy init roles/name-ip-mapping
 
 
 .. code-block:: diff
    :linenos:
    :emphasize-lines: 0
 
-   --- a/posts/drafts/ansible-playbook-roles/playbook.yml
-   +++ b/posts/drafts/ansible-playbook-roles/playbook.yml
+   --- a/playbook.yml
+   +++ b/playbook.yml
    @@ -9,19 +9,7 @@
 
       roles:
@@ -732,6 +756,7 @@ To go to an extreme, extract the IP address to name mapping too:
    -      ping:
    -      with_items: '{{ groups["all"] }}'
    -
+
 
 
 The end result of the as-is extraction
