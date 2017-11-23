@@ -30,7 +30,7 @@
 
   roles:
     - prometheus
-    - grafana
+    - { role: grafana, install_method: os-package }
     - grafana-prometheus-datasource
     - grafana-dashboard
 

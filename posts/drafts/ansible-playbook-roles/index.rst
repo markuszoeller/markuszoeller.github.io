@@ -943,7 +943,155 @@ which makes it easier to spot what's happening.
 Define configuration interfaces
 ===============================
 
-.. todo:: add a variable to defaults main
+At this point, we did an as-is extraction and relied on the defaults
+we used. There was no way to configure roles from a users point of view.
+Let's look at a real-world example with the *Grafana* role. As explained
+in a previous post (:ref:`monitoring-prometheus`), the *Ubuntu*
+package for it got removed with *Ubuntu 17.10* and we need some kind
+of transition strategy. We have different choices to do this:
+
+* create a new *Grafana* role which installs from source
+* extend the existing *Grafana* role to install from APT or source,
+  depending on a configured variable
+
+Honestly, both choices are valid in my opinion, each with advantages and
+disadvantages. I've chosen the latter approach here to demo how a separation
+of concerns could be done with *Ansible* role variables. To elaborate on
+that, imagine you're the *Grafana* expert in your company and two different
+groups want to use your role. One group uses *Ubuntu 16.04* until the long
+term support expires, the other group upgrades every time to a new LTS
+release, e.g. *Ubuntu 18.04* in April next year, which doesn't have
+the OS package anymore. The users mostly don't care how the installation
+happens, the just want to have the service available in their setup and
+you're the person responsible to make that happen and deal with their
+different setups.
+
+Let's add a variable to the *Grafana* role, which has a default value,
+but is supposed to get overridden if needed. The file
+``roles/grafana/defaults/main.yml`` could look like this:
+
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 0
+
+   ---
+   # defaults file for grafana
+
+   install_method: os-package
+
+``os-package`` is the default value for the variable ``install_method``.
+Another valid value, to override the default one, could then be ``source``.
+I've chosen those names arbitrarily, there is no naming convention.
+
+.. tip::
+
+   At this point you should strongly consider to fill out the section
+   *"Role Variables"* in the *README* file of that role.
+
+
+Before we make use of that new variable, move the contents of
+``roles/grafana/tasks/main.yml`` into a newly created file
+``roles/grafana/tasks/apt_install.yml``. Now we add this conditional
+to the empty ``roles/grafana/tasks/main.yml``:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 0
+
+   ---
+   # tasks file for grafana
+
+   - name: "Install from operating system package."
+     include: apt_install.yml
+     when: install_method == "os-package"
+
+   - name: "Install from source."
+     include: source_install.yml
+     when: install_method == "source"
+
+The important part here is, that we are **backwards compatible**.
+The default value ``os-package`` enables the conditional to hit
+which includes and executes the old logic to install from APT.
+
+The new code path in ``roles/grafana/tasks/source_install.yml`` is
+rather unspectacular:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 0
+
+   ---
+
+   - name: "Install from source."
+     fail:
+       msg: "TODO not yet done!"
+
+I haven't yet found time to develop the logic to install *Grafana*
+from source, so I let the task simply fail.
+
+In the playbook, we used the role like this:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 0
+
+   - hosts: monitoring
+     become: true
+
+     roles:
+       - prometheus
+       - grafana
+
+Executed, you'll see this in the output:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 3
+
+   TASK [grafana : Install from source.] ************************
+   Thursday 23 November 2017  11:46:55 +0100 (0:00:00.227)
+   skipping: [monitoring]
+
+Notice that we skipped the task to install from source, as our
+conditional worked.
+
+Now let's configure the role by overwriting the role's variable:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 0
+
+   - hosts: monitoring
+     become: true
+
+     roles:
+       - prometheus
+       - { role: grafana, install_method: source }
+
+Let's execute the playbook again:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 3
+
+   TASK [grafana : Install from source.] ************************
+   Thursday 23 November 2017  11:50:33 +0100 (0:00:00.014)
+   fatal: [monitoring]: FAILED! => {"changed": false, "failed": true, "msg": "TODO not yet done!"}
+
+The conditional matched and the task fails like expected.
+
+**Homework**
+
+.. todo:: readers could do this and that to test themselves
+
+
+
+Conclusion
+==========
+
+.. todo:: conclude something here
+
 
 
 References

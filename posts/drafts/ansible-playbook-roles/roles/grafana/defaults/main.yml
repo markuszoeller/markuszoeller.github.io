@@ -1,2 +1,4 @@
 ---
 # defaults file for grafana
+
+install_method: os-package
