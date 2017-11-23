@@ -109,11 +109,6 @@ which is the default directory when you use roles from others.
 The other settings in this file make my life a little easier most of the
 time, but they are not absolutely necessary.
 
-.. note::
-
-   Later steps can be, to put a role in a dedicated git repo only for that
-   role and use it in your company only, or push it to *Ansible Galaxy*
-   for reuse by others.
 
 
 The basic recipe
@@ -122,6 +117,7 @@ The basic recipe
 When doing an *as-is* extraction of the logical units (like we do in
 this post), follow these steps:
 
+#. decide what your logical unit is you want to extract
 #. create a new role with ``ansible-galaxy init roles/<role-name>``
 #. add the role to the ``playbook.yml``
 #. move the tasks into ``roles/<role-name>/tasks/main.yml``
@@ -183,8 +179,7 @@ and files.
 The responsibilities of those directories of a role in short:
 
 * ``tasks``:
-  Contains the tasks which do the work like you already know from a
-  normal playbook.
+  Contains the tasks which do the actual work.
 
 * ``handlers``:
   Contains handlers, which, when notified, trigger actions.
@@ -197,11 +192,12 @@ The responsibilities of those directories of a role in short:
   Role specific variables, which are **not** intended to get overridden.
 
 * ``templates``
-  With *jinja2* templated files. The ``template`` module [#templatemod]_
-  searches in that directory by default.
+  The default directory for *jinja2* templated files. The ``template``
+  module [#templatemod]_ searches in that directory.
 
 * ``files``
-  The default directory for the ``copy`` module [#copymod]_.
+  The default directory for static files used by the ``copy``
+  module [#copymod]_.
 
 * ``meta``
   Meta information for this role. This is the place where you can
@@ -219,8 +215,8 @@ The responsibilities of those directories of a role in short:
    uniformity among the roles and the superfluous directories don't
    bother me.
 
-The ``README.md`` is also worth taking a look at an filling in the missing
-documentation pieces. I'm omitting it in this post.
+The ``README.md`` is also worth taking a look at and filling out the missing
+documentation pieces. I omit it in this post.
 
 Move the node-exporter related tasks from the playbook into the file
 ``roles/node-exporter/tasks/main.yml``:
@@ -304,13 +300,15 @@ Extract more logical units
 For the sake of example, I'll go excessive here and refactor every logic
 in that *playbook* into their own *roles*, following the basic refactoring
 recipe explained before. You'll see the recurring pattern pretty quickly.
+If you don't care about every step, feel free to skip the details and move
+to the section :ref:`as-is-result`.
 
 
 
 Extract a ``prometheus`` role
 -----------------------------
 
-With this basic step, let's create another role, this time for the
+With this basic recipe, let's create another role, this time for the
 *Prometheus* service:
 
 .. code-block:: bash
@@ -319,7 +317,7 @@ With this basic step, let's create another role, this time for the
 
    [markus@local]$ ansible-galaxy init roles/prometheus
 
-Add the role to the playbook (see the highlighted lines below),
+Add the role to the playbook
 and move the tasks to ``roles/prometheus/tasks/main.yml`` and the
 *Prometheus* related handler to ``roles/prometheus/handlers/main.yml``
 and the ``prometheus.yml`` file into ``roles/prometheus/files/``.
@@ -383,7 +381,7 @@ and the ``prometheus.yml`` file into ``roles/prometheus/files/``.
 Extract a ``grafana`` role
 --------------------------
 
-We do the very same to the tasks to install the *Grafana* service:
+We do the very same to install the *Grafana* service:
 
 
 .. code-block:: bash
@@ -468,11 +466,11 @@ It would work, no doubt about that. My two reasons are:
 * keep it small and simple
 * dependency management
 
-Adding *Prometheus* as a datasource to *Grafana*, creates a **dependency**
+Adding *Prometheus* as a datasource to *Grafana* creates a **dependency**
 between those two. So far they were independent from each other. We could
-rearrange the two roles we have so far, and could use the ``grafana`` role
+use the ``grafana`` role
 before the ``prometheus`` role, it wouldn't matter as they are independent.
-Establishing the dependency is its own logical unit in my opinion. To
+**Establishing the dependency is its own logical unit** in my opinion. To
 encapsulate that, we create another role:
 
 .. code-block:: bash
@@ -757,6 +755,8 @@ Extract the IP address to name mapping too:
 
 
 
+.. _as-is-result:
+
 The result of the as-is extraction
 ==================================
 
@@ -881,12 +881,12 @@ I've chosen those names arbitrarily, there is no naming convention.
 
 Before we make use of that new variable, move the contents of
 ``roles/grafana/tasks/main.yml`` into a newly created file
-``roles/grafana/tasks/apt_install.yml``. Now we add this conditional
-to the empty ``roles/grafana/tasks/main.yml``:
+``roles/grafana/tasks/apt_install.yml``. Now we add two tasks with
+conditionals (``when:``) to the empty ``roles/grafana/tasks/main.yml``:
 
 .. code-block:: yaml
    :linenos:
-   :emphasize-lines: 0
+   :emphasize-lines: 6,10
 
    ---
    # tasks file for grafana
@@ -900,10 +900,9 @@ to the empty ``roles/grafana/tasks/main.yml``:
      when: install_method == "source"
 
 The important part here is, that we are **backwards compatible**.
-The default value ``os-package`` enables the conditional to hit
-which includes and executes the old logic to install from APT.
-
-The new code path in ``roles/grafana/tasks/source_install.yml`` is
+The default value ``os-package`` executes the old logic to install from APT.
+The alternative value ``source`` execute the new logic to install from
+source. The new code path in ``roles/grafana/tasks/source_install.yml`` is
 rather unspectacular:
 
 .. code-block:: yaml
@@ -1054,7 +1053,8 @@ everything in one long *Python* script, but at some point you're life
 gets a lot easier when you start moving logical units into classes
 and use their public interfaces. Just like we did with *Ansible roles* here.
 
-There are even more hard-coded values in our project. Download the
+There are even more hard-coded values in our project which might be
+better made configurable. If you like, download the
 :download:`project source files <ansible-playbook-roles.tar.gz>`
 and try yourself on it.
 
