@@ -767,6 +767,10 @@ Nothing more to extract out of the playbook. We have this end result:
    :linenos:
    :emphasize-lines: 0
 
+The layer of abstraction becomes obvious. Someone, who hasn't written
+this playbook can grasp in a few moments what's happening (but not *how*
+it is happening).
+
 Our project structure looks like this:
 
 .. code-block:: bash
@@ -777,156 +781,33 @@ Our project structure looks like this:
    .
    |-- roles
    |   |-- apt-update
-   |   |   |-- defaults
-   |   |   |   `-- main.yml
-   |   |   |-- handlers
-   |   |   |   `-- main.yml
-   |   |   |-- meta
-   |   |   |   `-- main.yml
-   |   |   |-- tasks
-   |   |   |   `-- main.yml
-   |   |   |-- tests
-   |   |   |   |-- inventory
-   |   |   |   `-- test.yml
-   |   |   |-- vars
-   |   |   |   `-- main.yml
-   |   |   `-- README.md
+   |       |-- [...]
    |   |-- grafana
-   |   |   |-- defaults
-   |   |   |   `-- main.yml
-   |   |   |-- files
-   |   |   |   `-- grafana.ini
-   |   |   |-- handlers
-   |   |   |   `-- main.yml
-   |   |   |-- meta
-   |   |   |   `-- main.yml
-   |   |   |-- tasks
-   |   |   |   `-- main.yml
-   |   |   |-- tests
-   |   |   |   |-- inventory
-   |   |   |   `-- test.yml
-   |   |   |-- vars
-   |   |   |   `-- main.yml
-   |   |   `-- README.md
+   |       |-- [...]
    |   |-- grafana-dashboard
-   |   |   |-- defaults
-   |   |   |   `-- main.yml
-   |   |   |-- files
-   |   |   |   `-- infra-node-metrics.json
-   |   |   |-- handlers
-   |   |   |   `-- main.yml
-   |   |   |-- meta
-   |   |   |   `-- main.yml
-   |   |   |-- tasks
-   |   |   |   `-- main.yml
-   |   |   |-- tests
-   |   |   |   |-- inventory
-   |   |   |   `-- test.yml
-   |   |   |-- vars
-   |   |   |   `-- main.yml
-   |   |   `-- README.md
+   |       |-- [...]
    |   |-- grafana-prometheus-datasource
-   |   |   |-- defaults
-   |   |   |   `-- main.yml
-   |   |   |-- handlers
-   |   |   |   `-- main.yml
-   |   |   |-- meta
-   |   |   |   `-- main.yml
-   |   |   |-- tasks
-   |   |   |   `-- main.yml
-   |   |   |-- tests
-   |   |   |   |-- inventory
-   |   |   |   `-- test.yml
-   |   |   |-- vars
-   |   |   |   `-- main.yml
-   |   |   `-- README.md
+   |       |-- [...]
    |   |-- name-ip-mapping
-   |   |   |-- defaults
-   |   |   |   `-- main.yml
-   |   |   |-- handlers
-   |   |   |   `-- main.yml
-   |   |   |-- meta
-   |   |   |   `-- main.yml
-   |   |   |-- tasks
-   |   |   |   `-- main.yml
-   |   |   |-- tests
-   |   |   |   |-- inventory
-   |   |   |   `-- test.yml
-   |   |   |-- vars
-   |   |   |   `-- main.yml
-   |   |   `-- README.md
+   |       |-- [...]
    |   |-- node-exporter
-   |   |   |-- defaults
-   |   |   |   `-- main.yml
-   |   |   |-- handlers
-   |   |   |   `-- main.yml
-   |   |   |-- meta
-   |   |   |   `-- main.yml
-   |   |   |-- tasks
-   |   |   |   `-- main.yml
-   |   |   |-- tests
-   |   |   |   |-- inventory
-   |   |   |   `-- test.yml
-   |   |   |-- vars
-   |   |   |   `-- main.yml
-   |   |   `-- README.md
+   |       |-- [...]
    |   |-- prometheus
-   |   |   |-- defaults
-   |   |   |   `-- main.yml
-   |   |   |-- files
-   |   |   |   `-- prometheus.yml
-   |   |   |-- handlers
-   |   |   |   `-- main.yml
-   |   |   |-- meta
-   |   |   |   `-- main.yml
-   |   |   |-- tasks
-   |   |   |   `-- main.yml
-   |   |   |-- tests
-   |   |   |   |-- inventory
-   |   |   |   `-- test.yml
-   |   |   |-- vars
-   |   |   |   `-- main.yml
-   |   |   `-- README.md
+   |       |-- [...]
    |   |-- ssh-accessible
-   |   |   |-- defaults
-   |   |   |   `-- main.yml
-   |   |   |-- handlers
-   |   |   |   `-- main.yml
-   |   |   |-- meta
-   |   |   |   `-- main.yml
-   |   |   |-- tasks
-   |   |   |   `-- main.yml
-   |   |   |-- tests
-   |   |   |   |-- inventory
-   |   |   |   `-- test.yml
-   |   |   |-- vars
-   |   |   |   `-- main.yml
-   |   |   `-- README.md
+   |       |-- [...]
    |   `-- workload-deploy
-   |       |-- defaults
-   |       |   `-- main.yml
-   |       |-- files
-   |       |   |-- eat_cpu.py
-   |       |   |-- eat_disk.py
-   |       |   `-- eat_memory.py
-   |       |-- handlers
-   |       |   `-- main.yml
-   |       |-- meta
-   |       |   `-- main.yml
-   |       |-- tasks
-   |       |   `-- main.yml
-   |       |-- tests
-   |       |   |-- inventory
-   |       |   `-- test.yml
-   |       |-- vars
-   |       |   `-- main.yml
-   |       `-- README.md
+   |       |-- [...]
    |-- ansible.cfg
    |-- hosts.ini
    |-- playbook.yml
    `-- Vagrantfile
 
    68 directories, 83 files
+
+I trimmed it down a little. You see that this is much cleaner than
+our starting point. The files are in the directories of the appropriate
+roles.
 
 Let's take a look at the *playbook* execution with roles:
 
