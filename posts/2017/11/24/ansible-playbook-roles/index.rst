@@ -207,7 +207,7 @@ The responsibilities of those directories of a role in short:
   I haven't yet used this like I should. I'm going to explore this
   in another post later.
 
-.. hint::
+.. tip::
 
    You can delete the directories and files you don't need for that role.
    *Ansible* can handle that. I usually keep them to have some kind of
@@ -1028,7 +1028,7 @@ more readable when you have more variables to set:
        - grafana-prometheus-datasource
 
 
-.. hint::
+.. note::
 
    There are even more ways to do it, but it's fine to start this way
    and to explore other ways and variable precedence later [#ansvars]_.
