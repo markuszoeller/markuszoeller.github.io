@@ -279,7 +279,7 @@ Use the spelling directive if it is only needed for one post:
 
       foo
 
-or extend the :download:`../../spelling_wordlist.txt`.
+or extend the `spelling_wordlist.txt`.
 
 In either case, take care of upper and lower case, singular and plural.
 
