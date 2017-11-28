@@ -1,16 +1,16 @@
 
 .. post::
    :tags: template
-   :title: Template for all posts
+   :title: Recommendation: The 5 Dysfunctions of a Team
 
 .. spelling::
    foo
 
 
 
-======================
-Template for all posts
-======================
+============================================
+Recommendation: The 5 Dysfunctions of a Team
+============================================
 
 Each post should start with one paragraph which is an abstract of the post.
 This paragraph should be enough for a reader to decide if they want to
@@ -245,7 +245,7 @@ Favor vector graphics (``.svg``) over raster maps (``.png``).
 Always do a scaling of the images (``:height:`` or ``:width:`` or ``:scale:``),
 this enables the "click on the thumbnail to show the full image" logic.
 
-.. image:: drawing_TOelDqK.svg
+.. image:: drawing_7Lymuho.svg
    :height: 150px
    :alt: Example drawing with Inkscape.
 
@@ -254,7 +254,7 @@ this enables the "click on the thumbnail to show the full image" logic.
   :linenos:
   :emphasize-lines: 0
 
-  .. image:: drawing_TOelDqK.svg
+  .. image:: drawing_7Lymuho.svg
      :height: 150px
      :alt: Example drawing with Inkscape.
 
