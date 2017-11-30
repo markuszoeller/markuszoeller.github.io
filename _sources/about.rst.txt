@@ -6,7 +6,7 @@ About
 
 I'm Markus Zoeller and I'm with IBM since early 2013. This blog intends to
 persist some things I'd like to share with others or don't want to forget.
-Atom feeds to this blog can be found `here <../posts/atom.xml>`_.
+
 
 .. raw:: html
 
