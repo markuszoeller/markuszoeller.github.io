@@ -79,52 +79,63 @@ I come from.
 The 5 most noteworthy things
 ============================
 
+Well, it's easy to pick the 5 most noteworthy things this time.
 I'll start each point with a citation of the book and add my 2 cents
 right after it.
 
 
+1. Absence of trust
+-------------------
 
-1. one
-------
+    [...] teammates must get comfortable being vulnerable with one
+    another. [This includes] weaknesses, skill deficiencies, interpersonal
+    shortcomings, mistakes and requests for help.
 
-   this is a quote
-
-my 2 cents
-
-
-
-2. two
-------
-
-    this is a quote
-
-my 2 cents
-
-
-3. three
---------
-
-    this is a quote
-
-my 2 cents
+.. todo:: my 2 cents
 
 
 
-4. four
--------
+2. Fear of conflict
+-------------------
 
-    this is a quote
+    [Teams] in productive conflict know, that the only purpose is to
+    produce the best possible solution in the shortest period of time.
 
-my 2 cents
+.. todo:: my 2 cents
+
+
+3. Lack of commitment
+---------------------
+
+    [...] causes of the lack of commitment are the desire for
+    consensus and the need for certainty.
+
+.. todo:: my 2 cents
 
 
 
-5. five
--------
+4. Avoidance of accountability
+------------------------------
 
-    this is a quote
+    [...] team members who are particularly close to one another
+    sometimes hesitate to hold one another accountable [...]. [This]
+    causes the relationship to deteriorate as team members begin to
+    resent each other for not living up to expectations and for
+    allowing the standards of the group to erode. [...] The enemy
+    of accountability is ambiguity.
 
-my 2 cents
+.. todo:: my 2 cents
+
+
+
+5. Inattention to results
+-------------------------
+
+    [...] the tendency of members to care about something other
+    than the collective goals of the group [...] [like] team status and
+    individual status [...].
+
+.. todo:: my 2 cents
 
 
 
