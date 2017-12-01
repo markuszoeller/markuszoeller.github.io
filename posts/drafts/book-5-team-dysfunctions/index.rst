@@ -12,13 +12,15 @@
 Recommendation: The Five Dysfunctions of a Team
 ===============================================
 
-Each post should start with one paragraph which is an abstract of the post.
-This paragraph should be enough for a reader to decide if they want to
-read the post or not. It is best to keep this paragraph short and simple.
-100 words or less is the limit, as this abstract is used as excerpt in the
-list on the landing page and in the feed readers. This upper limit
-of 100 words is also the amount of content someone should be able to read
-in less than 20 seconds. Additionally, it fits on one small mobile screen.
+Did you ever wonder why you're (again) in a meeting without a clear result?
+Do you feel like the topics got already discussed in a previous meeting?
+How often did your hear the sentence `**Someone** should work on that.`?
+Let's be honest, our work family is sometimes a little dysfunctional.
+Join me in my personal reflection of the book
+`The Five Dysfunctions of a Team: A Leadership Fable` from 2002 by
+*Patrick Lencioni*, which helps to understand what's happening.
+
+
 
 .. contents::
     :local:
