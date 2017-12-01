@@ -3,7 +3,7 @@
 
 .. post::
    :tags: template
-   :title: title
+   :title: mmonit
 
 .. spelling::
    mmonit
