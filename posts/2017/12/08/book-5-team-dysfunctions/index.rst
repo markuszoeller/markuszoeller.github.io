@@ -1,5 +1,5 @@
 
-.. post::
+.. post:: 08 Dec, 2017
    :category: books
    :title: Recommendation: The Five Dysfunctions of a Team
 
@@ -26,7 +26,6 @@ Join me in my personal reflection of the book
     :local:
     :backlinks: top
 
-.. todo:: date of the change history
 
 .. list-table:: Change history:
    :widths: 1 5
@@ -34,7 +33,7 @@ Join me in my personal reflection of the book
 
    * - Date
      - Change description
-   * - 2017-??-??
+   * - 2017-12-08
      - The first release
 
 
