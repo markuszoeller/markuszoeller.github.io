@@ -1,5 +1,5 @@
 
-.. post::
+.. post:: 08 Dec, 2017
    :category: books
    :title: Recommendation: The Five Dysfunctions of a Team
 
@@ -26,7 +26,6 @@ Join me in my personal reflection of the book
     :local:
     :backlinks: top
 
-.. todo:: date of the change history
 
 .. list-table:: Change history:
    :widths: 1 5
@@ -34,7 +33,7 @@ Join me in my personal reflection of the book
 
    * - Date
      - Change description
-   * - 2017-??-??
+   * - 2017-12-08
      - The first release
 
 
@@ -74,24 +73,19 @@ Why you should read it
 As said in the overview, this book is not focused on software development
 as such, but on team internal interaction. As I've experienced software
 development as mostly driven by people interacting with each other,
-it makes sense to understand *how* we can fail as a team.
-Recognizing symptoms is also an important part of "preventive social
-maintenance actions".
+it makes sense to understand **how we can socially fail as a team**.
+Recognizing symptoms is also an important part of
+*preventive social maintenance actions*.
 
-The book tells the story with an executive team of a company
-but you can map the behaviors and symptoms to your development team
-as well.
-
-
-The book describes the dysfunctions very well and in a concise form.
-It lists symptoms of the dysfunctions, and more important, lists possible
-ways to resolve them.
+The book tells the story with an executive team of a company but you can
+map the behaviors and symptoms to your development team as well. The
+dysfunctions get described in depth and in a concise form.
+It lists symptoms of the dysfunctions, and more importantly, lists possible
+**ways to resolve them**.
 
 If you're not convinced by now, the next section will contain very specific
 examples from the book, which might give you a better understanding where
 I come from.
-
-.. todo:: make a coherent thought out of this section.
 
 
 
@@ -110,8 +104,8 @@ Absence of trust
     another. [This includes] weaknesses, skill deficiencies, interpersonal
     shortcomings, mistakes and requests for help.
 
-I remember the kickoff meeting of an older project I was part off.
-When confronted with the questions and uncertainty we had, the
+I remember the kickoff meeting of an older project I was part of.
+When confronted with the questions and uncertainties we had, the
 technical lead said very often `"I don't know."`. This
 impressed me back then, as I felt that most people don't (like to)
 admit missing knowledge or skill and simply wing it in the hope you
@@ -132,9 +126,9 @@ the criticism doesn't lead to a better solution but to hurt feelings,
 they stop doing it. So they try to find ways to work around each other.
 Questions for dedicated ownership, where you have the last say by
 definition, might arise. Discussions might come to a stop with a
-`"Let's take this offline."`, which then doesn't happen. You're not a team
-anymore, but a group of people which is not able to discuss the hot topics
-anymore, so you stagnate.
+`"Let's take this offline."`, which then doesn't happen.
+**You're not a team anymore, but a group of people** which is not able
+to discuss the hot topics anymore, so you stagnate.
 
 
 
@@ -144,7 +138,7 @@ Lack of commitment
     [...] causes of the lack of commitment are the desire for
     consensus and the need for certainty.
 
-This is my favorite. It allows for having meeting over meeting where we
+This is my favorite. It allows having meeting over meeting where we
 discuss (or better: talk) about the same problem over and over again
 without making a decision. Another form this can take is, having a
 list of work items where nearly every work item has the highest priority.
@@ -152,8 +146,8 @@ If everything has a high priority, nothing has.
 
 While this dysfunction is already harmful when happening on the low
 organizational level I work, imagine the pain when this happens through
-multiple levels of company hierarchy, where the negative impact get
-amplified with each level, where it hits the practitioners by having
+**multiple levels of company hierarchy**, where the negative impact get
+amplified with each level, and then it hits the practitioners by having
 no clear goals or visions.
 
 My personal flaw here, is that I tried too often to reach a consensus
@@ -173,15 +167,15 @@ Avoidance of accountability
     of accountability is ambiguity.
 
 Did your team wrote some kind of guideline how the work needs to be done
-or which quality it needs to have? Is that document maybe 2 years old
+or which quality it needs to have? Is that document maybe two years old
 and it gets followed only sporadically or maybe not at all? Did you
 hear or say the sentence `"Somebody should enforce this guideline somehow."`?
 The three dysfunctions from before brought you this mess.
 
 As we are all very smart people, we create measurements or goals which
 are ambiguous. This avoids accountability right from the start, as an
-interpretation is needed. The pinnacle of this is, to never write anything
-down, but only do it verbally. Now you can use the powerful phrase
+**interpretation is needed**. The pinnacle of this is, to never write
+anything down, but only do it verbally. Now you can use the powerful phrase
 `"I did get that differently when we discussed this."`. I'm getting cynical
 here, but I think you get the idea.
 
@@ -199,8 +193,8 @@ doesn't touch the hot topics, cannot make reliable decisions and creates
 ambiguity to avoid accountability. All you have left now is focusing on
 your personal status or keep the team status for the status's sake.
 Results, which increase the value to your customers, are rare. The team
-members are working mostly on other stretch goals. The outcome decreases
-more every week.
+members are working mostly on other stretch goals. **The outcome decreases**
+with every week.
 
 
 
@@ -209,6 +203,10 @@ A few closing words
 
 This book gave me a lot of insights and I enjoyed reading and learning from
 it. Especially us IT folks, where work consists of interaction with many
-people, can benefit from reading it. Even if you cannot resolve the issues
-your team has, at least having a hint **why** it happens, can ease the pain.
-Go buy and read the book. It's worth it.
+people, can benefit from reading it. It's important to notice that
+**a dysfunctions is not standalone** but influences the other dysfunctions
+as well.
+
+Even if you cannot resolve the issues your team has, at least having a
+hint **why** it happens, can ease the pain. Go buy and read the book.
+It's worth it.
