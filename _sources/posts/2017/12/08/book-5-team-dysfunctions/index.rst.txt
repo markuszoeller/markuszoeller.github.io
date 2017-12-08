@@ -204,7 +204,7 @@ A few closing words
 This book gave me a lot of insights and I enjoyed reading and learning from
 it. Especially us IT folks, where work consists of interaction with many
 people, can benefit from reading it. It's important to notice that
-**a dysfunctions is not standalone** but influences the other dysfunctions
+**a dysfunction is not standalone** but influences the other dysfunctions
 as well.
 
 Even if you cannot resolve the issues your team has, at least having a
