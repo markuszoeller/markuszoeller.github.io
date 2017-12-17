@@ -1,16 +1,16 @@
 
 .. post::
    :tags: template
-   :title: Template for all posts
+   :title: OS packages with snaps and snapd
 
 .. spelling::
    foo
 
 
 
-======================
-Template for all posts
-======================
+====================================
+OS packages with *snaps* and *snapd*
+====================================
 
 Each post should start with one paragraph which is an abstract of the post.
 This paragraph should be enough for a reader to decide if they want to
@@ -48,8 +48,7 @@ General advice
 * add the release date only if confident enough
 * start with a brain dump, refine from there
 * consider touch screens (mobile phones). CSS hover text magic doesn't work
-* put example applications which have their own doc into a directory
-  ``example-app`` to avoid that this application gets used in the doc build.
+
 
 
 Structure

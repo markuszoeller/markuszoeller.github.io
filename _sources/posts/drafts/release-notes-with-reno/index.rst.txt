@@ -1,9 +1,8 @@
 
-.. todo:: date, tags and title
 
 .. post::
-   :tags: template
-   :title: Release Notes with *reno*
+   :tags: release-management
+   :title: Release Notes with reno
 
 
 =========================
@@ -11,18 +10,20 @@ Release Notes with *reno*
 =========================
 
 
-Brain dump
-==========
 
-https://docs.openstack.org/reno/latest/
-
-*"What features merged since the last release?"* -
-*"Did we introduce something which might break a deployment?"* -
+*"What features merged since the last release?"* --
+*"Did we introduce something which might break a deployment?"* --
 *"Let me grep through the commit history to check what happened."*
 Remember sentences like these when you're about to release? If you
 like this fire-fighting mode, ignore this post. If you want to have a
 more relaxed release, this post will show you how to use a tool called
 *reno* to manage your release notes.
+
+Brain dump
+==========
+
+https://docs.openstack.org/reno/latest/
+
 
 
 ----
