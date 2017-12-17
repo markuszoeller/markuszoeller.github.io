@@ -24,8 +24,9 @@ echo I am provisioning...
 date > /etc/vagrant_provisioned_at
 mkdir -p /applications
 cp -r /vagrant/example-app/* /applications/
-apt update -y
-apt install -y python-pip
+apt-get update -y
+apt-get install -y python-pip
+pip install -U pip
 pip install -r /applications/tsk_mgr/requirements.txt
 pip install -r /applications/tsk_mgr/doc-requirements.txt
 pip install tox
