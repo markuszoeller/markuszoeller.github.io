@@ -31,7 +31,6 @@ class Task(object):
         return not self.__eq__(other)
 
 
-
 class CLI(object):
     """ The user interface """
 
@@ -57,7 +56,6 @@ class CLI(object):
             # id = arguments["<id>"]
             # new_values = arguments["<attr=value>"]
             print("TODO - implement me")
-
 
 
 class Manager(object):
@@ -112,4 +110,3 @@ class Persistence(object):
         # tasks = [t for t in db.values()]  # works in py27 + py34
         db.close()
         return tasks
-
