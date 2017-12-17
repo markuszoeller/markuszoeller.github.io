@@ -27,6 +27,7 @@ cp -r /vagrant/example-app/* /applications/
 apt-get update -y
 apt-get install -y python-pip
 pip install -U pip
+pip install -U setuptools
 pip install -r /applications/tsk_mgr/requirements.txt
 pip install -r /applications/tsk_mgr/doc-requirements.txt
 pip install tox

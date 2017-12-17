@@ -16,7 +16,6 @@ requirements = [
 ]
 
 setup_requirements = [
-    'setuptools',
 ]
 
 test_requirements = [
