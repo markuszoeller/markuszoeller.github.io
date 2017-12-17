@@ -35,7 +35,6 @@ class TestTask(unittest.TestCase):
         self.assertEqual("title1", t.title)
         self.assertIsInstance(t.id, uuid.UUID)  # new in Python 2.7
 
-
     def test_list(self):
         t = self.manager.create("title2")
         tasks = self.manager.list_tasks()
