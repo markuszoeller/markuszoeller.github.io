@@ -12,15 +12,16 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    # TODO: put package requirements here
+    'docopt',
 ]
 
 setup_requirements = [
-    # TODO(markuszoeller): put setup requirements (distutils extensions, etc.) here
+    'setuptools',
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
+    'flake8',
+    'mock'
 ]
 
 setup(
