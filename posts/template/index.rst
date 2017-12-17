@@ -48,7 +48,8 @@ General advice
 * add the release date only if confident enough
 * start with a brain dump, refine from there
 * consider touch screens (mobile phones). CSS hover text magic doesn't work
-
+* put example applications which have their own doc into a directory
+  ``example-app`` to avoid that this application gets used in the doc build.
 
 
 Structure
