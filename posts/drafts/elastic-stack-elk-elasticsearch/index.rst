@@ -23,6 +23,8 @@ in less than 20 seconds. Additionally, it fits on one small mobile screen.
 
 https://www.elastic.co/webinars/getting-started-elasticsearch?elektra=ELKvideo
 
+Maybe use http://jsonlines.org/on_the_web/ for the example logs
+
 .. contents::
     :local:
     :backlinks: top
