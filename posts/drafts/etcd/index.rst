@@ -16,6 +16,9 @@ etcd
 
 .. todo:: abstract
 
+https://github.com/kelseyhightower/kubernetes-the-hard-way
+has also a section with etcd
+
 .. contents::
     :local:
     :backlinks: top
