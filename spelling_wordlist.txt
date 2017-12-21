@@ -88,6 +88,10 @@ runtimes
 Runtimes
 scalable
 Scalable
+screenshot
+Screenshot
+screenshots
+Screenshots
 searchable
 Searchable
 Sep
@@ -109,6 +113,8 @@ unordered
 unserviceable
 username
 Vagrantfile
+versioning
+Versioning
 VM
 webhook
 Webhook

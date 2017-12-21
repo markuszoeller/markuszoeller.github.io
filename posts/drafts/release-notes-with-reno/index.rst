@@ -474,6 +474,85 @@ The update documentation looks like this:
    :alt: More *reno* release notes in our application docs.
 
 
+Release notes and versioning
+============================
+
+You might have noticed that the versions were off in the screenshots.
+While the docs used the version number from within the project,
+*reno* took the version number from the git repository, namely the
+latest tag in the current branch. As we didn't yet tag the project,
+*reno* used ``0.0.0``. We will change that by applying a git tag
+and then list what *reno* has for this release:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ git tag 0.1.0
+   $ reno list --version 0.1.0
+   scanning ./releasenotes/notes (branch=*current* earliest_version=None)
+   including entire branch history
+   [...]
+   0.1.0
+       releasenotes/notes/bf-list-in-py3-[...]
+       releasenotes/notes/ki-update-not-working-[...]
+
+Let's add two more notes to see how this will be handled:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 8
+
+   $ reno new test
+   $ reno new another-test
+   $ git add -A
+   $ git commit -m "even more release notes"
+   $ reno list
+   scanning ./releasenotes/notes (branch=*current* earliest_version=None)
+   [...]
+   0.1.0-2
+       releasenotes/notes/another-test-[...]
+       releasenotes/notes/test-[...]
+   0.1.0
+       releasenotes/notes/bf-list-in-py3-[...]
+       releasenotes/notes/ki-update-now-working-[...]
+
+For the **unreleased release notes** (here they are ``test`` and
+``another-test``) *reno* simply uses the last git tag and adds a
+counter for the number of release notes which will be released with
+the next git tagging. After another version bump we see this:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 5
+
+   $ git tag 0.2.0
+   $ reno list
+   scanning ./releasenotes/notes (branch=*current* earliest_version=None)
+   [...]
+   0.2.0
+       releasenotes/notes/another-test-[...]
+       releasenotes/notes/test-[...]
+   0.1.0
+       releasenotes/notes/bf-list-in-py3-[...]
+       releasenotes/notes/ki-update-now-working-[...]
+
+
+The *Sphinx* extension for *reno* can also filter for version numbers:
+
+.. code-block:: rst
+   :linenos:
+   :emphasize-lines: 0
+
+   .. release-notes:: 0.1.0 Release Notes
+      :version: 0.1.0
+
+.. tip::
+
+   This is a good way to split up the display of the release notes
+   over multiple files, if you're concerned with showing too much
+   at once.
+
 
 Content
 =======
