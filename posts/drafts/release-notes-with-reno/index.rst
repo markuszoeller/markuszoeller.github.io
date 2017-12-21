@@ -114,12 +114,12 @@ Things you notice from this example are:
 * A release note is a ``YAML`` file which uses a combination of the
   name you provided and a hash-like text. This ensures uniqueness in
   file names.
-* The default template which our release note is based on used
+* The **default template** which our release note is based on used
   embedded *restructured text* for the markup of our prose.
 * The report combines all of our release notes (only one so far) into
-  something you can use in a release letter.
+  something you can use in a **release letter**.
 * The report also lists a version number (``0.0.0`` in this example)
-  which can be influenced with *git tagging*.
+  which can be influenced with **git tagging**.
 
 
 The next sections will dive deeper into specific questions on how to
@@ -149,7 +149,7 @@ demo a few of its capabilities.
 The demo application and environment
 ====================================
 
-This post contains an example application (called ``tsk-mgr``) we
+This post contains an **example application** (called ``tsk-mgr``) we
 will use to demo the usage of *reno* in a more real-world
 manner. ``tsk-mgr`` is a TODO list management tool with a CLI interface and
 persistence by using the Python shelve library [#shelve]_. It
@@ -234,7 +234,7 @@ with this view of the application release history:
    :height: 300px
    :alt: Example app's documentation with Sphinx: Starting point
 
-We will use the *reno* Sphinx extension:
+We will use the *reno* **Sphinx extension**:
 
 .. code-block:: bash
    :linenos:
@@ -415,7 +415,7 @@ Release notes and versioning
 You might have noticed that the versions were off in the screenshots.
 While the docs used the version number from within the project,
 *reno* took the version number from the git repository, namely the
-latest tag in the current branch. As we didn't yet tag the project,
+**latest tag** in the current branch. As we didn't yet tag the project,
 *reno* used ``0.0.0``. We will change that by applying a git tag
 and then list what *reno* has for this release:
 
@@ -536,22 +536,22 @@ Conclusion
 This post showed how you can use *reno* to manage the release notes
 of your project. Among others, these benefits are the most useful:
 
-* The release notes can be peer-reviewed like code. No more
+* The release notes can be **peer-reviewed** like code. No more
   *"We released a bunch of fixes"*.
-* The release note is part of the code change which makes the release note
-  necessary. Write it while your memory of the impact is still fresh.
-* Backports to stable branches already contain the release note.
+* The release note is **part of the code** change which makes the release
+  note necessary. Write it while your memory of the impact is still fresh.
+* **Backports** to stable branches already contain the release note.
   There's no way to miss the notes.
-* Merge conflicts to the overall release letter are next to impossible
+* **Merge conflicts** to the overall release letter are next to impossible
   as every developer works in an extra file which gets combined later.
-* Have a (customizable) template of release specific sections which are
+* Have a (customizable) **template** of release specific sections which are
   the most important ones for your users.
 * A *Sphinx document generator* plugin is available. No copy & paste to
   another place necessary.
 
 When *OpenStack* introduced the usage of *reno*, it became apparent that
 there was a little confusion about when a change needs a release note.
-Having a written guideline will help you to introduce *reno* for your
+Having a **written guideline** will help you to introduce *reno* for your
 project.
 
 It also helps a lot if you know your users as you write for them.
