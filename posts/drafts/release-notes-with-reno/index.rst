@@ -152,9 +152,26 @@ I trimmed some of the unnecessary output with *[...]*:
 
     - Add other notes here, or remove this section. [...]
 
-The report is the part we're most interested in. The (truncated) text
-you see is based on the default template for release notes. The next
-sections will dive deeper into *reno* and its possibilities.
+
+Things you notice from this example are:
+
+* *reno* creates its release notes in a directory ``releasenotes`` under
+  the root directory of your project.
+* A release note is a ``YAML`` file which uses a combination of the
+  name you provided and a hash-like text. This ensures uniqueness in
+  file names.
+* The default template which our release note is based on used
+  embedded *restructured text* for the markup of our prose.
+* The report combines all of our release notes (only one so far) into
+  something you can use in a release letter.
+* The report also lists a version number (``0.0.0`` in this example)
+  which can be influenced with *git tagging*.
+
+.. note::
+   Most of the content in this post is based on [#reno]_.
+
+The next sections will dive deeper into specific questions on how to
+use reno in your (most likely code driven) project.
 
 
 
