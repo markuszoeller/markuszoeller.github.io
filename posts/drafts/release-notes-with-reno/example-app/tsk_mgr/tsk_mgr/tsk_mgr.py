@@ -1,6 +1,19 @@
 # -*- coding: utf-8 -*-
 
-"""Main module."""
+"""Demo Tasks Mgmt.
+
+Usage:
+  tsk-mgr.py create <title>
+  tsk-mgr.py list
+  tsk-mgr.py update <id> <attr=value>...
+  tsk-mgr.py (-h | --help)
+  tsk-mgr.py --version
+
+Options:
+  -h --help     Show this screen.
+  --version     Show version.
+
+"""
 
 import os
 import uuid
