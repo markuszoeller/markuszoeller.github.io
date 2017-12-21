@@ -593,10 +593,7 @@ look like, can be found at the *OpenStack* projects like *Nova* [#nova]_.
 The *OpenStack* community is the origin on *reno*, which needed something
 to keep track with the many contributions by their many contributors.
 
-Content
-=======
 
-.. todo:: add stuff here
 
 Conclusion
 ==========
