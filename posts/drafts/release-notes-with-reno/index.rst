@@ -467,12 +467,6 @@ The diff looks like this:
 That's the beauty of release note management with *reno*. The documentation
 is part of the very same code change.
 
-The update documentation looks like this:
-
-.. image:: images/sphinx_reno_more_notes_DPPWC3y.png
-   :height: 300px
-   :alt: More *reno* release notes in our application docs.
-
 
 
 Content
