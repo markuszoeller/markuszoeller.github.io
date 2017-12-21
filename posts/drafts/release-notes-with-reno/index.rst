@@ -171,7 +171,7 @@ Things you notice from this example are:
    Most of the content in this post is based on [#reno]_.
 
 The next sections will dive deeper into specific questions on how to
-use reno in your (most likely code driven) project.
+use *reno* in your (most likely code driven) project.
 
 
 
@@ -289,8 +289,8 @@ be clean like nothing happened.
 
 
 
-How to add the reno report to my documentation
-==============================================
+How to add the *reno* report to my documentation
+================================================
 
 We will use the file ``docs/history.rst`` for our release notes. We start
 with this view of the application release history:
@@ -402,14 +402,14 @@ Build the docs again with ``make docs`` and refresh the history page:
    :alt: First *reno* release note in our application docs.
 
 Here you see that the embedded *restructured text* in the YAML file
-can be interpreted and rendered by the reno *Sphinx* extension. This allows
+can be interpreted and rendered by the *reno* *Sphinx* extension. This allows
 you to format the release notes for easier consumption for your users.
 
 
 Add a release note with a code change
 =====================================
 
-The examples before showed the usage of reno when no code was involved.
+The examples before showed the usage of *reno* when no code was involved.
 We change this by doing an actual fix in the application.
 
 Our app works fine in *Python 2*, but the ``shelve`` library behaves
