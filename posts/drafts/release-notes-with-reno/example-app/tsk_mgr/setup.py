@@ -34,6 +34,9 @@ setup(
     packages=find_packages(include=['tsk_mgr']),
     include_package_data=True,
     install_requires=requirements,
+    entry_points={
+        'console_scripts': ['tskmgr=tsk_mgr.tsk_mgr:main'],
+    },
     license="MIT license",
     zip_safe=False,
     keywords='tsk_mgr',

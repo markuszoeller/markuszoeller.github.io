@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
 
 """Demo Tasks Mgmt.
 
 Usage:
-  tsk-mgr.py create <title>
-  tsk-mgr.py list
-  tsk-mgr.py update <id> <attr=value>...
-  tsk-mgr.py (-h | --help)
-  tsk-mgr.py --version
+  tskmgr create <title>
+  tskmgr list
+  tskmgr update <id> <attr=value>...
+  tskmgr (-h | --help)
+  tskmgr --version
 
 Options:
   -h --help     Show this screen.
@@ -127,6 +127,10 @@ class Persistence(object):
         return tasks
 
 
-if __name__ == '__main__':
+def main():
     arguments = docopt(__doc__, version='Demo Tasks Mgmt 0.1')
-CLI.handle_arguments(arguments)
+    CLI.handle_arguments(arguments)
+
+
+if __name__ == '__main__':
+    main()
