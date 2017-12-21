@@ -176,14 +176,19 @@ use *reno* in your (most likely code driven) project.
 Use Case
 ========
 
-It got developed to fit the needs
-of the *OpenStack* upstream development, but it can be used in any other
-project as well.
+Release notes are a way to let your users know what happened since
+the last release. This can be:
 
-.. todo:: describe the use case here
+* more awesome features
+* some nasty bugs got fixed
+* known issues which are not yet solved
+* code changed which have an impact on the upgrade procedure
 
-
-
+This is a non-exhaustive list. It depends on your users what you add.
+*reno* is a tool to manage the release notes of your project.
+It got developed to fit the needs of the *OpenStack* upstream development,
+but it can be used in any other project as well and this post will
+demo a few of its capabilities.
 
 
 
