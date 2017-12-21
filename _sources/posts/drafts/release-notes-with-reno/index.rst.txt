@@ -104,53 +104,7 @@ I trimmed some of the unnecessary output with *[...]*:
 
     - List known issues here, or remove this section. [...]
 
-
-    Upgrade Notes
-    -------------
-
-    .. releasenotes/notes/my-first-release-note-[...]
-
-    - List upgrade notes here, or remove this section. [...]
-
-
-    Deprecation Notes
-    -----------------
-
-    .. releasenotes/notes/my-first-release-note-[...]
-
-    - List deprecations notes here, or remove this section. [...]
-
-
-    Critical Issues
-    ---------------
-
-    .. releasenotes/notes/my-first-release-note-[...]
-
-    - Add critical notes here, or remove this section. [...]
-
-
-    Security Issues
-    ---------------
-
-    .. releasenotes/notes/my-first-release-note-[...]
-
-    - Add security notes here, or remove this section. [...]
-
-
-    Bug Fixes
-    ---------
-
-    .. releasenotes/notes/my-first-release-note-[...]
-
-    - Add normal bug fixes here, or remove this section. [...]
-
-
-    Other Notes
-    -----------
-
-    .. releasenotes/notes/my-first-release-note-[...]
-
-    - Add other notes here, or remove this section. [...]
+    [...]
 
 
 Things you notice from this example are:
@@ -160,15 +114,13 @@ Things you notice from this example are:
 * A release note is a ``YAML`` file which uses a combination of the
   name you provided and a hash-like text. This ensures uniqueness in
   file names.
-* The default template which our release note is based on used
+* The **default template** which our release note is based on used
   embedded *restructured text* for the markup of our prose.
 * The report combines all of our release notes (only one so far) into
-  something you can use in a release letter.
+  something you can use in a **release letter**.
 * The report also lists a version number (``0.0.0`` in this example)
-  which can be influenced with *git tagging*.
+  which can be influenced with **git tagging**.
 
-.. note::
-   Most of the content in this post is based on [#reno]_.
 
 The next sections will dive deeper into specific questions on how to
 use *reno* in your (most likely code driven) project.
@@ -178,43 +130,26 @@ use *reno* in your (most likely code driven) project.
 Use Case
 ========
 
-It got developed to fit the needs
-of the *OpenStack* upstream development, but it can be used in any other
-project as well.
+Release notes are a way to let your users know what happened since
+the last release. This can be:
 
-.. todo:: describe the use case here
+* more awesome features
+* some nasty bugs got fixed
+* known issues which are not yet solved
+* code changed which have an impact on the upgrade procedure
 
-
-
-Benefits
-========
-
-* The release notes can be reviewed like code.
-* The release note is part of the code change which makes the release note
-  necessary.
-* Backports to stable branches already contain the release note.
-* Merge conflicts to the common release letter are next to impossible
-* Have a (customizable) template of release specific sections which are
-  the most important ones for your users
-* A *Sphinx document generator* plugin is available.
-
-
-
-Alternatives
-============
-
-Alternatives could be:
-
-* Make the release note part of the git commit message.
-* Only use files with a naming convention and parse them separately.
-* Use the git notes feature.
+This is a non-exhaustive list. It depends on your users what you add.
+*reno* [#reno]_ is a tool to manage the release notes of your project.
+It got developed to fit the needs of the *OpenStack* upstream development,
+but it can be used in any other project as well and this post will
+demo a few of its capabilities.
 
 
 
 The demo application and environment
 ====================================
 
-This post contains an example application (called ``tsk-mgr``) we
+This post contains an **example application** (called ``tsk-mgr``) we
 will use to demo the usage of *reno* in a more real-world
 manner. ``tsk-mgr`` is a TODO list management tool with a CLI interface and
 persistence by using the Python shelve library [#shelve]_. It
@@ -230,11 +165,15 @@ the archive, use the demo environment like this:
    :linenos:
    :emphasize-lines: 0
 
-   [markus@local]$ vagrant up
-   [markus@local]$ vagrant ssh
+   [markus@local]$ vagrant up     # see the Vagrantfile
+   [markus@local]$ vagrant ssh    # login
    vagrant@reno:~$ sudo su -
-   root@reno:~# cd /applications/tsk_mgr/
-   root@reno:/applications/tsk_mgr# 2>/dev/null 1>&2 python -m SimpleHTTPServer &
+   root@reno:~# cd /applications/tsk_mgr/  #
+   root@reno:/applications/tsk_mgr# 2>/dev/null 1>&2 python -m SimpleHTTPServer &   # to serve the docs
+
+Doing this in a virtual machine is entirely optional. You could also do
+it in a *Python virtualenv*, a *Docker* container, a *chroot* or your local
+laptop.
 
 Install and use the app like this:
 
@@ -299,7 +238,7 @@ with this view of the application release history:
    :height: 300px
    :alt: Example app's documentation with Sphinx: Starting point
 
-We will use the *reno* Sphinx extension:
+We will use the *reno* **Sphinx extension**:
 
 .. code-block:: bash
    :linenos:
@@ -380,7 +319,7 @@ content:
 
 .. tip::
 
-   The char ``>`` is *YAML folding syntax*. It replaces every line break
+   The ``>`` char is *YAML folding syntax*. It replaces every line break
    with a space. If you want to keep the line breaks as you specified them,
    use the ``|`` char. More details at [#yamlsyn]_ or the official
    spec [#yamlspec]_.
@@ -422,7 +361,7 @@ differently in *Python 3*. We see this issue:
    $ python -V
    Python 3.5.2
    $
-   $ tskmgr list list
+   $ tskmgr list
    Traceback (most recent call last):
    [...]
    dbm.error: db type could not be determined
@@ -474,36 +413,180 @@ The update documentation looks like this:
    :alt: More *reno* release notes in our application docs.
 
 
+Release notes and versioning
+============================
 
-Content
-=======
+You might have noticed that the versions were off in the screenshots.
+While the docs used the version number from within the project,
+*reno* took the version number from the git repository, namely the
+**latest tag** in the current branch. As we didn't yet tag the project,
+*reno* used ``0.0.0``. We will change that by applying a git tag
+and then list what *reno* has for this release:
 
-.. todo:: add stuff here
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ git tag 0.1.0
+   $ reno list --version 0.1.0
+   scanning ./releasenotes/notes (branch=*current* earliest_version=None)
+   including entire branch history
+   [...]
+   0.1.0
+       releasenotes/notes/bf-list-in-py3-[...]
+       releasenotes/notes/ki-update-not-working-[...]
+
+Let's add two more notes to see how this will be handled:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 8
+
+   $ reno new test
+   $ reno new another-test
+   $ git add -A
+   $ git commit -m "even more release notes"
+   $ reno list
+   scanning ./releasenotes/notes (branch=*current* earliest_version=None)
+   [...]
+   0.1.0-2
+       releasenotes/notes/another-test-[...]
+       releasenotes/notes/test-[...]
+   0.1.0
+       releasenotes/notes/bf-list-in-py3-[...]
+       releasenotes/notes/ki-update-now-working-[...]
+
+For the **unreleased release notes** (here they are ``test`` and
+``another-test``) *reno* simply uses the last git tag and adds a
+counter for the number of release notes which will be released with
+the next git tagging. After another version bump we see this:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 5
+
+   $ git tag 0.2.0
+   $ reno list
+   scanning ./releasenotes/notes (branch=*current* earliest_version=None)
+   [...]
+   0.2.0
+       releasenotes/notes/another-test-[...]
+       releasenotes/notes/test-[...]
+   0.1.0
+       releasenotes/notes/bf-list-in-py3-[...]
+       releasenotes/notes/ki-update-now-working-[...]
+
+
+The *Sphinx* extension for *reno* can also filter for version numbers:
+
+.. code-block:: rst
+   :linenos:
+   :emphasize-lines: 0
+
+   ====================
+   Release Notes: 0.1.0
+   ====================
+
+   .. release-notes:: 0.1.0 Release Notes
+      :version: 0.1.0
+
+.. tip::
+
+   This is a good way to split up the display of the release notes
+   over multiple files, if you're concerned with showing too much
+   at once.
+
+
+Release notes and stable branches
+=================================
+
+If your project has a stable branch policy, you can limit the displayed
+release notes to that branch only with:
+
+.. code-block:: rst
+   :linenos:
+   :emphasize-lines: 0
+
+   =============================
+   Release Notes: <release-name>
+   =============================
+
+   .. release-notes::
+      :branch: stable/release-name
+
+This means the command ``git branch --list`` should contain one branch named
+``stable/release-name``. If your stable branch naming convention is
+different, you have to create a **reno config file** and change the
+option ``branch_name_re`` [#renousage]_.
+
+
+.. important::
+
+   Changes to release notes in a stable branch, like fixing a typo or
+   phrasing something differently, need to be done in that stable branch.
+   That's due to how *reno* scans for release notes to keep track
+   [#renousage]_.
+
+A real-live example, of how the usage of *reno* in a big project can
+look like, can be found at the *OpenStack* projects like *Nova* [#nova]_.
+The *OpenStack* community is the origin on *reno*, which needed something
+to keep track with the many contributions by their many contributors.
+
+
 
 Conclusion
 ==========
 
-.. todo:: explain more here and reference to it [1]_
+This post showed how you can use *reno* to manage the release notes
+of your project. Among others, these benefits are the most useful:
+
+* The release notes can be **peer-reviewed** like code. No more
+  *"We released a bunch of fixes"*.
+* The release note is **part of the code** change which makes the release
+  note necessary. Write it while your memory of the impact is still fresh.
+* **Backports** to stable branches already contain the release note.
+  There's no way to miss the notes.
+* **Merge conflicts** to the overall release letter are next to impossible
+  as every developer works in an extra file which gets combined later.
+* Have a (customizable) **template** of release specific sections which are
+  the most important ones for your users.
+* A *Sphinx document generator* plugin is available. No copy & paste to
+  another place necessary.
+
+When *OpenStack* introduced the usage of *reno*, it became apparent that
+there was a little confusion about when a change needs a release note.
+Having a **written guideline** will help you to introduce *reno* for your
+project.
+
+It also helps a lot if you know your users as you write for them.
+Operators are often concerned about deprecations and any upgrade
+impacting actions they need to do. At the end of the day, the release
+notes are a communication vehicle with your user base. Make the best
+out of it.
+
+
 
 References
 ==========
 
-.. [1] www.google.com
-
 .. [#reno] https://docs.openstack.org/reno/latest/
-
-.. [#vagrant] https://www.vagrantup.com/intro/index.html
-
-.. [#cookie] https://pypi.python.org/pypi/cookiecutter/1.6.0
 
 .. [#shelve] https://docs.python.org/2/library/shelve.html
 
 .. [#sphinx] http://www.sphinx-doc.org/en/stable/
 
+.. [#cookie] https://pypi.python.org/pypi/cookiecutter/1.6.0
+
+.. [#vagrant] https://www.vagrantup.com/intro/index.html
+
 .. [#sphinxb] http://www.sphinx-doc.org/en/stable/man/sphinx-build.html
+
+.. [#simplehttp] https://docs.python.org/2.7/library/simplehttpserver.html
 
 .. [#yamlsyn] http://yaml-multiline.info/
 
 .. [#yamlspec] http://www.yaml.org/spec/1.2/spec.html#id2796251
 
-.. [#simplehttp] https://docs.python.org/2.7/library/simplehttpserver.html
+.. [#renousage] https://docs.openstack.org/reno/latest/user/usage.html
+
+.. [#nova] https://docs.openstack.org/releasenotes/nova/unreleased.html

@@ -130,15 +130,14 @@ more relaxed release, this post will show you how to use a tool called
 <em>reno</em> to manage your release notes.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#tl-dr" id="id13">TL;DR</a></li>
-<li><a class="reference internal" href="#use-case" id="id14">Use Case</a></li>
-<li><a class="reference internal" href="#benefits" id="id15">Benefits</a></li>
-<li><a class="reference internal" href="#alternatives" id="id16">Alternatives</a></li>
-<li><a class="reference internal" href="#the-demo-application-and-environment" id="id17">The demo application and environment</a></li>
-<li><a class="reference internal" href="#how-to-add-the-reno-report-to-my-documentation" id="id18">How to add the <em>reno</em> report to my documentation</a></li>
-<li><a class="reference internal" href="#add-a-release-note-and-show-it-in-the-docs" id="id19">Add a release note and show it in the docs</a></li>
-<li><a class="reference internal" href="#add-a-release-note-with-a-code-change" id="id20">Add a release note with a code change</a></li>
-<li><a class="reference internal" href="#content" id="id21">Content</a></li>
+<li><a class="reference internal" href="#tl-dr" id="id14">TL;DR</a></li>
+<li><a class="reference internal" href="#use-case" id="id15">Use Case</a></li>
+<li><a class="reference internal" href="#the-demo-application-and-environment" id="id16">The demo application and environment</a></li>
+<li><a class="reference internal" href="#how-to-add-the-reno-report-to-my-documentation" id="id17">How to add the <em>reno</em> report to my documentation</a></li>
+<li><a class="reference internal" href="#add-a-release-note-and-show-it-in-the-docs" id="id18">Add a release note and show it in the docs</a></li>
+<li><a class="reference internal" href="#add-a-release-note-with-a-code-change" id="id19">Add a release note with a code change</a></li>
+<li><a class="reference internal" href="#release-notes-and-versioning" id="id20">Release notes and versioning</a></li>
+<li><a class="reference internal" href="#release-notes-and-stable-branches" id="id21">Release notes and stable branches</a></li>
 <li><a class="reference internal" href="#conclusion" id="id22">Conclusion</a></li>
 <li><a class="reference internal" href="#references" id="id23">References</a></li>
 </ul>
@@ -147,8 +146,8 @@ more relaxed release, this post will show you how to use a tool called
 <p class="first admonition-title">Todo</p>
 <p class="last">date</p>
 </div>
-<table border="1" class="docutils" id="id12">
-<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id12" title="Permalink to this table"> </a></caption>
+<table border="1" class="docutils" id="id13">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id13" title="Permalink to this table"> </a></caption>
 <colgroup>
 <col width="17%" />
 <col width="83%" />
@@ -226,53 +225,7 @@ more relaxed release, this post will show you how to use a tool called
 49
 50
 51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98</pre></div></td><td class="code"><div class="highlight"><pre><span></span> $ apt-get install -y git                     <span class="c1"># reno operates on git repos</span>
+52</pre></div></td><td class="code"><div class="highlight"><pre><span></span> $ apt-get install -y git                     <span class="c1"># reno operates on git repos</span>
  $ git init                                   <span class="c1"># initialize a git repo</span>
  $ git config user.name <span class="s2">&quot;John Doe&quot;</span>            <span class="c1"># configure git repo (1/2)</span>
  $ git config user.email <span class="s2">&quot;jd@example.com&quot;</span>     <span class="c1"># configure git repo (2/2)</span>
@@ -323,53 +276,7 @@ more relaxed release, this post will show you how to use a tool called
 
  - List known issues here, or remove this section. <span class="o">[</span>...<span class="o">]</span>
 
-
- Upgrade Notes
- -------------
-
- .. releasenotes/notes/my-first-release-note-<span class="o">[</span>...<span class="o">]</span>
-
- - List upgrade notes here, or remove this section. <span class="o">[</span>...<span class="o">]</span>
-
-
- Deprecation Notes
- -----------------
-
- .. releasenotes/notes/my-first-release-note-<span class="o">[</span>...<span class="o">]</span>
-
- - List deprecations notes here, or remove this section. <span class="o">[</span>...<span class="o">]</span>
-
-
- Critical Issues
- ---------------
-
- .. releasenotes/notes/my-first-release-note-<span class="o">[</span>...<span class="o">]</span>
-
- - Add critical notes here, or remove this section. <span class="o">[</span>...<span class="o">]</span>
-
-
- Security Issues
- ---------------
-
- .. releasenotes/notes/my-first-release-note-<span class="o">[</span>...<span class="o">]</span>
-
- - Add security notes here, or remove this section. <span class="o">[</span>...<span class="o">]</span>
-
-
- Bug Fixes
- ---------
-
- .. releasenotes/notes/my-first-release-note-<span class="o">[</span>...<span class="o">]</span>
-
- - Add normal bug fixes here, or remove this section. <span class="o">[</span>...<span class="o">]</span>
-
-
- Other Notes
- -----------
-
- .. releasenotes/notes/my-first-release-note-<span class="o">[</span>...<span class="o">]</span>
-
- - Add other notes here, or remove this section. <span class="o">[</span>...<span class="o">]</span>
+ <span class="o">[</span>...<span class="o">]</span>
 </pre></div>
 </td></tr></table></div>
 <p>Things you notice from this example are:</p>
@@ -379,75 +286,58 @@ the root directory of your project.</li>
 <li>A release note is a <code class="docutils literal"><span class="pre">YAML</span></code> file which uses a combination of the
 name you provided and a hash-like text. This ensures uniqueness in
 file names.</li>
-<li>The default template which our release note is based on used
+<li>The <strong>default template</strong> which our release note is based on used
 embedded <em>restructured text</em> for the markup of our prose.</li>
 <li>The report combines all of our release notes (only one so far) into
-something you can use in a release letter.</li>
+something you can use in a <strong>release letter</strong>.</li>
 <li>The report also lists a version number (<code class="docutils literal"><span class="pre">0.0.0</span></code> in this example)
-which can be influenced with <em>git tagging</em>.</li>
+which can be influenced with <strong>git tagging</strong>.</li>
 </ul>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Most of the content in this post is based on <a class="footnote-reference" href="#reno" id="id1">[2]</a>.</p>
-</div>
 <p>The next sections will dive deeper into specific questions on how to
 use <em>reno</em> in your (most likely code driven) project.</p>
 </div>
 <div class="section" id="use-case">
 <h2><a class="toc-backref" href="#contents">Use Case</a><a class="headerlink" href="#use-case" title="Permalink to this headline"> </a></h2>
-<p>It got developed to fit the needs
-of the <em>OpenStack</em> upstream development, but it can be used in any other
-project as well.</p>
-<div class="admonition-todo admonition" id="index-1">
-<p class="first admonition-title">Todo</p>
-<p class="last">describe the use case here</p>
-</div>
-</div>
-<div class="section" id="benefits">
-<h2><a class="toc-backref" href="#contents">Benefits</a><a class="headerlink" href="#benefits" title="Permalink to this headline"> </a></h2>
+<p>Release notes are a way to let your users know what happened since
+the last release. This can be:</p>
 <ul class="simple">
-<li>The release notes can be reviewed like code.</li>
-<li>The release note is part of the code change which makes the release note
-necessary.</li>
-<li>Backports to stable branches already contain the release note.</li>
-<li>Merge conflicts to the common release letter are next to impossible</li>
-<li>Have a (customizable) template of release specific sections which are
-the most important ones for your users</li>
-<li>A <em>Sphinx document generator</em> plugin is available.</li>
+<li>more awesome features</li>
+<li>some nasty bugs got fixed</li>
+<li>known issues which are not yet solved</li>
+<li>code changed which have an impact on the upgrade procedure</li>
 </ul>
-</div>
-<div class="section" id="alternatives">
-<h2><a class="toc-backref" href="#contents">Alternatives</a><a class="headerlink" href="#alternatives" title="Permalink to this headline"> </a></h2>
-<p>Alternatives could be:</p>
-<ul class="simple">
-<li>Make the release note part of the git commit message.</li>
-<li>Only use files with a naming convention and parse them separately.</li>
-<li>Use the git notes feature.</li>
-</ul>
+<p>This is a non-exhaustive list. It depends on your users what you add.
+<em>reno</em> <a class="footnote-reference" href="#reno" id="id1">[1]</a> is a tool to manage the release notes of your project.
+It got developed to fit the needs of the <em>OpenStack</em> upstream development,
+but it can be used in any other project as well and this post will
+demo a few of its capabilities.</p>
 </div>
 <div class="section" id="the-demo-application-and-environment">
 <h2><a class="toc-backref" href="#contents">The demo application and environment</a><a class="headerlink" href="#the-demo-application-and-environment" title="Permalink to this headline"> </a></h2>
-<p>This post contains an example application (called <code class="docutils literal"><span class="pre">tsk-mgr</span></code>) we
+<p>This post contains an <strong>example application</strong> (called <code class="docutils literal"><span class="pre">tsk-mgr</span></code>) we
 will use to demo the usage of <em>reno</em> in a more real-world
 manner. <code class="docutils literal"><span class="pre">tsk-mgr</span></code> is a TODO list management tool with a CLI interface and
-persistence by using the Python shelve library <a class="footnote-reference" href="#shelve" id="id2">[5]</a>. It
-has a <code class="docutils literal"><span class="pre">docs</span></code> directory which uses <em>Sphinx</em> <a class="footnote-reference" href="#sphinx" id="id3">[6]</a> as documentation
+persistence by using the Python shelve library <a class="footnote-reference" href="#shelve" id="id2">[2]</a>. It
+has a <code class="docutils literal"><span class="pre">docs</span></code> directory which uses <em>Sphinx</em> <a class="footnote-reference" href="#sphinx" id="id3">[3]</a> as documentation
 generator. The structure of the app got created with <em>cookiecutter</em> <a class="footnote-reference" href="#cookie" id="id4">[4]</a>.</p>
 <p>To reproduce the actions below on your local laptop, download the
 <a class="reference download internal" href="../../../_downloads/release-notes-with-reno.tar.gz" download=""><code class="xref download docutils literal"><span class="pre">project</span> <span class="pre">source</span> <span class="pre">files</span></code></a>.
-The environment is based on <em>Vagrant</em> <a class="footnote-reference" href="#vagrant" id="id5">[3]</a>. After extracting
+The environment is based on <em>Vagrant</em> <a class="footnote-reference" href="#vagrant" id="id5">[5]</a>. After extracting
 the archive, use the demo environment like this:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ vagrant up
-<span class="o">[</span>markus@local<span class="o">]</span>$ vagrant ssh
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>markus@local<span class="o">]</span>$ vagrant up     <span class="c1"># see the Vagrantfile</span>
+<span class="o">[</span>markus@local<span class="o">]</span>$ vagrant ssh    <span class="c1"># login</span>
 vagrant@reno:~$ sudo su -
-root@reno:~# <span class="nb">cd</span> /applications/tsk_mgr/
-root@reno:/applications/tsk_mgr# <span class="m">2</span>&gt;/dev/null <span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span> python -m SimpleHTTPServer <span class="p">&amp;</span>
+root@reno:~# <span class="nb">cd</span> /applications/tsk_mgr/  <span class="c1">#</span>
+root@reno:/applications/tsk_mgr# <span class="m">2</span>&gt;/dev/null <span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span> python -m SimpleHTTPServer <span class="p">&amp;</span>   <span class="c1"># to serve the docs</span>
 </pre></div>
 </td></tr></table></div>
+<p>Doing this in a virtual machine is entirely optional. You could also do
+it in a <em>Python virtualenv</em>, a <em>Docker</em> container, a <em>chroot</em> or your local
+laptop.</p>
 <p>Install and use the app like this:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -502,11 +392,11 @@ Current tasks:
 </td></tr></table></div>
 <p>Under the covers, this uses the <code class="docutils literal"><span class="pre">sphinx-build</span></code> command from <em>Sphinx</em>,
 but we won&#8217;t dive deeper into this. Further reading can be found at
-<a class="footnote-reference" href="#sphinxb" id="id6">[7]</a>.</p>
+<a class="footnote-reference" href="#sphinxb" id="id6">[6]</a>.</p>
 <p>Now you can access the documentation in your local browser via the
 URL <code class="docutils literal"><span class="pre">http://192.168.159.11:8000/docs/_build/html/index.html</span></code>. The
 IP address got specified in the <code class="docutils literal"><span class="pre">Vagrantfile</span></code> and the port <code class="docutils literal"><span class="pre">8000</span></code>
-is the default for <code class="docutils literal"><span class="pre">SimpleHTTPServer</span></code> <a class="footnote-reference" href="#simplehttp" id="id7">[10]</a>.</p>
+is the default for <code class="docutils literal"><span class="pre">SimpleHTTPServer</span></code> <a class="footnote-reference" href="#simplehttp" id="id7">[7]</a>.</p>
 <p>If you don&#8217;t like to use it anymore, destroy the environment with
 <code class="docutils literal"><span class="pre">vagrant</span> <span class="pre">destroy</span> <span class="pre">-f</span></code> and remove the directory. You&#8217;re laptop will
 be clean like nothing happened.</p>
@@ -516,7 +406,7 @@ be clean like nothing happened.</p>
 <p>We will use the file <code class="docutils literal"><span class="pre">docs/history.rst</span></code> for our release notes. We start
 with this view of the application release history:</p>
 <a class="reference internal image-reference" href="../../../_images/sphinx_history_000_vwZSWlz.png"><img alt="Example app's documentation with Sphinx: Starting point" src="../../../_images/sphinx_history_000_vwZSWlz.png" style="height: 300px;" /></a>
-<p>We will use the <em>reno</em> Sphinx extension:</p>
+<p>We will use the <em>reno</em> <strong>Sphinx extension</strong>:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span> $ pip install <span class="s1">&#39;reno[sphinx]&#39;</span>
 </pre></div>
 </td></tr></table></div>
@@ -585,7 +475,7 @@ content:</p>
 </td></tr></table></div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">The char <code class="docutils literal"><span class="pre">&gt;</span></code> is <em>YAML folding syntax</em>. It replaces every line break
+<p class="last">The <code class="docutils literal"><span class="pre">&gt;</span></code> char is <em>YAML folding syntax</em>. It replaces every line break
 with a space. If you want to keep the line breaks as you specified them,
 use the <code class="docutils literal"><span class="pre">|</span></code> char. More details at <a class="footnote-reference" href="#yamlsyn" id="id8">[8]</a> or the official
 spec <a class="footnote-reference" href="#yamlspec" id="id9">[9]</a>.</p>
@@ -618,7 +508,7 @@ differently in <em>Python 3</em>. We see this issue:</p>
 7</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ python -V
 Python <span class="m">3</span>.5.2
 $
-$ tskmgr list list
+$ tskmgr list
 Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
 <span class="o">[</span>...<span class="o">]</span>
 dbm.error: db <span class="nb">type</span> could not be determined
@@ -683,38 +573,184 @@ is part of the very same code change.</p>
 <p>The update documentation looks like this:</p>
 <a class="reference internal image-reference" href="../../../_images/sphinx_reno_more_notes_DPPWC3y.png"><img alt="More *reno* release notes in our application docs." src="../../../_images/sphinx_reno_more_notes_DPPWC3y.png" style="height: 300px;" /></a>
 </div>
-<div class="section" id="content">
-<h2><a class="toc-backref" href="#contents">Content</a><a class="headerlink" href="#content" title="Permalink to this headline"> </a></h2>
-<div class="admonition-todo admonition" id="index-2">
-<p class="first admonition-title">Todo</p>
-<p class="last">add stuff here</p>
+<div class="section" id="release-notes-and-versioning">
+<h2><a class="toc-backref" href="#contents">Release notes and versioning</a><a class="headerlink" href="#release-notes-and-versioning" title="Permalink to this headline"> </a></h2>
+<p>You might have noticed that the versions were off in the screenshots.
+While the docs used the version number from within the project,
+<em>reno</em> took the version number from the git repository, namely the
+<strong>latest tag</strong> in the current branch. As we didn&#8217;t yet tag the project,
+<em>reno</em> used <code class="docutils literal"><span class="pre">0.0.0</span></code>. We will change that by applying a git tag
+and then list what <em>reno</em> has for this release:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ git tag <span class="m">0</span>.1.0
+$ reno list --version <span class="m">0</span>.1.0
+scanning ./releasenotes/notes <span class="o">(</span><span class="nv">branch</span><span class="o">=</span>*current* <span class="nv">earliest_version</span><span class="o">=</span>None<span class="o">)</span>
+including entire branch <span class="nb">history</span>
+<span class="o">[</span>...<span class="o">]</span>
+<span class="m">0</span>.1.0
+    releasenotes/notes/bf-list-in-py3-<span class="o">[</span>...<span class="o">]</span>
+    releasenotes/notes/ki-update-not-working-<span class="o">[</span>...<span class="o">]</span>
+</pre></div>
+</td></tr></table></div>
+<p>Let&#8217;s add two more notes to see how this will be handled:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ reno new <span class="nb">test</span>
+$ reno new another-test
+$ git add -A
+$ git commit -m <span class="s2">&quot;even more release notes&quot;</span>
+$ reno list
+scanning ./releasenotes/notes <span class="o">(</span><span class="nv">branch</span><span class="o">=</span>*current* <span class="nv">earliest_version</span><span class="o">=</span>None<span class="o">)</span>
+<span class="o">[</span>...<span class="o">]</span>
+<span class="hll"><span class="m">0</span>.1.0-2
+</span>    releasenotes/notes/another-test-<span class="o">[</span>...<span class="o">]</span>
+    releasenotes/notes/test-<span class="o">[</span>...<span class="o">]</span>
+<span class="m">0</span>.1.0
+    releasenotes/notes/bf-list-in-py3-<span class="o">[</span>...<span class="o">]</span>
+    releasenotes/notes/ki-update-now-working-<span class="o">[</span>...<span class="o">]</span>
+</pre></div>
+</td></tr></table></div>
+<p>For the <strong>unreleased release notes</strong> (here they are <code class="docutils literal"><span class="pre">test</span></code> and
+<code class="docutils literal"><span class="pre">another-test</span></code>) <em>reno</em> simply uses the last git tag and adds a
+counter for the number of release notes which will be released with
+the next git tagging. After another version bump we see this:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ git tag <span class="m">0</span>.2.0
+$ reno list
+scanning ./releasenotes/notes <span class="o">(</span><span class="nv">branch</span><span class="o">=</span>*current* <span class="nv">earliest_version</span><span class="o">=</span>None<span class="o">)</span>
+<span class="o">[</span>...<span class="o">]</span>
+<span class="hll"><span class="m">0</span>.2.0
+</span>    releasenotes/notes/another-test-<span class="o">[</span>...<span class="o">]</span>
+    releasenotes/notes/test-<span class="o">[</span>...<span class="o">]</span>
+<span class="m">0</span>.1.0
+    releasenotes/notes/bf-list-in-py3-<span class="o">[</span>...<span class="o">]</span>
+    releasenotes/notes/ki-update-now-working-<span class="o">[</span>...<span class="o">]</span>
+</pre></div>
+</td></tr></table></div>
+<p>The <em>Sphinx</em> extension for <em>reno</em> can also filter for version numbers:</p>
+<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gh">====================</span>
+<span class="gh">Release Notes: 0.1.0</span>
+<span class="gh">====================</span>
+
+<span class="p">..</span> <span class="ow">release-notes</span><span class="p">::</span> 0.1.0 Release Notes
+   <span class="nc">:version:</span> <span class="nf">0.1.0</span>
+</pre></div>
+</td></tr></table></div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">This is a good way to split up the display of the release notes
+over multiple files, if you&#8217;re concerned with showing too much
+at once.</p>
 </div>
+</div>
+<div class="section" id="release-notes-and-stable-branches">
+<h2><a class="toc-backref" href="#contents">Release notes and stable branches</a><a class="headerlink" href="#release-notes-and-stable-branches" title="Permalink to this headline"> </a></h2>
+<p>If your project has a stable branch policy, you can limit the displayed
+release notes to that branch only with:</p>
+<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gh">=============================</span>
+<span class="gh">Release Notes: &lt;release-name&gt;</span>
+<span class="gh">=============================</span>
+
+<span class="p">..</span> <span class="ow">release-notes</span><span class="p">::</span>
+   <span class="nc">:branch:</span> <span class="nf">stable/release-name</span>
+</pre></div>
+</td></tr></table></div>
+<p>This means the command <code class="docutils literal"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">--list</span></code> should contain one branch named
+<code class="docutils literal"><span class="pre">stable/release-name</span></code>. If your stable branch naming convention is
+different, you have to create a <strong>reno config file</strong> and change the
+option <code class="docutils literal"><span class="pre">branch_name_re</span></code> <a class="footnote-reference" href="#renousage" id="id10">[10]</a>.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Changes to release notes in a stable branch, like fixing a typo or
+phrasing something differently, need to be done in that stable branch.
+That&#8217;s due to how <em>reno</em> scans for release notes to keep track
+<a class="footnote-reference" href="#renousage" id="id11">[10]</a>.</p>
+</div>
+<p>A real-live example, of how the usage of <em>reno</em> in a big project can
+look like, can be found at the <em>OpenStack</em> projects like <em>Nova</em> <a class="footnote-reference" href="#nova" id="id12">[11]</a>.
+The <em>OpenStack</em> community is the origin on <em>reno</em>, which needed something
+to keep track with the many contributions by their many contributors.</p>
 </div>
 <div class="section" id="conclusion">
 <h2><a class="toc-backref" href="#contents">Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this headline"> </a></h2>
-<div class="admonition-todo admonition" id="index-3">
-<p class="first admonition-title">Todo</p>
-<p class="last">explain more here and reference to it <a class="footnote-reference" href="#id11" id="id10">[1]</a></p>
-</div>
+<p>This post showed how you can use <em>reno</em> to manage the release notes
+of your project. Among others, these benefits are the most useful:</p>
+<ul class="simple">
+<li>The release notes can be <strong>peer-reviewed</strong> like code. No more
+<em>&#8220;We released a bunch of fixes&#8221;</em>.</li>
+<li>The release note is <strong>part of the code</strong> change which makes the release
+note necessary. Write it while your memory of the impact is still fresh.</li>
+<li><strong>Backports</strong> to stable branches already contain the release note.
+There&#8217;s no way to miss the notes.</li>
+<li><strong>Merge conflicts</strong> to the overall release letter are next to impossible
+as every developer works in an extra file which gets combined later.</li>
+<li>Have a (customizable) <strong>template</strong> of release specific sections which are
+the most important ones for your users.</li>
+<li>A <em>Sphinx document generator</em> plugin is available. No copy &amp; paste to
+another place necessary.</li>
+</ul>
+<p>When <em>OpenStack</em> introduced the usage of <em>reno</em>, it became apparent that
+there was a little confusion about when a change needs a release note.
+Having a <strong>written guideline</strong> will help you to introduce <em>reno</em> for your
+project.</p>
+<p>It also helps a lot if you know your users as you write for them.
+Operators are often concerned about deprecations and any upgrade
+impacting actions they need to do. At the end of the day, the release
+notes are a communication vehicle with your user base. Make the best
+out of it.</p>
 </div>
 <div class="section" id="references">
 <h2><a class="toc-backref" href="#contents">References</a><a class="headerlink" href="#references" title="Permalink to this headline"> </a></h2>
-<table class="docutils footnote" frame="void" id="id11" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id10">[1]</a></td><td>www.google.com</td></tr>
-</tbody>
-</table>
 <table class="docutils footnote" frame="void" id="reno" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[2]</a></td><td><a class="reference external" href="https://docs.openstack.org/reno/latest/">https://docs.openstack.org/reno/latest/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="https://docs.openstack.org/reno/latest/">https://docs.openstack.org/reno/latest/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="vagrant" rules="none">
+<table class="docutils footnote" frame="void" id="shelve" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[3]</a></td><td><a class="reference external" href="https://www.vagrantup.com/intro/index.html">https://www.vagrantup.com/intro/index.html</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="https://docs.python.org/2/library/shelve.html">https://docs.python.org/2/library/shelve.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="sphinx" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/">http://www.sphinx-doc.org/en/stable/</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="cookie" rules="none">
@@ -723,22 +759,22 @@ is part of the very same code change.</p>
 <tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="https://pypi.python.org/pypi/cookiecutter/1.6.0">https://pypi.python.org/pypi/cookiecutter/1.6.0</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="shelve" rules="none">
+<table class="docutils footnote" frame="void" id="vagrant" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[5]</a></td><td><a class="reference external" href="https://docs.python.org/2/library/shelve.html">https://docs.python.org/2/library/shelve.html</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="sphinx" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[6]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/">http://www.sphinx-doc.org/en/stable/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><a class="reference external" href="https://www.vagrantup.com/intro/index.html">https://www.vagrantup.com/intro/index.html</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="sphinxb" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id6">[7]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/man/sphinx-build.html">http://www.sphinx-doc.org/en/stable/man/sphinx-build.html</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/man/sphinx-build.html">http://www.sphinx-doc.org/en/stable/man/sphinx-build.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="simplehttp" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td><a class="reference external" href="https://docs.python.org/2.7/library/simplehttpserver.html">https://docs.python.org/2.7/library/simplehttpserver.html</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="yamlsyn" rules="none">
@@ -753,10 +789,16 @@ is part of the very same code change.</p>
 <tr><td class="label"><a class="fn-backref" href="#id9">[9]</a></td><td><a class="reference external" href="http://www.yaml.org/spec/1.2/spec.html#id2796251">http://www.yaml.org/spec/1.2/spec.html#id2796251</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="simplehttp" rules="none">
+<table class="docutils footnote" frame="void" id="renousage" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[10]</a></td><td><a class="reference external" href="https://docs.python.org/2.7/library/simplehttpserver.html">https://docs.python.org/2.7/library/simplehttpserver.html</a></td></tr>
+<tr><td class="label">[10]</td><td><em>(<a class="fn-backref" href="#id10">1</a>, <a class="fn-backref" href="#id11">2</a>)</em> <a class="reference external" href="https://docs.openstack.org/reno/latest/user/usage.html">https://docs.openstack.org/reno/latest/user/usage.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="nova" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id12">[11]</a></td><td><a class="reference external" href="https://docs.openstack.org/releasenotes/nova/unreleased.html">https://docs.openstack.org/releasenotes/nova/unreleased.html</a></td></tr>
 </tbody>
 </table>
 </div>
