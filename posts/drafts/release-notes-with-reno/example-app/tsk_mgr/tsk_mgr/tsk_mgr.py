@@ -19,6 +19,8 @@ import os
 import uuid
 import shelve
 
+from docopt import docopt
+
 
 class Task(object):
     """ The domain object """
@@ -123,3 +125,8 @@ class Persistence(object):
         # tasks = [t for t in db.values()]  # works in py27 + py34
         db.close()
         return tasks
+
+
+if __name__ == '__main__':
+    arguments = docopt(__doc__, version='Demo Tasks Mgmt 0.1')
+CLI.handle_arguments(arguments)
