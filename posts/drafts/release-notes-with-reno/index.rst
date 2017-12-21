@@ -167,8 +167,6 @@ Things you notice from this example are:
 * The report also lists a version number (``0.0.0`` in this example)
   which can be influenced with *git tagging*.
 
-.. note::
-   Most of the content in this post is based on [#reno]_.
 
 The next sections will dive deeper into specific questions on how to
 use *reno* in your (most likely code driven) project.
