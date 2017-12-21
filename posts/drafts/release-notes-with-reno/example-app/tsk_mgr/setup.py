@@ -5,6 +5,8 @@
 
 from setuptools import setup, find_packages
 
+import tsk_mgr
+
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
@@ -25,7 +27,7 @@ test_requirements = [
 
 setup(
     name='tsk_mgr',
-    version='0.1.0',
+    version=tsk_mgr.__version__,
     description="Task Manager",
     long_description=readme + '\n\n' + history,
     author="Markus Zoeller",
