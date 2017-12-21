@@ -211,9 +211,8 @@ Alternatives could be:
 
 
 
-
-How to add the reno report to my documentation
-==============================================
+The demo application and environment
+====================================
 
 This post contains an example application (called ``tsk-mgr``) we
 will use to demo the usage of *reno* in a more real-world
@@ -225,7 +224,7 @@ generator. The structure of the app got created with *cookiecutter* [#cookie]_.
 To reproduce the actions below on your local laptop, download the
 :download:`project source files <release-notes-with-reno.tar.gz>`.
 The environment is based on *Vagrant* [#vagrant]_. After extracting
-the archive, use the demo environment with like this:
+the archive, use the demo environment like this:
 
 .. code-block:: bash
    :linenos:
@@ -236,6 +235,36 @@ the archive, use the demo environment with like this:
    vagrant@reno:~$ sudo su -
    root@reno:~# cd /applications/tsk_mgr/
    root@reno:/applications/tsk_mgr# 2>/dev/null 1>&2 python -m SimpleHTTPServer &
+
+Install and use the app like this:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ python setup.py develop   # install the app in development mode
+   $ [...]
+   $
+   $ tskmgr --help             # call the app
+   Demo Tasks Mgmt.
+
+   Usage:
+     tskmgr create <title>
+     tskmgr list
+     tskmgr update <id> <attr=value>...
+     tskmgr (-h | --help)
+     tskmgr --version
+
+   Options:
+     -h --help     Show this screen.
+     --version     Show version.
+   $
+   $ tskmgr create "Write a post about reno"
+   created: 5e16bde4-b1f6-4c9b-a090-cec9573c0a89 | Write a post about reno
+   $
+   $ tskmgr list
+   Current tasks:
+   * Write a post about reno
 
 We build the documentation with:
 
@@ -257,6 +286,11 @@ is the default for ``SimpleHTTPServer`` [#simplehttp]_.
 If you don't like to use it anymore, destroy the environment with
 ``vagrant destroy -f`` and remove the directory. You're laptop will
 be clean like nothing happened.
+
+
+
+How to add the reno report to my documentation
+==============================================
 
 We will use the file ``docs/history.rst`` for our release notes. We start
 with this view of the application release history:
@@ -370,7 +404,6 @@ Build the docs again with ``make docs`` and refresh the history page:
 Here you see that the embedded *restructured text* in the YAML file
 can be interpreted and rendered by the reno *Sphinx* extension. This allows
 you to format the release notes for easier consumption for your users.
-
 
 
 
