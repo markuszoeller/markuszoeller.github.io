@@ -1,6 +1,6 @@
 
 
-.. post::
+.. post:: 22 Dec, 2017
    :tags: release-management
    :title: Release Notes with reno
 
@@ -31,7 +31,7 @@ more relaxed release, this post will show you how to use a tool called
 
    * - Date
      - Change description
-   * - YYYY-MM-DD
+   * - 2017-12-22
      - The first release
 
 
