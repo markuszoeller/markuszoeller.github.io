@@ -165,11 +165,15 @@ the archive, use the demo environment like this:
    :linenos:
    :emphasize-lines: 0
 
-   [markus@local]$ vagrant up
-   [markus@local]$ vagrant ssh
+   [markus@local]$ vagrant up     # see the Vagrantfile
+   [markus@local]$ vagrant ssh    # login
    vagrant@reno:~$ sudo su -
-   root@reno:~# cd /applications/tsk_mgr/
-   root@reno:/applications/tsk_mgr# 2>/dev/null 1>&2 python -m SimpleHTTPServer &
+   root@reno:~# cd /applications/tsk_mgr/  #
+   root@reno:/applications/tsk_mgr# 2>/dev/null 1>&2 python -m SimpleHTTPServer &   # to serve the docs
+
+Doing this in a virtual machine is entirely optional. You could also do
+it in a *Python virtualenv*, a *Docker* container, a *chroot* or your local
+laptop.
 
 Install and use the app like this:
 
