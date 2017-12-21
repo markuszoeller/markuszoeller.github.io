@@ -184,28 +184,6 @@ project as well.
 
 
 
-Benefits
-========
-
-* The release notes can be reviewed like code.
-* The release note is part of the code change which makes the release note
-  necessary.
-* Backports to stable branches already contain the release note.
-* Merge conflicts to the common release letter are next to impossible
-* Have a (customizable) template of release specific sections which are
-  the most important ones for your users
-* A *Sphinx document generator* plugin is available.
-
-
-
-Alternatives
-============
-
-Alternatives could be:
-
-* Make the release note part of the git commit message.
-* Only use files with a naming convention and parse them separately.
-* Use the git notes feature.
 
 
 
@@ -596,12 +574,37 @@ to keep track with the many contributions by their many contributors.
 Conclusion
 ==========
 
-.. todo:: explain more here and reference to it [1]_
+This post showed how you can use *reno* to manage the release notes
+of your project. Among others, these benefits are the most useful:
+
+* The release notes can be peer-reviewed like code. No more
+  *"We released a bunch of fixes"*.
+* The release note is part of the code change which makes the release note
+  necessary. Write it while your memory of the impact is still fresh.
+* Backports to stable branches already contain the release note.
+  There's no way to miss the notes.
+* Merge conflicts to the overall release letter are next to impossible
+  as every developer works in an extra file which gets combined later.
+* Have a (customizable) template of release specific sections which are
+  the most important ones for your users.
+* A *Sphinx document generator* plugin is available. No copy & paste to
+  another place necessary.
+
+When *OpenStack* introduced the usage of *reno*, it became apparent that
+there was a little confusion about when a change needs a release note.
+Having a written guideline will help you to introduce *reno* for your
+project.
+
+It also helps a lot if you know your users as you write for them.
+Operators are often concerned about deprecations and any upgrade
+impacting actions they need to do. At the end of the day, the release
+notes are a communication vehicle with your user base. Make the best
+out of it.
+
+
 
 References
 ==========
-
-.. [1] www.google.com
 
 .. [#reno] https://docs.openstack.org/reno/latest/
 
