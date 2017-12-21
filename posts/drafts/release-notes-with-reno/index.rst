@@ -104,53 +104,7 @@ I trimmed some of the unnecessary output with *[...]*:
 
     - List known issues here, or remove this section. [...]
 
-
-    Upgrade Notes
-    -------------
-
-    .. releasenotes/notes/my-first-release-note-[...]
-
-    - List upgrade notes here, or remove this section. [...]
-
-
-    Deprecation Notes
-    -----------------
-
-    .. releasenotes/notes/my-first-release-note-[...]
-
-    - List deprecations notes here, or remove this section. [...]
-
-
-    Critical Issues
-    ---------------
-
-    .. releasenotes/notes/my-first-release-note-[...]
-
-    - Add critical notes here, or remove this section. [...]
-
-
-    Security Issues
-    ---------------
-
-    .. releasenotes/notes/my-first-release-note-[...]
-
-    - Add security notes here, or remove this section. [...]
-
-
-    Bug Fixes
-    ---------
-
-    .. releasenotes/notes/my-first-release-note-[...]
-
-    - Add normal bug fixes here, or remove this section. [...]
-
-
-    Other Notes
-    -----------
-
-    .. releasenotes/notes/my-first-release-note-[...]
-
-    - Add other notes here, or remove this section. [...]
+    [...]
 
 
 Things you notice from this example are:
