@@ -211,6 +211,170 @@ Alternatives could be:
 
 
 
+
+How to add the reno report to my documentation
+==============================================
+
+This post contains an example application (called ``tsk-mgr``) we
+will use to demo the usage of *reno* in a more real-world
+manner. ``tsk-mgr`` is a TODO list management tool with a CLI interface and
+persistence by using the Python shelve library [#shelve]_. It
+has a ``docs`` directory which uses *Sphinx* [#sphinx]_ as documentation
+generator. The structure of the app got created with *cookiecutter* [#cookie]_.
+
+To reproduce the actions below on your local laptop, download the
+:download:`project source files <release-notes-with-reno.tar.gz>`.
+The environment is based on *Vagrant* [#vagrant]_. After extracting
+the archive, use the demo environment with like this:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   [markus@local]$ vagrant up
+   [markus@local]$ vagrant ssh
+   vagrant@reno:~$ sudo su -
+   root@reno:~# cd /applications/tsk_mgr/
+   root@reno:/applications/tsk_mgr# 2>/dev/null 1>&2 python -m SimpleHTTPServer &
+
+We build the documentation with:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ make docs       # alternatively: cd docs && make html
+
+Under the covers, this uses the ``sphinx-build`` command from *Sphinx*,
+but we won't dive deeper into this. Further reading can be found at
+[#sphinxb]_.
+
+Now you can access the documentation in your local browser via the
+URL ``http://192.168.159.11:8000/docs/_build/html/index.html``. The
+IP address got specified in the ``Vagrantfile`` and the port ``8000``
+is the default for ``SimpleHTTPServer`` [#simplehttp]_.
+
+If you don't like to use it anymore, destroy the environment with
+``vagrant destroy -f`` and remove the directory. You're laptop will
+be clean like nothing happened.
+
+We will use the file ``docs/history.rst`` for our release notes. We start
+with this view of the application release history:
+
+.. image:: images/sphinx_history_000_vwZSWlz.png
+   :height: 300px
+   :alt: Example app's documentation with Sphinx: Starting point
+
+We will use the *reno* Sphinx extension:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+    $ pip install 'reno[sphinx]'
+
+After that, we can add it to the *Sphinx* configuration file at
+``docs/conf.py``. This diff shows the line to add to the ``extensions``
+list:
+
+.. code-block:: diff
+   :linenos:
+   :emphasize-lines: 0
+
+   diff --git a/docs/conf.py b/docs/conf.py
+   index c6d3e26..031653c 100755
+   --- a/docs/conf.py
+   +++ b/docs/conf.py
+   @@ -45,6 +45,7 @@ import tsk_mgr
+    extensions = [
+        'sphinx.ext.autodoc',
+        'sphinx.ext.viewcode',
+   +    'reno.sphinxext',
+        ]
+
+    # Add any paths that contain templates here, relative to this directory.
+
+We will show the release notes in ``docs/history.rst``. Use the
+``release-notes`` directive we gained from installing the *reno* *Sphinx*
+extension:
+
+.. code-block:: rst
+   :linenos:
+   :emphasize-lines: 0
+
+   .. release-notes:: Release Notes
+
+
+.. image:: images/sphinx_history_reno_px2JD7k.png
+   :height: 300px
+   :alt: Example app's documentation with Sphinx: Using *reno*
+
+It's empty for now, as we haven't yet added a release note to this
+project.
+
+
+
+Add a release note and show it in the docs
+==========================================
+
+Let's assume we want to release the app (to *PypI* for example)
+but we discovered that the update of tasks doesn't work. Instead of
+delaying the release date, we create a release note which states this
+known issue:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ reno new ki-update-not-working
+   Created new notes file in releasenotes/notes/ki-update-not-working-8f89e1c561bc7c91.yaml
+
+I used the prefix ``ki`` for *known issue*, but that's entirely optional.
+
+Edit the *yaml* file with your editor of choice so that you have this
+content:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 0
+
+   ---
+   issues:
+     - >
+       The update procedure doesn't work at the moment. This means that the
+       command ``tsk-mgr.py update`` throws an error.
+
+.. tip::
+
+   The char ``>`` is *YAML folding syntax*. It replaces every line break
+   with a space. If you want to keep the line breaks as you specified them,
+   use the ``|`` char. More details at [#yamlsyn]_ or the official
+   spec [#yamlspec]_.
+
+Remember, *reno* works on your git repository. Add the release note
+and commit it:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ git add -A
+   $ git commit -m "Add known issue about update"
+
+Build the docs again with ``make docs`` and refresh the history page:
+
+.. image:: images/sphinx_reno_first_note_k6gtr5g.png
+   :height: 300px
+   :alt: First *reno* release note in our application docs.
+
+Here you see that the embedded *restructured text* in the YAML file
+can be interpreted and rendered by the reno *Sphinx* extension. This allows
+you to format the release notes for easier consumption for your users.
+
+
+
+
+
 Content
 =======
 
@@ -228,3 +392,18 @@ References
 
 .. [#reno] https://docs.openstack.org/reno/latest/
 
+.. [#vagrant] https://www.vagrantup.com/intro/index.html
+
+.. [#cookie] https://pypi.python.org/pypi/cookiecutter/1.6.0
+
+.. [#shelve] https://docs.python.org/2/library/shelve.html
+
+.. [#sphinx] http://www.sphinx-doc.org/en/stable/
+
+.. [#sphinxb] http://www.sphinx-doc.org/en/stable/man/sphinx-build.html
+
+.. [#yamlsyn] http://yaml-multiline.info/
+
+.. [#yamlspec] http://www.yaml.org/spec/1.2/spec.html#id2796251
+
+.. [#simplehttp] https://docs.python.org/2.7/library/simplehttpserver.html
