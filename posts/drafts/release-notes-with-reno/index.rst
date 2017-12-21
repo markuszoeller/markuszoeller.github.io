@@ -406,6 +406,67 @@ can be interpreted and rendered by the reno *Sphinx* extension. This allows
 you to format the release notes for easier consumption for your users.
 
 
+Add a release note with a code change
+=====================================
+
+The examples before showed the usage of reno when no code was involved.
+We change this by doing an actual fix in the application.
+
+Our app works fine in *Python 2*, but the ``shelve`` library behaves
+differently in *Python 3*. We see this issue:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ python -V
+   Python 3.5.2
+   $
+   $ tskmgr list list
+   Traceback (most recent call last):
+   [...]
+   dbm.error: db type could not be determined
+
+We fix this in the code and add a release note for the users to notice.
+The git commit consists of two files:
+
+* the changed functional code
+* the release note for this
+
+The diff looks like this:
+
+.. code-block:: diff
+   :linenos:
+   :emphasize-lines: 0
+
+   diff --git a/releasenotes/notes/bf-list-in-py3-a2ea5423b9d538f0.yaml b/releasenotes/notes/bf-list-in-py3-a2ea5423b9d538f0.yaml
+   new file mode 100644
+   index 0000000..8bf1bf5
+   --- /dev/null
+   +++ b/releasenotes/notes/bf-list-in-py3-a2ea5423b9d538f0.yaml
+   @@ -0,0 +1,5 @@
+   +---
+   +fixes:
+   +  - >
+   +    The command ``tskmgr list`` didn't work on Python3. This is fixed now.
+   +
+   diff --git a/tsk_mgr/tsk_mgr.py b/tsk_mgr/tsk_mgr.py
+   index 037840a..0f4bfa3 100755
+   --- a/tsk_mgr/tsk_mgr.py
+   +++ b/tsk_mgr/tsk_mgr.py
+   @@ -121,7 +121,7 @@ class Persistence(object):
+
+        def list_tasks(self):
+            db = shelve.open(Persistence.FILE_NAME, writeback=True)
+   -        tasks = db.values()
+   +        tasks = [t for t in db.values()]
+            db.close()
+            return tasks
+
+
+That's the beauty of release note management with *reno*. The documentation
+is part of the very same code change.
+
 
 
 Content
