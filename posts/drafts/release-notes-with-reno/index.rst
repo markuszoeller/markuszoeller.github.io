@@ -544,6 +544,10 @@ The *Sphinx* extension for *reno* can also filter for version numbers:
    :linenos:
    :emphasize-lines: 0
 
+   ====================
+   Release Notes: 0.1.0
+   ====================
+
    .. release-notes:: 0.1.0 Release Notes
       :version: 0.1.0
 
@@ -553,6 +557,41 @@ The *Sphinx* extension for *reno* can also filter for version numbers:
    over multiple files, if you're concerned with showing too much
    at once.
 
+
+Release notes and stable branches
+=================================
+
+If your project has a stable branch policy, you can limit the displayed
+release notes to that branch only with:
+
+.. code-block:: rst
+   :linenos:
+   :emphasize-lines: 0
+
+   =============================
+   Release Notes: <release-name>
+   =============================
+
+   .. release-notes::
+      :branch: stable/release-name
+
+This means the command ``git branch --list`` should contain one branch named
+``stable/release-name``. If your stable branch naming convention is
+different, you have to create a **reno config file** and change the
+option ``branch_name_re`` [#renousage]_.
+
+
+.. important::
+
+   Changes to release notes in a stable branch, like fixing a typo or
+   phrasing something differently, need to be done in that stable branch.
+   That's due to how *reno* scans for release notes to keep track
+   [#renousage]_.
+
+A real-live example, of how the usage of *reno* in a big project can
+look like, can be found at the *OpenStack* projects like *Nova* [#nova]_.
+The *OpenStack* community is the origin on *reno*, which needed something
+to keep track with the many contributions by their many contributors.
 
 Content
 =======
@@ -586,3 +625,7 @@ References
 .. [#yamlspec] http://www.yaml.org/spec/1.2/spec.html#id2796251
 
 .. [#simplehttp] https://docs.python.org/2.7/library/simplehttpserver.html
+
+.. [#renousage] https://docs.openstack.org/reno/latest/user/usage.html
+
+.. [#nova] https://docs.openstack.org/releasenotes/nova/unreleased.html
