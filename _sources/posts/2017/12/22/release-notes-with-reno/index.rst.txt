@@ -23,7 +23,6 @@ more relaxed release, this post will show you how to use a tool called
     :local:
     :backlinks: top
 
-.. todo:: date
 
 .. list-table:: Change history:
    :widths: 1 5
