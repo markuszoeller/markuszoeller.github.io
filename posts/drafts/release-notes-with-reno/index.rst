@@ -380,7 +380,7 @@ content:
 
 .. tip::
 
-   The char ``>`` is *YAML folding syntax*. It replaces every line break
+   The ``>`` char is *YAML folding syntax*. It replaces every line break
    with a space. If you want to keep the line breaks as you specified them,
    use the ``|`` char. More details at [#yamlsyn]_ or the official
    spec [#yamlspec]_.
@@ -422,7 +422,7 @@ differently in *Python 3*. We see this issue:
    $ python -V
    Python 3.5.2
    $
-   $ tskmgr list list
+   $ tskmgr list
    Traceback (most recent call last):
    [...]
    dbm.error: db type could not be determined
