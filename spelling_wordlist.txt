@@ -14,6 +14,10 @@ customizable
 Customizable
 datasource
 Dec
+deprecation
+Deprecation
+deprecations
+Deprecations
 devs
 diff
 diffs
