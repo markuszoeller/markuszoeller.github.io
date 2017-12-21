@@ -139,7 +139,7 @@ the last release. This can be:
 * code changed which have an impact on the upgrade procedure
 
 This is a non-exhaustive list. It depends on your users what you add.
-*reno* is a tool to manage the release notes of your project.
+*reno* [#reno]_ is a tool to manage the release notes of your project.
 It got developed to fit the needs of the *OpenStack* upstream development,
 but it can be used in any other project as well and this post will
 demo a few of its capabilities.
@@ -567,21 +567,21 @@ References
 
 .. [#reno] https://docs.openstack.org/reno/latest/
 
-.. [#vagrant] https://www.vagrantup.com/intro/index.html
-
-.. [#cookie] https://pypi.python.org/pypi/cookiecutter/1.6.0
-
 .. [#shelve] https://docs.python.org/2/library/shelve.html
 
 .. [#sphinx] http://www.sphinx-doc.org/en/stable/
 
+.. [#cookie] https://pypi.python.org/pypi/cookiecutter/1.6.0
+
+.. [#vagrant] https://www.vagrantup.com/intro/index.html
+
 .. [#sphinxb] http://www.sphinx-doc.org/en/stable/man/sphinx-build.html
+
+.. [#simplehttp] https://docs.python.org/2.7/library/simplehttpserver.html
 
 .. [#yamlsyn] http://yaml-multiline.info/
 
 .. [#yamlspec] http://www.yaml.org/spec/1.2/spec.html#id2796251
-
-.. [#simplehttp] https://docs.python.org/2.7/library/simplehttpserver.html
 
 .. [#renousage] https://docs.openstack.org/reno/latest/user/usage.html
 
