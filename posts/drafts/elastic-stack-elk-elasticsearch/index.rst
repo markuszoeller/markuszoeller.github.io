@@ -5,7 +5,7 @@
    :title: Elastic Stack (formerly ELK) - Elasticsearch
 
 .. spelling::
-   foo
+   tokenized
 
 
 
@@ -39,6 +39,73 @@ Maybe use http://jsonlines.org/on_the_web/ for the example logs
      - Change description
    * - 2017-11-02
      - The first release
+
+.. |es| replace:: *Elasticsearch*
+
+Brain dump
+==========
+
+This is the first part of a multi-part series about the
+*Elastic Stack* (formerly the *ELK* stack). This stack
+consists of 3 parts:
+
+* storing data with |es|
+* ingesting data with *Logstash* (and/or *Beats*)
+* visualizing data with *Kibana*
+
+This post will focus on the first part, |es|.
+
+
+It uses a schema-less, flexible data model, which means you
+can use your current data as-is and don't have to transform
+it into another schema so that |es| can deal with it.
+
+This post will focus on the *log analytics* part and
+won't delve into metrics analytics or other use cases.
+
+We will also not talk about the *x-pack* plugins,
+which would add more functionality.
+
+The platform support matrix is at:
+https://www.elastic.co/support/matrix
+
+We will use this setup:
+
+* OS: Ubuntu 16.04
+* JVM: IcedTea OpenJDK
+* |es|: 6.1
+
+
+Terms:
+------
+
+document
+    One single, unstructured entry in |es| which gets
+    tokenized into its parts.
+
+
+Actions
+-------
+
+* ``match`` (``OR``'ed; see ``_score``)
+* ``match_phrase``
+* ``must`` and ``must_not``
+* ``AND``'ed with multiple *clauses*
+* ``should`` orders by score
+* querying and filtering are different
+* understand the *analysis* for tokenized documents
+* aggregations with ``aggs`` (and e.g. ``avg``)
+* partial update with  ``POST`` to ``_update`` API
+* replacement with plain ``POST`` API on index
+
+
+
+
+questions
+---------
+
+* Q: Horizontal scale out of |es| instances?
+
 
 
 
