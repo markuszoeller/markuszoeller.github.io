@@ -10,7 +10,7 @@ servers=[
       :box => "geerlingguy/ubuntu1604",
       :ip => "192.168.78.11",
       :port => 50211,
-      :ram => 1024,
+      :ram => 3072,
       :cpu => 1
     },
     {
@@ -18,7 +18,7 @@ servers=[
       :box => "geerlingguy/ubuntu1604",
       :ip => "192.168.78.12",
       :port => 50212,
-      :ram => 1024,
+      :ram => 3072,
       :cpu => 1
     },
 ]
