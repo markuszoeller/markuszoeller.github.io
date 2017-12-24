@@ -34,6 +34,19 @@
       ping:
       with_items: '{{ groups["all"] }}'
 
+    - name: "Gather some facts for later."
+      setup:
+
+    - name: "Disable all swapping."
+      command: swapoff -a
+      when: ansible_swaptotal_mb > 0
+
+    - name: "Remove all swapping."
+      lineinfile:
+        dest: /etc/fstab
+        regexp: "swap"
+        state: absent
+
     - name: "Ensure system package cache is updated."
       apt:
         update_cache: "yes"
