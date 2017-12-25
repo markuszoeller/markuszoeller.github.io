@@ -56,14 +56,26 @@
       group:
         name: "{{ user_group }}"
         state: present
+      tags: perm
+
+    - name: "Allow passwordless sudo for group {{ user_group }}"
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: "^%{{ user_group }}"
+        line: "%{{ user_group }} ALL=(ALL) NOPASSWD: ALL"
+        validate: 'visudo -cf %s'
+      tags: perm
 
     - name: "Creating user for Elasticsearch group."
       user:
         name: "{{ user_name }}"
-        password:  "{{ user_password | password_hash('sha512') }}"
-        group: "{{ user_group }}"
+        groups: "{{ user_group }}"
+        append: true
+        createhome: true
         system: true
         state: present
+      tags: perm
 
     - name: "Set number of open file descriptors (permanently)."
       pam_limits:
