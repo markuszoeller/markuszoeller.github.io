@@ -65,12 +65,27 @@
         system: true
         state: present
 
-    - name: "Increase number of open file descriptors (permanently)."
+    - name: "Set number of open file descriptors (permanently)."
       pam_limits:
         domain: "{{ user_name }}"
         limit_type: soft
         limit_item: nofile
         value: 65536
+      tags: limit
+
+    - name: "Set number of threads (permanently)."
+      pam_limits:
+        domain: "{{ user_name }}"
+        limit_type: soft
+        limit_item: nproc
+        value: 8192
+      tags: limit
+
+    - name: "Set maximum number of memory map areas (permanently)."
+      sysctl:
+        name: vm.max_map_count
+        value: 262144
+        state: present
       tags: limit
 
     - name: "Install JAVA runtime."
@@ -94,6 +109,8 @@
         group: "{{ user_group }}"
 
     - name: "Run elasticsearch as daemon."
+      # environment variables
+      # ES_JAVA_OPTS="-Xms1500m -Xmx1500m"
       command: "sudo -u {{ user_name }} ./bin/elasticsearch -d -p pid"
       args:
         chdir: /home/elastic/elasticsearch-6.1.1/
