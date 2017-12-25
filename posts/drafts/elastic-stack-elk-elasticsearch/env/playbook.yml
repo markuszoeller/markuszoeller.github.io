@@ -77,6 +77,24 @@
         state: present
       tags: perm
 
+    - name: "Create logging directory."
+      file:
+        path: /var/log/elasticsearch
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ user_group }}"
+        mode: 0775
+      tags: dirs
+
+    - name: "Create data directory."
+      file:
+        path: /var/data/elasticsearch
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ user_group }}"
+        mode: 0775
+      tags: dirs
+
     - name: "Set number of open file descriptors (permanently)."
       pam_limits:
         domain: "{{ user_name }}"
