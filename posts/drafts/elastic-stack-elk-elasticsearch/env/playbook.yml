@@ -108,9 +108,23 @@
         owner: "{{ user_name }}"
         group: "{{ user_group }}"
 
+    - name: "Copy the elasticsearch config file."
+      copy:
+        src: elasticsearch.yml
+        dest: /home/elastic/elasticsearch-6.1.1/config
+      tags: config
+
+    - name: "Set environment variables for all users."
+      lineinfile:
+        dest: /etc/environment
+        line: "{{ item }}"
+        state: present
+      with_items:
+        - "ES_JAVA_OPTS=-Xms1500m -Xmx1500m"
+        - "ES_NETWORK_HOST={{ ansible_enp0s8.ipv4.address }}"
+        - "ES_NODE_NAME={{ ansible_hostname }}"
+
     - name: "Run elasticsearch as daemon."
-      # environment variables
-      # ES_JAVA_OPTS="-Xms1500m -Xmx1500m"
       command: "sudo -u {{ user_name }} ./bin/elasticsearch -d -p pid"
       args:
         chdir: /home/elastic/elasticsearch-6.1.1/
