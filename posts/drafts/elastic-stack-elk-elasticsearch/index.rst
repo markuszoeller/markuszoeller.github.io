@@ -100,6 +100,62 @@ Actions
 
 
 
+Download the compressed project source archive file, uncompress it,
+change to the ``env`` directory, start the *Vagrant* setup and use
+*Ansible* to set configure |es| on that virtualized environment:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   [markus@local]$ untar -xcv project.tar.gz
+   [markus@local]$ cd env
+   [markus@local]$ vagrant up
+   [markus@local]$ ansible-playbook playbook.yml
+
+
+Your output should look similar to this:
+
+.. code-block:: text
+   :linenos:
+   :emphasize-lines: 0
+
+   TASK [Check if Elasticsearch is up an running.] *******************************
+   Wednesday 03 January 2018  17:15:23 +0100 (0:00:01.189)       0:00:45.358 *****
+   FAILED - RETRYING: Check if Elasticsearch is up an running. (5 retries left).
+   FAILED - RETRYING: Check if Elasticsearch is up an running. (4 retries left).
+   ok: [es1 -> localhost]
+
+   PLAY RECAP ********************************************************************
+   es1                        : ok=21   changed=17   unreachable=0    failed=0
+
+
+After the setup by the *Ansible playbook*, we can interact with |es|
+via ``curl`` on our local machine:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   [markus@local]$ curl 192.168.78.11:9200
+   {
+     "name" : "hMDFApt",
+     "cluster_name" : "elasticsearch",
+     "cluster_uuid" : "kEM4Oz-PQQ-98ZgdOxGOdw",
+     "version" : {
+       "number" : "6.1.1",
+       "build_hash" : "bd92e7f",
+       "build_date" : "2017-12-17T20:23:25.338Z",
+       "build_snapshot" : false,
+       "lucene_version" : "7.1.0",
+       "minimum_wire_compatibility_version" : "5.6.0",
+       "minimum_index_compatibility_version" : "5.0.0"
+     },
+     "tagline" : "You Know, for Search"
+   }
+
+
+
 
 questions
 ---------
