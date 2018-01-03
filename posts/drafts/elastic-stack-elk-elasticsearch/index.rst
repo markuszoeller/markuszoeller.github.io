@@ -99,6 +99,8 @@ Actions
 * replacement with plain ``POST`` API on index
 
 
+Set up the environment
+======================
 
 Download the compressed project source archive file, decompress it,
 change to the ``env`` directory, start the *Vagrant* setup and use
@@ -130,6 +132,9 @@ Your output should look similar to this:
    es1                        : ok=21   changed=17   unreachable=0    failed=0
 
 
+Interact with |es|
+==================
+
 After the setup by the *Ansible playbook*, we can interact with |es|
 via ``curl`` on our local machine:
 
@@ -154,6 +159,23 @@ via ``curl`` on our local machine:
      "tagline" : "You Know, for Search"
    }
 
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   [markus@local]$ curl 192.168.78.11:9200/_cat/health?v
+   epoch      timestamp cluster       status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent
+   1514997486 16:38:06  elasticsearch green           1         1      0   0    0    0        0             0                  -                100.0%
+
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   [markus@local]$ curl 192.168.78.11:9200/_cat/nodes?v
+   ip            heap.percent ram.percent cpu load_1m load_5m load_15m node.role master name
+   192.168.78.11            5          63   0    0.00    0.00     0.00 mdi       *      hMDFApt
 
 
 
