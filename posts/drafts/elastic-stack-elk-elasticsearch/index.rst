@@ -132,6 +132,14 @@ Your output should look similar to this:
    es1                        : ok=21   changed=17   unreachable=0    failed=0
 
 
+Terms and Concepts
+==================
+
+Cluster -- Node - Index -- Document
+
+Index --Shard -- Replica -- Replication Group
+
+
 Interact with |es|
 ==================
 
@@ -160,23 +168,160 @@ via ``curl`` on our local machine:
    }
 
 
-.. code-block:: bash
-   :linenos:
-   :emphasize-lines: 0
-
-   [markus@local]$ curl 192.168.78.11:9200/_cat/health?v
-   epoch      timestamp cluster       status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent
-   1514997486 16:38:06  elasticsearch green           1         1      0   0    0    0        0             0                  -                100.0%
-
+We use ``format=yaml``, one of the common REST API options of |es|
+[#commonapi]_, to have an output which is easier to read.
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   [markus@local]$ curl 192.168.78.11:9200/_cat/nodes?v
-   ip            heap.percent ram.percent cpu load_1m load_5m load_15m node.role master name
-   192.168.78.11            5          63   0    0.00    0.00     0.00 mdi       *      hMDFApt
+   [markus@local]$ curl 192.168.78.11:9200/_cat/health?format=yaml
+   ---
+   - epoch: "1514998054"
+     timestamp: "16:47:34"
+     cluster: "elasticsearch"
+     status: "green"
+     node.total: "1"
+     node.data: "1"
+     shards: "0"
+     pri: "0"
+     relo: "0"
+     init: "0"
+     unassign: "0"
+     pending_tasks: "0"
+     max_task_wait_time: "-"
+     active_shards_percent: "100.0%"
 
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   [markus@local]$ curl 192.168.78.11:9200/_cat/nodes?format=yaml
+   ---
+   - ip: "192.168.78.11"
+     heap.percent: "6"
+     ram.percent: "63"
+     cpu: "0"
+     load_1m: "0.00"
+     load_5m: "0.00"
+     load_15m: "0.00"
+     node.role: "mdi"
+     master: "*"
+     name: "hMDFApt"
+
+Useful common options:
+
+* ``pretty=true`` to beautify the JSON output
+* ``format=yaml`` as we used before
+* ``error_trace=true`` to show a more verbose error trace
+* ``filter_path=<values>`` to reduce the response
+
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+    curl -XPUT '192.168.78.11:9200/twitter/tweet/1?pretty' \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "user" : "kimchy",
+        "post_date" : "2009-11-15T14:12:12",
+        "message" : "trying out Elasticsearch"
+    }'
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+
+    $ curl -X GET 192.168.78.11:9200/_cat/indices?format=yaml
+    ---
+    - health: "yellow"
+      status: "open"
+      index: "app"
+      uuid: "EgTSMR4AQpKfSXRh3r6Rqw"
+      pri: "5"
+      rep: "1"
+      docs.count: "3"
+      docs.deleted: "0"
+      store.size: "16.1kb"
+      pri.store.size: "16.1kb"
+
+
+Logging to |es|
+===============
+
+Custom logger
+
+
+Basic CRUDL operations
+======================
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+    [markus@local]$ curl -X GET 192.168.78.11:9200/app/_search?pretty=true
+    {
+      "took" : 1,
+      "timed_out" : false,
+      "_shards" : {
+        "total" : 5,
+        "successful" : 5,
+        "skipped" : 0,
+        "failed" : 0
+      },
+      "hits" : {
+        "total" : 3,
+        "max_score" : 1.0,
+        "hits" : [
+          {
+            "_index" : "app",
+            "_type" : "logs",
+            "_id" : "KpBcvWAB78EA2Ko2WrB2",
+            "_score" : 1.0,
+            "_source" : {
+              "timestamp" : "foo",
+              "message" : "bar",
+              "module" : "app",
+              "level" : "INFO"
+            }
+          },
+          {
+            "_index" : "app",
+            "_type" : "logs",
+            "_id" : "K5BgvWAB78EA2Ko2Q7B-",
+            "_score" : 1.0,
+            "_source" : {
+              "timestamp" : "foo",
+              "message" : "info message",
+              "module" : "app",
+              "level" : "INFO"
+            }
+          },
+          {
+            "_index" : "app",
+            "_type" : "logs",
+            "_id" : "LJBhvWAB78EA2Ko2k7Dy",
+            "_score" : 1.0,
+            "_source" : {
+              "timestamp" : "foo",
+              "message" : "info message",
+              "module" : "app",
+              "level" : "INFO"
+            }
+          }
+        ]
+      }
+    }
+
+
+Conclusion
+==========
+
+Logging to the HTTP address itself doesn't make sense. We will
+use *Logstash* in the next post which does that for us.
 
 
 questions
@@ -193,3 +338,5 @@ References
 .. [#pygments] http://pygments.org/
 
 .. [#footnotes] http://www.sphinx-doc.org/en/stable/rest.html#footnotes
+
+.. [#commonapi] https://www.elastic.co/guide/en/elasticsearch/reference/6.1/common-options.html#common-options
