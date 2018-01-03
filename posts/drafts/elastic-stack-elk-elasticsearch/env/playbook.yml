@@ -138,26 +138,30 @@
         owner: "{{ user_name }}"
         group: "{{ user_group }}"
 
-    - name: "Set environment variables for all users."
+    - name: "Configure elasticsearch."
       lineinfile:
-        dest: /etc/environment
-        line: "{{ item }}"
+        dest: /home/elastic/elasticsearch-6.1.1/config/elasticsearch.yml
+        line: 'network.host: "${ES_NETWORK_HOST}"'
+        regexp: "network.host"
         state: present
-      with_items:
-        - "ES_NETWORK_HOST={{ ansible_enp0s8.ipv4.address }}"
-        - "ES_NODE_NAME={{ ansible_hostname }}"
 
     - name: "Run elasticsearch as daemon."
-      command: "sudo -u {{ user_name }} ./bin/elasticsearch -d -p pid"
+      environment:
+        ES_NETWORK_HOST: "{{ ansible_enp0s8.ipv4.address }}"
+        ES_NODE_NAME: "{{ ansible_hostname }}"
+      command: "sudo -E -u {{ user_name }} ./bin/elasticsearch -d -p pid"
       args:
         chdir: /home/elastic/elasticsearch-6.1.1/
       async: 10
       poll: 0
 
     - name: "Check if Elasticsearch is up an running."
+      delegate_to: localhost
+      become: false
       uri:
-        url: http://127.0.0.1:9200
+        url: "http://{{ ansible_enp0s8.ipv4.address }}:9200"
         method: GET
       register: reg_get_api
       until: reg_get_api.status == 200
       retries: 5
+      ignore_errors: true
