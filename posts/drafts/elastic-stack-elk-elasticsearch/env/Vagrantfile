@@ -13,14 +13,6 @@ servers=[
       :ram => 3072,
       :cpu => 1
     },
-    {
-      :hostname => "es2",
-      :box => "geerlingguy/ubuntu1604",
-      :ip => "192.168.78.12",
-      :port => 50212,
-      :ram => 3072,
-      :cpu => 1
-    },
 ]
 
 
