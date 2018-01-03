@@ -100,7 +100,7 @@ Actions
 
 
 
-Download the compressed project source archive file, uncompress it,
+Download the compressed project source archive file, decompress it,
 change to the ``env`` directory, start the *Vagrant* setup and use
 *Ansible* to set configure |es| on that virtualized environment:
 

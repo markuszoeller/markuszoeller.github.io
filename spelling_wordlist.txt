@@ -119,6 +119,8 @@ username
 Vagrantfile
 versioning
 Versioning
+virtualized
+Virtualized
 VM
 webhook
 Webhook
