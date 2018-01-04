@@ -70,6 +70,7 @@ The platform support matrix is at:
 https://www.elastic.co/support/matrix
 
 
+.. _sec-env:
 
 Set up the environment
 ======================
@@ -211,14 +212,15 @@ interact with |es| in our environment.
 Basic Interaction with |es|
 ===========================
 
-After the setup by the *Ansible playbook*, we can interact with |es|
-via ``curl`` on our local machine:
+After the setup by the *Ansible playbook*, we can interact with the
+**REST API** of |es| via ``curl`` on our local machine. Port ``9200`` is
+the default:
 
 .. code-block:: bash
    :linenos:
-   :emphasize-lines: 0
+   :emphasize-lines: 3,4,7,11
 
-   [markus@local]$ curl 192.168.78.11:9200
+   $ curl 192.168.78.11:9200
    {
      "name" : "hMDFApt",
      "cluster_name" : "elasticsearch",
@@ -235,15 +237,45 @@ via ``curl`` on our local machine:
      "tagline" : "You Know, for Search"
    }
 
+This JSON response shows a few things of the previous section:
 
-We use ``format=yaml``, one of the common REST API options of |es|
-[#commonapi]_, to have an output which is easier to read.
+* ``name``: The name of the *Node*. I used the default, which randomly
+  generates a unique one. This is configurable.
+* ``cluster_name``: The name of the *Cluster* this *Node* is in.
+  Again, I used the default name.
+* ``number``: The version of the |es| *Node*.
+* ``lucene_version``: The version of the search engine
+  encapsulated by |es|.
+
+The REST API has some useful common options [#commonapi]_:
+
+* ``pretty=true``: to beautify the JSON output
+* ``format=yaml``: use YAML instead of JSON as output
+* ``error_trace=true`` to show a more verbose error trace
+* ``filter_path=<values>`` to reduce the response
+
+We will use some of these later.
+
+
+
+Health Check
+------------
+
+Let's do a basic health check of our single-node cluster.
+We use ``format=yaml`` to have an output which is easier to read:
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   [markus@local]$ curl 192.168.78.11:9200/_cat/health?format=yaml
+   $ curl 192.168.78.11:9200/_cat/health?format=yaml
+
+The output, formatted as YAML:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 5
+
    ---
    - epoch: "1514998054"
      timestamp: "16:47:34"
@@ -260,12 +292,30 @@ We use ``format=yaml``, one of the common REST API options of |es|
      max_task_wait_time: "-"
      active_shards_percent: "100.0%"
 
+|es| uses a traffic light system with *green*, *yellow* and *red*.
+As the ``status`` is ``green``, we're good, the node works fine.
+
+
+
+List Nodes
+----------
+
+Any real live production system which uses |es| will most likely have
+a cluster with multiple nodes in it. In those setups it might come
+in handy to list all nodes:
 
 .. code-block:: bash
    :linenos:
-   :emphasize-lines: 0
+   :emphasize-lines: 3,11,12
 
-   [markus@local]$ curl 192.168.78.11:9200/_cat/nodes?format=yaml
+   $ curl 192.168.78.11:9200/_cat/nodes?format=yaml
+
+The output, formatted as YAML:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 2,10,11
+
    ---
    - ip: "192.168.78.11"
      heap.percent: "6"
@@ -278,43 +328,137 @@ We use ``format=yaml``, one of the common REST API options of |es|
      master: "*"
      name: "hMDFApt"
 
-Useful common options:
+Remember, we have a single-node system, so only this one should
+get listed:
 
-* ``pretty=true`` to beautify the JSON output
-* ``format=yaml`` as we used before
-* ``error_trace=true`` to show a more verbose error trace
-* ``filter_path=<values>`` to reduce the response
+* ``ip``: as described in the previous section :ref:`sec-env`
+* ``master``: this node is a *master node* in this *cluster*.
+  I'll dive deeper into that in a later post.
+* ``name``: the name of this *node*
 
+If the cluster would contain more nodes, they would be shown here
+with YAML list style (see *Block Sequence* at [#yamllist]_).
+
+
+
+Minimal Example
+---------------
+
+Let's create a very small document:
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-    curl -XPUT '192.168.78.11:9200/twitter/tweet/1?pretty' \
+    $ curl -X PUT '192.168.78.11:9200/my-index/my-type/1?pretty' \
     -H 'Content-Type: application/json' \
     -d '{
-        "user" : "kimchy",
-        "post_date" : "2009-11-15T14:12:12",
-        "message" : "trying out Elasticsearch"
+        "my_document" : "my document content"
     }'
+
+This HTTP PUT call does multiple things:
+
+* it creates an *Index* called ``my-index``
+* it creates a *Type* in that *Index*, called ``my-type``
+* it adds the *Document* (the JSON for parameter ``-d``) to that *Index*
+* it assigns the ID ``1`` to that document
+* it increments the version number of that created (or updated) *Document*
+* it specifies, that the HTTP response should be ``pretty`` json
+
+It becomes more clear when we look at the HTTP response:
+
+.. code-block:: json
+   :linenos:
+   :emphasize-lines: 0
+
+   {
+     "_index" : "my-index",
+     "_type" : "my-type",
+     "_id" : "1",
+     "_version" : 1,
+     "result" : "created",
+     "_shards" : {
+       "total" : 2,
+       "successful" : 1,
+       "failed" : 0
+     },
+     "_seq_no" : 0,
+     "_primary_term" : 1
+   }
+
+Before going into more detail, let's query this document with another
+REST API call:
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
+   $ curl -X GET '192.168.78.11:9200/my-index/my-type/1?pretty'
 
-    $ curl -X GET 192.168.78.11:9200/_cat/indices?format=yaml
-    ---
-    - health: "yellow"
-      status: "open"
-      index: "app"
-      uuid: "EgTSMR4AQpKfSXRh3r6Rqw"
-      pri: "5"
-      rep: "1"
-      docs.count: "3"
-      docs.deleted: "0"
-      store.size: "16.1kb"
-      pri.store.size: "16.1kb"
+This call gives us this JSON response:
+
+.. code-block:: json
+   :linenos:
+   :emphasize-lines: 8
+
+   {
+     "_index" : "my-index",
+     "_type" : "my-type",
+     "_id" : "1",
+     "_version" : 1,
+     "found" : true,
+     "_source" : {
+       "my_document" : "my document content"
+     }
+   }
+
+These are the basic steps to store and retrieve documents in |es|.
+
+.. note::
+
+   For centralized logging, where log entries are considered immutable, the
+   versioning support is rather uninteresting. In case you got curious,
+   take a look at [#esversion]_.
+
+It's also worth nothing that the automatic index creation can be
+disabled if you see the need for it [#esindexdis]_.
+You're also every time allowed to create your indices
+beforehand [#esindexcreate]_:
+
+
+
+List Indices
+------------
+
+Now that we have an (automatically created) index, we can query it:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ curl -X GET 192.168.78.11:9200/_cat/indices?format=yaml
+
+Again, we use the ``format=yaml`` simply to have a more readable output:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 4
+
+   ---
+   - health: "yellow"
+     status: "open"
+     index: "my-index"
+     uuid: "u4WB1ztWT1GVXGOI0OoJnQ"
+     pri: "5"
+     rep: "1"
+     docs.count: "1"
+     docs.deleted: "0"
+     store.size: "4.5kb"
+     pri.store.size: "4.5kb"
+
+Now that we know the basic interaction with |es|, let's use it as
+a centralized logging server in the next section.
+
 
 
 Logging to |es|
@@ -423,7 +567,6 @@ Actions
 * replacement with plain ``POST`` API on index
 
 
-
 References
 ==========
 
@@ -437,4 +580,12 @@ References
 
 .. [#lucene] https://lucene.apache.org/
 
-.. [#commonapi] https://www.elastic.co/guide/en/elasticsearch/reference/6.1/common-options.html#common-options
+.. [#commonapi] https://www.elastic.co/guide/en/elasticsearch/reference/6.1/common-options.html
+
+.. [#yamllist] http://www.yaml.org/spec/1.2/spec.html#id2797382
+
+.. [#esversion] https://www.elastic.co/guide/en/elasticsearch/reference/6.1/docs-index\_.html#index-versioning
+
+.. [#esindexdis] https://www.elastic.co/guide/en/elasticsearch/reference/6.1/docs-index\_.html#index-creation
+
+.. [#esindexcreate] https://www.elastic.co/guide/en/elasticsearch/reference/6.1/indices-create-index.html
