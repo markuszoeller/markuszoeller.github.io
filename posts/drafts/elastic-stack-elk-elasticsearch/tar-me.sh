@@ -11,7 +11,7 @@
 post_name=$(basename $(pwd))
 
 tar \
---exclude="./*" \
+--exclude=".*" \
 --exclude="tar-me.sh" \
 --exclude="index.rst" \
 --exclude="${post_name}.tar.gz" \

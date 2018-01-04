@@ -102,18 +102,24 @@ Actions
 Set up the environment
 ======================
 
-Download the compressed project source archive file, decompress it,
-change to the ``env`` directory, start the *Vagrant* setup and use
-*Ansible* to set configure |es| on that virtualized environment:
+To reproduce the steps in this post:
+
+#. download the compressed
+   :download:`project source files <elastic-stack-elk-elasticsearch.tar.gz>`.
+#. extract the archive
+#. change to the ``env`` directory
+#. start the *Vagrant* setup
+#. use *Ansible* to configure the environment
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   [markus@local]$ untar -xcv project.tar.gz
-   [markus@local]$ cd env
-   [markus@local]$ vagrant up
-   [markus@local]$ ansible-playbook playbook.yml
+   $ wget http://www.markusz.io/_downloads/elastic-stack-elk-elasticsearch.tar.gz
+   $ tar -zxvf elastic-stack-elk-elasticsearch.tar.gz
+   $ cd env
+   $ vagrant up
+   $ ansible-playbook playbook.yml
 
 
 Your output should look similar to this:
@@ -130,6 +136,12 @@ Your output should look similar to this:
 
    PLAY RECAP ********************************************************************
    es1                        : ok=21   changed=17   unreachable=0    failed=0
+
+
+.. note::
+
+   You can remove the environment with ``vagrant destroy -f``.
+
 
 
 Terms and Concepts
