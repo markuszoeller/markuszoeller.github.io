@@ -7,6 +7,8 @@
 .. spelling::
    tokenized
 
+.. |es| replace:: *Elasticsearch*
+
 
 
 ==============================================
@@ -40,21 +42,19 @@ Maybe use http://jsonlines.org/on_the_web/ for the example logs
    * - 2017-11-02
      - The first release
 
-.. |es| replace:: *Elasticsearch*
 
-Brain dump
-==========
+Intro
+=====
 
 This is the first part of a multi-part series about the
-*Elastic Stack* (formerly the *ELK* stack). This stack
+*Elastic Stack* (formerly the **ELK stack**). This stack
 consists of 3 parts:
 
-* storing data with |es|
-* ingesting data with *Logstash* (and/or *Beats*)
-* visualizing data with *Kibana*
+* **storing data** with |es|
+* **ingesting data** with *Logstash* (and/or *Beats*)
+* **visualizing data** with *Kibana*
 
 This post will focus on the first part, |es|.
-
 
 It uses a schema-less, flexible data model, which means you
 can use your current data as-is and don't have to transform
@@ -69,40 +69,18 @@ which would add more functionality.
 The platform support matrix is at:
 https://www.elastic.co/support/matrix
 
-We will use this setup:
-
-* OS: Ubuntu 16.04
-* JVM: IcedTea OpenJDK
-* |es|: 6.1
-
-
-Terms:
-------
-
-document
-    One single, unstructured entry in |es| which gets
-    tokenized into its parts.
-
-
-Actions
--------
-
-* ``match`` (``OR``'ed; see ``_score``)
-* ``match_phrase``
-* ``must`` and ``must_not``
-* ``AND``'ed with multiple *clauses*
-* ``should`` orders by score
-* querying and filtering are different
-* understand the *analysis* for tokenized documents
-* aggregations with ``aggs`` (and e.g. ``avg``)
-* partial update with  ``POST`` to ``_update`` API
-* replacement with plain ``POST`` API on index
 
 
 Set up the environment
 ======================
 
-To reproduce the steps in this post:
+To reproduce the steps in this post, you need to have installed locally:
+
+* *Vagrant* [#vagrinst]_
+* *Ansible* [#ansinst]_
+* *VirtualBox* [#vbinst]_
+
+After these prerequisites are fulfilled:
 
 #. download the compressed
    :download:`project source files <elastic-stack-elk-elasticsearch.tar.gz>`.
@@ -122,38 +100,116 @@ To reproduce the steps in this post:
    $ ansible-playbook playbook.yml
 
 
-Your output should look similar to this:
+Your (truncated) output should look similar to this:
 
 .. code-block:: text
    :linenos:
    :emphasize-lines: 0
 
-   TASK [Check if Elasticsearch is up an running.] *******************************
-   Wednesday 03 January 2018  17:15:23 +0100 (0:00:01.189)       0:00:45.358 *****
-   FAILED - RETRYING: Check if Elasticsearch is up an running. (5 retries left).
-   FAILED - RETRYING: Check if Elasticsearch is up an running. (4 retries left).
-   ok: [es1 -> localhost]
+   [...]
 
    PLAY RECAP ********************************************************************
+   app1                       : ok=10   changed=6    unreachable=0    failed=0
+   app2                       : ok=10   changed=6    unreachable=0    failed=0
    es1                        : ok=21   changed=17   unreachable=0    failed=0
+
+   Thursday 04 January 2018  16:29:04 +0100 (0:00:01.319)       0:02:06.741 ******
+   ===============================================================================
+   Install python package manager. ---------------------------------------- 50.79s
+   Install JAVA runtime. -------------------------------------------------- 24.73s
+   Check if Elasticsearch is up an running. ------------------------------- 11.50s
+   Wait for SSH to be ready. ---------------------------------------------- 10.36s
+   Download file with checksum check. -------------------------------------- 9.31s
+   Install app requirements. ----------------------------------------------- 4.87s
+   Ensure system package cache is updated. --------------------------------- 4.46s
+   Unarchive the elasticsearch archive. ------------------------------------ 1.43s
+   Run example app. -------------------------------------------------------- 1.32s
+   Run elasticsearch as daemon. -------------------------------------------- 1.22s
+   Add our servers to the hosts file. -------------------------------------- 0.99s
+   Deploy example app to servers. ------------------------------------------ 0.88s
+   Ping each other via DNS names. ------------------------------------------ 0.77s
+   Gather some facts for later. -------------------------------------------- 0.62s
+   Creating user for Elasticsearch group. ---------------------------------- 0.37s
+   Create a group for Elasticsearch. --------------------------------------- 0.32s
+   Disable all swapping. --------------------------------------------------- 0.32s
+   Create logging directory. ----------------------------------------------- 0.31s
+   Set maximum number of memory map areas (permanently). ------------------- 0.29s
+   Set number of open file descriptors (permanently). ---------------------- 0.28s
 
 
 .. note::
 
-   You can remove the environment with ``vagrant destroy -f``.
+   After you decided that you don't need this environment anymore,
+   you can remove it with ``vagrant destroy -f``
+
+
+This created an environment which looks like this:
+
+.. image:: images/elasticsearch-env-nF4AMyX.svg
+   :scale: 100 %
+   :alt: *Vagrant* environment with virtual machines.
+
+* one central logging server ``es1``
+* two application servers ``app1`` and ``app2``
+* *Ubuntu 16.04* as operating system
+* Java *Open JDK* in version 8
+* |es| in version 6.1
+
+While the setup goes on for a minute or two, let's have a look at
+a few basic terms and concepts of |es|.
 
 
 
 Terms and Concepts
 ==================
 
-Cluster -- Node - Index -- Document
+Let's start with an overview of the basic concepts [#concepts]_.
+I'll explain the details after this image:
 
-Index --Shard -- Replica -- Replication Group
+.. image:: images/elasticsearch-concepts-YfYunTY.svg
+   :scale: 100 %
+   :alt: The basic terms and concepts in |es|
+
+The main entity we're interested in is the **Document**. This is the
+schema-less entity we want to store in |es|. In our case, as this post
+focuses on centralized logging, this is one single log entry.
+
+|es| stores *Documents* in an **Index** and every *Index* can store multiple
+*Documents*. The *Index* is the entity which provides the ability to search
+*Document* objects.
+
+Each |es| service is considered a **Node**. This *Node* is not necessarily
+bound to one hardware server or virtual machine. Each *Node* is in other
+words, an |es| instance. Each one can have 0 to N *Index* objects to
+scale out the management of *Document* objects.
+
+For further horizontal scale out, each *Node* can be part of a **Cluster**.
+Each *Cluster* consists of 1 to N *Node* objects. A single-node setup is
+still a *Cluster* (with only 1 *Node*). There are *master nodes* in a
+cluster, which determine how information gets replicated, but I won't
+dive into it in this post.
+
+As described before, an *Index* is the (abstract) entity which stores
+our documents. To be precise, an *Index* consists of **Shards**. These
+*Shard* objects are *Index* objects themselves and can therefore store
+*Documents*. This concept enables splitting out the *Documents* into
+smaller segments. One *Shard* is in fact the *Lucene Index* [#lucene]_,
+the search engine encapsulated by |es|. Such *shards* can be called
+**primary shards**.
+
+The *Shard* objects can be replicated (copied) into so called **Replica**
+entities (or **replica shards**). A set of *Replica* objects are collected
+in a **Replication Group**. Those *replica shards* enable
+*High Availability (HA)* and *Data Recovery (DR)*. Hopefully I can
+dive deeper into these capabilities in a later post.
+
+After these basic terms and concepts are described, let's finally
+interact with |es| in our environment.
 
 
-Interact with |es|
-==================
+
+Basic Interaction with |es|
+===========================
 
 After the setup by the *Ansible playbook*, we can interact with |es|
 via ``curl`` on our local machine:
@@ -344,11 +400,41 @@ questions
 
 
 
+Terms:
+------
+
+document
+    One single, unstructured entry in |es| which gets
+    tokenized into its parts.
+
+
+Actions
+-------
+
+* ``match`` (``OR``'ed; see ``_score``)
+* ``match_phrase``
+* ``must`` and ``must_not``
+* ``AND``'ed with multiple *clauses*
+* ``should`` orders by score
+* querying and filtering are different
+* understand the *analysis* for tokenized documents
+* aggregations with ``aggs`` (and e.g. ``avg``)
+* partial update with  ``POST`` to ``_update`` API
+* replacement with plain ``POST`` API on index
+
+
+
 References
 ==========
 
-.. [#pygments] http://pygments.org/
+.. [#vagrinst] https://www.vagrantup.com/docs/installation/
 
-.. [#footnotes] http://www.sphinx-doc.org/en/stable/rest.html#footnotes
+.. [#ansinst] http://docs.ansible.com/ansible/latest/intro_installation.html
+
+.. [#vbinst] https://www.virtualbox.org/wiki/Downloads
+
+.. [#concepts] https://www.elastic.co/guide/en/elasticsearch/reference/6.1/_basic_concepts.html
+
+.. [#lucene] https://lucene.apache.org/
 
 .. [#commonapi] https://www.elastic.co/guide/en/elasticsearch/reference/6.1/common-options.html#common-options
