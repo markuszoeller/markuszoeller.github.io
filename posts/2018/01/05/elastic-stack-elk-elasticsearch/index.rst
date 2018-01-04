@@ -52,20 +52,16 @@ consists of 3 parts:
 * **ingesting data** with *Logstash* (and/or *Beats*)
 * **visualizing data** with *Kibana*
 
-This post will focus on the first part, |es|.
-
-It uses a schema-less, flexible data model, which means you
+This post will focus on the first part, |es|, which uses a schema-less,
+flexible data model, often called **document based**. This means you
 can use your current data as-is and don't have to transform
 it into another schema so that |es| can deal with it.
 
-This post will focus on the *log analytics* part and
-won't delve into metrics analytics or other use cases.
-
-We will also not talk about the *x-pack* plugins,
+This post will focus on the **log storage and query** part and
+won't delve into metrics analytics or other use cases you can
+implement with |es|. We will also not talk about the *x-pack* plugins,
 which would add more functionality.
 
-The platform support matrix is at:
-https://www.elastic.co/support/matrix
 
 
 .. _sec-env:
@@ -79,7 +75,7 @@ To reproduce the steps in this post, you need to have installed locally:
 * *Ansible* [#ansinst]_
 * *VirtualBox* [#vbinst]_
 
-After these prerequisites are fulfilled:
+After these **prerequisites** are fulfilled:
 
 #. download the compressed
    :download:`project source files <elastic-stack-elk-elasticsearch.tar.gz>`.
@@ -142,7 +138,7 @@ Your (truncated) output should look similar to this:
    you can remove it with ``vagrant destroy -f``
 
 
-This created an environment which looks like this:
+This created a **virtualized environment** which looks like this:
 
 .. image:: images/elasticsearch-env-nF4AMyX.svg
    :scale: 100 %
@@ -164,7 +160,7 @@ a few basic terms and concepts of |es|.
 Terms and Concepts
 ==================
 
-Let's start with an overview of the basic concepts [#concepts]_.
+Let's start with an overview of the basic **concepts** [#concepts]_.
 I'll explain the details after this image:
 
 .. image:: images/elasticsearch-concepts-YfYunTY.svg
@@ -247,7 +243,7 @@ This JSON response shows a few things of the previous section:
 * ``lucene_version``: The version of the search engine
   encapsulated by |es|.
 
-The REST API has some useful common options [#commonapi]_:
+The **REST API** has some useful **common options** [#commonapi]_:
 
 * ``pretty=true``: to beautify the JSON output
 * ``format=yaml``: use YAML instead of JSON as output
@@ -420,10 +416,9 @@ These are the basic steps to store and retrieve documents in |es|.
    versioning support is rather uninteresting. In case you got curious,
    take a look at [#esversion]_.
 
-It's also worth nothing that the automatic index creation can be
-disabled if you see the need for it [#esindexdis]_.
-You're also every time allowed to create your indices
-beforehand [#esindexcreate]_:
+It's also worth nothing that the **automatic index creation** can be
+disabled if you see the need for it [#esindexdis]_. You're also allowed
+to create your indices beforehand [#esindexcreate]_.
 
 
 
@@ -470,7 +465,7 @@ a centralized logging server in the next section.
 Logging to |es|
 ===============
 
-The *Ansible playbook* also deploy a small example application to
+The *Ansible playbook* also deploy a **small example application** to
 the application servers ``app1`` and ``app2`` of our environment.
 It's a *Python Flask* app [#flask]_ which uses Python's logging
 library [#pylog]_. *Flask* enables us to create a REST API to interact
@@ -687,7 +682,7 @@ Summary
 =======
 
 We set up an environment with a single-node instance of |es|, a data
-store for documents. In our case, we use it as centralized logging store.
+store for documents. In our case, we use it as **centralized logging store**.
 We used an example application to show the interaction between application
 logs and the storing and querying of log records.
 
@@ -703,10 +698,10 @@ The REST API of |es| can do much more than I showed here. For example:
 
 For GUI dashboards, which show the current (and historic) state of
 your environment, these REST APIs provide a lot of possibilities.
-We will dive more in details when we talk about *Kibana*, the GUI
+We will dive more in details when we talk about **Kibana**, the GUI
 component of the *Elastic Stack*.
 
-The next post in this series will talk about *Logstash*, which makes
+The next post in this series will talk about **Logstash**, which makes
 our (shaky) custom logging handler obsolete.
 
 
