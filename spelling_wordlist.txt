@@ -3,6 +3,9 @@ analytics
 ansible
 Ansible
 app
+App
+apps
+Apps
 Apr
 Aug
 backport
@@ -34,6 +37,8 @@ HAProxy
 hypervisor
 importances
 Importances
+indices
+Indices
 inline
 Inline
 Jan
