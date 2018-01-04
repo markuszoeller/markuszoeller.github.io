@@ -174,3 +174,45 @@
       until: reg_get_api.status == 200
       retries: 5
       ignore_errors: true
+
+
+# ===========================================================================
+# Set up Elasticsearch on central logging host
+# ===========================================================================
+- hosts: app-servers
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: "Create target directory for the app."
+      file:
+        dest: /opt/example-app/
+        state: directory
+
+    - name: "Deploy example app to servers."
+      copy:
+        src : ../example-app/
+        dest:  /opt/example-app/
+
+    - name: "Install python package manager."
+      apt:
+        name: python-pip
+        update_cache: true
+        cache_valid_time: 3600
+        state: present
+
+    - name: "Install app requirements."
+      pip:
+        requirements: /opt/example-app/requirements.txt
+
+    - name: "Query if app is already running."
+      shell: "ps aux | grep '[p]ython app.py'"
+      changed_when: false
+      failed_when: false
+      register: reg_pid_app
+
+    - name: "Run example app."
+      shell: nohup python app.py &
+      args:
+        chdir: /opt/example-app/
+      when: reg_pid_app.stdout == ''
