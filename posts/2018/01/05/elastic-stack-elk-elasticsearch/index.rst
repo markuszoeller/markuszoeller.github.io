@@ -1,5 +1,5 @@
 
-.. post::
+.. post:: 5 Jan, 2018
    :tags: logging, elasticstack
    :category: monitoring
    :title: Elastic Stack (formerly ELK) - Elasticsearch
