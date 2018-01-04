@@ -5,7 +5,7 @@
    :title: Elastic Stack (formerly ELK) - Elasticsearch
 
 .. spelling::
-   foo
+   tokenized
 
 
 
@@ -40,452 +40,307 @@ Maybe use http://jsonlines.org/on_the_web/ for the example logs
    * - 2017-11-02
      - The first release
 
+.. |es| replace:: *Elasticsearch*
+
+Brain dump
+==========
+
+This is the first part of a multi-part series about the
+*Elastic Stack* (formerly the *ELK* stack). This stack
+consists of 3 parts:
+
+* storing data with |es|
+* ingesting data with *Logstash* (and/or *Beats*)
+* visualizing data with *Kibana*
+
+This post will focus on the first part, |es|.
 
 
-General advice
-==============
+It uses a schema-less, flexible data model, which means you
+can use your current data as-is and don't have to transform
+it into another schema so that |es| can deal with it.
 
-* the complete URL must not be longer than 78 chars
-* the initial release date is in the URL
-* post directory is part of the URL (make it searchable, don't be fancy)
-* aim for less than 15h per post, otherwise the releases will become unstable
-* the spelling check is done frequently and at the very end
-* add the release date only if confident enough
-* start with a brain dump, refine from there
-* consider touch screens (mobile phones). CSS hover text magic doesn't work
-* put example applications which have their own doc into a directory
-  ``example-app`` to avoid that this application gets used in the doc build.
+This post will focus on the *log analytics* part and
+won't delve into metrics analytics or other use cases.
 
+We will also not talk about the *x-pack* plugins,
+which would add more functionality.
 
-Structure
-=========
+The platform support matrix is at:
+https://www.elastic.co/support/matrix
 
-#. title
-#. abstract
-#. table of contents
-#. change history table
-#. TL;DR (if applicable)
-#. use case
-#. content
-#. summary / conclusion
-#. references
-#. appendix
+We will use this setup:
 
-This is only the first level. Add another level if necessary. Let 2 levels
-be the maximum.
-
-Each section is a permalink and therefore a published resource. That means,
-don't change once published permalinks (aka altering sections).
+* OS: Ubuntu 16.04
+* JVM: IcedTea OpenJDK
+* |es|: 6.1
 
 
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   =====
-   title
-   =====
-
-   section
-   =======
-
-   sub-section
-   -----------
-
-   **paragraph header**
-
-
-
-Table of contents
-=================
-
-Every post has a table of contents. The sections link back to the
-table of contents. This makes jumps back and forth easy.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-    .. contents::
-        :local:
-        :backlinks: top
-
-
-
-Categories and labels
-=====================
-
-There are 3 categories:
-
-* books
-* conferences
-* openstack
-
-Categories are more coarse grained than labels. Having no category is fine,
-it's then seen as being miscellaneous until a category evolves over time.
-
-Add labels as you see fit. Check the existing ones. Use one to three labels.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-    .. post:: 25 Aug, 2017
-       :category: openstack
-       :tags: nova, scheduling, cpu-architecture
-       :title: OpenStack Nova Scheduling based on CPU architecture
-
-
-Code examples
-=============
-
-* blocks always with line numbers
-* emphasize lines to set focus
-* use the proper highlighting language [#pygments]_
-
-Text
-----
-
-The config option ``key2`` has value ``value2``.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   The config option ``key2`` has value ``value2``.
-
-
-Blocks
+Terms:
 ------
 
-.. code-block:: python
-   :linenos:
-   :emphasize-lines: 0
-
-   print("hello blog")
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   .. code-block:: python
-      :linenos:
-      :emphasize-lines: 0
-
-      print("hello blog")
-
-Files
------
-
-.. literalinclude:: example.ini
-   :language: ini
-   :linenos:
-   :emphasize-lines: 5
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-    .. literalinclude:: example.ini
-       :language: ini
-       :linenos:
-       :emphasize-lines: 5
-
-
-
-Text format
-===========
-
-Use **strongly emphasized** to make a point.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   Use **strongly emphasized** to make a point.
-
-
-----
-
-Use *proper names* for people companies and software.
-For example, *Kubernetes*.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   Use *proper names* for people companies and software.
-   For example, *Kubernetes*.
-
-----
-
-Use an `inline quote` for inline referencing an external source
-(like books) or small direct quotes of cited sources.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   Use an `inline quote` for inline referencing an external source
-   (like books) or small direct quotes of cited sources.
-
-
-----
-
-    Use a block quote for multi line
-    direct quotes of cited resources.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-       Use a block quote for multi line
-       direct quotes of cited resources.
-
-
-
-Images
-======
-
-Favor vector graphics (``.svg``) over raster maps (``.png``).
-Always do a scaling of the images (``:height:`` or ``:width:`` or ``:scale:``),
-this enables the "click on the thumbnail to show the full image" logic.
-
-.. image:: drawing_TOelDqK.svg
-   :height: 150px
-   :alt: Example drawing with Inkscape.
-
-
-.. code-block:: rst
-  :linenos:
-  :emphasize-lines: 0
-
-  .. image:: drawing_TOelDqK.svg
-     :height: 150px
-     :alt: Example drawing with Inkscape.
-
-.. important::
-
-   All images of all posts will be copied to ``_images``. This means
-   unique image names are needed to avoid collisions. Use the script
-   to generate unique (enough) identifiers.
-
-
-
-Spelling
-========
-
-Use the spelling directive if it is only needed for one post:
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   .. spelling::
-
-      foo
-
-or extend the `spelling_wordlist.txt`.
-
-In either case, take care of upper and lower case, singular and plural.
-
-
-
-References and links
-====================
-
-External
---------
-
-"External" is everything outside of this blog.
-Reference to it with auto-numbered footnotes [#footnotes]_
-
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   Reference to it with auto-numbered footnotes [#footnotes]_
-
-Internal
---------
-
-"Internal" is everything inside of this blog.
-For example the :ref:`about` page.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   For example the :ref:`about` page.
-
-
-
-Lists
-=====
-
-Numbered lists for ordered items:
-
-#. first do this,
-#. then you can do that,
-#. lastly you do another thing.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   Numbered lists for ordered items:
-
-   #. first do this,
-   #. then you can do that,
-   #. lastly you do another thing.
-
-
-----
-
-Bullet lists for (unordered) items:
-
-* a hat
-* a walking stick
-* an umbrella
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   Bullet lists for (unordered) items:
-
-   * a hat
-   * a walking stick
-   * an umbrella
-
-
-
-Highlighted info boxes
+document
+    One single, unstructured entry in |es| which gets
+    tokenized into its parts.
+
+
+Actions
+-------
+
+* ``match`` (``OR``'ed; see ``_score``)
+* ``match_phrase``
+* ``must`` and ``must_not``
+* ``AND``'ed with multiple *clauses*
+* ``should`` orders by score
+* querying and filtering are different
+* understand the *analysis* for tokenized documents
+* aggregations with ``aggs`` (and e.g. ``avg``)
+* partial update with  ``POST`` to ``_update`` API
+* replacement with plain ``POST`` API on index
+
+
+Set up the environment
 ======================
 
-.. todo::
+To reproduce the steps in this post:
 
-    Reminder for the author to do this here before publishing.
+#. download the compressed
+   :download:`project source files <elastic-stack-elk-elasticsearch.tar.gz>`.
+#. extract the archive
+#. change to the ``env`` directory
+#. start the *Vagrant* setup
+#. use *Ansible* to configure the environment
 
-.. code-block:: rst
+.. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   .. todo::
+   $ wget http://www.markusz.io/_downloads/elastic-stack-elk-elasticsearch.tar.gz
+   $ tar -zxvf elastic-stack-elk-elasticsearch.tar.gz
+   $ cd env
+   $ vagrant up
+   $ ansible-playbook playbook.yml
 
-       Reminder for the author to do this here before publishing.
 
-----
+Your output should look similar to this:
 
-.. admonition:: Feedback needed
-
-    Use this for actively asking for feedback from the reader.
-
-.. code-block:: rst
+.. code-block:: text
    :linenos:
    :emphasize-lines: 0
 
-   .. admonition:: Feedback needed
+   TASK [Check if Elasticsearch is up an running.] *******************************
+   Wednesday 03 January 2018  17:15:23 +0100 (0:00:01.189)       0:00:45.358 *****
+   FAILED - RETRYING: Check if Elasticsearch is up an running. (5 retries left).
+   FAILED - RETRYING: Check if Elasticsearch is up an running. (4 retries left).
+   ok: [es1 -> localhost]
 
-       Use this for actively asking for feedback from the reader.
+   PLAY RECAP ********************************************************************
+   es1                        : ok=21   changed=17   unreachable=0    failed=0
 
-
-----
 
 .. note::
 
-    This is a "mild" highlight. No biggie if the reader misses it.
+   You can remove the environment with ``vagrant destroy -f``.
 
-.. code-block:: rst
+
+
+Terms and Concepts
+==================
+
+Cluster -- Node - Index -- Document
+
+Index --Shard -- Replica -- Replication Group
+
+
+Interact with |es|
+==================
+
+After the setup by the *Ansible playbook*, we can interact with |es|
+via ``curl`` on our local machine:
+
+.. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   .. note::
+   [markus@local]$ curl 192.168.78.11:9200
+   {
+     "name" : "hMDFApt",
+     "cluster_name" : "elasticsearch",
+     "cluster_uuid" : "kEM4Oz-PQQ-98ZgdOxGOdw",
+     "version" : {
+       "number" : "6.1.1",
+       "build_hash" : "bd92e7f",
+       "build_date" : "2017-12-17T20:23:25.338Z",
+       "build_snapshot" : false,
+       "lucene_version" : "7.1.0",
+       "minimum_wire_compatibility_version" : "5.6.0",
+       "minimum_index_compatibility_version" : "5.0.0"
+     },
+     "tagline" : "You Know, for Search"
+   }
 
-       This is a "mild" highlight. No biggie if the reader misses it.
 
+We use ``format=yaml``, one of the common REST API options of |es|
+[#commonapi]_, to have an output which is easier to read.
 
-
-----
-
-.. tip::
-
-    This gives advice to the reader.
-
-.. code-block:: rst
+.. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   .. tip::
+   [markus@local]$ curl 192.168.78.11:9200/_cat/health?format=yaml
+   ---
+   - epoch: "1514998054"
+     timestamp: "16:47:34"
+     cluster: "elasticsearch"
+     status: "green"
+     node.total: "1"
+     node.data: "1"
+     shards: "0"
+     pri: "0"
+     relo: "0"
+     init: "0"
+     unassign: "0"
+     pending_tasks: "0"
+     max_task_wait_time: "-"
+     active_shards_percent: "100.0%"
 
-       This gives advice to the reader.
 
-
-----
-
-
-.. warning::
-
-    Don't do this. This is a common mistake.
-
-
-.. code-block:: rst
+.. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   .. warning::
+   [markus@local]$ curl 192.168.78.11:9200/_cat/nodes?format=yaml
+   ---
+   - ip: "192.168.78.11"
+     heap.percent: "6"
+     ram.percent: "63"
+     cpu: "0"
+     load_1m: "0.00"
+     load_5m: "0.00"
+     load_15m: "0.00"
+     node.role: "mdi"
+     master: "*"
+     name: "hMDFApt"
 
-       Don't do this. This is a common mistake.
+Useful common options:
+
+* ``pretty=true`` to beautify the JSON output
+* ``format=yaml`` as we used before
+* ``error_trace=true`` to show a more verbose error trace
+* ``filter_path=<values>`` to reduce the response
 
 
-----
-
-.. important::
-
-    Do this (really) / Be aware of this (really).
-
-
-.. code-block:: rst
+.. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   .. important::
+    curl -XPUT '192.168.78.11:9200/twitter/tweet/1?pretty' \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "user" : "kimchy",
+        "post_date" : "2009-11-15T14:12:12",
+        "message" : "trying out Elasticsearch"
+    }'
 
-       Do this (really) / Be aware of this (really).
-
-
-Change history
-==============
-
-The publish date is the very first entry. Append another entry below the
-previous one when:
-
-* the structure got changed
-* a paragraph got added or removed
-* content got altered which changed the meaning of something
-
-In general, think twice before changing a published post. If a big change
-would be necessary, maybe a follow up post is the better choice. If so,
-cross-reference each other.
-
-**No addition** needed when:
-
-* typo fix
-* small format change (bold, italics, ...)
-
-.. code-block:: rst
+.. code-block:: bash
    :linenos:
-   :emphasize-lines: 7-8
+   :emphasize-lines: 0
 
-    .. list-table:: Change history:
-       :widths: 1 5
-       :header-rows: 1
 
-       * - Date
-         - Change description
-       * - 2017-11-02
-         - The first release
+    $ curl -X GET 192.168.78.11:9200/_cat/indices?format=yaml
+    ---
+    - health: "yellow"
+      status: "open"
+      index: "app"
+      uuid: "EgTSMR4AQpKfSXRh3r6Rqw"
+      pri: "5"
+      rep: "1"
+      docs.count: "3"
+      docs.deleted: "0"
+      store.size: "16.1kb"
+      pri.store.size: "16.1kb"
+
+
+Logging to |es|
+===============
+
+Custom logger
+
+
+Basic CRUDL operations
+======================
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+    [markus@local]$ curl -X GET 192.168.78.11:9200/app/_search?pretty=true
+    {
+      "took" : 1,
+      "timed_out" : false,
+      "_shards" : {
+        "total" : 5,
+        "successful" : 5,
+        "skipped" : 0,
+        "failed" : 0
+      },
+      "hits" : {
+        "total" : 3,
+        "max_score" : 1.0,
+        "hits" : [
+          {
+            "_index" : "app",
+            "_type" : "logs",
+            "_id" : "KpBcvWAB78EA2Ko2WrB2",
+            "_score" : 1.0,
+            "_source" : {
+              "timestamp" : "foo",
+              "message" : "bar",
+              "module" : "app",
+              "level" : "INFO"
+            }
+          },
+          {
+            "_index" : "app",
+            "_type" : "logs",
+            "_id" : "K5BgvWAB78EA2Ko2Q7B-",
+            "_score" : 1.0,
+            "_source" : {
+              "timestamp" : "foo",
+              "message" : "info message",
+              "module" : "app",
+              "level" : "INFO"
+            }
+          },
+          {
+            "_index" : "app",
+            "_type" : "logs",
+            "_id" : "LJBhvWAB78EA2Ko2k7Dy",
+            "_score" : 1.0,
+            "_source" : {
+              "timestamp" : "foo",
+              "message" : "info message",
+              "module" : "app",
+              "level" : "INFO"
+            }
+          }
+        ]
+      }
+    }
+
+
+Conclusion
+==========
+
+Logging to the HTTP address itself doesn't make sense. We will
+use *Logstash* in the next post which does that for us.
+
+
+questions
+---------
+
+* Q: Horizontal scale out of |es| instances?
+
 
 
 
@@ -495,3 +350,5 @@ References
 .. [#pygments] http://pygments.org/
 
 .. [#footnotes] http://www.sphinx-doc.org/en/stable/rest.html#footnotes
+
+.. [#commonapi] https://www.elastic.co/guide/en/elasticsearch/reference/6.1/common-options.html#common-options
