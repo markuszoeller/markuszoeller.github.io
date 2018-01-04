@@ -9,6 +9,9 @@ import requests
 HOSTNAME = platform.node()
 
 
+# ======================================================================
+# Custom logging handler for Elasticsearch
+# ======================================================================
 class ElasticsearchHandler(logging.Handler):
 
     def __init__(self, url):
@@ -31,13 +34,29 @@ class ElasticsearchHandler(logging.Handler):
         print("Log record emit result: %s" % r.status_code)
 
 
+# ======================================================================
+# Set up logging
+# ======================================================================
+formatter = logging.Formatter('%(asctime)s - %(name)s - '
+                              '%(levelname)s - %(message)s')
+
 http_handler = ElasticsearchHandler("http://es1:9200/app/logs/")
-http_formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s - %(asctime)s')
-http_handler.setFormatter(http_formatter)
+http_handler.setFormatter(formatter)
+
+file_handler = logging.handlers.RotatingFileHandler("app.log",
+                                                    maxBytes=10240,
+                                                    backupCount=4)
+file_handler.setFormatter(formatter)
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 logger.addHandler(http_handler)
+logger.addHandler(file_handler)
 
+
+# ======================================================================
+# REST API with Flask
+# ======================================================================
 app = Flask(__name__)
 
 
@@ -64,5 +83,8 @@ def log_warning_message():
     return "Logged warning message\n"
 
 
+# ======================================================================
+# MAIN
+# ======================================================================
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
