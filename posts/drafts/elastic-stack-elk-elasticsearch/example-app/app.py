@@ -3,7 +3,10 @@
 from flask import Flask
 import json
 import logging.handlers
+import platform
 import requests
+
+HOSTNAME = platform.node()
 
 
 class ElasticsearchHandler(logging.Handler):
@@ -20,6 +23,7 @@ class ElasticsearchHandler(logging.Handler):
             'timestamp': record.asctime,
             'level': record.levelname,
             'message': record.message,
+            'host': HOSTNAME,
         }
         r = requests.post(self.url,
                           data=json.dumps(payload),
