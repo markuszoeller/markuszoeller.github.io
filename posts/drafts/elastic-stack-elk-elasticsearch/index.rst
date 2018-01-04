@@ -1,6 +1,6 @@
 
 .. post::
-   :tags: template
+   :tags: logging, elasticstack
    :category: monitoring
    :title: Elastic Stack (formerly ELK) - Elasticsearch
 
@@ -15,23 +15,21 @@
 Elastic Stack (formerly ELK) - *Elasticsearch*
 ==============================================
 
-Each post should start with one paragraph which is an abstract of the post.
-This paragraph should be enough for a reader to decide if they want to
-read the post or not. It is best to keep this paragraph short and simple.
-100 words or less is the limit, as this abstract is used as excerpt in the
-list on the landing page and in the feed readers. This upper limit
-of 100 words is also the amount of content someone should be able to read
-in less than 20 seconds. Additionally, it fits on one small mobile screen.
+When something goes wrong in an environment, the people trying to fix it
+mostly start by looking at the log files persisted on the local filesystem
+of the server. This gets more cumbersome the more server and services
+participate. Highly distributed applications, developed and deployed as
+microservices in a cloud environment exacerbate this too. A centralized
+logging server helps to ease the pain. In this post I'll talk about the
+popular |es| service, which is part of the *Elastic Stack*, formerly known
+as *ELK* stack.
 
-https://www.elastic.co/webinars/getting-started-elasticsearch?elektra=ELKvideo
 
-Maybe use http://jsonlines.org/on_the_web/ for the example logs
 
 .. contents::
     :local:
     :backlinks: top
 
-.. todo:: date of the change history
 
 .. list-table:: Change history:
    :widths: 1 5
@@ -39,7 +37,7 @@ Maybe use http://jsonlines.org/on_the_web/ for the example logs
 
    * - Date
      - Change description
-   * - 2017-11-02
+   * - 2018-01-05
      - The first release
 
 
