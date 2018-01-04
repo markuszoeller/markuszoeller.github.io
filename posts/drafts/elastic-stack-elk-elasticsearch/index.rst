@@ -161,6 +161,8 @@ a few basic terms and concepts of |es|.
 
 
 
+.. _sec-concepts:
+
 Terms and Concepts
 ==================
 
@@ -442,7 +444,7 @@ Again, we use the ``format=yaml`` simply to have a more readable output:
 
 .. code-block:: yaml
    :linenos:
-   :emphasize-lines: 4
+   :emphasize-lines: 4,6,7
 
    ---
    - health: "yellow"
@@ -456,6 +458,12 @@ Again, we use the ``format=yaml`` simply to have a more readable output:
      store.size: "4.5kb"
      pri.store.size: "4.5kb"
 
+This is the one *Index* we created automatically by adding a
+document to it previously.
+We also see the impact of *primary shards* and *replication shards*
+in this response, namely the fields ``pri`` and ``rep``, as discussed
+in the previous section :ref:`sec-concepts`.
+
 Now that we know the basic interaction with |es|, let's use it as
 a centralized logging server in the next section.
 
@@ -464,107 +472,245 @@ a centralized logging server in the next section.
 Logging to |es|
 ===============
 
-Custom logger
+The *Ansible playbook* also deploy a small example application to
+the application servers ``app1`` and ``app2`` of our environment.
+It's a *Python Flask* app [#flask]_ which uses Python's logging
+library [#pylog]_. *Flask* enables us to create a REST API to interact
+with the apps. The logging library gives us a means to write a custom
+log handler which emits log records into |es|. Here's the code first,
+then I explain the important parts:
 
+.. literalinclude:: example-app/app.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 15,24,31-33,40,43,46,68-70,90
 
-Basic CRUDL operations
-======================
+The class ``ElasticsearchHandler`` is a (very rudimentary) **logging handler**
+which can be added to a logger. When the logger logs a record, the added
+handlers can emit them to different targets. This class emits the log
+record to our *node* on server ``es1``.
+
+This custom logging handler is also responsible for putting together the
+**payload** to send to |es|. We use the **requests** package to call
+the REST API of |es|, like we did earlier with ``curl`` commands.
+
+We use a ``Formatter`` for our log records.
+
+We configure the logging handler with an |es| *Index* and *Type* by
+specifying the URL ``/app/logs/``. This means, an *Index* ``app`` gets
+automatically created if it doesn't exist yet.
+
+As we don't want to rely on the centralized logging only, which might
+suffer from intermittent network connectivity issues, we log into a
+file on the local filesystem too. There will be a rotated log file
+``app.log`` [#pylogrot]_ on each of the application servers.
+
+After that, we define the URL routing for our REST API by using *Flask*
+decorators. For example, we will have a route ``/logging/debug``,
+which does nothing else but creating a log record with ``DEBUG``
+log level and a rather useless message. It also returns a string we
+will get as a response when calling our app's REST API.
+
+At last, we run the app and let it listen on all network devices,
+so it can be reached by the private IP addresses of the virtual machines.
+The default port for that is ``5000``.
+
+Interact with our app
+---------------------
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-    [markus@local]$ curl -X GET 192.168.78.11:9200/app/_search?pretty=true
-    {
-      "took" : 1,
-      "timed_out" : false,
-      "_shards" : {
-        "total" : 5,
-        "successful" : 5,
-        "skipped" : 0,
-        "failed" : 0
-      },
-      "hits" : {
-        "total" : 3,
-        "max_score" : 1.0,
-        "hits" : [
-          {
-            "_index" : "app",
-            "_type" : "logs",
-            "_id" : "KpBcvWAB78EA2Ko2WrB2",
-            "_score" : 1.0,
-            "_source" : {
-              "timestamp" : "foo",
-              "message" : "bar",
-              "module" : "app",
-              "level" : "INFO"
-            }
-          },
-          {
-            "_index" : "app",
-            "_type" : "logs",
-            "_id" : "K5BgvWAB78EA2Ko2Q7B-",
-            "_score" : 1.0,
-            "_source" : {
-              "timestamp" : "foo",
-              "message" : "info message",
-              "module" : "app",
-              "level" : "INFO"
-            }
-          },
-          {
-            "_index" : "app",
-            "_type" : "logs",
-            "_id" : "LJBhvWAB78EA2Ko2k7Dy",
-            "_score" : 1.0,
-            "_source" : {
-              "timestamp" : "foo",
-              "message" : "info message",
-              "module" : "app",
-              "level" : "INFO"
-            }
-          }
-        ]
-      }
-    }
+   $ curl -X GET 192.168.78.12:5000/
+   Hello World!
+   $ curl -X GET 192.168.78.12:5000/logging/debug
+   Logged debug message.
+   $ curl -X GET 192.168.78.12:5000/logging/info
+   Logged info message.
+   $ curl -X GET 192.168.78.12:5000/logging/warning
+   Logged warning message
+   $ curl -X GET 192.168.78.13:5000/logging/info  # app2 server
+   Logged info message.
+
+We used ``curl`` to call our app's REST API on port 5000 with the
+routing we specified with *Flask*. If we did everything correct
+there should be log files on the application servers:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ vagrant ssh app1 -c "cat /opt/example-app/app.log"
+   2018-01-04 19:32:24,204 - __main__ - DEBUG - debug message
+   2018-01-04 19:32:47,899 - __main__ - INFO - info message
+   2018-01-04 19:32:51,147 - __main__ - WARNING - warning message
+   Connection to 127.0.0.1 closed.
+   $
+   $ vagrant ssh app2 -c "cat /opt/example-app/app.log"
+   2018-01-04 19:35:36,504 - __main__ - INFO - info message
+   Connection to 127.0.0.1 closed.
+
+We see that the log file has the format as we specified in the app.
 
 
-Conclusion
-==========
+Search our log entries
+----------------------
 
-Logging to the HTTP address itself doesn't make sense. We will
-use *Logstash* in the next post which does that for us.
+Let's use our knowledge from the previous sections to check if there
+is a new *Index* created:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ curl -X GET 192.168.78.11:9200/_cat/indices?format=yaml
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 4,8
+
+   ---
+   - health: "yellow"
+     status: "open"
+     index: "app"
+     uuid: "N6ORz3afRLWZxoogAjAYDQ"
+     pri: "5"
+     rep: "1"
+     docs.count: "4"
+     docs.deleted: "0"
+     store.size: "24.3kb"
+     pri.store.size: "24.3kb"
+   - health: "yellow"
+     status: "open"
+     index: "my-index"
+     uuid: "u4WB1ztWT1GVXGOI0OoJnQ"
+     pri: "5"
+     rep: "1"
+     docs.count: "1"
+     docs.deleted: "0"
+     store.size: "4.6kb"
+     pri.store.size: "4.6kb"
+
+Yes, there is our **new index called app** and our four documents are
+correctly counted as well.
+
+In the minimal example in a previous chapter, we had the ID to query
+the document. We didn't do that this time, as we don't want to bother
+with managing IDs when dealing with log records. We did let |es| assign
+IDs by itself. So we need to use the **search API** [#essearch]_:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ curl -X GET 192.168.78.11:9200/app/_search?pretty=true
 
 
-questions
----------
+.. code-block:: json
+   :linenos:
+   :emphasize-lines: 11,19,32,45,58
 
-* Q: Horizontal scale out of |es| instances?
+   {
+     "took" : 60,
+     "timed_out" : false,
+     "_shards" : {
+       "total" : 5,
+       "successful" : 5,
+       "skipped" : 0,
+       "failed" : 0
+     },
+     "hits" : {
+       "total" : 4,
+       "max_score" : 1.0,
+       "hits" : [
+         {
+           "_index" : "app",
+           "_type" : "logs",
+           "_id" : "Lc2rwmABVxyRMIKP804k",
+           "_score" : 1.0,
+           "_source" : {
+             "timestamp" : "2018-01-04 19:35:36,504",
+             "message" : "info message",
+             "host" : "app2",
+             "module" : "app",
+             "level" : "INFO"
+           }
+         },
+         {
+           "_index" : "app",
+           "_type" : "logs",
+           "_id" : "K82pwmABVxyRMIKPYE5h",
+           "_score" : 1.0,
+           "_source" : {
+             "timestamp" : "2018-01-04 19:32:47,899",
+             "message" : "info message",
+             "host" : "app1",
+             "module" : "app",
+             "level" : "INFO"
+           }
+         },
+         {
+           "_index" : "app",
+           "_type" : "logs",
+           "_id" : "LM2pwmABVxyRMIKPbU4P",
+           "_score" : 1.0,
+           "_source" : {
+             "timestamp" : "2018-01-04 19:32:51,147",
+             "message" : "warning message",
+             "host" : "app1",
+             "module" : "app",
+             "level" : "WARNING"
+           }
+         },
+         {
+           "_index" : "app",
+           "_type" : "logs",
+           "_id" : "Ks2pwmABVxyRMIKPBE5J",
+           "_score" : 1.0,
+           "_source" : {
+             "timestamp" : "2018-01-04 19:32:24,204",
+             "message" : "debug message",
+             "host" : "app1",
+             "module" : "app",
+             "level" : "DEBUG"
+           }
+         }
+       ]
+     }
+   }
+
+These are the four log records we sent as documents to |es| with the
+help of your custom logging handler in our example app.
 
 
 
+Summary
+=======
 
-Terms:
-------
+We set up an environment with a single-node instance of |es|, a data
+store for documents. In our case, we use it as centralized logging store.
+We used an example application to show the interaction between application
+logs and the storing and querying of log records.
 
-document
-    One single, unstructured entry in |es| which gets
-    tokenized into its parts.
+Alternatives could be a centralized logging approach with
+*rsyslog* [#rsyslog]_. I most likely won't do a comparison between
+the two approaches.
 
+The REST API of |es| can do much more than I showed here. For example:
 
-Actions
--------
+* calculate the ``_score`` by providing ``match`` criteria
+* use clauses with ``must``, ``must_not`` and ``should``
+* create aggregations with ``aggs`` and ``avg``
 
-* ``match`` (``OR``'ed; see ``_score``)
-* ``match_phrase``
-* ``must`` and ``must_not``
-* ``AND``'ed with multiple *clauses*
-* ``should`` orders by score
-* querying and filtering are different
-* understand the *analysis* for tokenized documents
-* aggregations with ``aggs`` (and e.g. ``avg``)
-* partial update with  ``POST`` to ``_update`` API
-* replacement with plain ``POST`` API on index
+For GUI dashboards, which show the current (and historic) state of
+your environment, these REST APIs provide a lot of possibilities.
+We will dive more in details when we talk about *Kibana*, the GUI
+component of the *Elastic Stack*.
+
+The next post in this series will talk about *Logstash*, which makes
+our (shaky) custom logging handler obsolete.
+
 
 
 References
@@ -589,3 +735,13 @@ References
 .. [#esindexdis] https://www.elastic.co/guide/en/elasticsearch/reference/6.1/docs-index\_.html#index-creation
 
 .. [#esindexcreate] https://www.elastic.co/guide/en/elasticsearch/reference/6.1/indices-create-index.html
+
+.. [#flask] http://flask.pocoo.org/
+
+.. [#pylog] https://docs.python.org/2/howto/logging.html#logging-basic-tutorial
+
+.. [#pylogrot] https://docs.python.org/2/library/logging.handlers.html#logging.handlers.RotatingFileHandler
+
+.. [#essearch] https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html
+
+.. [#rsyslog] http://www.rsyslog.com/
