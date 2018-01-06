@@ -78,3 +78,9 @@ Configuration
 =============
 
 http://ablog.readthedocs.org/manual/ablog-configuration-options/
+
+
+Disqus Integration
+==================
+
+https://mzio.disqus.com/admin/settings/general/
