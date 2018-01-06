@@ -14,10 +14,10 @@ This is Markus Zoeller's blog about software development related topics.
 Recent posts
 ============
 
-.. postlist:: 5
+.. postlist:: 8
    :excerpts:
    :date: %b %d, %Y
-   :list-style: circle
+   :list-style: none
 
 .. toctree::
    :hidden:
