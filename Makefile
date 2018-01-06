@@ -2,6 +2,7 @@
 BUILD_DIR = .venv
 OUTPUT_DIR = _website
 SPHINX_DIR = .doctrees
+ASCIINEMA_DIR = .asciinema
 
 SPELLING_CMD = $(BUILD_DIR)/bin/sphinx-build -Q -b spelling -d .doctrees .
 SPELLING_OUT_DIR = build/spelling
@@ -14,7 +15,7 @@ help:              ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 remove:            ## Remove the build dir and all output.
-	@rm -rf $(OUTPUT_DIR) $(BUILD_DIR) $(SPHINX_DIR) $(SPELLING_OUT_DIR)
+	@rm -rf $(OUTPUT_DIR) $(BUILD_DIR) $(SPHINX_DIR) $(SPELLING_OUT_DIR) $(ASCIINEMA_DIR)
 	@echo "===MAKE: Removed everything."
 
 clean:             ## Clean the built blog output.
