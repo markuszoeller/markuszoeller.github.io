@@ -142,7 +142,6 @@ html_sidebars = {}
 disqus_shortname = "mzio"
 
 # Choose to disqus pages that are not posts, default is ``False``.
-# markus_z: apparently my posts don't count as 'posts', so I have to set this to True
 disqus_pages = False
 
 # Choose to disqus posts that are drafts (without a published date),
