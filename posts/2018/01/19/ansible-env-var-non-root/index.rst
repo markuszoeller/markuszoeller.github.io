@@ -1,5 +1,5 @@
 
-.. post::
+.. post:: 19 Jan, 2018
    :tags: ansible, quick-tips
    :title: Quick Tip: Ansible commands as non-root user with environment variables
 
