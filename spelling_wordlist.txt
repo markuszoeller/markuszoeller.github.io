@@ -21,6 +21,7 @@ deprecation
 Deprecation
 deprecations
 Deprecations
+deserialize
 devs
 diff
 diffs
@@ -89,6 +90,8 @@ refactoring
 Refactoring
 refactorings
 Refactorings
+regex
+Regex
 repo
 repos
 runtime
