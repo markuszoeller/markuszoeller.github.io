@@ -67,8 +67,6 @@ This post will focus on the second part, |ls|, ...
 
 
 
-.. _sec-env:
-
 Set up the environment
 ======================
 
@@ -158,7 +156,6 @@ a few basic terms and concepts of |es|.
 
 
 
-.. _sec-concepts:
 
 Terms and Concepts
 ==================
