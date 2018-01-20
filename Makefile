@@ -25,8 +25,7 @@ build_dir:         ## Create the build directory and install the dependencies.
 	@./scripts/create_build_env.sh
 
 build:             ## Build the blog sources.
-	@$(BUILD_DIR)/bin/ablog build
-	@echo "===MAKE: Built the blog sources."
+	@./scripts/build_website.sh
 
 spelling:          ## Check the spelling of the posts.
 	@rm -rf build
