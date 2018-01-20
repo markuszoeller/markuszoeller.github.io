@@ -48,7 +48,7 @@ Some notes:
 
    * - Date
      - Change description
-   * - 2018-mm-dd
+   * - TODO
      - The first release
 
 
