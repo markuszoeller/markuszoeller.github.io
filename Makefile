@@ -22,14 +22,7 @@ clean:             ## Clean the built blog output.
 	@./scripts/remove_build_artifacts.sh
 
 build_dir:         ## Create the build directory and install the dependencies.
-	@virtualenv $(BUILD_DIR)
-	@$(BUILD_DIR)/bin/pip install -r requirements.txt
-	# private fixes --->
-	@echo "=== MZO: apply private fix for https://github.com/abakan/ablog/issues/94"
-	@patch --forward --unified --quiet -d .venv/local/lib/python2.7/site-packages/ablog < patches/tomorrow.diff ; \
-	if [ $$? -eq 1 ] ; then echo "Already patched." ; fi
-	# <--- private fixes
-	@echo "===MAKE: Created the build directory."
+	@./scripts/create_build_env.sh
 
 build:             ## Build the blog sources.
 	@$(BUILD_DIR)/bin/ablog build
