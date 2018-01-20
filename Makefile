@@ -37,12 +37,10 @@ spelling:          ## Check the spelling of the posts.
 	@echo "===MAKE: Checked the spelling."
 
 start:             ## Start the local server to serve the blog.
-	@$(BUILD_DIR)/bin/ablog serve -r >/dev/null 2>&1 &
-	@echo "===MAKE: Started the server."
+	@./scripts/start_server.sh
 
 stop:              ## Stop the local server.
-	@pkill ablog; if [ $$? -eq 1 ] ; then echo "Already stopped." ; fi
-	@echo "===MAKE: Stopped the server."
+	@./scripts/stop_server.sh
 
 install_apt_deps:  ## Install the Ubuntu (*.deb) OS packages needed.
 	@apt-get -qq update
