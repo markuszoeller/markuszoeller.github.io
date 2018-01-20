@@ -19,8 +19,7 @@ remove:            ## Remove the build dir and all output.
 	@echo "===MAKE: Removed everything."
 
 clean:             ## Clean the built blog output.
-	@rm -rf $(OUTPUT_DIR) $(SPHINX_DIR)
-	@echo "===MAKE: Cleaned the blog output files."
+	@./scripts/remove_build_artifacts.sh
 
 build_dir:         ## Create the build directory and install the dependencies.
 	@virtualenv $(BUILD_DIR)
