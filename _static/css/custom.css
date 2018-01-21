@@ -99,16 +99,8 @@ ul.postlist > li > p.first {
 }
 
 ul.postlist > li {
-    /* Contrast white list items on white background */
-    border: solid 1px #CCC;
-    /* Rounded corners (which need a little extra space) */
-    border-radius: 20px;
-    padding: 10px;
-    /* Shadow at the bottom and right (which shouldn't overlap adjacent stuff) */
-    box-shadow: 8px 8px 10px  #aaa;
-    -moz-box-shadow: 8px 8px 10px  #aaa;
-    -webkit-box-shadow: 8px 8px 10px  #aaa;
-    -o-box-shadow: 8px 8px 10px  #aaa;
+    border-bottom: solid 1px #cccccc;
+    padding-bottom: 10px;
     margin-bottom: 20px;
     /* To reduce the indent from being a <li> element */
     margin-left: -45px;
