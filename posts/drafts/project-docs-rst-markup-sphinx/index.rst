@@ -162,7 +162,7 @@ Use different themes
 *Sphinx* uses themes for styling the content. The default theme is
 called *Alabaster*. That's the one you've seen in the image before.
 It's a good start for creating your own theme (I won't cover this here,
-more info at xxx) but it's very simplistic and unfortunately not
+more info at [#sphinxtheme]_) but it's very simplistic and unfortunately not
 mobile friendly (you maybe have noticed that the text is cut off
 in the bottom right corner). Let's change it to use a theme you know
 from ReadTheDocs:
