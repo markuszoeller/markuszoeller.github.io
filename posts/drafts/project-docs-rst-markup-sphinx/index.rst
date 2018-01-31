@@ -3,9 +3,8 @@
    :tags: documentation, restructured-text, sphinx
    :title: Project documentation with restructured text and Sphinx
 
-.. spelling::
-   foo
 
+.. |rst| replace:: *reStructuredText*
 
 
 ===========================================================
@@ -24,7 +23,7 @@ features I usually need when documenting, and how to do it.
     :local:
     :backlinks: top
 
-.. todo:: date of the change history
+
 
 .. list-table:: Change history:
    :widths: 1 5
@@ -32,21 +31,21 @@ features I usually need when documenting, and how to do it.
 
    * - Date
      - Change description
-   * - 2017-11-02
+   * - 2018-02-02
      - The first release
 
 
 Use Case
 ========
 
+The main benefit of using a markup languages like |rst| is, that you can
+treat your documentation like code. This includes doing reviews and adding
+it to version control.
 
-The benefit of using a markup
-languages is, that you can treat your documentation like your code and
-review and discuss it before publishing it.
+Another benefit is, that the plain text files work on every platform.
+Be it *Mac*, *Windows* or *Linux*. Using a *Windows* virtual
+machine to work with *PowerPoint* files can be cumbersome sometimes.
 
-Runs on all platforms (Windows, Linux, Mac)
-
-Transform to multiple output formats (HTML, PDF, ...)
 
 
 Minimal example
@@ -54,12 +53,12 @@ Minimal example
 
 We need two files:
 
-* One file ``conf.py``, which will configure *Sphinx*.
-* Another file called ``index.rst`` which contains our content. To be
-  precise, this file is the main entry point to all doc files we will have.
+* The first file ``conf.py`` will configure *Sphinx*.
+* The second file ``index.rst`` contains our content. To be precise,
+  this file is the main entry point to all doc files we will have.
   More on that later.
 
-The ``conf.py`` file looks like this:
+Create the file ``conf.py`` and add this content:
 
 .. code-block:: python
    :linenos:
@@ -79,8 +78,8 @@ is based on the behavior of most web servers to look for an HTML file named
 usually in URLs which are a little nicer to look at, at least in my
 opinion. The full list of options is at [#sphinxconf]_.
 
-Our second file ``index.rst`` contains this:
 
+Create the file ``index.rst`` and add this content:
 
 .. code-block:: rst
    :linenos:
@@ -93,8 +92,7 @@ Our second file ``index.rst`` contains this:
    This documents our project.
 
 
-To build this content with *Sphinx* we need to install it:
-
+Install *Sphinx* with the *Python* package manager *pip*:
 
 .. code-block:: bash
    :linenos:
@@ -104,14 +102,15 @@ To build this content with *Sphinx* we need to install it:
    $ sudo apt-get install -y python-pip
    $ sudo pip install sphinx
 
-Now build the documentation:
 
+Build the documentation:
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
    $ sphinx-build -b html -q -W -n . _build
+
 
 The parameters of the command ``sphinx-build`` in detail:
 
@@ -148,14 +147,17 @@ I usually need when writing documentation and how they can be done
 with *Sphinx* and *restructured text*.
 
 
-How do I ...
-============
+The main features
+=================
 
 The minimal example above will probably not bring you very far.
 Below are the things I (and maybe you) usually need when writing docs.
+I won't show the trivial things every markup language has, like
+the inclusion of images and formatting of text.
 
-change the theme?
------------------
+
+Use different themes
+--------------------
 
 *Sphinx* uses themes for styling the content. The default theme is
 called *Alabaster*. That's the one you've seen in the image before.
@@ -202,8 +204,8 @@ More details about the theme support can be found at [#sphinxtheme]_.
 
 
 
-show code examples?
--------------------
+Show code examples
+------------------
 
 Code blocks can be shown in different ways. The first way has the code
 inline in the document itself:
@@ -218,8 +220,8 @@ inline in the document itself:
 
       print("hello blog")
 
-The second way includes the file:
 
+The second way does a literal include of the file:
 
 .. code-block:: rst
    :linenos:
@@ -230,45 +232,31 @@ The second way includes the file:
       :linenos:
       :emphasize-lines: 5
 
+
 This second example renders like this:
 
-.. literalinclude:: example.ini
-   :language: ini
-   :linenos:
-   :emphasize-lines: 5
+.. image:: literalinclude_mcPi8J5.png
+   :width: 80%
+   :alt: Code example with *literalinclude* directive.
 
-The file inclusion is a neat way and easy to maintain. The highlighting
-works for around 300 languages and text format, thanks to
+.. note::
+
+   The wrong alignment between line numbers and lines is a bug in the
+   theme. It is already solved but not released yet [#rtdbug]_.
+
+The file inclusion is a nice way and easy to maintain. It also allows to
+use the actual code or config files, which can be tested for correctness.
+If we would include them in the doc file itself, like in the example before,
+it would be a lot harder to verify the correctness.
+
+The highlighting works for around 300 languages and text format, thanks to
 *Pygments* [#pygments]_. The ability to emphasize specific lines is very
 helpful in longer code examples when you want to set a focus.
 
 
 
-show images?
-------------
-
-
-Favor vector graphics (``.svg``) over raster maps (``.png``).
-Always do a scaling of the images (``:height:`` or ``:width:`` or ``:scale:``),
-this enables the "click on the thumbnail to show the full image" logic.
-
-.. code-block:: rst
-   :linenos:
-   :emphasize-lines: 0
-
-   .. image:: drawing_TOelDqK.svg
-      :width: 80%
-      :alt: Example drawing with Inkscape.
-
-
-.. image:: drawing_TOelDqK.svg
-  :width: 80%
-  :alt: Example drawing with Inkscape.
-
-
-
-add more pages?
----------------
+Structure your docs
+-------------------
 
 The key is the ``toctree`` magic of *Sphinx* [#toctree]_. Our updated
 ``index.rst`` file looks like this:
@@ -303,9 +291,8 @@ This means there is a directory ``pages`` on the same level as the
 
 
 
-cross-reference between pages?
-------------------------------
-
+Cross-reference between pages
+-----------------------------
 
 Add a *label* which plays the role as a jump mark, like I did with
 ``.. _the-glossary:`` in file ``glossary.rst`` here:
@@ -356,8 +343,8 @@ of your documentation IMO.
 
 
 
-split page content over multiple files?
----------------------------------------
+Split page content over multiple files
+--------------------------------------
 
 .. code-block:: rst
    :linenos:
@@ -409,8 +396,8 @@ time.
 
 
 
-add tables efficiently?
------------------------
+Add tables efficiently
+----------------------
 
 Add the content you want to present in a table to the file
 ``table.csv``:
@@ -425,7 +412,7 @@ Add the content you want to present in a table to the file
    "Gannet Ripple", 1.99, "On a stick!"
 
 
-Use that data in the ``csvtable`` directive:
+Use that data in the ``csv-table`` directive:
 
 .. code-block:: rst
    :linenos:
@@ -466,38 +453,35 @@ This can become cumbersome though.
 
 
 
-create constants for words or phrases?
---------------------------------------
+Use constants for words or phrases
+----------------------------------
 
 Repetition of certain terms and phrases is a good thing in documentation.
 It reinforces the connection of an idea to a term. This can be boring
 to type sometimes. Programming languages use usually constants for that.
 *Sphinx* can help you with that. For example, my earlier post about
-*Elasticsearch* used that word (in that format) multiple times in the post.
-
-.. todo:: Add link to the es post
-
+*Elasticsearch* (see :ref:`elastic-stack-elk-elasticsearch`) used that
+word in that format multiple times in the post.
 
 .. code-block:: rst
    :linenos:
    :emphasize-lines: 0
-
 
    .. |es| replace:: *Elasticsearch*
 
    Store your logs in |es|.
 
 
-The first line defines the constant (named ``|es|``), the second one
-uses it.
+The first line defines the constant named ``|es|``, while the later after
+it uses its to include the value during the docs build.
 
 In my opinion, the maintainability of the docs get increased with such a
 feature, because I don't care about a sudden renaming anymore. I go and
 change the constant definition on one place and that place only.
 
 
-show a per-page table of contents?
-----------------------------------
+Show a per-page table of contents
+---------------------------------
 
 The sections link back to the
 table of contents. This makes jumps back and forth easy.
@@ -533,26 +517,32 @@ table of contents. This makes jumps back and forth easy.
 This is useful for longer pages which have multiple sections on it.
 
 
-use external references?
-------------------------
+Use external references
+-----------------------
 
-
-"External" is everything outside of this blog.
-Reference to it with auto-numbered footnotes [#footnotes]_
-
+When referencing sources outside of docs project, I'd recommend to
+use the auto-numbered footnotes [#footnotes]_ feature.
 
 .. code-block:: rst
    :linenos:
    :emphasize-lines: 0
 
-   Reference to it with auto-numbered footnotes [#footnotes]_
+   Reference to external sources with auto-numbered footnotes [#footnotes]_
 
    References
    ==========
 
    .. [#footnotes] http://www.sphinx-doc.org/en/stable/rest.html#footnotes
 
-This gives your page a article like reference style which, in my personal
+
+This gets rendered as:
+
+.. image:: footnotes_cdAqsqq.png
+   :width: 80%
+   :alt: Auto-numbered footnotes as references.
+
+
+This gives your page an article like reference style which, in my personal
 view, increases the readability. It's also easier to reference to the
 same link multiple times. Should that link change, change only the
 one in the ``References`` section at the very end of the page. It also
@@ -560,10 +550,12 @@ helps, in case you want to output your docs in PDFs or even are crazy
 enough to print it on paper.
 
 
-add hints and warnings?
------------------------
 
+Hints and warnings
+------------------
 
+Adding highlighted boxes to draw attention to the more important pieces
+of information is also already built-in:
 
 .. code-block:: rst
    :linenos:
@@ -575,6 +567,7 @@ add hints and warnings?
 
    .. important:: This is important.
 
+This renders as:
 
 .. image:: admonitions_o8Ljc1Z.png
    :width: 80%
@@ -582,22 +575,41 @@ add hints and warnings?
 
 
 
-Why *Sphinx* helps me to do my job
-==================================
 
-* it's around since the early 2000s
-  => the "teething troubles" are solved
-* very popular doc engine for the Python community
-  => It won't vanish in the near future
-* extent the basic functionality with *sphinx-contrib*
-  => My "special problem" is probably already solved and I can add the extension
-* There is only one restructured text spec. No *github flavored markdown*,
-  *commonmark*, *kramdown*, *multimarkdown*, *pandoc markdown*,
-  etc. etc.
-  => I don't have to discuss trivial things
+Reasons why I bet on *Sphinx* and *Restructured Text*
+=====================================================
+
+#. It's a very popular and successfully used documentation engine for
+   the Python community, which means to me that it won't vanish in the
+   near future.
+
+#. It's around since the early 2000s and the teething troubles are
+   all solved. It's stable and I find a lot of examples online.
+
+#. There is only one |rst| spec [#rstspec]_. As nice as *Markdown* is, but
+   do we really need all those different flavors? Honestly, I do not.
+
+#. Extensibility is a base concept in *Sphinx* [#sphinxext]_. There's a
+   very good chance that my problem is already solved by
+   someone with an extension. If not, there is a defined way to write
+   an extension. I'll cover that in a follow-up post.
+
+#. It's easy to configure and well documented and simply gets the job done.
+   A real-life example can be seen at *OpenStack* [#osdocs]_. They do all
+   their docs with *Sphinx*.
 
 
 
+Conclusion
+==========
+
+This post showed only a sub-set of the possibilities with *Sphinx* and
+|rst|. Other features I didn't mention but could be interesting for you
+are:
+
+* create a glossary [#sphinxglos]_
+* use internationalization [#i18n]_
+* build (*Latex*) PDF output [#latex]_
 
 
 
@@ -608,6 +620,8 @@ References
 
 .. [#sphinxtheme] http://www.sphinx-doc.org/en/stable/theming.html
 
+.. [#rtdbug] https://github.com/rtfd/sphinx_rtd_theme/issues/417
+
 .. [#toctree] http://www.sphinx-doc.org/en/stable/markup/toctree.html
 
 .. [#pygments] http://pygments.org/
@@ -616,6 +630,14 @@ References
 
 .. [#crossref] http://www.sphinx-doc.org/en/stable/markup/inline.html#cross-referencing-arbitrary-locations
 
+.. [#rstspec] http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html
 
+.. [#sphinxext] http://www.sphinx-doc.org/en/stable/extensions.html
 
+.. [#osdocs] https://docs.openstack.org/
 
+.. [#sphinxglos] http://www.sphinx-doc.org/en/stable/markup/para.html#directive-glossary
+
+.. [#i18n] http://www.sphinx-doc.org/en/stable/intl.html
+
+.. [#latex] http://www.sphinx-doc.org/en/stable/config.html#options-for-latex-output

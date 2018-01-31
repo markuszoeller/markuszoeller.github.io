@@ -25,6 +25,8 @@ deserialize
 devs
 diff
 diffs
+extensibility
+Extensibility
 Feb
 filesystem
 Filesystem
