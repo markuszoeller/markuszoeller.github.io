@@ -16,8 +16,9 @@ When it comes to documenting your project, especially the non-code parts,
 you might face a plethora of opinions what the "correct approach" might be.
 Some love *Word* documents, some favor *PowerPoint* slides and some like
 documents written in a markup language. I'm one of the latter. This post
-will show my favorite, |rst| with |sph|. It will list the features I
-usually need when documenting, and how to do it.
+will show my favorite, |rst| with |sph|. It will list the capabilities I
+usually need when documenting, and how to do it with the features of |sph|
+and |rst|.
 
 
 .. contents::
@@ -47,12 +48,16 @@ Another benefit is, that the plain text files work on every platform.
 Be it *Mac*, *Windows* or *Linux*. Using a *Windows* virtual
 machine to work with *PowerPoint* files can be cumbersome sometimes.
 
+*Github* and other web based source code management systems are usually
+able to render markup language files of your project directly in the browser,
+which is kinda neat.
+
 
 
 Minimal example
 ===============
 
-We need two files:
+Let's start small. We need two files:
 
 * The first file ``conf.py`` will configure |sph|.
 * The second file ``index.rst`` contains our content. To be precise,
@@ -158,7 +163,8 @@ The main features
 The minimal example above will probably not bring you very far.
 Below are the things I (and maybe you) usually need when writing docs.
 I won't show the trivial things every markup language has, like
-the inclusion of images and formatting of text.
+the inclusion of images and formatting of text. You'll find a very
+good starting point for that at [#rstprimer]_.
 
 
 Use different themes
@@ -170,7 +176,7 @@ It's a good start for creating your own theme (I won't cover this here,
 more info at [#sphinxtheme]_) but it's very simplistic and unfortunately not
 mobile friendly (you maybe have noticed that the text is cut off
 in the bottom right corner). Let's change it to use a theme you know
-from ReadTheDocs:
+from *ReadTheDocs*:
 
 Install the theme:
 
@@ -294,6 +300,9 @@ This means there is a directory ``pages`` on the same level as the
    :width: 900px
    :alt: Include more pages with toctree.
 
+It's also possible to use *globbing*, so you don't have to add every
+new page manually to this list. It's worth to spend a minute or two
+to understand the ``toctree``.
 
 
 Cross-reference between pages
@@ -344,7 +353,7 @@ This renders in HTML as:
 
 Notice that the label is now part of the URL you jump to.
 The ``ref`` magic is the most flexible way and easiest way to link parts
-of your documentation IMO.
+of your documentation in my opinion.
 
 
 
@@ -404,8 +413,7 @@ time.
 Add tables efficiently
 ----------------------
 
-Add the content you want to present in a table to the file
-``table.csv``:
+Create a file which holds your data, for example ``table.csv``:
 
 .. code-block:: rst
    :linenos:
@@ -417,7 +425,7 @@ Add the content you want to present in a table to the file
    "Gannet Ripple", 1.99, "On a stick!"
 
 
-Use that data in the ``csv-table`` directive:
+Use the ``csv-table`` directive and point it to the CSV file:
 
 .. code-block:: rst
    :linenos:
@@ -454,7 +462,8 @@ It's also possible to add the table inline in your document:
       True   False
       =====  =====
 
-This can become cumbersome though.
+This can become cumbersome though. It's a case-by-case decision you
+have to make.
 
 
 
@@ -463,8 +472,8 @@ Use constants for words or phrases
 
 Repetition of certain terms and phrases is a good thing in documentation.
 It reinforces the connection of an idea to a term. This can be boring
-to type sometimes. Programming languages use usually constants for that.
-*Sphinx* can help you with that. For example, my earlier post about
+to type sometimes. Programming languages usually use constants for that
+and |sph| can do that too. For example, my earlier post about
 *Elasticsearch* (see :ref:`elastic-stack-elk-elasticsearch`) used that
 word in that format multiple times in the post.
 
@@ -551,13 +560,13 @@ This gives your page an article like reference style which, in my personal
 view, increases the readability. It's also easier to reference to the
 same link multiple times. Should that link change, change only the
 one in the ``References`` section at the very end of the page. It also
-helps, in case you want to output your docs in PDFs or even are crazy
+helps in case you want to output your docs in PDFs or are even crazy
 enough to print it on paper.
 
 
 
-Hints and warnings
-------------------
+Highlight important parts
+-------------------------
 
 Adding highlighted boxes to draw attention to the more important pieces
 of information is also already built-in:
@@ -578,6 +587,10 @@ This renders as:
    :width: 900px
    :alt: |sph| admonitions as highlighted boxes.
 
+When skimming pages, they can give the readers some kind of anchor points
+which are easy to recognize. Don't go overboard though. If you're lucky
+enough to have access to good technical writers, go ask them and do as
+they say (or do not; I'm not your boss).
 
 
 
@@ -616,12 +629,15 @@ are:
 * use internationalization [#i18n]_
 * build (*Latex*) PDF output [#latex]_
 
+This list is not exhaustive. There's even more. Now go and write good docs. :)
 
 
 References
 ==========
 
 .. [#sphinxconf] http://www.sphinx-doc.org/en/stable/config.html
+
+.. [#rstprimer] http://www.sphinx-doc.org/en/stable/rest.html
 
 .. [#sphinxtheme] http://www.sphinx-doc.org/en/stable/theming.html
 
