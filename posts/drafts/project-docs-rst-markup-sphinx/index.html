@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Project documentation with restructured text and Sphinx &#8212; Markus Zoeller Blog</title>
+    <title>Project documentation with reStructuredText and Sphinx &#8212; Markus Zoeller Blog</title>
     
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -119,38 +119,39 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="project-documentation-with-restructured-text-and-sphinx">
-<h1>Project documentation with <em>restructured text</em> and <em>Sphinx</em><a class="headerlink" href="#project-documentation-with-restructured-text-and-sphinx" title="Permalink to this headline"> </a></h1>
+  <div class="section" id="project-documentation-with-rst-and-sph">
+<h1>Project documentation with <em>reStructuredText</em> and <em>Sphinx</em><a class="headerlink" href="#project-documentation-with-rst-and-sph" title="Permalink to this headline"> </a></h1>
 <p>When it comes to documenting your project, especially the non-code parts,
 you might face a plethora of opinions what the &#8220;correct approach&#8221; might be.
 Some love <em>Word</em> documents, some favor <em>PowerPoint</em> slides and some like
 documents written in a markup language. I&#8217;m one of the latter. This post
-will show my favorite, <em>restructured text</em> with <em>Sphinx</em>. It will list the
-features I usually need when documenting, and how to do it.</p>
+will show my favorite, <em>reStructuredText</em> with <em>Sphinx</em>. It will list the capabilities I
+usually need when documenting, and how to do it with the features of <em>Sphinx</em>
+and <em>reStructuredText</em>.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#use-case" id="id16">Use Case</a></li>
-<li><a class="reference internal" href="#minimal-example" id="id17">Minimal example</a></li>
-<li><a class="reference internal" href="#the-main-features" id="id18">The main features</a><ul>
-<li><a class="reference internal" href="#use-different-themes" id="id19">Use different themes</a></li>
-<li><a class="reference internal" href="#show-code-examples" id="id20">Show code examples</a></li>
-<li><a class="reference internal" href="#structure-your-docs" id="id21">Structure your docs</a></li>
-<li><a class="reference internal" href="#cross-reference-between-pages" id="id22">Cross-reference between pages</a></li>
-<li><a class="reference internal" href="#split-page-content-over-multiple-files" id="id23">Split page content over multiple files</a></li>
-<li><a class="reference internal" href="#add-tables-efficiently" id="id24">Add tables efficiently</a></li>
-<li><a class="reference internal" href="#use-constants-for-words-or-phrases" id="id25">Use constants for words or phrases</a></li>
-<li><a class="reference internal" href="#show-a-per-page-table-of-contents" id="id26">Show a per-page table of contents</a></li>
-<li><a class="reference internal" href="#use-external-references" id="id27">Use external references</a></li>
-<li><a class="reference internal" href="#hints-and-warnings" id="id28">Hints and warnings</a></li>
+<li><a class="reference internal" href="#use-case" id="id17">Use Case</a></li>
+<li><a class="reference internal" href="#minimal-example" id="id18">Minimal example</a></li>
+<li><a class="reference internal" href="#the-main-features" id="id19">The main features</a><ul>
+<li><a class="reference internal" href="#use-different-themes" id="id20">Use different themes</a></li>
+<li><a class="reference internal" href="#show-code-examples" id="id21">Show code examples</a></li>
+<li><a class="reference internal" href="#structure-your-docs" id="id22">Structure your docs</a></li>
+<li><a class="reference internal" href="#cross-reference-between-pages" id="id23">Cross-reference between pages</a></li>
+<li><a class="reference internal" href="#split-page-content-over-multiple-files" id="id24">Split page content over multiple files</a></li>
+<li><a class="reference internal" href="#add-tables-efficiently" id="id25">Add tables efficiently</a></li>
+<li><a class="reference internal" href="#use-constants-for-words-or-phrases" id="id26">Use constants for words or phrases</a></li>
+<li><a class="reference internal" href="#show-a-per-page-table-of-contents" id="id27">Show a per-page table of contents</a></li>
+<li><a class="reference internal" href="#use-external-references" id="id28">Use external references</a></li>
+<li><a class="reference internal" href="#highlight-important-parts" id="id29">Highlight important parts</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#reasons-why-i-bet-on-sphinx-and-restructured-text" id="id29">Reasons why I bet on <em>Sphinx</em> and <em>Restructured Text</em></a></li>
-<li><a class="reference internal" href="#conclusion" id="id30">Conclusion</a></li>
-<li><a class="reference internal" href="#references" id="id31">References</a></li>
+<li><a class="reference internal" href="#reasons-why-i-bet-on-sph-and-rst" id="id30">Reasons why I bet on <em>Sphinx</em> and <em>reStructuredText</em></a></li>
+<li><a class="reference internal" href="#conclusion" id="id31">Conclusion</a></li>
+<li><a class="reference internal" href="#references" id="id32">References</a></li>
 </ul>
 </div>
-<table border="1" class="docutils" id="id15">
-<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id15" title="Permalink to this table"> </a></caption>
+<table border="1" class="docutils" id="id16">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id16" title="Permalink to this table"> </a></caption>
 <colgroup>
 <col width="17%" />
 <col width="83%" />
@@ -174,10 +175,13 @@ it to version control.</p>
 <p>Another benefit is, that the plain text files work on every platform.
 Be it <em>Mac</em>, <em>Windows</em> or <em>Linux</em>. Using a <em>Windows</em> virtual
 machine to work with <em>PowerPoint</em> files can be cumbersome sometimes.</p>
+<p><em>Github</em> and other web based source code management systems are usually
+able to render markup language files of your project directly in the browser,
+which is kinda neat.</p>
 </div>
 <div class="section" id="minimal-example">
 <h2><a class="toc-backref" href="#contents">Minimal example</a><a class="headerlink" href="#minimal-example" title="Permalink to this headline"> </a></h2>
-<p>We need two files:</p>
+<p>Let&#8217;s start small. We need two files:</p>
 <ul class="simple">
 <li>The first file <code class="docutils literal"><span class="pre">conf.py</span></code> will configure <em>Sphinx</em>.</li>
 <li>The second file <code class="docutils literal"><span class="pre">index.rst</span></code> contains our content. To be precise,
@@ -201,7 +205,7 @@ for the <code class="docutils literal"><span class="pre">master_doc</span></code
 is based on the behavior of most web servers to look for an HTML file named
 <code class="docutils literal"><span class="pre">index</span></code> and to serve this file when pointed to a path. This results
 usually in URLs which are a little nicer to look at, at least in my
-opinion. The full list of options is at <a class="footnote-reference" href="#sphinxconf" id="id1">[1]</a>.</p>
+opinion. The full list of config options is at <a class="footnote-reference" href="#sphinxconf" id="id1">[1]</a>.</p>
 <p>Create the file <code class="docutils literal"><span class="pre">index.rst</span></code> and add this content:</p>
 <div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -241,35 +245,39 @@ reason to start sloppy.</li>
 <li><code class="docutils literal"><span class="pre">_build</span></code>: The output directory.</li>
 </ul>
 <p>The result looks like this:</p>
-<a class="reference internal image-reference" href="../../../_images/minimal_gy0NjSA.png"><img alt="Minimal *Sphinx* HTML output with default *Alabaster* theme." src="../../../_images/minimal_gy0NjSA.png" style="width: 900px;" /></a>
+<a class="reference internal image-reference" href="../../../_images/minimal_gy0NjSA.png"><img alt="Minimal |sph| HTML output with default *Alabaster* theme." src="../../../_images/minimal_gy0NjSA.png" style="width: 900px;" /></a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p><em>Sphinx</em> does not come with a built-in web server. I usually help
 myself with the minimal web server which comes with <em>Python</em>:</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span>$ python -m SimpleHTTPServer &amp;
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cd _build
+$ python -m SimpleHTTPServer &amp;   # python3 -m http.server &amp;
 $ firefox localhost:8000
 </pre></div>
 </div>
+<p class="last">You can also simply point your browser to the built <code class="docutils literal"><span class="pre">index.html</span></code>
+file. It works either way.</p>
 </div>
 <p>With this as a starting point, I&#8217;ll go through the different aspects
 I usually need when writing documentation and how they can be done
-with <em>Sphinx</em> and <em>restructured text</em>.</p>
+with <em>Sphinx</em> and <em>reStructuredText</em>.</p>
 </div>
 <div class="section" id="the-main-features">
 <h2><a class="toc-backref" href="#contents">The main features</a><a class="headerlink" href="#the-main-features" title="Permalink to this headline"> </a></h2>
 <p>The minimal example above will probably not bring you very far.
 Below are the things I (and maybe you) usually need when writing docs.
 I won&#8217;t show the trivial things every markup language has, like
-the inclusion of images and formatting of text.</p>
+the inclusion of images and formatting of text. You&#8217;ll find a very
+good starting point for that at <a class="footnote-reference" href="#rstprimer" id="id2">[2]</a>.</p>
 <div class="section" id="use-different-themes">
 <h3><a class="toc-backref" href="#contents">Use different themes</a><a class="headerlink" href="#use-different-themes" title="Permalink to this headline"> </a></h3>
 <p><em>Sphinx</em> uses themes for styling the content. The default theme is
 called <em>Alabaster</em>. That&#8217;s the one you&#8217;ve seen in the image before.
 It&#8217;s a good start for creating your own theme (I won&#8217;t cover this here,
-more info at <a class="footnote-reference" href="#sphinxtheme" id="id2">[2]</a>) but it&#8217;s very simplistic and unfortunately not
+more info at <a class="footnote-reference" href="#sphinxtheme" id="id3">[3]</a>) but it&#8217;s very simplistic and unfortunately not
 mobile friendly (you maybe have noticed that the text is cut off
 in the bottom right corner). Let&#8217;s change it to use a theme you know
-from ReadTheDocs:</p>
+from <em>ReadTheDocs</em>:</p>
 <p>Install the theme:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ sudo pip install sphinx_rtd_theme
 </pre></div>
@@ -283,8 +291,8 @@ from ReadTheDocs:</p>
 </pre></div>
 </td></tr></table></div>
 <p>The result looks like this:</p>
-<a class="reference internal image-reference" href="../../../_images/rtd_FjEO8MZ.png"><img alt="Minimal *Sphinx* HTML output with *Read The Docs* theme." src="../../../_images/rtd_FjEO8MZ.png" style="width: 900px;" /></a>
-<p>More details about the theme support can be found at <a class="footnote-reference" href="#sphinxtheme" id="id3">[2]</a>.</p>
+<a class="reference internal image-reference" href="../../../_images/rtd_FjEO8MZ.png"><img alt="Minimal |sph| HTML output with *Read The Docs* theme." src="../../../_images/rtd_FjEO8MZ.png" style="width: 900px;" /></a>
+<p>More details about the theme support can be found at <a class="footnote-reference" href="#sphinxtheme" id="id4">[3]</a>.</p>
 </div>
 <div class="section" id="show-code-examples">
 <h3><a class="toc-backref" href="#contents">Show code examples</a><a class="headerlink" href="#show-code-examples" title="Permalink to this headline"> </a></h3>
@@ -316,19 +324,19 @@ inline in the document itself:</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The wrong alignment between line numbers and lines is a bug in the
-theme. It is already solved but not released yet <a class="footnote-reference" href="#rtdbug" id="id4">[3]</a>.</p>
+theme. It is already solved but not released yet <a class="footnote-reference" href="#rtdbug" id="id5">[4]</a>.</p>
 </div>
 <p>The file inclusion is a nice way and easy to maintain. It also allows to
 use the actual code or config files, which can be tested for correctness.
 If we would include them in the doc file itself, like in the example before,
 it would be a lot harder to verify the correctness.</p>
 <p>The highlighting works for around 300 languages and text format, thanks to
-<em>Pygments</em> <a class="footnote-reference" href="#pygments" id="id5">[5]</a>. The ability to emphasize specific lines is very
+<em>Pygments</em> <a class="footnote-reference" href="#pygments" id="id6">[5]</a>. The ability to emphasize specific lines is very
 helpful in longer code examples when you want to set a focus.</p>
 </div>
 <div class="section" id="structure-your-docs">
 <h3><a class="toc-backref" href="#contents">Structure your docs</a><a class="headerlink" href="#structure-your-docs" title="Permalink to this headline"> </a></h3>
-<p>The key is the <code class="docutils literal"><span class="pre">toctree</span></code> magic of <em>Sphinx</em> <a class="footnote-reference" href="#toctree" id="id6">[4]</a>. Our updated
+<p>The key is the <code class="docutils literal"><span class="pre">toctree</span></code> magic of <em>Sphinx</em> <a class="footnote-reference" href="#toctree" id="id7">[6]</a>. Our updated
 <code class="docutils literal"><span class="pre">index.rst</span></code> file looks like this:</p>
 <div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -363,6 +371,9 @@ This documents our project.
 <code class="docutils literal"><span class="pre">index.rst</span></code>. This directory contains three files named <code class="docutils literal"><span class="pre">overview.rst</span></code>,
 <code class="docutils literal"><span class="pre">content.rst</span></code> and <code class="docutils literal"><span class="pre">glossary.rst</span></code>.</p>
 <a class="reference internal image-reference" href="../../../_images/toctree_9ADWK2U.png"><img alt="Include more pages with toctree." src="../../../_images/toctree_9ADWK2U.png" style="width: 900px;" /></a>
+<p>It&#8217;s also possible to use <em>globbing</em>, so you don&#8217;t have to add every
+new page manually to this list. It&#8217;s worth to spend a minute or two
+to understand the <code class="docutils literal"><span class="pre">toctree</span></code>.</p>
 </div>
 <div class="section" id="cross-reference-between-pages">
 <h3><a class="toc-backref" href="#contents">Cross-reference between pages</a><a class="headerlink" href="#cross-reference-between-pages" title="Permalink to this headline"> </a></h3>
@@ -383,7 +394,7 @@ This documents our project.
 This is a glossary.
 </pre></div>
 </td></tr></table></div>
-<p>Now you can use this as value for the <code class="docutils literal"><span class="pre">:ref:</span></code> role <a class="footnote-reference" href="#crossref" id="id7">[7]</a>:</p>
+<p>Now you can use this as value for the <code class="docutils literal"><span class="pre">:ref:</span></code> role <a class="footnote-reference" href="#crossref" id="id8">[7]</a>:</p>
 <div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -404,7 +415,7 @@ See the <span class="na">:ref:</span><span class="nv">`the-glossary`</span> for 
 <a class="reference internal image-reference" href="../../../_images/ref_to_0oh9gdz.png"><img alt="The ref label is part of the URL." src="../../../_images/ref_to_0oh9gdz.png" style="width: 900px;" /></a>
 <p>Notice that the label is now part of the URL you jump to.
 The <code class="docutils literal"><span class="pre">ref</span></code> magic is the most flexible way and easiest way to link parts
-of your documentation IMO.</p>
+of your documentation in my opinion.</p>
 </div>
 <div class="section" id="split-page-content-over-multiple-files">
 <h3><a class="toc-backref" href="#contents">Split page content over multiple files</a><a class="headerlink" href="#split-page-content-over-multiple-files" title="Permalink to this headline"> </a></h3>
@@ -441,7 +452,7 @@ This is explains everything.
 </li>
 </ul>
 <a class="reference internal image-reference" href="../../../_images/include_part_MdtYww9.png"><img alt="Content split over multiple files and combined with include." src="../../../_images/include_part_MdtYww9.png" style="width: 900px;" /></a>
-<p>The content of those included files is normal <em>restructured Text</em>. The
+<p>The content of those included files is normal <em>reStructuredText</em>. The
 file extension <code class="docutils literal"><span class="pre">*.inc</span></code> is only a convention. With that mechanism,
 you can also write re-usable pieces of text, for example in use-case
 centered documentation of the features of your project, where every
@@ -453,8 +464,7 @@ time.</p>
 </div>
 <div class="section" id="add-tables-efficiently">
 <h3><a class="toc-backref" href="#contents">Add tables efficiently</a><a class="headerlink" href="#add-tables-efficiently" title="Permalink to this headline"> </a></h3>
-<p>Add the content you want to present in a table to the file
-<code class="docutils literal"><span class="pre">table.csv</span></code>:</p>
+<p>Create a file which holds your data, for example <code class="docutils literal"><span class="pre">table.csv</span></code>:</p>
 <div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -464,7 +474,7 @@ time.</p>
 &quot;Gannet Ripple&quot;, 1.99, &quot;On a stick!&quot;
 </pre></div>
 </td></tr></table></div>
-<p>Use that data in the <code class="docutils literal"><span class="pre">csv-table</span></code> directive:</p>
+<p>Use the <code class="docutils literal"><span class="pre">csv-table</span></code> directive and point it to the CSV file:</p>
 <div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -496,14 +506,15 @@ time.</p>
    =====  =====
 </pre></div>
 </td></tr></table></div>
-<p>This can become cumbersome though.</p>
+<p>This can become cumbersome though. It&#8217;s a case-by-case decision you
+have to make.</p>
 </div>
 <div class="section" id="use-constants-for-words-or-phrases">
 <h3><a class="toc-backref" href="#contents">Use constants for words or phrases</a><a class="headerlink" href="#use-constants-for-words-or-phrases" title="Permalink to this headline"> </a></h3>
 <p>Repetition of certain terms and phrases is a good thing in documentation.
 It reinforces the connection of an idea to a term. This can be boring
-to type sometimes. Programming languages use usually constants for that.
-<em>Sphinx</em> can help you with that. For example, my earlier post about
+to type sometimes. Programming languages usually use constants for that
+and <em>Sphinx</em> can do that too. For example, my earlier post about
 <em>Elasticsearch</em> (see <a class="reference internal" href="../../2018/01/05/elastic-stack-elk-elasticsearch/#elastic-stack-elk-elasticsearch"><span class="std std-ref">Elastic Stack (formerly ELK) - Elasticsearch</span></a>) used that
 word in that format multiple times in the post.</p>
 <div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -564,7 +575,7 @@ table of contents. This makes jumps back and forth easy.</p>
 <div class="section" id="use-external-references">
 <h3><a class="toc-backref" href="#contents">Use external references</a><a class="headerlink" href="#use-external-references" title="Permalink to this headline"> </a></h3>
 <p>When referencing sources outside of docs project, I&#8217;d recommend to
-use the auto-numbered footnotes <a class="footnote-reference" href="#footnotes" id="id8">[6]</a> feature.</p>
+use the auto-numbered footnotes <a class="footnote-reference" href="#footnotes" id="id9">[8]</a> feature.</p>
 <div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -584,11 +595,11 @@ use the auto-numbered footnotes <a class="footnote-reference" href="#footnotes" 
 view, increases the readability. It&#8217;s also easier to reference to the
 same link multiple times. Should that link change, change only the
 one in the <code class="docutils literal"><span class="pre">References</span></code> section at the very end of the page. It also
-helps, in case you want to output your docs in PDFs or even are crazy
+helps in case you want to output your docs in PDFs or are even crazy
 enough to print it on paper.</p>
 </div>
-<div class="section" id="hints-and-warnings">
-<h3><a class="toc-backref" href="#contents">Hints and warnings</a><a class="headerlink" href="#hints-and-warnings" title="Permalink to this headline"> </a></h3>
+<div class="section" id="highlight-important-parts">
+<h3><a class="toc-backref" href="#contents">Highlight important parts</a><a class="headerlink" href="#highlight-important-parts" title="Permalink to this headline"> </a></h3>
 <p>Adding highlighted boxes to draw attention to the more important pieces
 of information is also already built-in:</p>
 <div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -603,25 +614,29 @@ of information is also already built-in:</p>
 </pre></div>
 </td></tr></table></div>
 <p>This renders as:</p>
-<a class="reference internal image-reference" href="../../../_images/admonitions_o8Ljc1Z.png"><img alt="Sphinx admonitions as highlighted boxes." src="../../../_images/admonitions_o8Ljc1Z.png" style="width: 900px;" /></a>
+<a class="reference internal image-reference" href="../../../_images/admonitions_o8Ljc1Z.png"><img alt="|sph| admonitions as highlighted boxes." src="../../../_images/admonitions_o8Ljc1Z.png" style="width: 900px;" /></a>
+<p>When skimming pages, they can give the readers some kind of anchor points
+which are easy to recognize. Don&#8217;t go overboard though. If you&#8217;re lucky
+enough to have access to good technical writers, go ask them and do as
+they say (or do not; I&#8217;m not your boss).</p>
 </div>
 </div>
-<div class="section" id="reasons-why-i-bet-on-sphinx-and-restructured-text">
-<h2><a class="toc-backref" href="#contents">Reasons why I bet on <em>Sphinx</em> and <em>Restructured Text</em></a><a class="headerlink" href="#reasons-why-i-bet-on-sphinx-and-restructured-text" title="Permalink to this headline"> </a></h2>
+<div class="section" id="reasons-why-i-bet-on-sph-and-rst">
+<h2><a class="toc-backref" href="#contents">Reasons why I bet on <em>Sphinx</em> and <em>reStructuredText</em></a><a class="headerlink" href="#reasons-why-i-bet-on-sph-and-rst" title="Permalink to this headline"> </a></h2>
 <ol class="arabic simple">
 <li>It&#8217;s a very popular and successfully used documentation engine for
 the Python community, which means to me that it won&#8217;t vanish in the
 near future.</li>
 <li>It&#8217;s around since the early 2000s and the teething troubles are
 all solved. It&#8217;s stable and I find a lot of examples online.</li>
-<li>There is only one <em>reStructuredText</em> spec <a class="footnote-reference" href="#rstspec" id="id9">[8]</a>. As nice as <em>Markdown</em> is, but
+<li>There is only one <em>reStructuredText</em> spec <a class="footnote-reference" href="#rstspec" id="id10">[9]</a>. As nice as <em>Markdown</em> is, but
 do we really need all those different flavors? Honestly, I do not.</li>
-<li>Extensibility is a base concept in <em>Sphinx</em> <a class="footnote-reference" href="#sphinxext" id="id10">[9]</a>. There&#8217;s a
+<li>Extensibility is a base concept in <em>Sphinx</em> <a class="footnote-reference" href="#sphinxext" id="id11">[10]</a>. There&#8217;s a
 very good chance that my problem is already solved by
 someone with an extension. If not, there is a defined way to write
 an extension. I&#8217;ll cover that in a follow-up post.</li>
 <li>It&#8217;s easy to configure and well documented and simply gets the job done.
-A real-life example can be seen at <em>OpenStack</em> <a class="footnote-reference" href="#osdocs" id="id11">[10]</a>. They do all
+A real-life example can be seen at <em>OpenStack</em> <a class="footnote-reference" href="#osdocs" id="id12">[11]</a>. They do all
 their docs with <em>Sphinx</em>.</li>
 </ol>
 </div>
@@ -631,10 +646,11 @@ their docs with <em>Sphinx</em>.</li>
 <em>reStructuredText</em>. Other features I didn&#8217;t mention but could be interesting for you
 are:</p>
 <ul class="simple">
-<li>create a glossary <a class="footnote-reference" href="#sphinxglos" id="id12">[11]</a></li>
-<li>use internationalization <a class="footnote-reference" href="#i18n" id="id13">[12]</a></li>
-<li>build (<em>Latex</em>) PDF output <a class="footnote-reference" href="#latex" id="id14">[13]</a></li>
+<li>create a glossary <a class="footnote-reference" href="#sphinxglos" id="id13">[12]</a></li>
+<li>use internationalization <a class="footnote-reference" href="#i18n" id="id14">[13]</a></li>
+<li>build (<em>Latex</em>) PDF output <a class="footnote-reference" href="#latex" id="id15">[14]</a></li>
 </ul>
+<p>This list is not exhaustive. There&#8217;s even more. Now go and write good docs. :)</p>
 </div>
 <div class="section" id="references">
 <h2><a class="toc-backref" href="#contents">References</a><a class="headerlink" href="#references" title="Permalink to this headline"> </a></h2>
@@ -644,76 +660,82 @@ are:</p>
 <tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/config.html">http://www.sphinx-doc.org/en/stable/config.html</a></td></tr>
 </tbody>
 </table>
+<table class="docutils footnote" frame="void" id="rstprimer" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html">http://www.sphinx-doc.org/en/stable/rest.html</a></td></tr>
+</tbody>
+</table>
 <table class="docutils footnote" frame="void" id="sphinxtheme" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[2]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id3">2</a>)</em> <a class="reference external" href="http://www.sphinx-doc.org/en/stable/theming.html">http://www.sphinx-doc.org/en/stable/theming.html</a></td></tr>
+<tr><td class="label">[3]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id4">2</a>)</em> <a class="reference external" href="http://www.sphinx-doc.org/en/stable/theming.html">http://www.sphinx-doc.org/en/stable/theming.html</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="rtdbug" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[3]</a></td><td><a class="reference external" href="https://github.com/rtfd/sphinx_rtd_theme/issues/417">https://github.com/rtfd/sphinx_rtd_theme/issues/417</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="toctree" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id6">[4]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/markup/toctree.html">http://www.sphinx-doc.org/en/stable/markup/toctree.html</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id5">[4]</a></td><td><a class="reference external" href="https://github.com/rtfd/sphinx_rtd_theme/issues/417">https://github.com/rtfd/sphinx_rtd_theme/issues/417</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="pygments" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><a class="reference external" href="http://pygments.org/">http://pygments.org/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id6">[5]</a></td><td><a class="reference external" href="http://pygments.org/">http://pygments.org/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="footnotes" rules="none">
+<table class="docutils footnote" frame="void" id="toctree" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[6]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html#footnotes">http://www.sphinx-doc.org/en/stable/rest.html#footnotes</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id7">[6]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/markup/toctree.html">http://www.sphinx-doc.org/en/stable/markup/toctree.html</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="crossref" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/markup/inline.html#cross-referencing-arbitrary-locations">http://www.sphinx-doc.org/en/stable/markup/inline.html#cross-referencing-arbitrary-locations</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id8">[7]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/markup/inline.html#cross-referencing-arbitrary-locations">http://www.sphinx-doc.org/en/stable/markup/inline.html#cross-referencing-arbitrary-locations</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="footnotes" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id9">[8]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html#footnotes">http://www.sphinx-doc.org/en/stable/rest.html#footnotes</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="rstspec" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id9">[8]</a></td><td><a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html">http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id10">[9]</a></td><td><a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html">http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="sphinxext" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id10">[9]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/extensions.html">http://www.sphinx-doc.org/en/stable/extensions.html</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id11">[10]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/extensions.html">http://www.sphinx-doc.org/en/stable/extensions.html</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="osdocs" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id11">[10]</a></td><td><a class="reference external" href="https://docs.openstack.org/">https://docs.openstack.org/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id12">[11]</a></td><td><a class="reference external" href="https://docs.openstack.org/">https://docs.openstack.org/</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="sphinxglos" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id12">[11]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/markup/para.html#directive-glossary">http://www.sphinx-doc.org/en/stable/markup/para.html#directive-glossary</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id13">[12]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/markup/para.html#directive-glossary">http://www.sphinx-doc.org/en/stable/markup/para.html#directive-glossary</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="i18n" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id13">[12]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/intl.html">http://www.sphinx-doc.org/en/stable/intl.html</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id14">[13]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/intl.html">http://www.sphinx-doc.org/en/stable/intl.html</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="latex" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id14">[13]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/config.html#options-for-latex-output">http://www.sphinx-doc.org/en/stable/config.html#options-for-latex-output</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id15">[14]</a></td><td><a class="reference external" href="http://www.sphinx-doc.org/en/stable/config.html#options-for-latex-output">http://www.sphinx-doc.org/en/stable/config.html#options-for-latex-output</a></td></tr>
 </tbody>
 </table>
 </div>
