@@ -130,7 +130,7 @@ The parameters of the command ``sphinx-build`` in detail:
 The result looks like this:
 
 .. image:: minimal_gy0NjSA.png
-   :width: 80%
+   :width: 900px
    :alt: Minimal *Sphinx* HTML output with default *Alabaster* theme.
 
 
@@ -197,7 +197,7 @@ Build the docs again like before:
 The result looks like this:
 
 .. image:: rtd_FjEO8MZ.png
-   :width: 80%
+   :width: 900px
    :alt: Minimal *Sphinx* HTML output with *Read The Docs* theme.
 
 More details about the theme support can be found at [#sphinxtheme]_.
@@ -236,7 +236,7 @@ The second way does a literal include of the file:
 This second example renders like this:
 
 .. image:: literalinclude_mcPi8J5.png
-   :width: 80%
+   :width: 900px
    :alt: Code example with *literalinclude* directive.
 
 .. note::
@@ -286,7 +286,7 @@ This means there is a directory ``pages`` on the same level as the
 
 
 .. image:: toctree_9ADWK2U.png
-   :width: 80%
+   :width: 900px
    :alt: Include more pages with toctree.
 
 
@@ -329,12 +329,12 @@ Now you can use this as value for the ``:ref:`` role [#crossref]_:
 This renders in HTML as:
 
 .. image:: ref_from_0oh9gdz.png
-   :width: 80%
+   :width: 900px
    :alt: Link from one page to another.
 
 
 .. image:: ref_to_0oh9gdz.png
-   :width: 80%
+   :width: 900px
    :alt: The ref label is part of the URL.
 
 Notice that the label is now part of the URL you jump to.
@@ -380,7 +380,7 @@ Where the two referenced files are:
 
 
 .. image:: include_part_MdtYww9.png
-   :width: 80%
+   :width: 900px
    :alt: Content split over multiple files and combined with include.
 
 The content of those included files is normal *restructured Text*. The
@@ -427,7 +427,7 @@ The result looks like this:
 
 
 .. image:: table_oHeLO4C.png
-   :width: 80%
+   :width: 900px
    :alt: HTML output table data.
 
 
@@ -510,7 +510,7 @@ table of contents. This makes jumps back and forth easy.
 
 
 .. image:: toc_page_djfCY0e.png
-   :width: 80%
+   :width: 900px
    :alt: A per-page table of contents of the local sections.
 
 
@@ -538,7 +538,7 @@ use the auto-numbered footnotes [#footnotes]_ feature.
 This gets rendered as:
 
 .. image:: footnotes_cdAqsqq.png
-   :width: 80%
+   :width: 900px
    :alt: Auto-numbered footnotes as references.
 
 
@@ -570,7 +570,7 @@ of information is also already built-in:
 This renders as:
 
 .. image:: admonitions_o8Ljc1Z.png
-   :width: 80%
+   :width: 900px
    :alt: Sphinx admonitions as highlighted boxes.
 
 
