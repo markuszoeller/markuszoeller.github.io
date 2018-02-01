@@ -1,5 +1,5 @@
 
-.. post::
+.. post:: 2 Feb, 2018
    :tags: documentation, restructuredtext, sphinx, markup, rst
    :title: Project documentation with reStructuredText and Sphinx
 
