@@ -1,22 +1,23 @@
 
 .. post::
-   :tags: documentation, restructured-text, sphinx
-   :title: Project documentation with restructured text and Sphinx
+   :tags: documentation, restructuredtext, sphinx, markup, rst
+   :title: Project documentation with reStructuredText and Sphinx
 
 
 .. |rst| replace:: *reStructuredText*
+.. |sph| replace:: *Sphinx*
 
 
-===========================================================
-Project documentation with *restructured text* and *Sphinx*
-===========================================================
+==========================================
+Project documentation with |rst| and |sph|
+==========================================
 
 When it comes to documenting your project, especially the non-code parts,
 you might face a plethora of opinions what the "correct approach" might be.
 Some love *Word* documents, some favor *PowerPoint* slides and some like
 documents written in a markup language. I'm one of the latter. This post
-will show my favorite, *restructured text* with *Sphinx*. It will list the
-features I usually need when documenting, and how to do it.
+will show my favorite, |rst| with |sph|. It will list the features I
+usually need when documenting, and how to do it.
 
 
 .. contents::
@@ -53,7 +54,7 @@ Minimal example
 
 We need two files:
 
-* The first file ``conf.py`` will configure *Sphinx*.
+* The first file ``conf.py`` will configure |sph|.
 * The second file ``index.rst`` contains our content. To be precise,
   this file is the main entry point to all doc files we will have.
   More on that later.
@@ -76,7 +77,7 @@ for the ``master_doc`` option, you have to name the main content file
 is based on the behavior of most web servers to look for an HTML file named
 ``index`` and to serve this file when pointed to a path. This results
 usually in URLs which are a little nicer to look at, at least in my
-opinion. The full list of options is at [#sphinxconf]_.
+opinion. The full list of config options is at [#sphinxconf]_.
 
 
 Create the file ``index.rst`` and add this content:
@@ -92,7 +93,7 @@ Create the file ``index.rst`` and add this content:
    This documents our project.
 
 
-Install *Sphinx* with the *Python* package manager *pip*:
+Install |sph| with the *Python* package manager *pip*:
 
 .. code-block:: bash
    :linenos:
@@ -114,7 +115,7 @@ Build the documentation:
 
 The parameters of the command ``sphinx-build`` in detail:
 
-* ``-b html``: *Sphinx* can create multiple different formats. It uses
+* ``-b html``: |sph| can create multiple different formats. It uses
   a concept of *builders*. We chose the HTML builder here.
 * ``-q``: Builds quietly and only emits warnings and errors. This is
   optional.
@@ -131,20 +132,24 @@ The result looks like this:
 
 .. image:: minimal_gy0NjSA.png
    :width: 900px
-   :alt: Minimal *Sphinx* HTML output with default *Alabaster* theme.
+   :alt: Minimal |sph| HTML output with default *Alabaster* theme.
 
 
 .. note::
 
-   *Sphinx* does not come with a built-in web server. I usually help
+   |sph| does not come with a built-in web server. I usually help
    myself with the minimal web server which comes with *Python*::
 
-       $ python -m SimpleHTTPServer &
+       $ cd _build
+       $ python -m SimpleHTTPServer &   # python3 -m http.server &
        $ firefox localhost:8000
+
+   You can also simply point your browser to the built ``index.html``
+   file. It works either way.
 
 With this as a starting point, I'll go through the different aspects
 I usually need when writing documentation and how they can be done
-with *Sphinx* and *restructured text*.
+with |sph| and |rst|.
 
 
 The main features
@@ -159,7 +164,7 @@ the inclusion of images and formatting of text.
 Use different themes
 --------------------
 
-*Sphinx* uses themes for styling the content. The default theme is
+|sph| uses themes for styling the content. The default theme is
 called *Alabaster*. That's the one you've seen in the image before.
 It's a good start for creating your own theme (I won't cover this here,
 more info at [#sphinxtheme]_) but it's very simplistic and unfortunately not
@@ -198,7 +203,7 @@ The result looks like this:
 
 .. image:: rtd_FjEO8MZ.png
    :width: 900px
-   :alt: Minimal *Sphinx* HTML output with *Read The Docs* theme.
+   :alt: Minimal |sph| HTML output with *Read The Docs* theme.
 
 More details about the theme support can be found at [#sphinxtheme]_.
 
@@ -258,7 +263,7 @@ helpful in longer code examples when you want to set a focus.
 Structure your docs
 -------------------
 
-The key is the ``toctree`` magic of *Sphinx* [#toctree]_. Our updated
+The key is the ``toctree`` magic of |sph| [#toctree]_. Our updated
 ``index.rst`` file looks like this:
 
 .. code-block:: rst
@@ -383,7 +388,7 @@ Where the two referenced files are:
    :width: 900px
    :alt: Content split over multiple files and combined with include.
 
-The content of those included files is normal *restructured Text*. The
+The content of those included files is normal |rst|. The
 file extension ``*.inc`` is only a convention. With that mechanism,
 you can also write re-usable pieces of text, for example in use-case
 centered documentation of the features of your project, where every
@@ -571,13 +576,13 @@ This renders as:
 
 .. image:: admonitions_o8Ljc1Z.png
    :width: 900px
-   :alt: Sphinx admonitions as highlighted boxes.
+   :alt: |sph| admonitions as highlighted boxes.
 
 
 
 
-Reasons why I bet on *Sphinx* and *Restructured Text*
-=====================================================
+Reasons why I bet on |sph| and |rst|
+====================================
 
 #. It's a very popular and successfully used documentation engine for
    the Python community, which means to me that it won't vanish in the
@@ -589,21 +594,21 @@ Reasons why I bet on *Sphinx* and *Restructured Text*
 #. There is only one |rst| spec [#rstspec]_. As nice as *Markdown* is, but
    do we really need all those different flavors? Honestly, I do not.
 
-#. Extensibility is a base concept in *Sphinx* [#sphinxext]_. There's a
+#. Extensibility is a base concept in |sph| [#sphinxext]_. There's a
    very good chance that my problem is already solved by
    someone with an extension. If not, there is a defined way to write
    an extension. I'll cover that in a follow-up post.
 
 #. It's easy to configure and well documented and simply gets the job done.
    A real-life example can be seen at *OpenStack* [#osdocs]_. They do all
-   their docs with *Sphinx*.
+   their docs with |sph|.
 
 
 
 Conclusion
 ==========
 
-This post showed only a sub-set of the possibilities with *Sphinx* and
+This post showed only a sub-set of the possibilities with |sph| and
 |rst|. Other features I didn't mention but could be interesting for you
 are:
 
@@ -622,13 +627,13 @@ References
 
 .. [#rtdbug] https://github.com/rtfd/sphinx_rtd_theme/issues/417
 
-.. [#toctree] http://www.sphinx-doc.org/en/stable/markup/toctree.html
-
 .. [#pygments] http://pygments.org/
 
-.. [#footnotes] http://www.sphinx-doc.org/en/stable/rest.html#footnotes
+.. [#toctree] http://www.sphinx-doc.org/en/stable/markup/toctree.html
 
 .. [#crossref] http://www.sphinx-doc.org/en/stable/markup/inline.html#cross-referencing-arbitrary-locations
+
+.. [#footnotes] http://www.sphinx-doc.org/en/stable/rest.html#footnotes
 
 .. [#rstspec] http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html
 
