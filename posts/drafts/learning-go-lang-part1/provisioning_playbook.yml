@@ -1,0 +1,61 @@
+---
+
+- hosts: all
+  become: true
+
+  tasks:
+
+    # https://golang.org/doc/install
+
+    - name: "The apt cache should be updated."
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: "The basic build tools should be installed."
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - gcc
+        - make
+
+    - name: "The OS packaged GO lang should NOT be available."
+      apt:
+        name: golang-go
+        state: absent
+
+    - name: "The working directory of GO should be created."
+      file:
+        name: "{{ ansible_env.HOME }}/go"
+        state: directory
+
+    - name: "The GO lang archive should be downloaded and extracted."
+      unarchive:
+        src: https://dl.google.com/go/go1.9.3.linux-amd64.tar.gz
+        dest: /usr/local/
+        remote_src: yes
+        creates: /usr/local/go/bin/go
+
+    - name: "The GO PATHs should be set globally."
+      lineinfile:
+        path: /etc/profile
+        line: "{{ item }}"
+      with_items:
+        - GOPATH=$HOME/go
+        - PATH=$PATH:/usr/local/go/bin
+        - GOROOT=$HOME/go
+        - GOBIN=$HOME/go/bin
+
+    - name: "The hello world directory should be available."
+      file:
+        name: "{{ ansible_env.HOME }}/go/src/hello/"
+        state: directory
+
+    - name: "The hello world example should be on the target."
+      copy:
+        src: hello.go
+        dest: "{{ ansible_env.HOME }}/go/src/hello/"
+
+    - debug:
+        msg: "MANUALLY: cd ~/go/src/hello/ && go build && ./hello"
