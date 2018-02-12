@@ -8,7 +8,7 @@
   gather_facts: false
 
   tasks:
-    - name: "Wait for SSH to be ready."
+    - name: "SSH should be available."
       become: false
       delegate_to: localhost
       wait_for:
@@ -18,23 +18,23 @@
         delay: 1
         timeout: 300
 
-    - name: "Add our servers to the hosts file."
+    - name: "Our servers should be known by name."
       lineinfile:
         dest: /etc/hosts
         # use the IP address we specified in the Vagrantfile
         line: '{{ hostvars[item].ansible_host }} {{item}}'
       with_items: '{{ groups["all"] }}'
 
-    - name: "Ping each other via DNS names."
+    - name: "A 'ping' via DNS name should be possible."
       ping:
       with_items: '{{ groups["all"] }}'
 
-    - name: "Gather some facts for later."
+    - name: "The ansible facts should be gathered for later."
       setup:
 
 
 # ===========================================================================
-# Set up Elasticsearch on central logging host
+# Set up Elasticsearch
 # ===========================================================================
 - hosts: es1
   become: true
@@ -177,42 +177,35 @@
 
 
 # ===========================================================================
-# Set up Elasticsearch on central logging host
+# Set up Logstash
 # ===========================================================================
-- hosts: app-servers
+- hosts: ls1
   become: true
   gather_facts: false
 
   tasks:
-    - name: "Create target directory for the app."
-      file:
-        dest: /opt/example-app/
-        state: directory
-
-    - name: "Deploy example app to servers."
-      copy:
-        src : ../example-app/
-        dest:  /opt/example-app/
-
-    - name: "Install python package manager."
+    - name: "The Java Virtual Machine should be available."
       apt:
-        name: python-pip
-        update_cache: true
-        cache_valid_time: 3600
+        name: openjdk-8-jdk-headless
         state: present
 
-    - name: "Install app requirements."
-      pip:
-        requirements: /opt/example-app/requirements.txt
+    - name: "The Logstash service should be available."
+      apt:
+        deb: https://artifacts.elastic.co/downloads/logstash/logstash-6.2.1.deb
+        state: present
 
-    - name: "Query if app is already running."
-      shell: "ps aux | grep '[p]ython app.py'"
-      changed_when: false
-      failed_when: false
-      register: reg_pid_app
+    - name: "The simple pipeline should be configured."
+      copy:
+        src: logstash-simple.conf
+        dest: /etc/logstash/conf.d/
 
-    - name: "Run example app."
-      shell: nohup python app.py &
-      args:
-        chdir: /opt/example-app/
-      when: reg_pid_app.stdout == ''
+    - name: "Logstash should bind to the public IP."
+      lineinfile:
+        dest: /etc/logstash/logstash.yml
+        regexp: "http.host:"
+        line: "http.host: 192.168.73.12"
+
+    - name: "The Logstash service should be active."
+      service:
+        name: logstash
+        state: started

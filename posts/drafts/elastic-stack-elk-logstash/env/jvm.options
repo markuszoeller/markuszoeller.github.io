@@ -1,4 +1,0 @@
--Xms2g
--Xmx2g
-# Read https://github.com/elastic/elasticsearch/issues/21932#issuecomment-264435034
-# when using this config file.
