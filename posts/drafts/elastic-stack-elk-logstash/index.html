@@ -140,16 +140,22 @@
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#intro" id="id6">Intro</a></li>
-<li><a class="reference internal" href="#set-up-the-environment" id="id7">Set up the environment</a></li>
-<li><a class="reference internal" href="#terms-and-concepts" id="id8">Terms and Concepts</a></li>
-<li><a class="reference internal" href="#basic-interaction-with-es" id="id9">Basic Interaction with <em>Elasticsearch</em></a></li>
-<li><a class="reference internal" href="#summary" id="id10">Summary</a></li>
-<li><a class="reference internal" href="#references" id="id11">References</a></li>
+<li><a class="reference internal" href="#intro" id="id5">Intro</a></li>
+<li><a class="reference internal" href="#set-up-the-environment" id="id6">Set up the environment</a></li>
+<li><a class="reference internal" href="#terms-and-concepts" id="id7">Terms and Concepts</a></li>
+<li><a class="reference internal" href="#basic-interaction-with-ls" id="id8">Basic interaction with <em>Logstash</em></a></li>
+<li><a class="reference internal" href="#first-pipeline" id="id9">First Pipeline</a></li>
+<li><a class="reference internal" href="#a-pipeline-with-a-filter" id="id10">A Pipeline with a Filter</a></li>
+<li><a class="reference internal" href="#brain-dump" id="id11">Brain Dump</a><ul>
+<li><a class="reference internal" href="#pipeline-config" id="id12">pipeline config</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#summary" id="id13">Summary</a></li>
+<li><a class="reference internal" href="#references" id="id14">References</a></li>
 </ul>
 </div>
-<table border="1" class="docutils" id="id5">
-<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id5" title="Permalink to this table"> </a></caption>
+<table border="1" class="docutils" id="id4">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id4" title="Permalink to this table"> </a></caption>
 <colgroup>
 <col width="17%" />
 <col width="83%" />
@@ -168,14 +174,26 @@
 <div class="section" id="intro">
 <h2><a class="toc-backref" href="#contents">Intro</a><a class="headerlink" href="#intro" title="Permalink to this headline"> </a></h2>
 <p>This is the second part of a multi-part series about the
-<em>Elastic Stack</em> (formerly the <strong>ELK stack</strong>). This stack
+<em>Elastic Stack</em> (formerly known as the <strong>ELK stack</strong>). This stack
 consists of 3 parts:</p>
 <ul class="simple">
 <li><strong>storing data</strong> with <em>Elasticsearch</em></li>
 <li><strong>ingesting data</strong> with <em>Logstash</em> (and/or <em>Beats</em>)</li>
 <li><strong>visualizing data</strong> with <em>Kibana</em></li>
 </ul>
-<p>This post will focus on the second part, <em>Logstash</em>, ...</p>
+<p>This post will focus on the second part, <em>Logstash</em>. <em>Logstash</em> uses <em>Elasticsearch</em> as
+storage back-end in this post, so you might want to read the previous
+post about it at <a class="reference internal" href="../../2018/01/05/elastic-stack-elk-elasticsearch/#elastic-stack-elk-elasticsearch"><span class="std std-ref">Elastic Stack (formerly ELK) - Elasticsearch</span></a>.</p>
+<p>I&#8217;ll use a <strong>virtualized environment</strong> which looks like this:</p>
+<a class="reference internal image-reference" href="../../../_images/environment_overview_Plniuva.svg"><img alt="The environment of virtual machines I used in this post." src="../../../_images/environment_overview_Plniuva.svg" width="600px" /></a>
+<ul class="simple">
+<li>Server <code class="docutils literal"><span class="pre">es1</span></code> contains the <em>Elasticsearch</em> service which provides a REST API
+at port <code class="docutils literal"><span class="pre">9200</span></code>.</li>
+<li>Server <code class="docutils literal"><span class="pre">ls1</span></code> contains the <em>Logstash</em> service which provides a REST API
+at port <code class="docutils literal"><span class="pre">9600</span></code>. The <em>Logstash</em> service will use the REST API of <em>Elasticsearch</em>
+to store the logs.</li>
+</ul>
+<p>Skip the next section if you don&#8217;t want to repeat the steps locally.</p>
 </div>
 <div class="section" id="set-up-the-environment">
 <h2><a class="toc-backref" href="#contents">Set up the environment</a><a class="headerlink" href="#set-up-the-environment" title="Permalink to this headline"> </a></h2>
@@ -192,21 +210,188 @@ consists of 3 parts:</p>
 <li>extract the archive</li>
 <li>change to the <code class="docutils literal"><span class="pre">env</span></code> directory</li>
 <li>start the <em>Vagrant</em> setup</li>
-<li>use <em>Ansible</em> to configure the environment</li>
 </ol>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ wget http://www.markusz.io/_downloads/elastic-stack-elk-logstash.tar.gz
-$ tar -zxvf elastic-stack-elk-elasticsearch.tar.gz
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ wget http://www.markusz.io/_downloads/elastic-stack-elk-logstash.tar.gz
+$ tar -zxvf elastic-stack-elk-logstash.tar.gz
 $ <span class="nb">cd</span> env
-$ vagrant up
-$ ansible-playbook playbook.yml
+$ vagrant up  <span class="c1"># does also all of the installation</span>
 </pre></div>
 </td></tr></table></div>
-<p>Your (truncated) output should look similar to this:</p>
-<div class="highlight-text"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>After this is fully done, you can access these two servers with:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ vagrant ssh es1     <span class="c1"># log into the elasticsearch server</span>
+<span class="o">[</span>vagrant@es1<span class="o">]</span> $ <span class="nb">exit</span>  <span class="c1"># log out</span>
+$ vagrant ssh ls1     <span class="c1"># log into the logstash server</span>
+<span class="o">[</span>vagrant@ls1<span class="o">]</span> $ <span class="nb">exit</span>  <span class="c1"># log out</span>
+</pre></div>
+</td></tr></table></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">After you decided that you don&#8217;t need this environment anymore,
+you can remove it with <code class="docutils literal"><span class="pre">vagrant</span> <span class="pre">destroy</span> <span class="pre">-f</span></code></p>
+</div>
+<p>While the setup goes on for a minute or two, let&#8217;s have a look at
+a few basic terms and concepts of <em>Logstash</em>.</p>
+</div>
+<div class="section" id="terms-and-concepts">
+<h2><a class="toc-backref" href="#contents">Terms and Concepts</a><a class="headerlink" href="#terms-and-concepts" title="Permalink to this headline"> </a></h2>
+<p><em>Logstash</em> has a concept of <strong>pipelines</strong>. It reads data from a source, optionally
+transforms and/or filters out the data and writes the data to a data sink.
+The pipelines are configured with these three steps</p>
+<ol class="arabic simple">
+<li>the <code class="docutils literal"><span class="pre">input</span></code></li>
+<li>the <code class="docutils literal"><span class="pre">filter</span></code></li>
+<li>the <code class="docutils literal"><span class="pre">output</span></code></li>
+</ol>
+<a class="reference internal image-reference" href="../../../_images/logstash_pipeline_1TcRt4t.svg"><img alt="The pipeline concept of |ls|" src="../../../_images/logstash_pipeline_1TcRt4t.svg" width="900px" /></a>
+<p>This allows to have <strong>multiple pipelines</strong> in parallel, or let the output
+from one pipelines be the input for another pipeline. It&#8217;s the very same
+idea like in a shell.</p>
+<p>Every atomic input such a pipeline can read is called an <strong>event</strong>.
+The <code class="docutils literal"><span class="pre">filter</span></code> step can transform such events to a different format
+or even filter out some events. This makes <em>Logstash</em> very flexible and you
+can adjust it to your data.</p>
+</div>
+<div class="section" id="basic-interaction-with-ls">
+<h2><a class="toc-backref" href="#contents">Basic interaction with <em>Logstash</em></a><a class="headerlink" href="#basic-interaction-with-ls" title="Permalink to this headline"> </a></h2>
+<p>As shown in the beginning, <em>Logstash</em> has a REST API to get some stats
+from it. <em>Logstash</em> needs to bind to an IP address you can reach from
+outside the server. In my virtual environment, I have this setting
+in the file <code class="docutils literal"><span class="pre">/etc/logstash/logstash.yml</span></code>:</p>
+<div class="highlight-yml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span># ------------ Metrics Settings --------------
+# Bind address for the metrics REST endpoint
+http.host: &quot;192.168.73.12&quot;
+</pre></div>
+</td></tr></table></div>
+<p>To make the following queries a bit easier to read, export the URI:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">ls1</span><span class="o">=</span><span class="s2">&quot;http://192.168.73.12:9600&quot;</span>
+</pre></div>
+</td></tr></table></div>
+<p>Let&#8217;s do some queries:</p>
+<ol class="arabic">
+<li><p class="first">Details about the <em>Logstash</em> instance:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ curl <span class="s2">&quot;</span><span class="nv">$ls1</span><span class="s2">/?pretty&quot;</span>
+</pre></div>
+</td></tr></table></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">During my experiments, the REST API didn&#8217;t come up if not
+at least one pipeline was defined. Not sure if this is a bug
+or a feature. The next section will tell more about pipeline
+definitions.</p>
+</div>
+<p>Response:</p>
+<div class="highlight-json"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;host&quot;</span> <span class="p">:</span> <span class="s2">&quot;ls1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;version&quot;</span> <span class="p">:</span> <span class="s2">&quot;6.2.1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;http_address&quot;</span> <span class="p">:</span> <span class="s2">&quot;192.168.73.12:9600&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;id&quot;</span> <span class="p">:</span> <span class="s2">&quot;b961f021-8470-48ad-ba6c-a4f1ca4ca5f1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;ls1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;build_date&quot;</span> <span class="p">:</span> <span class="s2">&quot;2018-02-07T21:17:29+00:00&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;build_sha&quot;</span> <span class="p">:</span> <span class="s2">&quot;2b141ed331d8372b0cdd01fd1caad330ecc77df6&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;build_snapshot&quot;</span> <span class="p">:</span> <span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</li>
+<li><p class="first">Details about the pipelines:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ curl <span class="s2">&quot;</span><span class="nv">$ls1</span><span class="s2">/_node/pipelines?pretty&quot;</span>
+</pre></div>
+</td></tr></table></div>
+<p>Response:</p>
+<div class="highlight-json"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;host&quot;</span> <span class="p">:</span> <span class="s2">&quot;ls1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;version&quot;</span> <span class="p">:</span> <span class="s2">&quot;6.2.1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;http_address&quot;</span> <span class="p">:</span> <span class="s2">&quot;192.168.73.12:9600&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;id&quot;</span> <span class="p">:</span> <span class="s2">&quot;b961f021-8470-48ad-ba6c-a4f1ca4ca5f1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;ls1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;pipelines&quot;</span> <span class="p">:</span> <span class="p">{</span>
+<span class="hll">    <span class="nt">&quot;main&quot;</span> <span class="p">:</span> <span class="p">{</span>
+</span>      <span class="nt">&quot;workers&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+      <span class="nt">&quot;batch_size&quot;</span> <span class="p">:</span> <span class="mi">125</span><span class="p">,</span>
+      <span class="nt">&quot;batch_delay&quot;</span> <span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+      <span class="nt">&quot;config_reload_automatic&quot;</span> <span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="nt">&quot;config_reload_interval&quot;</span> <span class="p">:</span> <span class="mi">3000000000</span><span class="p">,</span>
+      <span class="nt">&quot;dead_letter_queue_enabled&quot;</span> <span class="p">:</span> <span class="kc">false</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</li>
+<li><p class="first">Metrics about the events:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ curl <span class="s2">&quot;</span><span class="nv">$ls1</span><span class="s2">/_node/stats/events?pretty&quot;</span>
+</pre></div>
+</td></tr></table></div>
+<p>Response:</p>
+<div class="highlight-json"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;host&quot;</span> <span class="p">:</span> <span class="s2">&quot;ls1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;version&quot;</span> <span class="p">:</span> <span class="s2">&quot;6.2.1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;http_address&quot;</span> <span class="p">:</span> <span class="s2">&quot;192.168.73.12:9600&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;id&quot;</span> <span class="p">:</span> <span class="s2">&quot;b961f021-8470-48ad-ba6c-a4f1ca4ca5f1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;ls1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;events&quot;</span> <span class="p">:</span> <span class="p">{</span>
+<span class="hll">    <span class="nt">&quot;in&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class="hll">    <span class="nt">&quot;filtered&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class="hll">    <span class="nt">&quot;out&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span>    <span class="nt">&quot;duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;queue_push_duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">0</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</li>
+<li><p class="first">Metrics about the pipeline named <em>main</em>:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ curl <span class="s2">&quot;</span><span class="nv">$ls1</span><span class="s2">/_node/stats/pipelines/main?pretty&quot;</span>
+</pre></div>
+</td></tr></table></div>
+<p>Response:</p>
+<div class="highlight-json"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -234,73 +419,236 @@ $ ansible-playbook playbook.yml
 26
 27
 28
-29</pre></div></td><td class="code"><div class="highlight"><pre><span></span>[...]
-
-PLAY RECAP ********************************************************************
-app1                       : ok=10   changed=6    unreachable=0    failed=0
-app2                       : ok=10   changed=6    unreachable=0    failed=0
-es1                        : ok=21   changed=17   unreachable=0    failed=0
-
-Thursday 04 January 2018  16:29:04 +0100 (0:00:01.319)       0:02:06.741 ******
-===============================================================================
-Install python package manager. ---------------------------------------- 50.79s
-Install JAVA runtime. -------------------------------------------------- 24.73s
-Check if Elasticsearch is up an running. ------------------------------- 11.50s
-Wait for SSH to be ready. ---------------------------------------------- 10.36s
-Download file with checksum check. -------------------------------------- 9.31s
-Install app requirements. ----------------------------------------------- 4.87s
-Ensure system package cache is updated. --------------------------------- 4.46s
-Unarchive the elasticsearch archive. ------------------------------------ 1.43s
-Run example app. -------------------------------------------------------- 1.32s
-Run elasticsearch as daemon. -------------------------------------------- 1.22s
-Add our servers to the hosts file. -------------------------------------- 0.99s
-Deploy example app to servers. ------------------------------------------ 0.88s
-Ping each other via DNS names. ------------------------------------------ 0.77s
-Gather some facts for later. -------------------------------------------- 0.62s
-Creating user for Elasticsearch group. ---------------------------------- 0.37s
-Create a group for Elasticsearch. --------------------------------------- 0.32s
-Disable all swapping. --------------------------------------------------- 0.32s
-Create logging directory. ----------------------------------------------- 0.31s
-Set maximum number of memory map areas (permanently). ------------------- 0.29s
-Set number of open file descriptors (permanently). ---------------------- 0.28s
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;host&quot;</span> <span class="p">:</span> <span class="s2">&quot;ls1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;version&quot;</span> <span class="p">:</span> <span class="s2">&quot;6.2.1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;http_address&quot;</span> <span class="p">:</span> <span class="s2">&quot;192.168.73.12:9600&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;id&quot;</span> <span class="p">:</span> <span class="s2">&quot;b961f021-8470-48ad-ba6c-a4f1ca4ca5f1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;ls1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;pipelines&quot;</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;main&quot;</span> <span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;events&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;in&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;out&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;filtered&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;queue_push_duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">0</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;plugins&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;inputs&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span> <span class="p">:</span> <span class="s2">&quot;my-app1-id-in&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;events&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;out&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nt">&quot;queue_push_duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">0</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;file&quot;</span>
+        <span class="p">}</span> <span class="p">],</span>
+        <span class="nt">&quot;filters&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">],</span>
+        <span class="nt">&quot;outputs&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span> <span class="p">:</span> <span class="s2">&quot;my-app1-id-out&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;events&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nt">&quot;in&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nt">&quot;out&quot;</span> <span class="p">:</span> <span class="mi">0</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;file&quot;</span>
+        <span class="p">}</span> <span class="p">]</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;reloads&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;last_error&quot;</span> <span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nt">&quot;successes&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;last_success_timestamp&quot;</span> <span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nt">&quot;last_failure_timestamp&quot;</span> <span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nt">&quot;failures&quot;</span> <span class="p">:</span> <span class="mi">0</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;queue&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;memory&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </td></tr></table></div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">After you decided that you don&#8217;t need this environment anymore,
-you can remove it with <code class="docutils literal"><span class="pre">vagrant</span> <span class="pre">destroy</span> <span class="pre">-f</span></code></p>
+</li>
+</ol>
 </div>
-<p>This created a <strong>virtualized environment</strong> which looks like this:</p>
-<a class="reference internal image-reference" href="../../../_images/elasticsearch-env-nF4AMyX1.svg"><img alt="*Vagrant* environment with virtual machines." src="../../../_images/elasticsearch-env-nF4AMyX1.svg" /></a>
-<ul class="simple">
-<li>one central logging server <code class="docutils literal"><span class="pre">es1</span></code></li>
-<li>two application servers <code class="docutils literal"><span class="pre">app1</span></code> and <code class="docutils literal"><span class="pre">app2</span></code></li>
-<li><em>Ubuntu 16.04</em> as operating system</li>
-<li>Java <em>Open JDK</em> in version 8</li>
-<li><em>Elasticsearch</em> in version 6.1</li>
-</ul>
-<p>While the setup goes on for a minute or two, let&#8217;s have a look at
-a few basic terms and concepts of <em>Elasticsearch</em>.</p>
+<div class="section" id="first-pipeline">
+<h2><a class="toc-backref" href="#contents">First Pipeline</a><a class="headerlink" href="#first-pipeline" title="Permalink to this headline"> </a></h2>
+<div class="highlight-ruby"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="c1"># cat /etc/logstash/conf.d/logstash-simple.conf</span>
+ <span class="n">input</span> <span class="p">{</span>
+   <span class="n">file</span> <span class="p">{</span>
+     <span class="nb">id</span> <span class="o">=&gt;</span> <span class="s2">&quot;my-app1-id-in&quot;</span>
+     <span class="n">path</span> <span class="o">=&gt;</span> <span class="s2">&quot;/var/log/app1/source.log&quot;</span>
+   <span class="p">}</span>
+ <span class="p">}</span>
+
+ <span class="n">output</span> <span class="p">{</span>
+   <span class="n">file</span> <span class="p">{</span>
+     <span class="nb">id</span> <span class="o">=&gt;</span> <span class="s2">&quot;my-app1-id-out&quot;</span>
+     <span class="n">path</span> <span class="o">=&gt;</span> <span class="s2">&quot;/var/log/app1/target.log&quot;</span>
+   <span class="p">}</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
 </div>
-<div class="section" id="terms-and-concepts">
-<h2><a class="toc-backref" href="#contents">Terms and Concepts</a><a class="headerlink" href="#terms-and-concepts" title="Permalink to this headline"> </a></h2>
-<p>Let&#8217;s start with an overview of the basic <strong>concepts</strong> <a class="footnote-reference" href="#concepts" id="id4">[4]</a>.
-I&#8217;ll explain the details after this image:</p>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">TODO</p>
+<div class="section" id="a-pipeline-with-a-filter">
+<h2><a class="toc-backref" href="#contents">A Pipeline with a Filter</a><a class="headerlink" href="#a-pipeline-with-a-filter" title="Permalink to this headline"> </a></h2>
+<p>TODO</p>
 </div>
-</div>
-<div class="section" id="basic-interaction-with-es">
-<h2><a class="toc-backref" href="#contents">Basic Interaction with <em>Elasticsearch</em></a><a class="headerlink" href="#basic-interaction-with-es" title="Permalink to this headline"> </a></h2>
-<div class="admonition-todo admonition" id="index-1">
-<p class="first admonition-title">Todo</p>
-<p class="last">TODO</p>
+<div class="section" id="brain-dump">
+<h2><a class="toc-backref" href="#contents">Brain Dump</a><a class="headerlink" href="#brain-dump" title="Permalink to this headline"> </a></h2>
+<p><em>Bash</em> history:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="m">27</span>  vm /etc/logstash/conf.d/stdio.conf /etc/logstash/conf.d/logstash-simple.conf
+<span class="m">28</span>  mv /etc/logstash/conf.d/stdio.conf /etc/logstash/conf.d/logstash-simple.conf
+<span class="m">29</span>  vim /etc/logstash/conf.d/logstash-simple.conf
+<span class="m">30</span>  systemctl restart logstash.service
+<span class="m">31</span>  vim /etc/logstash/pipelines.yml
+<span class="m">33</span>  systemctl status logstash.service
+<span class="m">34</span>  vim /var/log/logstash/logstash-plain.log
+<span class="m">35</span>  curl localhost:9600
+<span class="m">36</span>  tail -f /var/log/logstash/logstash-plain.log
+<span class="m">37</span>  <span class="nb">echo</span> <span class="s2">&quot;foo&quot;</span>
+<span class="m">38</span>  vim /etc/logstash/conf.d/logstash-simple.conf
+<span class="m">39</span>  mkdir -p /var/log/app1
+<span class="m">40</span>  <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
+<span class="m">41</span>  cat /var/log/app1/source.log
+<span class="m">42</span>  cat /var/log/app1/target.log
+<span class="m">43</span>  systemctl restart logstash.service
+<span class="m">44</span>  <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
+<span class="m">45</span>  cat /var/log/app1/source.log
+<span class="m">46</span>  cat /var/log/app1/target.log
+<span class="m">47</span>  tail -f /var/log/logstash/logstash-plain.log
+<span class="m">48</span>  cat /var/log/app1/target.log
+<span class="m">49</span>  touch /var/log/app1/target.log
+<span class="m">50</span>  <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
+<span class="m">51</span>  cat /var/log/app1/target.log
+<span class="m">52</span>  vim /etc/logstash/conf.d/logstash-simple.conf
+<span class="m">53</span>  systemctl restart logstash.service
+<span class="m">54</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/pipelines?pretty&#39;</span>
+<span class="m">55</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/pipelines/main?pretty&#39;</span>
+<span class="m">56</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/jvm?pretty&#39;</span>
+<span class="m">57</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/plugins?pretty&#39;</span>
+<span class="m">58</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/stats/process?pretty&#39;</span>
+<span class="m">59</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/stats/events?pretty&#39;</span>
+<span class="m">60</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/stats/pipelines?pretty&#39;</span>
+<span class="m">61</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/stats/pipelines/main?pretty&#39;</span>
+<span class="m">62</span>  <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
+<span class="m">63</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/stats/pipelines/main?pretty&#39;</span>
+<span class="m">64</span>  <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
+<span class="m">65</span>  cat /var/log/app1/target.log
+<span class="m">66</span>  ll /var/log/app1/target.log
+<span class="m">67</span>  ll /var/log/logstash/
+<span class="m">68</span>  chown -R logstash:logstash /var/log/app1/
+<span class="m">69</span>  ll /var/log/app1/
+<span class="m">70</span>  <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
+<span class="m">71</span>  cat /var/log/app1/target.log
+<span class="m">72</span>  cat /var/log/app1/source.log
+<span class="m">73</span>  cat /var/log/app1/target.log
+<span class="m">74</span>  tail -f /var/log/app1/target.log
+<span class="m">75</span>  cat /var/log/app1/target.log
+<span class="m">76</span>  <span class="nb">history</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="pipeline-config">
+<h3><a class="toc-backref" href="#contents">pipeline config</a><a class="headerlink" href="#pipeline-config" title="Permalink to this headline"> </a></h3>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span>root@ls1:~# ll /var/log/app1/
+total <span class="m">16</span>
+drwxr-xr-x <span class="m">2</span> logstash logstash <span class="m">4096</span> Feb  <span class="m">9</span> <span class="m">14</span>:27 ./
+drwxrwxr-x <span class="m">9</span> root     syslog   <span class="m">4096</span> Feb  <span class="m">9</span> <span class="m">14</span>:24 ../
+-rw-r--r-- <span class="m">1</span> logstash logstash  <span class="m">434</span> Feb  <span class="m">9</span> <span class="m">14</span>:54 source.log
+-rw-r--r-- <span class="m">1</span> logstash logstash  <span class="m">844</span> Feb  <span class="m">9</span> <span class="m">14</span>:54 target.log
+</pre></div>
+</td></tr></table></div>
 </div>
 </div>
 <div class="section" id="summary">
 <h2><a class="toc-backref" href="#contents">Summary</a><a class="headerlink" href="#summary" title="Permalink to this headline"> </a></h2>
-<div class="admonition-todo admonition" id="index-2">
+<div class="admonition-todo admonition" id="index-0">
 <p class="first admonition-title">Todo</p>
 <p class="last">TODO</p>
 </div>
@@ -328,7 +676,7 @@ I&#8217;ll explain the details after this image:</p>
 <table class="docutils footnote" frame="void" id="concepts" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.1/_basic_concepts.html">https://www.elastic.co/guide/en/elasticsearch/reference/6.1/_basic_concepts.html</a></td></tr>
+<tr><td class="label">[4]</td><td><a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.1/_basic_concepts.html">https://www.elastic.co/guide/en/elasticsearch/reference/6.1/_basic_concepts.html</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="lucene" rules="none">
