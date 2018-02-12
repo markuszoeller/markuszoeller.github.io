@@ -14,6 +14,8 @@ zipkin Intro
 
 http://zipkin.io/
 
+http://opentracing.io/
+
 .. todo:: abstract
 
 .. contents::
