@@ -47,7 +47,7 @@ This post will focus on the second part, |ls|. |ls| uses |es| as
 storage back-end in this post, so you might want to read the previous
 post about it at :ref:`elastic-stack-elk-elasticsearch`.
 
-.. todo:: drop all traces of elasticsearch in this post, I didn't use it.
+.. todo:: drop all traces of *ElasticSearch* in this post, I didn't use it.
 
 I'll use a **virtualized environment** which looks like this:
 
