@@ -121,41 +121,19 @@
       
   <div class="section" id="elastic-stack-formerly-elk-logstash">
 <h1>Elastic Stack (formerly ELK) - <em>Logstash</em><a class="headerlink" href="#elastic-stack-formerly-elk-logstash" title="Permalink to this headline"> </a></h1>
-<p>abstract</p>
-<p>Some notes:</p>
-<ul class="simple">
-<li>Logging as a Service with <em>Elastic</em> Cloud Enterprise</li>
-<li>data flow pipelines (pipe to pipe to pipe)</li>
-<li>independent pipelines in one <em>Logstash</em> instance</li>
-<li>&#8220;beats&#8221; protocol</li>
-<li>&#8220;event&#8221; is the primary unit which gets sent to <em>Logstash</em></li>
-<li>&#8220;workers&#8221; scale out the processing</li>
-<li>in-memory queue vs. persistent queue</li>
-<li>&#8220;at least once&#8221; delivery (err on the side of duplication)</li>
-<li>codecs serialize and deserialize</li>
-<li><code class="docutils literal"><span class="pre">json_lines</span></code> codecs is available  # non-human</li>
-<li><code class="docutils literal"><span class="pre">dissect</span></code> is the &#8220;smaller version&#8221; of <code class="docutils literal"><span class="pre">grok</span></code> (delimiter vs regex)</li>
-<li><em>kibana</em> can monitor <em>Logstash</em> and <em>Elasticsearch</em>  # not sure</li>
-<li><em>Logstash</em> has an external REST API for metrics</li>
-</ul>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#intro" id="id5">Intro</a></li>
-<li><a class="reference internal" href="#set-up-the-environment" id="id6">Set up the environment</a></li>
-<li><a class="reference internal" href="#terms-and-concepts" id="id7">Terms and Concepts</a></li>
-<li><a class="reference internal" href="#basic-interaction-with-ls" id="id8">Basic interaction with <em>Logstash</em></a></li>
-<li><a class="reference internal" href="#first-pipeline" id="id9">First Pipeline</a></li>
-<li><a class="reference internal" href="#a-pipeline-with-a-filter" id="id10">A Pipeline with a Filter</a></li>
-<li><a class="reference internal" href="#brain-dump" id="id11">Brain Dump</a><ul>
-<li><a class="reference internal" href="#pipeline-config" id="id12">pipeline config</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#summary" id="id13">Summary</a></li>
-<li><a class="reference internal" href="#references" id="id14">References</a></li>
+<li><a class="reference internal" href="#intro" id="id12">Intro</a></li>
+<li><a class="reference internal" href="#set-up-the-environment" id="id13">Set up the environment</a></li>
+<li><a class="reference internal" href="#terms-and-concepts" id="id14">Terms and Concepts</a></li>
+<li><a class="reference internal" href="#pipeline-configuration" id="id15">Pipeline Configuration</a></li>
+<li><a class="reference internal" href="#basic-interaction-with-ls" id="id16">Basic interaction with <em>Logstash</em></a></li>
+<li><a class="reference internal" href="#summary" id="id17">Summary</a></li>
+<li><a class="reference internal" href="#references" id="id18">References</a></li>
 </ul>
 </div>
-<table border="1" class="docutils" id="id4">
-<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id4" title="Permalink to this table"> </a></caption>
+<table border="1" class="docutils" id="id11">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id11" title="Permalink to this table"> </a></caption>
 <colgroup>
 <col width="17%" />
 <col width="83%" />
@@ -184,6 +162,10 @@ consists of 3 parts:</p>
 <p>This post will focus on the second part, <em>Logstash</em>. <em>Logstash</em> uses <em>Elasticsearch</em> as
 storage back-end in this post, so you might want to read the previous
 post about it at <a class="reference internal" href="../../2018/01/05/elastic-stack-elk-elasticsearch/#elastic-stack-elk-elasticsearch"><span class="std std-ref">Elastic Stack (formerly ELK) - Elasticsearch</span></a>.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">drop all traces of <em>ElasticSearch</em> in this post, I didn&#8217;t use it.</p>
+</div>
 <p>I&#8217;ll use a <strong>virtualized environment</strong> which looks like this:</p>
 <a class="reference internal image-reference" href="../../../_images/environment_overview_Plniuva.svg"><img alt="The environment of virtual machines I used in this post." src="../../../_images/environment_overview_Plniuva.svg" width="600px" /></a>
 <ul class="simple">
@@ -244,9 +226,9 @@ a few basic terms and concepts of <em>Logstash</em>.</p>
 transforms and/or filters out the data and writes the data to a data sink.
 The pipelines are configured with these three steps</p>
 <ol class="arabic simple">
-<li>the <code class="docutils literal"><span class="pre">input</span></code></li>
-<li>the <code class="docutils literal"><span class="pre">filter</span></code></li>
-<li>the <code class="docutils literal"><span class="pre">output</span></code></li>
+<li>the <code class="docutils literal"><span class="pre">input</span></code> step</li>
+<li>the <code class="docutils literal"><span class="pre">filter</span></code> step</li>
+<li>the <code class="docutils literal"><span class="pre">output</span></code> step</li>
 </ol>
 <a class="reference internal image-reference" href="../../../_images/logstash_pipeline_1TcRt4t.svg"><img alt="The pipeline concept of |ls|" src="../../../_images/logstash_pipeline_1TcRt4t.svg" width="900px" /></a>
 <p>This allows to have <strong>multiple pipelines</strong> in parallel, or let the output
@@ -256,12 +238,156 @@ idea like in a shell.</p>
 The <code class="docutils literal"><span class="pre">filter</span></code> step can transform such events to a different format
 or even filter out some events. This makes <em>Logstash</em> very flexible and you
 can adjust it to your data.</p>
+<p>The steps described above are implemented as <em>plugins</em>. There are many
+input plugins <a class="footnote-reference" href="#lsin" id="id4">[4]</a>, filter plugins <a class="footnote-reference" href="#lsfil" id="id5">[5]</a> and output
+plugins <a class="footnote-reference" href="#lsout" id="id6">[6]</a>. Let&#8217;s see in the next section what we can do
+with these plugins and how to specify a pipeline.</p>
+</div>
+<div class="section" id="pipeline-configuration">
+<h2><a class="toc-backref" href="#contents">Pipeline Configuration</a><a class="headerlink" href="#pipeline-configuration" title="Permalink to this headline"> </a></h2>
+<p>The pipelines get configured with a custom grammar which resembles <em>Ruby</em>
+a little, but it isn&#8217;t. The description of the syntax is at <a class="footnote-reference" href="#config" id="id7">[7]</a>.
+For our first pipeline, create a file
+<code class="docutils literal"><span class="pre">/etc/logstash/conf.d/logstash-simple.conf</span></code> with this content:</p>
+<div class="highlight-text"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span>input {
+  file {
+    id =&gt; &quot;my-app1-id-in&quot;
+    path =&gt; &quot;/var/log/app1/source.log&quot;
+  }
+}
+
+output {
+  file {
+    id =&gt; &quot;my-app1-id-out&quot;
+    path =&gt; &quot;/var/log/app1/target.log&quot;
+  }
+}
+</pre></div>
+</td></tr></table></div>
+<p>This file gets read because <em>Logstash</em> uses the often seen <code class="docutils literal"><span class="pre">conf.d</span></code>
+concept:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ cat /etc/logstash/pipelines.yml
+<span class="c1"># This file is where you define your pipelines. You can define multiple.</span>
+<span class="c1"># For more information on multiple pipelines, see the documentation:</span>
+<span class="c1">#   https://www.elastic.co/guide/en/logstash/current/multiple-pipelines.html</span>
+
+<span class="hll">- pipeline.id: main
+</span>  path.config: <span class="s2">&quot;/etc/logstash/conf.d/*.conf&quot;</span>
+</pre></div>
+</td></tr></table></div>
+<p>This example is rather useless in a real-live setup, but shows well the
+structure and how to use one of the many input and output plugins.
+I deliberately left out the (optional) filter plugin, to keep the
+example simple.</p>
+<p>What&#8217;s happening here is:</p>
+<ul class="simple">
+<li>we use the <code class="docutils literal"><span class="pre">file</span></code> input plugin <a class="footnote-reference" href="#filein" id="id8">[8]</a></li>
+<li>we gave that one usage of that plugin the ID <code class="docutils literal"><span class="pre">my-app1-id-in</span></code></li>
+<li>we specified that this input plugin should listen on changes for
+file <code class="docutils literal"><span class="pre">/var/log/app1/source.log</span></code></li>
+<li>we configured the <code class="docutils literal"><span class="pre">file</span></code> output plugin similarly <a class="footnote-reference" href="#fileout" id="id9">[9]</a></li>
+</ul>
+<p>Let&#8217;s use this pipeline with some dummy data:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ vagrant ssh ls1  <span class="c1"># to log into the local Logstash server</span>
+$ <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
+</pre></div>
+</td></tr></table></div>
+<p>Execute this last line a few times and take a look at what the <em>Logstash</em>
+pipeline has output into the target file.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">The <code class="docutils literal"><span class="pre">jq</span></code> CLI is very useful to show that JSON output.</p>
+</div>
+<p>Execute <code class="docutils literal"><span class="pre">cat</span> <span class="pre">/var/log/app1/target.log</span> <span class="pre">|</span> <span class="pre">jq</span></code>:</p>
+<div class="highlight-json"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;@version&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-02-14T18:24:19+00:00&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;@timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-02-14T18:24:21.364Z&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/var/log/app1/source.log&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;ls1&quot;</span>
+<span class="p">}</span>
+<span class="p">{</span>
+  <span class="nt">&quot;@version&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-02-14T18:24:33+00:00&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;@timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-02-14T18:24:34.414Z&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/var/log/app1/source.log&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;ls1&quot;</span>
+<span class="p">}</span>
+<span class="p">{</span>
+  <span class="nt">&quot;@version&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-02-14T18:24:36+00:00&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;@timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-02-14T18:24:37.491Z&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/var/log/app1/source.log&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;ls1&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>As a comparison, this is our source file:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ cat /var/log/app1/source.log
+<span class="m">2018</span>-02-14T18:24:19+00:00
+<span class="m">2018</span>-02-14T18:24:33+00:00
+<span class="m">2018</span>-02-14T18:24:36+00:00
+</pre></div>
+</td></tr></table></div>
+<p>A few interesting observations with this small example:</p>
+<ul class="simple">
+<li><em>Logstash</em> encapsulates the message we created into a JSON object and adds
+meta data like a timestamp, the host and the version</li>
+<li>there is a small delay between our message creation and the
+timestamp which <em>Logstash</em> adds itself</li>
+</ul>
+<p>When working with those pipelines and events, it may become useful
+to get some insights into <em>Logstash</em> itself.</p>
 </div>
 <div class="section" id="basic-interaction-with-ls">
 <h2><a class="toc-backref" href="#contents">Basic interaction with <em>Logstash</em></a><a class="headerlink" href="#basic-interaction-with-ls" title="Permalink to this headline"> </a></h2>
 <p>As shown in the beginning, <em>Logstash</em> has a REST API to get some stats
-from it. <em>Logstash</em> needs to bind to an IP address you can reach from
-outside the server. In my virtual environment, I have this setting
+from it. This is useful to get some insights, for example if your
+configured pipelines are recognized and how many events they processed.</p>
+<p>For this, <em>Logstash</em> needs to bind to an IP address you can reach from outside
+the server. In my virtual environment, I have this setting
 in the file <code class="docutils literal"><span class="pre">/etc/logstash/logstash.yml</span></code>:</p>
 <div class="highlight-yml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -270,13 +396,13 @@ in the file <code class="docutils literal"><span class="pre">/etc/logstash/logst
 http.host: &quot;192.168.73.12&quot;
 </pre></div>
 </td></tr></table></div>
-<p>To make the following queries a bit easier to read, export the URI:</p>
+<p>To make the following queries a bit easier to read, export the URI of
+the <em>Logstash</em> server as variable.</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">ls1</span><span class="o">=</span><span class="s2">&quot;http://192.168.73.12:9600&quot;</span>
 </pre></div>
 </td></tr></table></div>
-<p>Let&#8217;s do some queries:</p>
-<ol class="arabic">
-<li><p class="first">Details about the <em>Logstash</em> instance:</p>
+<p>Let&#8217;s do some queries.</p>
+<p><strong>Request details about the Logstash instance:</strong></p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ curl <span class="s2">&quot;</span><span class="nv">$ls1</span><span class="s2">/?pretty&quot;</span>
 </pre></div>
 </td></tr></table></div>
@@ -309,8 +435,10 @@ definitions.</p>
 <span class="p">}</span>
 </pre></div>
 </td></tr></table></div>
-</li>
-<li><p class="first">Details about the pipelines:</p>
+<p>You&#8217;ll notice that we&#8217;re on host <code class="docutils literal"><span class="pre">ls1</span></code> as described in the environment
+section from the beginning of this post, and that we use <em>Logstash</em> in version
+<code class="docutils literal"><span class="pre">6.2</span></code>. This request helps to figure out if the instance is running.</p>
+<p><strong>Request details about the pipelines:</strong></p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ curl <span class="s2">&quot;</span><span class="nv">$ls1</span><span class="s2">/_node/pipelines?pretty&quot;</span>
 </pre></div>
 </td></tr></table></div>
@@ -350,8 +478,12 @@ definitions.</p>
 <span class="p">}</span>
 </pre></div>
 </td></tr></table></div>
-</li>
-<li><p class="first">Metrics about the events:</p>
+<p>There is one pipeline configured, named <code class="docutils literal"><span class="pre">main</span></code>. The configuration
+will be shown in the next section. To be honest, I have no clue yet
+what the other key-value-pairs in that dictionary mean. My assumption
+is, that in high-availability setups, these things get important,
+but ignore them for now.</p>
+<p><strong>Request metrics about the events:</strong></p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ curl <span class="s2">&quot;</span><span class="nv">$ls1</span><span class="s2">/_node/stats/events?pretty&quot;</span>
 </pre></div>
 </td></tr></table></div>
@@ -376,17 +508,19 @@ definitions.</p>
   <span class="nt">&quot;id&quot;</span> <span class="p">:</span> <span class="s2">&quot;b961f021-8470-48ad-ba6c-a4f1ca4ca5f1&quot;</span><span class="p">,</span>
   <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;ls1&quot;</span><span class="p">,</span>
   <span class="nt">&quot;events&quot;</span> <span class="p">:</span> <span class="p">{</span>
-<span class="hll">    <span class="nt">&quot;in&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span><span class="hll">    <span class="nt">&quot;filtered&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span><span class="hll">    <span class="nt">&quot;out&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span>    <span class="nt">&quot;duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="hll">    <span class="nt">&quot;in&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+</span><span class="hll">    <span class="nt">&quot;filtered&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+</span><span class="hll">    <span class="nt">&quot;out&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+</span>    <span class="nt">&quot;duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">99</span><span class="p">,</span>
     <span class="nt">&quot;queue_push_duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">0</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </td></tr></table></div>
-</li>
-<li><p class="first">Metrics about the pipeline named <em>main</em>:</p>
+<p>This shows well how the processing of <em>Logstash</em> is based on <em>events</em>.
+Also, the pipeline steps from above can be found here. The three
+events I created above are reflected here too.</p>
+<p><strong>Request metrics about the pipeline named</strong> <code class="docutils literal"><span class="pre">main</span></code>:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ curl <span class="s2">&quot;</span><span class="nv">$ls1</span><span class="s2">/_node/stats/pipelines/main?pretty&quot;</span>
 </pre></div>
 </td></tr></table></div>
@@ -447,31 +581,31 @@ definitions.</p>
   <span class="nt">&quot;pipelines&quot;</span> <span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;main&quot;</span> <span class="p">:</span> <span class="p">{</span>
       <span class="nt">&quot;events&quot;</span> <span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="nt">&quot;in&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="nt">&quot;out&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="nt">&quot;filtered&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">99</span><span class="p">,</span>
+        <span class="nt">&quot;in&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;out&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;filtered&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
         <span class="nt">&quot;queue_push_duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">0</span>
       <span class="p">},</span>
       <span class="nt">&quot;plugins&quot;</span> <span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;inputs&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span>
-          <span class="nt">&quot;id&quot;</span> <span class="p">:</span> <span class="s2">&quot;my-app1-id-in&quot;</span><span class="p">,</span>
-          <span class="nt">&quot;events&quot;</span> <span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;out&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="hll">          <span class="nt">&quot;id&quot;</span> <span class="p">:</span> <span class="s2">&quot;my-app1-id-in&quot;</span><span class="p">,</span>
+</span>          <span class="nt">&quot;events&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;out&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
             <span class="nt">&quot;queue_push_duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">0</span>
           <span class="p">},</span>
-          <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;file&quot;</span>
-        <span class="p">}</span> <span class="p">],</span>
+<span class="hll">          <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;file&quot;</span>
+</span>        <span class="p">}</span> <span class="p">],</span>
         <span class="nt">&quot;filters&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">],</span>
         <span class="nt">&quot;outputs&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span>
-          <span class="nt">&quot;id&quot;</span> <span class="p">:</span> <span class="s2">&quot;my-app1-id-out&quot;</span><span class="p">,</span>
-          <span class="nt">&quot;events&quot;</span> <span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="nt">&quot;in&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="nt">&quot;out&quot;</span> <span class="p">:</span> <span class="mi">0</span>
+<span class="hll">          <span class="nt">&quot;id&quot;</span> <span class="p">:</span> <span class="s2">&quot;my-app1-id-out&quot;</span><span class="p">,</span>
+</span>          <span class="nt">&quot;events&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;duration_in_millis&quot;</span> <span class="p">:</span> <span class="mi">93</span><span class="p">,</span>
+            <span class="nt">&quot;in&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="nt">&quot;out&quot;</span> <span class="p">:</span> <span class="mi">3</span>
           <span class="p">},</span>
-          <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;file&quot;</span>
-        <span class="p">}</span> <span class="p">]</span>
+<span class="hll">          <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;file&quot;</span>
+</span>        <span class="p">}</span> <span class="p">]</span>
       <span class="p">},</span>
       <span class="nt">&quot;reloads&quot;</span> <span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;last_error&quot;</span> <span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
@@ -488,170 +622,24 @@ definitions.</p>
 <span class="p">}</span>
 </pre></div>
 </td></tr></table></div>
-</li>
-</ol>
-</div>
-<div class="section" id="first-pipeline">
-<h2><a class="toc-backref" href="#contents">First Pipeline</a><a class="headerlink" href="#first-pipeline" title="Permalink to this headline"> </a></h2>
-<div class="highlight-ruby"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="c1"># cat /etc/logstash/conf.d/logstash-simple.conf</span>
- <span class="n">input</span> <span class="p">{</span>
-   <span class="n">file</span> <span class="p">{</span>
-     <span class="nb">id</span> <span class="o">=&gt;</span> <span class="s2">&quot;my-app1-id-in&quot;</span>
-     <span class="n">path</span> <span class="o">=&gt;</span> <span class="s2">&quot;/var/log/app1/source.log&quot;</span>
-   <span class="p">}</span>
- <span class="p">}</span>
-
- <span class="n">output</span> <span class="p">{</span>
-   <span class="n">file</span> <span class="p">{</span>
-     <span class="nb">id</span> <span class="o">=&gt;</span> <span class="s2">&quot;my-app1-id-out&quot;</span>
-     <span class="n">path</span> <span class="o">=&gt;</span> <span class="s2">&quot;/var/log/app1/target.log&quot;</span>
-   <span class="p">}</span>
- <span class="p">}</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="a-pipeline-with-a-filter">
-<h2><a class="toc-backref" href="#contents">A Pipeline with a Filter</a><a class="headerlink" href="#a-pipeline-with-a-filter" title="Permalink to this headline"> </a></h2>
-<p>TODO</p>
-</div>
-<div class="section" id="brain-dump">
-<h2><a class="toc-backref" href="#contents">Brain Dump</a><a class="headerlink" href="#brain-dump" title="Permalink to this headline"> </a></h2>
-<p><em>Bash</em> history:</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="m">27</span>  vm /etc/logstash/conf.d/stdio.conf /etc/logstash/conf.d/logstash-simple.conf
-<span class="m">28</span>  mv /etc/logstash/conf.d/stdio.conf /etc/logstash/conf.d/logstash-simple.conf
-<span class="m">29</span>  vim /etc/logstash/conf.d/logstash-simple.conf
-<span class="m">30</span>  systemctl restart logstash.service
-<span class="m">31</span>  vim /etc/logstash/pipelines.yml
-<span class="m">33</span>  systemctl status logstash.service
-<span class="m">34</span>  vim /var/log/logstash/logstash-plain.log
-<span class="m">35</span>  curl localhost:9600
-<span class="m">36</span>  tail -f /var/log/logstash/logstash-plain.log
-<span class="m">37</span>  <span class="nb">echo</span> <span class="s2">&quot;foo&quot;</span>
-<span class="m">38</span>  vim /etc/logstash/conf.d/logstash-simple.conf
-<span class="m">39</span>  mkdir -p /var/log/app1
-<span class="m">40</span>  <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
-<span class="m">41</span>  cat /var/log/app1/source.log
-<span class="m">42</span>  cat /var/log/app1/target.log
-<span class="m">43</span>  systemctl restart logstash.service
-<span class="m">44</span>  <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
-<span class="m">45</span>  cat /var/log/app1/source.log
-<span class="m">46</span>  cat /var/log/app1/target.log
-<span class="m">47</span>  tail -f /var/log/logstash/logstash-plain.log
-<span class="m">48</span>  cat /var/log/app1/target.log
-<span class="m">49</span>  touch /var/log/app1/target.log
-<span class="m">50</span>  <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
-<span class="m">51</span>  cat /var/log/app1/target.log
-<span class="m">52</span>  vim /etc/logstash/conf.d/logstash-simple.conf
-<span class="m">53</span>  systemctl restart logstash.service
-<span class="m">54</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/pipelines?pretty&#39;</span>
-<span class="m">55</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/pipelines/main?pretty&#39;</span>
-<span class="m">56</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/jvm?pretty&#39;</span>
-<span class="m">57</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/plugins?pretty&#39;</span>
-<span class="m">58</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/stats/process?pretty&#39;</span>
-<span class="m">59</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/stats/events?pretty&#39;</span>
-<span class="m">60</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/stats/pipelines?pretty&#39;</span>
-<span class="m">61</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/stats/pipelines/main?pretty&#39;</span>
-<span class="m">62</span>  <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
-<span class="m">63</span>  curl -XGET <span class="s1">&#39;localhost:9600/_node/stats/pipelines/main?pretty&#39;</span>
-<span class="m">64</span>  <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
-<span class="m">65</span>  cat /var/log/app1/target.log
-<span class="m">66</span>  ll /var/log/app1/target.log
-<span class="m">67</span>  ll /var/log/logstash/
-<span class="m">68</span>  chown -R logstash:logstash /var/log/app1/
-<span class="m">69</span>  ll /var/log/app1/
-<span class="m">70</span>  <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
-<span class="m">71</span>  cat /var/log/app1/target.log
-<span class="m">72</span>  cat /var/log/app1/source.log
-<span class="m">73</span>  cat /var/log/app1/target.log
-<span class="m">74</span>  tail -f /var/log/app1/target.log
-<span class="m">75</span>  cat /var/log/app1/target.log
-<span class="m">76</span>  <span class="nb">history</span>
-</pre></div>
-</td></tr></table></div>
-<div class="section" id="pipeline-config">
-<h3><a class="toc-backref" href="#contents">pipeline config</a><a class="headerlink" href="#pipeline-config" title="Permalink to this headline"> </a></h3>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span>root@ls1:~# ll /var/log/app1/
-total <span class="m">16</span>
-drwxr-xr-x <span class="m">2</span> logstash logstash <span class="m">4096</span> Feb  <span class="m">9</span> <span class="m">14</span>:27 ./
-drwxrwxr-x <span class="m">9</span> root     syslog   <span class="m">4096</span> Feb  <span class="m">9</span> <span class="m">14</span>:24 ../
--rw-r--r-- <span class="m">1</span> logstash logstash  <span class="m">434</span> Feb  <span class="m">9</span> <span class="m">14</span>:54 source.log
--rw-r--r-- <span class="m">1</span> logstash logstash  <span class="m">844</span> Feb  <span class="m">9</span> <span class="m">14</span>:54 target.log
-</pre></div>
-</td></tr></table></div>
-</div>
+<p>This shows the IDs we specified earlier and what type of plugin for
+input and output we used. The next section will use a filter plugin
+and show some of the capabilities.</p>
 </div>
 <div class="section" id="summary">
 <h2><a class="toc-backref" href="#contents">Summary</a><a class="headerlink" href="#summary" title="Permalink to this headline"> </a></h2>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">TODO</p>
-</div>
+<p>To keep this post at an digestible size, I make a cut here and will focus
+in a follow up post more on the filter plugins and more realistic input
+and how to connect to <em>Elasticsearch</em> as a data store.</p>
+<p>This post showed a brief overview of the basics, which is simply necessary
+to dive deeper into the great possibilities <em>Logstash</em> offers. We&#8217;ve seen
+the pipeline concept and that events get encapsulated into JSON objects.
+The metrics REST API of <em>Logstash</em> provides observability.</p>
+<p>One thing I didn&#8217;t talk about, but you should be aware of when you
+consider to use <em>Logstash</em> in a productive environment, is the fact that there
+are <em>in-memory queues</em> and <em>persistent queues</em> and you need to make a
+decision what fits your requirements best <a class="footnote-reference" href="#queue" id="id10">[10]</a>. Unfortunately I have
+too little real-live knowledge to give a recommendation here.</p>
 </div>
 <div class="section" id="references">
 <h2><a class="toc-backref" href="#contents">References</a><a class="headerlink" href="#references" title="Permalink to this headline"> </a></h2>
@@ -673,76 +661,46 @@ drwxrwxr-x <span class="m">9</span> root     syslog   <span class="m">4096</span
 <tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="concepts" rules="none">
+<table class="docutils footnote" frame="void" id="lsin" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[4]</td><td><a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.1/_basic_concepts.html">https://www.elastic.co/guide/en/elasticsearch/reference/6.1/_basic_concepts.html</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="https://www.elastic.co/guide/en/logstash/6.2/input-plugins.html">https://www.elastic.co/guide/en/logstash/6.2/input-plugins.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="lucene" rules="none">
+<table class="docutils footnote" frame="void" id="lsfil" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[5]</td><td><a class="reference external" href="https://lucene.apache.org/">https://lucene.apache.org/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><a class="reference external" href="https://www.elastic.co/guide/en/logstash/6.2/filter-plugins.html">https://www.elastic.co/guide/en/logstash/6.2/filter-plugins.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="commonapi" rules="none">
+<table class="docutils footnote" frame="void" id="lsout" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[6]</td><td><a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.1/common-options.html">https://www.elastic.co/guide/en/elasticsearch/reference/6.1/common-options.html</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td><a class="reference external" href="https://www.elastic.co/guide/en/logstash/6.2/output-plugins.html">https://www.elastic.co/guide/en/logstash/6.2/output-plugins.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="yamllist" rules="none">
+<table class="docutils footnote" frame="void" id="config" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[7]</td><td><a class="reference external" href="http://www.yaml.org/spec/1.2/spec.html#id2797382">http://www.yaml.org/spec/1.2/spec.html#id2797382</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td><a class="reference external" href="https://www.elastic.co/guide/en/logstash/6.2/configuration-file-structure.html">https://www.elastic.co/guide/en/logstash/6.2/configuration-file-structure.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="esversion" rules="none">
+<table class="docutils footnote" frame="void" id="filein" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[8]</td><td><a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.1/docs-index_.html#index-versioning">https://www.elastic.co/guide/en/elasticsearch/reference/6.1/docs-index_.html#index-versioning</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id8">[8]</a></td><td><a class="reference external" href="https://www.elastic.co/guide/en/logstash/6.2/plugins-inputs-file.html">https://www.elastic.co/guide/en/logstash/6.2/plugins-inputs-file.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="esindexdis" rules="none">
+<table class="docutils footnote" frame="void" id="fileout" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[9]</td><td><a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.1/docs-index_.html#index-creation">https://www.elastic.co/guide/en/elasticsearch/reference/6.1/docs-index_.html#index-creation</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id9">[9]</a></td><td><a class="reference external" href="https://www.elastic.co/guide/en/logstash/6.2/plugins-outputs-file.html">https://www.elastic.co/guide/en/logstash/6.2/plugins-outputs-file.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="esindexcreate" rules="none">
+<table class="docutils footnote" frame="void" id="queue" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[10]</td><td><a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.1/indices-create-index.html">https://www.elastic.co/guide/en/elasticsearch/reference/6.1/indices-create-index.html</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="flask" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[11]</td><td><a class="reference external" href="http://flask.pocoo.org/">http://flask.pocoo.org/</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="pylog" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[12]</td><td><a class="reference external" href="https://docs.python.org/2/howto/logging.html#logging-basic-tutorial">https://docs.python.org/2/howto/logging.html#logging-basic-tutorial</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="pylogrot" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[13]</td><td><a class="reference external" href="https://docs.python.org/2/library/logging.handlers.html#logging.handlers.RotatingFileHandler">https://docs.python.org/2/library/logging.handlers.html#logging.handlers.RotatingFileHandler</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="essearch" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[14]</td><td><a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="rsyslog" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[15]</td><td><a class="reference external" href="http://www.rsyslog.com/">http://www.rsyslog.com/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id10">[10]</a></td><td><a class="reference external" href="https://www.elastic.co/guide/en/logstash/6.2/persistent-queues.html">https://www.elastic.co/guide/en/logstash/6.2/persistent-queues.html</a></td></tr>
 </tbody>
 </table>
 </div>
