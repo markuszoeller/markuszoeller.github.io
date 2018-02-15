@@ -1,5 +1,5 @@
 
-.. post::
+.. post:: 16 Feb, 2018
    :tags: logging, elasticstack
    :category: monitoring
    :title: Elastic Stack (formerly ELK) - Logstash (Part 1)
