@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Elastic Stack (formerly ELK) - Logstash &#8212; Markus Zoeller Blog</title>
+    <title>Elastic Stack (formerly ELK) - Logstash (Part 1) &#8212; Markus Zoeller Blog</title>
     
-    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/custom.css" type="text/css" />
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/css/asciinema-player.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/asciinema-player.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../../',
+        URL_ROOT:    '../../../../../',
         VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '',
@@ -23,18 +23,18 @@
         SOURCELINK_SUFFIX: '.txt'
       };
     </script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/js/asciinema-player.js"></script>
-    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
-    <link rel="author" title="About these documents" href="../../../about/" />
-    <link rel="index" title="Index" href="../../../genindex/" />
-    <link rel="search" title="Search" href="../../../search/" />
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/asciinema-player.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="../../../../../about/" />
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" />
   
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -42,7 +42,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   
-  <link rel="alternate" type="application/atom+xml"  href="../../../posts/atom.xml" title="Markus's Brain Swap Space">
+  <link rel="alternate" type="application/atom+xml"  href="../../../../../posts/atom.xml" title="Markus's Brain Swap Space">
   
   
   <style type="text/css">
@@ -66,7 +66,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../../../">
+        <a class="navbar-brand" href="../../../../../">
           MZIO</a>
         <span class="navbar-text navbar-version pull-left"><b></b></span>
       </div>
@@ -74,10 +74,10 @@
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
-                <li><a href="../../../about/">About</a></li>
-                <li><a href="../../category/">Categories</a></li>
-                <li><a href="../../tag/">Tags</a></li>
-                <li><a href="../../archive/">Archives</a></li>
+                <li><a href="../../../../../about/">About</a></li>
+                <li><a href="../../../../category/">Categories</a></li>
+                <li><a href="../../../../tag/">Tags</a></li>
+                <li><a href="../../../../archive/">Archives</a></li>
                 <li><a href="/posts/atom.xml"><i class='fa fa-rss-square' aria-hidden='true'></i></a></li>
             
             
@@ -86,7 +86,7 @@
      id="dLabelGlobalToc"
      data-toggle="dropdown"
      data-target="#"
-     href="../../../">Site <b class="caret"></b></a>
+     href="../../../../../">Site <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"></ul>
@@ -103,7 +103,7 @@
 
           
             
-<form class="navbar-form navbar-right" action="../../../search/" method="get">
+<form class="navbar-form navbar-right" action="../../../../../search/" method="get">
  <div class="form-group">
   <input type="text" name="q" class="form-control" placeholder="Search" />
  </div>
@@ -119,8 +119,14 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="elastic-stack-formerly-elk-logstash">
-<h1>Elastic Stack (formerly ELK) - <em>Logstash</em><a class="headerlink" href="#elastic-stack-formerly-elk-logstash" title="Permalink to this headline"> </a></h1>
+  <div class="section" id="elastic-stack-formerly-elk-logstash-part-1">
+<h1>Elastic Stack (formerly ELK) - <em>Logstash</em> (Part 1)<a class="headerlink" href="#elastic-stack-formerly-elk-logstash-part-1" title="Permalink to this headline"> </a></h1>
+<p>In this post I&#8217;ll talk about the <em>Logstash</em> service, which is part of the
+<em>Elastic Stack</em>, formerly known as <em>ELK</em> stack. The purpose of <em>Logstash</em> is to
+ingest (logging) data, do some transformation or filtering on it,
+and output it into a data store like <em>Elasticsearch</em>. For details about <em>Elasticsearch</em>, you
+can get more information in my previous post
+<a class="reference internal" href="../../../01/05/elastic-stack-elk-elasticsearch/#elastic-stack-elk-elasticsearch"><span class="std std-ref">Elastic Stack (formerly ELK) - Elasticsearch</span></a>.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#intro" id="id12">Intro</a></li>
@@ -144,7 +150,7 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>TODO</td>
+<tr class="row-even"><td>2018-02-16</td>
 <td>The first release</td>
 </tr>
 </tbody>
@@ -159,22 +165,10 @@ consists of 3 parts:</p>
 <li><strong>ingesting data</strong> with <em>Logstash</em> (and/or <em>Beats</em>)</li>
 <li><strong>visualizing data</strong> with <em>Kibana</em></li>
 </ul>
-<p>This post will focus on the second part, <em>Logstash</em>. <em>Logstash</em> uses <em>Elasticsearch</em> as
-storage back-end in this post, so you might want to read the previous
-post about it at <a class="reference internal" href="../../2018/01/05/elastic-stack-elk-elasticsearch/#elastic-stack-elk-elasticsearch"><span class="std std-ref">Elastic Stack (formerly ELK) - Elasticsearch</span></a>.</p>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">drop all traces of <em>ElasticSearch</em> in this post, I didn&#8217;t use it.</p>
-</div>
-<p>I&#8217;ll use a <strong>virtualized environment</strong> which looks like this:</p>
-<a class="reference internal image-reference" href="../../../_images/environment_overview_Plniuva.svg"><img alt="The environment of virtual machines I used in this post." src="../../../_images/environment_overview_Plniuva.svg" width="600px" /></a>
-<ul class="simple">
-<li>Server <code class="docutils literal"><span class="pre">es1</span></code> contains the <em>Elasticsearch</em> service which provides a REST API
-at port <code class="docutils literal"><span class="pre">9200</span></code>.</li>
-<li>Server <code class="docutils literal"><span class="pre">ls1</span></code> contains the <em>Logstash</em> service which provides a REST API
-at port <code class="docutils literal"><span class="pre">9600</span></code>. The <em>Logstash</em> service will use the REST API of <em>Elasticsearch</em>
-to store the logs.</li>
-</ul>
+<p>This post will focus on the second part, <em>Logstash</em>.
+I&#8217;ll use a <strong>virtualized environment</strong> with only virtual machine,
+named <code class="docutils literal"><span class="pre">ls1</span></code>. This virtual machine contains the <em>Logstash</em> service which provides
+a REST API at port <code class="docutils literal"><span class="pre">9600</span></code>. But more on that REST API later.</p>
 <p>Skip the next section if you don&#8217;t want to repeat the steps locally.</p>
 </div>
 <div class="section" id="set-up-the-environment">
@@ -188,7 +182,7 @@ to store the logs.</li>
 <p>After these <strong>prerequisites</strong> are fulfilled:</p>
 <ol class="arabic simple">
 <li>download the compressed
-<a class="reference download internal" href="../../../_downloads/elastic-stack-elk-logstash.tar.gz" download=""><code class="xref download docutils literal"><span class="pre">project</span> <span class="pre">source</span> <span class="pre">files</span></code></a>.</li>
+<a class="reference download internal" href="../../../../../_downloads/elastic-stack-elk-logstash-part1.tar.gz" download=""><code class="xref download docutils literal"><span class="pre">project</span> <span class="pre">source</span> <span class="pre">files</span></code></a>.</li>
 <li>extract the archive</li>
 <li>change to the <code class="docutils literal"><span class="pre">env</span></code> directory</li>
 <li>start the <em>Vagrant</em> setup</li>
@@ -196,19 +190,15 @@ to store the logs.</li>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ wget http://www.markusz.io/_downloads/elastic-stack-elk-logstash.tar.gz
-$ tar -zxvf elastic-stack-elk-logstash.tar.gz
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ wget http://www.markusz.io/_downloads/elastic-stack-elk-logstash-part1.tar.gz
+$ tar -zxvf elastic-stack-elk-logstash-part1.tar.gz
 $ <span class="nb">cd</span> env
 $ vagrant up  <span class="c1"># does also all of the installation</span>
 </pre></div>
 </td></tr></table></div>
 <p>After this is fully done, you can access these two servers with:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ vagrant ssh es1     <span class="c1"># log into the elasticsearch server</span>
-<span class="o">[</span>vagrant@es1<span class="o">]</span> $ <span class="nb">exit</span>  <span class="c1"># log out</span>
-$ vagrant ssh ls1     <span class="c1"># log into the logstash server</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ vagrant ssh         <span class="c1"># log into the logstash server</span>
 <span class="o">[</span>vagrant@ls1<span class="o">]</span> $ <span class="nb">exit</span>  <span class="c1"># log out</span>
 </pre></div>
 </td></tr></table></div>
@@ -230,7 +220,7 @@ The pipelines are configured with these three steps</p>
 <li>the <code class="docutils literal"><span class="pre">filter</span></code> step</li>
 <li>the <code class="docutils literal"><span class="pre">output</span></code> step</li>
 </ol>
-<a class="reference internal image-reference" href="../../../_images/logstash_pipeline_1TcRt4t.svg"><img alt="The pipeline concept of |ls|" src="../../../_images/logstash_pipeline_1TcRt4t.svg" width="900px" /></a>
+<a class="reference internal image-reference" href="../../../../../_images/logstash_pipeline_1TcRt4t.svg"><img alt="The pipeline concept of |ls|" src="../../../../../_images/logstash_pipeline_1TcRt4t.svg" width="900px" /></a>
 <p>This allows to have <strong>multiple pipelines</strong> in parallel, or let the output
 from one pipelines be the input for another pipeline. It&#8217;s the very same
 idea like in a shell.</p>
@@ -307,7 +297,7 @@ file <code class="docutils literal"><span class="pre">/var/log/app1/source.log</
 </ul>
 <p>Let&#8217;s use this pipeline with some dummy data:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ vagrant ssh ls1  <span class="c1"># to log into the local Logstash server</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ vagrant ssh
 $ <span class="nb">echo</span> <span class="k">$(</span>date -Is<span class="k">)</span> &gt;&gt; /var/log/app1/source.log
 </pre></div>
 </td></tr></table></div>
@@ -379,7 +369,8 @@ meta data like a timestamp, the host and the version</li>
 timestamp which <em>Logstash</em> adds itself</li>
 </ul>
 <p>When working with those pipelines and events, it may become useful
-to get some insights into <em>Logstash</em> itself.</p>
+to get some insights into <em>Logstash</em> itself. The next section will show how
+to get them.</p>
 </div>
 <div class="section" id="basic-interaction-with-ls">
 <h2><a class="toc-backref" href="#contents">Basic interaction with <em>Logstash</em></a><a class="headerlink" href="#basic-interaction-with-ls" title="Permalink to this headline"> </a></h2>
@@ -479,7 +470,7 @@ section from the beginning of this post, and that we use <em>Logstash</em> in ve
 </pre></div>
 </td></tr></table></div>
 <p>There is one pipeline configured, named <code class="docutils literal"><span class="pre">main</span></code>. The configuration
-will be shown in the next section. To be honest, I have no clue yet
+was shown in the previous section. To be honest, I have no clue yet
 what the other key-value-pairs in that dictionary mean. My assumption
 is, that in high-availability setups, these things get important,
 but ignore them for now.</p>
