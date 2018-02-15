@@ -2,7 +2,7 @@
 .. post::
    :tags: logging, elasticstack
    :category: monitoring
-   :title: Elastic Stack (formerly ELK) - Logstash
+   :title: Elastic Stack (formerly ELK) - Logstash (Part 1)
 
 .. spelling::
    tokenized
@@ -13,9 +13,17 @@
 
 
 
-=========================================
-Elastic Stack (formerly ELK) - *Logstash*
-=========================================
+==================================================
+Elastic Stack (formerly ELK) - *Logstash* (Part 1)
+==================================================
+
+In this post I'll talk about the |ls| service, which is part of the
+*Elastic Stack*, formerly known as *ELK* stack. The purpose of |ls| is to
+ingest (logging) data, do some transformation or filtering on it,
+and output it into a data store like |es|. For details about |es|, you
+can get more information in my previous post
+:ref:`elastic-stack-elk-elasticsearch`.
+
 
 .. contents::
     :local:
@@ -28,7 +36,7 @@ Elastic Stack (formerly ELK) - *Logstash*
 
    * - Date
      - Change description
-   * - TODO
+   * - 2018-02-16
      - The first release
 
 
@@ -43,23 +51,10 @@ consists of 3 parts:
 * **ingesting data** with |ls| (and/or *Beats*)
 * **visualizing data** with *Kibana*
 
-This post will focus on the second part, |ls|. |ls| uses |es| as
-storage back-end in this post, so you might want to read the previous
-post about it at :ref:`elastic-stack-elk-elasticsearch`.
-
-.. todo:: drop all traces of *ElasticSearch* in this post, I didn't use it.
-
-I'll use a **virtualized environment** which looks like this:
-
-.. image:: images/environment_overview_Plniuva.svg
-   :width: 600px
-   :alt: The environment of virtual machines I used in this post.
-
-* Server ``es1`` contains the |es| service which provides a REST API
-  at port ``9200``.
-* Server ``ls1`` contains the |ls| service which provides a REST API
-  at port ``9600``. The |ls| service will use the REST API of |es|
-  to store the logs.
+This post will focus on the second part, |ls|.
+I'll use a **virtualized environment** with only virtual machine,
+named ``ls1``. This virtual machine contains the |ls| service which provides
+a REST API at port ``9600``. But more on that REST API later.
 
 Skip the next section if you don't want to repeat the steps locally.
 
@@ -76,7 +71,7 @@ To reproduce the steps in this post, you need to have installed locally:
 After these **prerequisites** are fulfilled:
 
 #. download the compressed
-   :download:`project source files <elastic-stack-elk-logstash.tar.gz>`.
+   :download:`project source files <elastic-stack-elk-logstash-part1.tar.gz>`.
 #. extract the archive
 #. change to the ``env`` directory
 #. start the *Vagrant* setup
@@ -85,8 +80,8 @@ After these **prerequisites** are fulfilled:
    :linenos:
    :emphasize-lines: 0
 
-   $ wget http://www.markusz.io/_downloads/elastic-stack-elk-logstash.tar.gz
-   $ tar -zxvf elastic-stack-elk-logstash.tar.gz
+   $ wget http://www.markusz.io/_downloads/elastic-stack-elk-logstash-part1.tar.gz
+   $ tar -zxvf elastic-stack-elk-logstash-part1.tar.gz
    $ cd env
    $ vagrant up  # does also all of the installation
 
@@ -97,9 +92,7 @@ After this is fully done, you can access these two servers with:
    :linenos:
    :emphasize-lines: 0
 
-   $ vagrant ssh es1     # log into the elasticsearch server
-   [vagrant@es1] $ exit  # log out
-   $ vagrant ssh ls1     # log into the logstash server
+   $ vagrant ssh         # log into the logstash server
    [vagrant@ls1] $ exit  # log out
 
 
@@ -210,7 +203,7 @@ Let's use this pipeline with some dummy data:
    :linenos:
    :emphasize-lines: 0
 
-   $ vagrant ssh ls1  # to log into the local Logstash server
+   $ vagrant ssh
    $ echo $(date -Is) >> /var/log/app1/source.log
 
 Execute this last line a few times and take a look at what the |ls|
@@ -268,7 +261,8 @@ A few interesting observations with this small example:
   timestamp which |ls| adds itself
 
 When working with those pipelines and events, it may become useful
-to get some insights into |ls| itself.
+to get some insights into |ls| itself. The next section will show how
+to get them.
 
 
 
@@ -376,7 +370,7 @@ Response:
 
 
 There is one pipeline configured, named ``main``. The configuration
-will be shown in the next section. To be honest, I have no clue yet
+was shown in the previous section. To be honest, I have no clue yet
 what the other key-value-pairs in that dictionary mean. My assumption
 is, that in high-availability setups, these things get important,
 but ignore them for now.

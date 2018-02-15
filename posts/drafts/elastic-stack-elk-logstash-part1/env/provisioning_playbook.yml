@@ -1,0 +1,68 @@
+---
+
+# ===========================================================================
+# Do basic setup on all hosts
+# ===========================================================================
+- hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: "SSH should be available."
+      become: false
+      delegate_to: localhost
+      wait_for:
+        port: 22
+        host: '{{ ansible_host }}'
+        search_regex: "OpenSSH"
+        delay: 1
+        timeout: 300
+
+    - name: "Our servers should be known by name."
+      lineinfile:
+        dest: /etc/hosts
+        # use the IP address we specified in the Vagrantfile
+        line: '{{ hostvars[item].ansible_host }} {{item}}'
+      with_items: '{{ groups["all"] }}'
+
+    - name: "A 'ping' via DNS name should be possible."
+      ping:
+      with_items: '{{ groups["all"] }}'
+
+    - name: "The ansible facts should be gathered for later."
+      setup:
+
+
+# ===========================================================================
+# Set up Logstash
+# ===========================================================================
+- hosts: ls1
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: "The Java Virtual Machine should be available."
+      apt:
+        name: openjdk-8-jdk-headless
+        state: present
+
+    - name: "The Logstash service should be available."
+      apt:
+        deb: https://artifacts.elastic.co/downloads/logstash/logstash-6.2.1.deb
+        state: present
+
+    - name: "The simple pipeline should be configured."
+      copy:
+        src: logstash-simple.conf
+        dest: /etc/logstash/conf.d/
+
+    - name: "Logstash should bind to the public IP."
+      lineinfile:
+        dest: /etc/logstash/logstash.yml
+        regexp: "http.host:"
+        line: "http.host: 192.168.73.12"
+
+    - name: "The Logstash service should be active."
+      service:
+        name: logstash
+        state: started
