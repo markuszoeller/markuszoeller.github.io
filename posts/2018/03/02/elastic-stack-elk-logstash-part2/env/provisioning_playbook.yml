@@ -1,0 +1,217 @@
+---
+
+# ===========================================================================
+# Do basic setup on all hosts
+# ===========================================================================
+- hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: "SSH should be available."
+      become: false
+      delegate_to: localhost
+      wait_for:
+        port: 22
+        host: '{{ ansible_host }}'
+        search_regex: "OpenSSH"
+        delay: 1
+        timeout: 300
+
+    - name: "The ansible facts should be gathered for later."
+      setup:
+
+    - name: "Our servers should be known by name."
+      lineinfile:
+        dest: /etc/hosts
+        line: '{{ hostvars[item].ansible_host }} {{item}}'
+      with_items: '{{ groups["all"] }}'
+
+    - name: "A 'ping' via DNS name should be possible."
+      ping:
+      with_items: '{{ groups["all"] }}'
+
+    - name: "The jq CLI should be there."
+      apt:
+        name: jq
+        state: present
+
+
+# ===========================================================================
+# Set up Logstash
+# ===========================================================================
+- hosts: ls1
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: "The Java Virtual Machine should be available."
+      apt:
+        name: openjdk-8-jdk-headless
+        state: present
+
+    - name: "The Logstash service should be available."
+      apt:
+        deb: https://artifacts.elastic.co/downloads/logstash/logstash-6.2.1.deb
+        state: present
+
+    - name: "The simple pipeline should be configured."
+      copy:
+        src: logstash-simple.conf
+        dest: /etc/logstash/conf.d/
+
+    - name: "Logstash should bind to the public IP."
+      lineinfile:
+        dest: /etc/logstash/logstash.yml
+        regexp: "http.host:"
+        line: "http.host: 192.168.73.12"
+
+    - name: "The Logstash service should be active."
+      service:
+        name: logstash
+        state: started
+
+
+
+# ===========================================================================
+# Set up Elasticsearch
+# ===========================================================================
+- hosts: es1
+  become: true
+  gather_facts: false
+
+  vars:
+    user_name: elastic
+    user_password: elastic
+    user_group: elastic
+
+  tasks:
+    - name: "Disable all swapping."
+      command: swapoff -a
+      when: ansible_swaptotal_mb > 0
+
+    - name: "Remove all swapping."
+      lineinfile:
+        dest: /etc/fstab
+        regexp: "swap"
+        state: absent
+
+    - name: "Ensure system package cache is updated."
+      apt:
+        update_cache: "yes"
+        cache_valid_time: 3600
+
+    - name: "Create a group for Elasticsearch."
+      group:
+        name: "{{ user_group }}"
+        state: present
+      tags: perm
+
+    - name: "Allow passwordless sudo for group {{ user_group }}"
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: "^%{{ user_group }}"
+        line: "%{{ user_group }} ALL=(ALL) NOPASSWD: ALL"
+        validate: 'visudo -cf %s'
+      tags: perm
+
+    - name: "Creating user for Elasticsearch group."
+      user:
+        name: "{{ user_name }}"
+        groups: "{{ user_group }}"
+        append: true
+        createhome: true
+        system: true
+        state: present
+      tags: perm
+
+    - name: "Create logging directory."
+      file:
+        path: /var/log/elasticsearch
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ user_group }}"
+        mode: 0775
+      tags: dirs
+
+    - name: "Create data directory."
+      file:
+        path: /var/data/elasticsearch
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ user_group }}"
+        mode: 0775
+      tags: dirs
+
+    - name: "Set number of open file descriptors (permanently)."
+      pam_limits:
+        domain: "{{ user_name }}"
+        limit_type: soft
+        limit_item: nofile
+        value: 65536
+      tags: limit
+
+    - name: "Set number of threads (permanently)."
+      pam_limits:
+        domain: "{{ user_name }}"
+        limit_type: soft
+        limit_item: nproc
+        value: 8192
+      tags: limit
+
+    - name: "Set maximum number of memory map areas (permanently)."
+      sysctl:
+        name: vm.max_map_count
+        value: 262144
+        state: present
+      tags: limit
+
+    - name: "Install JAVA runtime."
+      apt:
+        package: openjdk-8-jre-headless
+
+    - name: "Download file with checksum check."
+      get_url:
+        url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.1.1.tar.gz
+        dest: /home/elastic/
+        checksum: sha512:dcc23ef80ad2545490508d3e9db2fd0e6ae9a99cece0990f537c522265961dad234734548d1d86288af7f65a6ee681f5624d2c0e71df0e1dcc32fdb56dcefe92
+        owner: "{{ user_name }}"
+        group: "{{ user_group }}"
+
+    - name: "Unarchive the elasticsearch archive."
+      unarchive:
+        src: /home/elastic/elasticsearch-6.1.1.tar.gz
+        dest: /home/elastic/
+        remote_src: yes
+        owner: "{{ user_name }}"
+        group: "{{ user_group }}"
+
+    - name: "Configure elasticsearch."
+      lineinfile:
+        dest: /home/elastic/elasticsearch-6.1.1/config/elasticsearch.yml
+        line: 'network.host: "${ES_NETWORK_HOST}"'
+        regexp: "network.host"
+        state: present
+
+    - name: "Run elasticsearch as daemon."
+      environment:
+        ES_NETWORK_HOST: "{{ ansible_enp0s8.ipv4.address }}"
+        ES_NODE_NAME: "{{ ansible_hostname }}"
+      command: "sudo -E -u {{ user_name }} ./bin/elasticsearch -d -p pid"
+      args:
+        chdir: /home/elastic/elasticsearch-6.1.1/
+      async: 10
+      poll: 0
+
+    - name: "Check if Elasticsearch is up an running."
+      delegate_to: localhost
+      become: false
+      uri:
+        url: "http://{{ ansible_enp0s8.ipv4.address }}:9200"
+        method: GET
+      register: reg_get_api
+      until: reg_get_api.status == 200
+      retries: 5
+      ignore_errors: true
+
