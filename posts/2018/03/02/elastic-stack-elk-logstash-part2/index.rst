@@ -56,8 +56,132 @@ If you already know that content, here we go.
 Output our example log to |es|
 ==============================
 
-.. todo:: TODO
+Create a new pipeline configuration file named
+``/etc/logstash/conf.d/elasticsearch.conf`` and add the content below:
 
+.. code-block:: text
+   :linenos:
+   :emphasize-lines: 0
+
+   input {
+     file {
+       id => "my-app2-id-in"
+       path => "/var/log/app2/source.log"
+     }
+   }
+
+   output {
+     elasticsearch {
+       id => "my-app2-id-out"
+       hosts => ["http://es1:9200"]
+       index => "app2"
+     }
+   }
+
+
+Add some log entries to our log file:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ echo $(date -Is) >> /var/log/app2/source.log
+
+
+Query |es| if the new index got created:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ curl es1:9200/_cat/indices?format=yaml
+
+
+The response we get:
+
+.. code-block:: yaml
+   :linenos:
+   :emphasize-lines: 4,8
+
+   ---
+   - health: "yellow"
+     status: "open"
+     index: "app2"
+     uuid: "hL-CbpmmTm2I_aKryzqj-A"
+     pri: "5"
+     rep: "1"
+     docs.count: "2"
+     docs.deleted: "0"
+     store.size: "11kb"
+     pri.store.size: "11kb"
+
+
+Query |es| for the documents for the index ``app2``:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ curl -s es1:9200/app2/_search? | jq
+
+
+The response we get:
+
+.. code-block:: json
+   :linenos:
+   :emphasize-lines: 15,20-24
+
+   {
+     "took": 1,
+     "timed_out": false,
+     "_shards": {
+       "total": 5,
+       "successful": 5,
+       "skipped": 0,
+       "failed": 0
+     },
+     "hits": {
+       "total": 2,
+       "max_score": 1,
+       "hits": [
+         {
+           "_index": "app2",
+           "_type": "doc",
+           "_id": "YhO3r2EBDLUsSt4lTcKT",
+           "_score": 1,
+           "_source": {
+             "path": "/var/log/app2/source.log",
+             "host": "ls1",
+             "@version": "1",
+             "@timestamp": "2018-02-19T20:18:00.592Z",
+             "message": "2018-02-19T20:18:00+00:00"
+           }
+         },
+         {
+           "_index": "app2",
+           "_type": "doc",
+           "_id": "YRO2r2EBDLUsSt4l88J0",
+           "_score": 1,
+           "_source": {
+             "message": "2018-02-19T20:17:36+00:00",
+             "path": "/var/log/app2/source.log",
+             "@timestamp": "2018-02-19T20:17:37.420Z",
+             "host": "ls1",
+             "@version": "1"
+           }
+         }
+       ]
+     }
+   }
+
+
+|ls| did its job to encapsulate our messages into new JSON objects with
+meta data and to forward this JSON object to |es|. To be precise,
+the ``elasticsearch`` output plugin did the job. The index also got
+created like specified in the config file.
+
+So far, we've used fairly useless data for the log entries. The next
+section will use more realistic one.
 
 
 A more realistic logging data
@@ -78,6 +202,13 @@ Parse logging data by patterns
 ==============================
 
 .. todo:: grok
+
+
+
+A filter to update the timestamp
+================================
+
+.. todo:: Use a filter to transform
 
 
 
