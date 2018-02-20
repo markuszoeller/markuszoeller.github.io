@@ -215,3 +215,17 @@
       retries: 5
       ignore_errors: true
 
+
+# ===========================================================================
+# Copy example app to target
+# ===========================================================================
+- hosts: ls1
+  become: true
+  gather_facts: false
+
+
+  tasks:
+    - name: "The example app should be on the target."
+      copy:
+        src: ../example-app/example.py
+        dest: /opt/app3/
