@@ -1,0 +1,51 @@
+{
+  "...": "...",
+  "hits": {
+    "total": 2,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "app4",
+        "_type": "doc",
+        "_id": "R2jVzWEBRYCDJjrEtlgN",
+        "_score": 1,
+        "_source": {
+          "message": "2018-02-25 16:39:49,923 | DEBUG | 4845 | 140289154119424 | example | do_something | 14 | I did something!",
+          "host": "ls1",
+          "time": "2018-02-25 16:39:49,923",
+          "loggername": "example",
+          "function": "do_something",
+          "@timestamp": "2018-02-25T16:39:50.125Z",
+          "msg": "I did something!",
+          "path": "/var/log/app3/source.log",
+          "line": "14",
+          "thread": "140289154119424",
+          "@version": "1",
+          "level": "DEBUG",
+          "pid": "4845"
+        }
+      },
+      {
+        "_index": "app4",
+        "_type": "doc",
+        "_id": "RmjVzWEBRYCDJjrEtlgN",
+        "_score": 1,
+        "_source": {
+          "message": "2018-02-25 16:39:49,922 | INFO | 4845 | 140289154119424 | example | main | 18 | Started the application.",
+          "host": "ls1",
+          "time": "2018-02-25 16:39:49,922",
+          "loggername": "example",
+          "function": "main",
+          "@timestamp": "2018-02-25T16:39:50.120Z",
+          "msg": "Started the application.",
+          "path": "/var/log/app3/source.log",
+          "line": "18",
+          "thread": "140289154119424",
+          "@version": "1",
+          "level": "INFO",
+          "pid": "4845"
+        }
+      }
+    ]
+  }
+}

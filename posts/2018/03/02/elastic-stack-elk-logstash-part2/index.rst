@@ -300,7 +300,7 @@ with tons of functions and classes and modules and log levels and threads:
 How do we reasonably **query only the log messages** we care about in
 a specific scenario?
 
-We could use the builtin query DSL of |es| [#esquery]_ to do searches on the
+We could use the built-in query DSL of |es| [#esquery]_ to do searches on the
 ``message`` value only. This would feel like a ``grep`` and will probably
 bring good results at first:
 
@@ -349,34 +349,345 @@ The query we provided to |es| matched one of our logging entries.
 
 This is already pretty cool, but maybe we can split the very long
 logging message into something more meaningful, which can then
-be easier queried.
+be queried more easily.
 
 
 Parse logging data by delimiter
 ===============================
 
-.. todo:: dissect
+The ``dissect`` filter plugin [#lsdissect]_ allows to transform your
+log entries based on delimiters. It's a good fit for the classical log files
+like the one from before.
 
 
-
-Parse logging data by patterns
-==============================
-
-.. todo:: grok
-
+.. literalinclude:: env/app4-dissect.conf
+   :language: text
+   :linenos:
+   :emphasize-lines: 0
 
 
-JSON newline delimiter logging
-==============================
+Execute the example application again:
 
-.. todo:: maybe json newline is a reasonable thing to output when
-          working with |es|
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ ./example.py
 
 
-A filter to update the timestamp
-================================
+Query |es| with the new index ``app4``:
 
-.. todo:: Use a filter to transform
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ curl -s es1:9200/app4/_search? | jq
+
+
+Get the JSON response:
+
+.. literalinclude:: app4-dissect-response.json
+   :language: json
+   :linenos:
+   :emphasize-lines: 0
+
+
+This shows that our log entries in the log file got properly split up
+into fields. We should now be able to query |es| for those fields:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 5
+
+   $ curl -s 'es1:9200/app4/_search' -H 'Content-Type: application/json' -d'
+   {
+       "query": {
+           "match" : {
+               "level" : "DEBUG"
+           }
+       }
+   }
+   ' | jq
+
+
+The response we get:
+
+.. code-block:: json
+   :linenos:
+   :emphasize-lines: 0
+
+   {
+     "...": "...",
+     "hits": {
+       "total": 1,
+       "max_score": 0.2876821,
+       "hits": [
+         {
+           "_index": "app4",
+           "_type": "doc",
+           "_id": "R2jVzWEBRYCDJjrEtlgN",
+           "_score": 0.2876821,
+           "_source": {
+             "message": "2018-02-25 16:39:49,923 | DEBUG | 4845 | 140289154119424 | example | do_something | 14 | I did something!",
+             "host": "ls1",
+             "time": "2018-02-25 16:39:49,923",
+             "loggername": "example",
+             "function": "do_something",
+             "@timestamp": "2018-02-25T16:39:50.125Z",
+             "msg": "I did something!",
+             "path": "/var/log/app3/source.log",
+             "line": "14",
+             "thread": "140289154119424",
+             "@version": "1",
+             "level": "DEBUG",
+             "pid": "4845"
+           }
+         }
+       ]
+     }
+   }
+
+
+.. tip::
+
+   In case your |es| index got messy during the experiments,
+   you can delete it with ``curl -X DELETE es1:9200/app4/``.
+
+
+Three things aren't pretty yet:
+
+* The ``message`` field is not necessary anymore, as we have all the
+  information in the other fields.
+* The ``@timestamp`` field doesn't match our actual timestamp, captured
+  in field ``time``.
+* The fields which hold numbers as values, like ``line``, ``pid`` and
+  ``thread`` treat those values as strings.
+
+The next sections will show ways to do that.
+
+
+Remove fields
+=============
+
+The ``message`` field from above contains the full log entry, but
+we don't need that anymore, as we have split that into its fields.
+One way to remove that extraneous field, is the ``remove_field`` filter
+option:
+
+.. literalinclude:: env/step5-dissect-remove-field.conf
+   :language: text
+   :linenos:
+   :emphasize-lines: 13
+
+
+The response looks now like this:
+
+.. code-block:: json
+   :linenos:
+   :emphasize-lines: 0
+
+   {
+     "...": "...",
+     "hits": {
+       "total": 1,
+       "max_score": 0.2876821,
+       "hits": [
+         {
+           "...": "...",
+           "_source": {
+             "host": "ls1",
+             "time": "2018-02-25 16:39:49,923",
+             "loggername": "example",
+             "function": "do_something",
+             "@timestamp": "2018-02-25T16:39:50.125Z",
+             "msg": "I did something!",
+             "path": "/var/log/app3/source.log",
+             "line": "14",
+             "thread": "140289154119424",
+             "@version": "1",
+             "level": "DEBUG",
+             "pid": "4845"
+           }
+         }
+       ]
+     }
+   }
+
+It looks much cleaner now. A few more things until we're happy.
+
+
+Set the timestamp field
+=======================
+
+The ``date`` filter plugin [#lsdate]_ is capable of using our ``time`` field
+and use it as input for the ``@timestamp`` field:
+
+.. literalinclude:: env/step6-timestamp.conf
+   :language: text
+   :linenos:
+   :emphasize-lines: 15-18
+
+The ``time`` field served its purpose, so we remove it like shown in the
+previous section. This example also shows nicely, that multiple filters
+can be specified in one config, and that they get executed in the
+given order.
+
+If your log files don't use ISO8601, you can filter for other formats,
+like the *Unix* time in seconds or milliseconds since epoch. Any other
+format is also valid, e.g. ``"MMM dd yyyy HH:mm:ss"``. See the docs
+at [#lsdate]_ for more details.
+
+We execute our example application like before and get this response:
+
+.. code-block:: json
+   :linenos:
+   :emphasize-lines: 22
+
+   {
+     "...": "...",
+     "hits": {
+       "total": 2,
+       "max_score": 1,
+       "hits": [
+         {
+           "...": "..."
+         },
+         {
+           "_index": "app6",
+           "_type": "doc",
+           "_id": "hWgmzmEBRYCDJjrEYlhQ",
+           "_score": 1,
+           "_source": {
+             "line": "18",
+             "loggername": "example",
+             "msg": "Started the application.",
+             "function": "main",
+             "path": "/var/log/app3/source.log",
+             "thread": "140044078098176",
+             "@timestamp": "2018-02-25T18:07:57.051Z",
+             "@version": "1",
+             "level": "INFO",
+             "pid": "5923",
+             "host": "ls1"
+           }
+         }
+       ]
+     }
+   }
+
+The ``time`` field is gone and the ``@timestamp`` field uses the date and
+time specified in the original log file.
+
+
+Specify data type conversion
+============================
+
+The ``dissect`` filter provides the option ``convert_datatype``
+which can do a conversion to integer of float numbers. We only need
+conversions to ``int`` here:
+
+.. literalinclude:: env/step7-convert-datatype.conf
+   :language: text
+   :linenos:
+   :emphasize-lines: 14-18
+
+The JSON request contains numbers now:
+
+.. code-block:: json
+   :linenos:
+   :emphasize-lines: 17,22,26
+
+   {
+     "...": "...",
+     "hits": {
+       "total": 2,
+       "max_score": 1,
+       "hits": [
+         {
+           "...": "..."
+         },
+         {
+           "_index": "app7",
+           "_type": "doc",
+           "_id": "hmg7zmEBRYCDJjrEIFgb",
+           "_score": 1,
+           "_source": {
+             "path": "/var/log/app3/source.log",
+             "line": 18,
+             "@version": "1",
+             "@timestamp": "2018-02-25T18:30:31.645Z",
+             "level": "INFO",
+             "host": "ls1",
+             "pid": 6195,
+             "loggername": "example",
+             "msg": "Started the application.",
+             "function": "main",
+             "thread": 140172021761792
+           }
+         }
+       ]
+     }
+   }
+
+
+This can be useful when you search for a
+**range of numeric values** [#esrange]_:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 5-7
+
+   $ curl -s 'es1:9200/app7/_search' -H 'Content-Type: application/json' -d'
+   {
+       "query": {
+           "range" : {
+               "line" : {
+                   "gte" : 10,
+                   "lte" : 15
+               }
+           }
+       }
+   }
+   ' | jq
+
+The response:
+
+.. code-block:: json
+   :linenos:
+   :emphasize-lines: 14
+
+   {
+     "...": "...",
+     "hits": {
+       "total": 1,
+       "max_score": 1,
+       "hits": [
+         {
+           "_index": "app7",
+           "_type": "doc",
+           "_id": "h2g7zmEBRYCDJjrEIFg4",
+           "_score": 1,
+           "_source": {
+             "path": "/var/log/app3/source.log",
+             "line": 14,
+             "@version": "1",
+             "@timestamp": "2018-02-25T18:30:31.645Z",
+             "level": "DEBUG",
+             "host": "ls1",
+             "pid": 6195,
+             "loggername": "example",
+             "msg": "I did something!",
+             "function": "do_something",
+             "thread": 140172021761792
+           }
+         }
+       ]
+     }
+   }
+
+
+This example isn't that impressive, admittedly, but I'm sure you get
+the idea ``:-)``.
 
 
 
@@ -395,6 +706,10 @@ Nope, |fb| to the rescue. That's an insight I got while writing
 this post. So I'll take a quick look at |fb| next, before finishing
 this series with |ki|.
 
+A more powerful filter plugin is ``grok``.
+
+This is a contract now, how about a log file which evolves? Maybe use
+JSON newline delimited logs?
 
 
 References
@@ -402,4 +717,12 @@ References
 
 .. [#pylogrecord] https://docs.python.org/2/library/logging.html#logrecord-attributes
 
-.. [#esquery] https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
+.. [#esquery] https://www.elastic.co/guide/en/elasticsearch/reference/6.2/query-dsl.html
+
+.. [#lsdissect] https://www.elastic.co/guide/en/logstash/6.2/plugins-filters-dissect.html
+
+.. [#esdelidx] https://www.elastic.co/guide/en/elasticsearch/reference/6.2/indices-delete-index.html
+
+.. [#lsdate] https://www.elastic.co/guide/en/logstash/current/plugins-filters-date.html
+
+.. [#esrange] https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-range-query.html
