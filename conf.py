@@ -261,7 +261,7 @@ html_theme_options = {
         ("About", "about"),
         ("Categories", "posts/category"),
         ("Tags", "posts/tag"),
-        ("Archives", "posts/archive"),
+        ("Archive", "posts/archive"),
         ("<i class='fa fa-rss-square' aria-hidden='true'></i>", "/posts/atom.xml", True),
     ],
     'globaltoc_includehidden': "false",
