@@ -1,0 +1,183 @@
+---
+
+# ===========================================================================
+# Do basic setup on all hosts
+# ===========================================================================
+- hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: "Wait for SSH to be ready."
+      become: false
+      delegate_to: localhost
+      wait_for:
+        port: 22
+        host: '{{ ansible_host }}'
+        search_regex: "OpenSSH"
+        delay: 5
+        timeout: 300
+
+    - name: "Add our servers to the hosts file."
+      lineinfile:
+        dest: /etc/hosts
+        # use the IP address we specified in the Vagrantfile
+        line: '{{ hostvars[item].ansible_host }} {{item}}'
+      with_items: '{{ groups["all"] }}'
+
+    - name: "Ping each other via DNS names."
+      ping:
+      with_items: '{{ groups["all"] }}'
+
+    - name: "Ensure system package cache is updated."
+      apt:
+        update_cache: "yes"
+        cache_valid_time: 3600
+
+
+# ===========================================================================
+# Do setup on all hosts we want to monitor
+# ===========================================================================
+- hosts: all  # we want the metrics of the monitoring server too
+  become: true
+
+  tasks:
+    - name: "Install Prometheus Node Exporter package."
+      apt:
+        name: prometheus-node-exporter
+
+    - name: "Ensure the Node Exporter is started and starts at host boot."
+      service:
+        name: prometheus-node-exporter
+        enabled: true
+        state: started
+
+    - name: "Check if the service emits metrics."
+      uri:
+        url: http://127.0.0.1:9100/metrics
+        method: GET
+        status_code: 200
+
+
+# ===========================================================================
+# Do prometheus server specific setup only on the monitoring server
+# ===========================================================================
+- hosts: monitoring
+  become: true
+
+
+  tasks:
+    # --- Prometheus --------------------------------------------------------
+    - name: "Install the Prometheus server."
+      apt:
+        name: prometheus
+
+    - name: "Configure the Prometheus server."
+      copy:
+        src: prometheus.yml
+        dest: /etc/prometheus/prometheus.yml
+      notify: event_restart_prometheus
+
+    - name: "Ensure Prometheus is started and starts at host boot."
+      service:
+        name: prometheus
+        enabled: true
+        state: started
+
+    - name: "Check if Prometheus is accessible."
+      uri:
+        url: http://127.0.0.1:9090/graph
+        method: GET
+        status_code: 200
+
+    # --- Grafana -----------------------------------------------------------
+    - name: "Install the Grafana server."
+      apt:
+        name: grafana
+
+    - name: "Copy Grafana configuration file."
+      copy:
+        src: grafana.ini
+        dest: /etc/grafana/grafana.ini
+      notify: event_restart_grafana
+
+    - name: "Ensure Grafana is started and starts at host boot."
+      service:
+        name: grafana
+        enabled: true
+        state: started
+
+    - name: "Check if Grafana is accessible."
+      uri:
+        url: http://127.0.0.1:3000
+        method: GET
+        status_code: 200
+
+    - name: "Add Prometheus as datasource to Grafana."
+      vars:
+        prometheus_datasource:
+          name: "prometheus"
+          type: "prometheus"
+          url: "http://127.0.0.1:9090"
+          access: "proxy"
+          isDefault: true
+          basicAuth: false
+      uri:
+        url: http://127.0.0.1:3000/api/datasources
+        method: POST
+        body: "{{ prometheus_datasource | to_json }}"
+        body_format: json
+        user: admin
+        password: admin
+        force_basic_auth: yes
+        status_code: 200,500  # 500 means, the datasource is already added
+        headers:
+          Content-Type: "application/json"
+          Accept: "application/json"
+
+    - name: "Upload the example Grafana dashboard."
+      uri:
+        url: http://127.0.0.1:3000/api/dashboards/db
+        method: POST
+        body: "{{ lookup('file', 'infra-node-metrics.json') }}"
+        body_format: json
+        user: admin
+        password: admin
+        force_basic_auth: yes
+        status_code: 200
+        headers:
+          Content-Type: "application/json"
+          Accept: "application/json"
+
+
+  # --- After all tasks are executed (if notified) --------------------------
+  handlers:
+    - name: "Restart the Prometheus service."
+      service:
+        name: prometheus
+        state: restarted
+      listen: event_restart_prometheus
+
+    - name: "Restart the Grafana service."
+      service:
+        name: grafana
+        state: restarted
+      listen: event_restart_grafana
+
+
+# ===========================================================================
+# Push the "applications" to the application servers
+# ===========================================================================
+- hosts: application-servers
+  become: true
+  gather_facts: false
+
+  tasks:
+     - name: "Copy the applications to the servers."
+       copy:
+         src: "{{ item }}"
+         dest: "/root/{{ item }}"
+       with_items:
+         - eat_cpu.py
+         - eat_disk.py
+         - eat_memory.py

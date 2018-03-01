@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>All Posts &#8212; Markus Zoeller Blog</title>
+    
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/asciinema-player.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/asciinema-player.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="../about/" />
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+  
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../posts/atom.xml" title="">
+  
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../">
+          MZIO</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../about/">About</a></li>
+                <li><a href="category/">Categories</a></li>
+                <li><a href="tag/">Tags</a></li>
+                <li><a href="archive/">Archive</a></li>
+                <li><a href="/posts/atom.xml"><i class='fa fa-rss-square' aria-hidden='true'></i></a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search/" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section">
+
+    <h1>
+      
+      All
+      
+      Posts
+      
+    </h1>
+    
+    
+
+    <div class="section">
+      <h2><a href="2018/02/16/elastic-stack-elk-logstash-part1/">Elastic Stack (formerly ELK) - Logstash (Part 1)</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Feb 16, 2018
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+  <li>Category:
+    
+      
+      <a href="category/monitoring/">monitoring</a>
+      
+    </li>
+  
+
+  
+  <li>Tags:
+      
+    
+      
+      <a href="tag/logging/">logging</a>,
+      
+    
+      
+      <a href="tag/elasticstack/">elasticstack</a>
+      
+    </li>
+  
+  </ul>
+      <p>In this post I&#8217;ll talk about the <em>Logstash</em> service, which is part of the
+<em>Elastic Stack</em>, formerly known as <em>ELK</em> stack. The purpose of <em>Logstash</em> is to
+ingest (logging) data, do some transformation or filtering on it,
+and output it into a data store like <em>Elasticsearch</em>. For details about <em>Elasticsearch</em>, you
+can get more information in my previous post
+<a class="reference internal" href="2018/01/05/elastic-stack-elk-elasticsearch/#elastic-stack-elk-elasticsearch"><span class="std std-ref">Elastic Stack (formerly ELK) - Elasticsearch</span></a>.</p>
+
+      <p><a href="2018/02/16/elastic-stack-elk-logstash-part1/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2018/02/02/project-docs-rst-markup-sphinx/">Project documentation with reStructuredText and Sphinx</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Feb 02, 2018
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li>Tags:
+      
+    
+      
+      <a href="tag/documentation/">documentation</a>,
+      
+    
+      
+      <a href="tag/restructuredtext/">restructuredtext</a>,
+      
+    
+      
+      <a href="tag/sphinx/">sphinx</a>,
+      
+    
+      
+      <a href="tag/markup/">markup</a>,
+      
+    
+      
+      <a href="tag/rst/">rst</a>
+      
+    </li>
+  
+  </ul>
+      <p>When it comes to documenting your project, especially the non-code parts,
+you might face a plethora of opinions what the &#8220;correct approach&#8221; might be.
+Some love <em>Word</em> documents, some favor <em>PowerPoint</em> slides and some like
+documents written in a markup language. I&#8217;m one of the latter. This post
+will show my favorite, <em>reStructuredText</em> with <em>Sphinx</em>. It will list the capabilities I
+usually need when documenting, and how to do it with the features of <em>Sphinx</em>
+and <em>reStructuredText</em>.</p>
+
+      <p><a href="2018/02/02/project-docs-rst-markup-sphinx/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2018/01/19/ansible-env-var-non-root/">Quick Tip: Ansible commands as non-root user with environment variables</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Jan 19, 2018
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li>Tags:
+      
+    
+      
+      <a href="tag/ansible/">ansible</a>,
+      
+    
+      
+      <a href="tag/quick-tips/">quick-tips</a>
+      
+    </li>
+  
+  </ul>
+      <p>This is a short quick tip. When executing <em>Ansible</em> playbooks, you might
+need to execute a task as another user than the one you established the
+connection with. This post shows an example how to do it and deal with
+the environment variables.</p>
+
+      <p><a href="2018/01/19/ansible-env-var-non-root/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2018/01/05/elastic-stack-elk-elasticsearch/">Elastic Stack (formerly ELK) - Elasticsearch</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Jan 05, 2018
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+  <li>Category:
+    
+      
+      <a href="category/monitoring/">monitoring</a>
+      
+    </li>
+  
+
+  
+  <li>Tags:
+      
+    
+      
+      <a href="tag/logging/">logging</a>,
+      
+    
+      
+      <a href="tag/elasticstack/">elasticstack</a>
+      
+    </li>
+  
+  </ul>
+      <p>When something goes wrong in an environment, the people trying to fix it
+mostly start by looking at the log files persisted on the local filesystem
+of the server. This gets more cumbersome the more server and services
+participate. Highly distributed applications, developed and deployed as
+microservices in a cloud environment exacerbate this too. A centralized
+logging server helps to ease the pain. In this post I&#8217;ll talk about the
+popular <em>Elasticsearch</em> service, which is part of the <em>Elastic Stack</em>, formerly known
+as <em>ELK</em> stack.</p>
+
+      <p><a href="2018/01/05/elastic-stack-elk-elasticsearch/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2017/12/22/release-notes-with-reno/">Release Notes with reno</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Dec 22, 2017
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li>Tag:
+    
+      
+      <a href="tag/release-management/">release-management</a>
+      
+    </li>
+  
+  </ul>
+      <p><em>&#8220;What features merged since the last release?&#8221;</em> &#8211;
+<em>&#8220;Did we introduce something which might break a deployment?&#8221;</em> &#8211;
+<em>&#8220;Let me grep through the commit history to check what happened.&#8221;</em>
+Remember sentences like these when you&#8217;re about to release? If you
+like this fire-fighting mode, ignore this post. If you want to have a
+more relaxed release, this post will show you how to use a tool called
+<em>reno</em> to manage your release notes.</p>
+
+      <p><a href="2017/12/22/release-notes-with-reno/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2017/12/08/book-5-team-dysfunctions/">Recommendation: The Five Dysfunctions of a Team</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Dec 08, 2017
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+  <li>Category:
+    
+      
+      <a href="category/books/">books</a>
+      
+    </li>
+  
+
+  
+  </ul>
+      <p>Did you ever wonder why you&#8217;re (again) in a meeting without a clear result?
+Do you feel like the topics got already discussed in a previous meeting?
+How often did your hear the sentence <cite>&#8220;Someone should work on that.&#8221;</cite>?
+Let&#8217;s be honest, our work family is sometimes a little dysfunctional.
+Join me in my personal reflection of the book
+<cite>The Five Dysfunctions of a Team: A Leadership Fable</cite> from 2002 by
+<em>Patrick Lencioni</em>, which helps to understand what&#8217;s happening.</p>
+
+      <p><a href="2017/12/08/book-5-team-dysfunctions/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2017/11/24/ansible-playbook-roles/">Ansible Playbook Refactoring into Roles</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Nov 24, 2017
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li>Tags:
+      
+    
+      
+      <a href="tag/ansible/">ansible</a>,
+      
+    
+      
+      <a href="tag/iac/">iac</a>
+      
+    </li>
+  
+  </ul>
+      <p>In a previous post (<a class="reference internal" href="2017/10/27/monitoring-prometheus/#monitoring-prometheus"><span class="std std-ref">Monitoring with Prometheus</span></a>), we created one playbook
+which contained all the logic. This post will show how to do a refactoring of
+a playbook into smaller, reusable <em>Ansible Roles</em>. This allows us to hide
+complexity and to provide defined interfaces. It also increases the
+ability to work in parallel on different parts of your
+<em>Infrastructure as Code (IaC)</em> project. I won&#8217;t explore how you publish
+your roles to <em>Ansible Galaxy</em> but merely show a basic recipe how you
+move <em>Playbook</em> logic step by step into project specific roles.</p>
+
+      <p><a href="2017/11/24/ansible-playbook-roles/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2017/11/10/osse-prague-2017/">The 2017 Open Source Summit Europe in Praque</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Nov 10, 2017
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+  <li>Category:
+    
+      
+      <a href="category/conferences/">conferences</a>
+      
+    </li>
+  
+
+  
+  </ul>
+      <p>This post is my recap of the <em>Open Source Summit Europe</em> conference which
+took place in <em>Praque (Czech Republic)</em> from October 23-26, 2017. I&#8217;ll go
+briefly through the sessions I attended and the notes I took.</p>
+
+      <p><a href="2017/11/10/osse-prague-2017/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2017/10/27/monitoring-prometheus/">Monitoring with Prometheus</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Oct 27, 2017
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li>Tag:
+    
+      
+      <a href="tag/monitoring/">monitoring</a>
+      
+    </li>
+  
+  </ul>
+      <p>One of the common causes for service degradation or interruption is still
+the failure or exhaustion of your basic infrastructure resources.
+This post gives you an intro how you can monitor your basic resources
+with <em>Prometheus</em>. It shows the setup with <em>Ansible</em> and the data visualization
+with <em>Grafana</em>. The post does <strong>not</strong> show all the capabilities of <em>Prometheus</em>.
+In fact, I&#8217;m showing you only the simplest configuration. The benefit
+of this post is, that it takes you from start to finish and gives you
+a playground you can easily recreate when things go wrong, thanks to
+<em>Vagrant</em> and <em>VirtualBox</em>. Beware, as this is a non-trivial (non-hello-world)
+example, this post is really long.</p>
+
+      <p><a href="2017/10/27/monitoring-prometheus/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2017/10/13/book-phoenix-project/">Recommendation: The Phoenix Project</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Oct 13, 2017
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+  <li>Category:
+    
+      
+      <a href="category/books/">books</a>
+      
+    </li>
+  
+
+  
+  </ul>
+      <p>This is my take on the book
+<cite>The Phoenix Project: A  Novel about IT, DevOps, and Helping Your Business Win</cite>
+from 2014 by <em>Gene Kim</em>; <em>Kevin Behr</em>; <em>George Spafford</em>. It&#8217;s more of a personal
+reflection why I like the book &#8211; and why I think you should read it too &#8211;
+and less of a review.</p>
+
+      <p><a href="2017/10/13/book-phoenix-project/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2017/09/29/logrotate/">Basics about Logrotate</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Sep 29, 2017
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li>Tags:
+      
+    
+      
+      <a href="tag/logrotate/">logrotate</a>,
+      
+    
+      
+      <a href="tag/logging/">logging</a>
+      
+    </li>
+  
+  </ul>
+      <p>Ever lost a host because one of the services on that host used all
+available disk space with its logs? <em>logrotate</em> is a common tool
+which truncates your logs to make sure this won&#8217;t happen anymore.
+This post is a short <em>how-to</em>.</p>
+
+      <p><a href="2017/09/29/logrotate/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2017/08/25/openstack-cpu-arch-scheduling/">OpenStack Nova Scheduling based on CPU architecture</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Aug 25, 2017
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+  <li>Category:
+    
+      
+      <a href="category/openstack/">openstack</a>
+      
+    </li>
+  
+
+  
+  <li>Tags:
+      
+    
+      
+      <a href="tag/nova/">nova</a>,
+      
+    
+      
+      <a href="tag/scheduling/">scheduling</a>,
+      
+    
+      
+      <a href="tag/cpu-architecture/">cpu-architecture</a>
+      
+    </li>
+  
+  </ul>
+      <p>If you have an OpenStack cloud with compute nodes with different CPU
+architectures, then this post will give you the needed information about
+how to tag your guest images, which enables the Nova scheduler to find
+a target with the correct CPU architecture.</p>
+
+      <p><a href="2017/08/25/openstack-cpu-arch-scheduling/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2016/03/06/grafana-graphite-statsd/">Setup Grafana + Graphite + Statsd</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Mar 06, 2016
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li>Tags:
+      
+    
+      
+      <a href="tag/data-visualization/">data-visualization</a>,
+      
+    
+      
+      <a href="tag/how-to/">how-to</a>
+      
+    </li>
+  
+  </ul>
+      <p>If you ever played around with time series data and wanted to visualize them
+with graphs in a nice way you probably have heard about <em>Grafana</em>. This
+post provides a step-by-step instruction on how to build a <em>Grafana</em>-playground
+in about 15 minutes. The setup will be build of <em>statsd</em> to collect metrics,
+<em>graphite</em> to store those metrics, and <em>Grafana</em> to visualize those metrics.
+We will also create and push custom metrics and create templated graphs based
+on them. This post won&#8217;t provide any in-depth details about <em>statsd</em>,
+<em>graphite</em> and <em>Grafana</em> itself.</p>
+
+      <p><a href="2016/03/06/grafana-graphite-statsd/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+
+    <div class="section">
+      <h2><a href="2015/12/01/openstack-bugs/">OpenStack's Bug Management</a></h2>
+
+      <ul class="ablog-archive">
+      <li>
+      
+        Dec 01, 2015
+      
+      </li>
+        
+
+  
+  <li>Author:
+    
+      
+      <a href="author/markus-zoeller/">Markus Zoeller</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+  <li>Category:
+    
+      
+      <a href="category/openstack/">openstack</a>
+      
+    </li>
+  
+
+  
+  <li>Tag:
+    
+      
+      <a href="tag/bugs/">bugs</a>
+      
+    </li>
+  
+  </ul>
+      <p>This post intends to give you enough background to play an active part in
+working with bugs in <em>OpenStack</em>. This includes an understanding of the
+basic life cycle a bug goes through and in which state you can contribute
+in which way. It also clarifies some possible misunderstandings and gives a
+few best practices. In general, the bugs of a project (like <em>Nova</em>, <em>Cinder</em>,
+<em>Neutron</em> and others) can be found in our issue tracker <em>Launchpad</em>. The
+lists of bugs are available at <code class="docutils literal"><span class="pre">https://bugs.launchpad.net/&lt;projectname&gt;</span></code> for
+example <code class="docutils literal"><span class="pre">https://bugs.launchpad.net/nova</span></code> for the <em>Nova</em> project.</p>
+
+      <p><a href="2015/12/01/openstack-bugs/">Read more ...</a></p>
+      <hr>
+    </div>
+    
+    
+  </div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015-2018, Markus Zoeller.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

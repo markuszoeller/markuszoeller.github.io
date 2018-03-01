@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Recommendation: The Phoenix Project &#8212; Markus Zoeller Blog</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/asciinema-player.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/asciinema-player.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="../../../../../about/" />
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" />
+  
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../../../../posts/atom.xml" title="Markus's Brain Swap Space">
+  
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../../../">
+          MZIO</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../../../about/">About</a></li>
+                <li><a href="../../../../category/">Categories</a></li>
+                <li><a href="../../../../tag/">Tags</a></li>
+                <li><a href="../../../../archive/">Archive</a></li>
+                <li><a href="/posts/atom.xml"><i class='fa fa-rss-square' aria-hidden='true'></i></a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../../../">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../../../search/" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="recommendation-the-phoenix-project">
+<h1>Recommendation: The Phoenix Project<a class="headerlink" href="#recommendation-the-phoenix-project" title="Permalink to this headline"> </a></h1>
+<p>This is my take on the book
+<cite>The Phoenix Project: A  Novel about IT, DevOps, and Helping Your Business Win</cite>
+from 2014 by <em>Gene Kim</em>; <em>Kevin Behr</em>; <em>George Spafford</em>. It&#8217;s more of a personal
+reflection why I like the book &#8211; and why I think you should read it too &#8211;
+and less of a review.</p>
+<p>The book follows the character <em>Bill Palmer</em> who&#8217;s working for
+<em>Parts Unlimited</em>, a fictional company producing and selling automotive parts.
+The company is struggling, as it cannot keep up with their competitors.
+The e-commerce project <em>Phoenix</em> is supposed to put a stop to the struggle
+and bring the company back to the top. And Bill, our protagonist,
+unexpectedly promoted from a mid-level operations manager to
+<em>Vice President of IT Operations</em>, is now responsible for making it happen,
+and (of course) things are falling apart.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#overview" id="id2">Overview</a></li>
+<li><a class="reference internal" href="#why-you-should-read-it" id="id3">Why you should read it</a></li>
+<li><a class="reference internal" href="#the-5-most-noteworthy-things" id="id4">The 5 most noteworthy things</a></li>
+</ul>
+</div>
+<table border="1" class="docutils" id="id1">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id1" title="Permalink to this table"> </a></caption>
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Date</th>
+<th class="head">Change description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>2017-10-13</td>
+<td>The first release</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#contents">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline"> </a></h2>
+<dl class="docutils">
+<dt>Type:</dt>
+<dd>Novel: story telling with a fictional company and characters.</dd>
+<dt>Target group:</dt>
+<dd>Developers, operators, compliance folks, managers.</dd>
+<dt>Focus:</dt>
+<dd>End-to-end view of software development, delivery and operations.</dd>
+<dt>ISBN search:</dt>
+<dd><a class="reference external" href="https://isbnsearch.org/isbn/0988262509">https://isbnsearch.org/isbn/0988262509</a></dd>
+<dt>Preview:</dt>
+<dd><div class="first last"><iframe type="text/html"
+    width="336"
+    height="550"
+    frameborder="0"
+    allowfullscreen style="max-width:100%"
+    src="https://read.amazon.co.uk/kp/card?asin=B00AZRBLHO&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_Rt7YzbFJXBVP6" >
+</iframe></div></dd>
+</dl>
+</div>
+<div class="section" id="why-you-should-read-it">
+<h2><a class="toc-backref" href="#contents">Why you should read it</a><a class="headerlink" href="#why-you-should-read-it" title="Permalink to this headline"> </a></h2>
+<p>With <em>&#8220;you&#8221;</em>, I&#8217;m talking specifically to us IT people, working in companies
+&gt;500 people. It gets harder to relate if you&#8217;re working in a smaller company,
+I guess. If you&#8217;re in your last semesters of college and majoring in something
+IT related, read it as a preparation for the work life (that and all the
+<em>Dilbert</em> cartoons).</p>
+<p>The first time the book struck a nerve was when <em>Brent</em>, an IT engineer, was
+introduced. Brent is the go-to guy for anything non-trivial. Funnily enough,
+he&#8217;s also most of the time <strong>the only one who knows how it works</strong>. All the
+negative sides of this (and how to overcome them) are mentioned in the book.
+I&#8217;m sure you can name <em>your Brent</em> too.</p>
+<p>It also doesn&#8217;t stop with Brent. The book introduces different characters from
+different areas in the company. Marketing, developers, the compliance and audit
+folks, and of course the operators. You&#8217;re going to
+<strong>recognize many of those characters and their behaviors in your own company</strong>.</p>
+<p>Why is this useful for you, you ask? The authors <strong>weave in little learning
+lessons</strong> into the story, each time the protagonist and his team fail and
+recover. And the team faces obstacles over and over again. A short,
+non-exhaustive summary might be:</p>
+<ul class="simple">
+<li>developers: get a system wide view; coding is only a part of a bigger
+picture</li>
+<li>security folks: don&#8217;t follow the rules blindly, risk mitigation can
+have multiple forms</li>
+<li>managers: not only your team has to perform (help each other out)</li>
+<li>operators: reduce variance and manual effort</li>
+<li>marketing: you&#8217;re part of the overall flow</li>
+<li>everyone: consider other teams have valid concerns too</li>
+</ul>
+<p>And lastly, if you ever struggled to explain to your (non-IT) friends or
+family members <strong>how the IT life looks like</strong>, give them this book. They can
+ignore the learning aspect and enjoy the thrill of a bunch of IT people
+when a system goes down and the finger pointing starts.</p>
+<p>If you&#8217;re not convinced by now, the next section will contain very specific
+examples from the book, which might give you a better understanding where
+I come from.</p>
+</div>
+<div class="section" id="the-5-most-noteworthy-things">
+<h2><a class="toc-backref" href="#contents">The 5 most noteworthy things</a><a class="headerlink" href="#the-5-most-noteworthy-things" title="Permalink to this headline"> </a></h2>
+<p>I&#8217;ll start each point with a citation of the book and add my 2 cents
+right after it.</p>
+<div class="section" id="work-in-progress">
+<h3>1. Work In Progress<a class="headerlink" href="#work-in-progress" title="Permalink to this headline"> </a></h3>
+<blockquote>
+<div>WIP is one of the root causes for chronic due-date problems,
+quality issues, and expediters. [...] WIP is the silent killer.</div></blockquote>
+<p>The really great thing about this point is, you can fix that on your own
+without relying on somebody else. My very personal rule-of-thumb is, three
+items max at any given time. Your results may vary. Also, what size these
+items are is also a very personal thing. If they overlap, great,
+if they are 100% distinct, 3 contexts is the maximum my mind can handle.</p>
+<p>If you work in a company where the culture is very reporting focused,
+you might face a situation where having <em>a lot of things in progress</em>
+is considered to be good thing, while <em>finishing a few items</em> might be
+less recognized as an effort. Unfortunately, I don&#8217;t have a solution to
+that, as it also depends on your values and motivation.</p>
+</div>
+<div class="section" id="bottleneck">
+<h3>2. Bottleneck<a class="headerlink" href="#bottleneck" title="Permalink to this headline"> </a></h3>
+<blockquote>
+<div>[...] [releasing work] should be based on the tempo of how quickly the
+bottleneck resource can consume work.</div></blockquote>
+<p>That&#8217;s a thing I honestly have never seen in reality although it makes so
+much sense. I blame responsibilities/incentives which are based on single
+elements of a value chain only instead of the overall value chain. If you&#8217;ve
+ever heard sentences like the following, you may be in such a situation:</p>
+<ul class="simple">
+<li>Marketing: <em>&#8220;The developers didn&#8217;t deliver what we promised.&#8221;</em></li>
+<li>Devs: <em>&#8220;The test team didn&#8217;t find time to test our latest changes.&#8221;</em></li>
+<li>Test: <em>&#8220;The new SW dev bucket needs a completely different HW setup.&#8221;</em></li>
+<li>Ops: <em>&#8220;We can apply these changes earliest in 6 months.&#8221;</em></li>
+<li>Everyone: <em>&#8220;We could be faster if it weren&#8217;t for the others...&#8221;</em></li>
+</ul>
+</div>
+<div class="section" id="improvements">
+<h3>3. Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline"> </a></h3>
+<blockquote>
+<div>[...] any improvements made anywhere besides the bottleneck
+are an illusion.</div></blockquote>
+<p>Again a thought which makes a ton of sense. The value flow through the
+company is not like a garden hose where you put more pressure on it and
+then more comes out at the end. It&#8217;s more like a traffic jam. You can
+blast your radio, open a window, honk like crazy, but you won&#8217;t go faster
+until the bottleneck widens.</p>
+<p>Despite of the logic, I (and maybe you too) encountered surprising
+difficulties when it comes to open up known bottlenecks, not because of
+technological reasons but social reasons.</p>
+</div>
+<div class="section" id="operations">
+<h3>4. Operations<a class="headerlink" href="#operations" title="Permalink to this headline"> </a></h3>
+<blockquote>
+<div>It&#8217;s not the upfront capital that kills you, it&#8217;s the
+operations and maintenance on the back end.</div></blockquote>
+<p>Raise your hand if you ever were in a meeting were it got decided that a
+homegrown solution is the best way although you know N already existing
+solutions which fulfill the requirements but nobody listened to you.
+Now it&#8217;s one or two years later and the Behemoth of an &#8220;easy&#8221; solution
+is nearly unmaintainable and every requested change needs 1 PY to implement.</p>
+<p>If you&#8217;ve observed this, then the people who made the decisions may have
+put more value on the initial costs and less on the operations cost.
+It&#8217;s the same fallacy you make when you buy a car based on the buying price
+only and not count in the maintenance cost of the next N years when you
+drive it.</p>
+</div>
+<div class="section" id="flow">
+<h3>5. Flow<a class="headerlink" href="#flow" title="Permalink to this headline"> </a></h3>
+<blockquote>
+<div>[...] as important as throttling the release of work
+is managing the handoffs. [...] [the] goal is to maximize
+the flow.</div></blockquote>
+<p>Here&#8217;s a thought I can put a lot of blame on me. I&#8217;m a software developer,
+and until I&#8217;ve read this book, I&#8217;ve never spent a reasonable amount of
+thought on it how operators have to deal with my genius solutions.
+Deployment, operations, upgrades; these things were the
+<em>&#8220;issues of other people&#8221;</em> and therefor invisible to me. <code class="docutils literal"><span class="pre">¯\_(ツ)_/¯</span></code>
+I try to become better in this area.</p>
+<p>This also doesn&#8217;t stop at the handoffs between developers and operators.
+There are a lot of earlier stages were <em>work</em> gets released. Be it:</p>
+<ul class="simple">
+<li>a market analysis to justify development effort</li>
+<li>a requirements engineering document</li>
+<li>a feature specification</li>
+</ul>
+<p>Sloppy handoffs are an easy way to kill efficiency and throughput. Value
+is only generated as soon as the <em>user can consume</em> the effort we&#8217;ve
+spent for the solution.</p>
+<hr class="docutils" />
+<p>This book gave me a lot of insights and I enjoyed reading and learning from
+it.</p>
+</div>
+</div>
+</div>
+
+  <div class="section">
+  
+    
+
+
+<div class="section">
+  <span style="float: left;">
+  
+  Previous: 
+  <a href="../../../09/29/logrotate/">
+    
+    Basics about Logrotate
+  </a>
+  
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right;">
+  
+  Next: 
+  <a href="../../27/monitoring-prometheus/">
+    Monitoring with Prometheus
+    
+  </a>
+  </span>
+  
+</div>
+
+  
+  
+    <div class="section">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'mzio';
+        var disqus_identifier = '/posts/2017/10/13/book-phoenix-project/';
+        var disqus_title = 'Recommendation: The Phoenix Project';
+        var disqus_url = 'http://www.markusz.io/posts/2017/10/13/book-phoenix-project/';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  
+  </div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015-2018, Markus Zoeller.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

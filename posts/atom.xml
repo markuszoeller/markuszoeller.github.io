@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">Markus's Brain Swap Space</title>
+  <id>http://www.markusz.io/posts/atom.xml</id>
+  <updated>2018-02-16T00:00:00Z</updated>
+  <link href="http://www.markusz.io/" />
+  <link href="http://www.markusz.io/posts/atom.xml" rel="self" />
+  <generator uri="http://ablog.readthedocs.org" version="0.8.4">ABlog</generator>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">Elastic Stack (formerly ELK) - Logstash (Part 1)</title>
+    <id>http://www.markusz.io/posts/2018/02/16/elastic-stack-elk-logstash-part1/</id>
+    <updated>2018-02-16T00:00:00Z</updated>
+    <published>2018-02-16T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2018/02/16/elastic-stack-elk-logstash-part1/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;In this post I&amp;#8217;ll talk about the &lt;em&gt;Logstash&lt;/em&gt; service, which is part of the
+&lt;em&gt;Elastic Stack&lt;/em&gt;, formerly known as &lt;em&gt;ELK&lt;/em&gt; stack. The purpose of &lt;em&gt;Logstash&lt;/em&gt; is to
+ingest (logging) data, do some transformation or filtering on it,
+and output it into a data store like &lt;em&gt;Elasticsearch&lt;/em&gt;. For details about &lt;em&gt;Elasticsearch&lt;/em&gt;, you
+can get more information in my previous post
+&lt;a class=&quot;reference internal&quot; href=&quot;2018/01/05/elastic-stack-elk-elasticsearch/#elastic-stack-elk-elasticsearch&quot;&gt;&lt;span class=&quot;std std-ref&quot;&gt;Elastic Stack (formerly ELK) - Elasticsearch&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">Project documentation with reStructuredText and Sphinx</title>
+    <id>http://www.markusz.io/posts/2018/02/02/project-docs-rst-markup-sphinx/</id>
+    <updated>2018-02-02T00:00:00Z</updated>
+    <published>2018-02-02T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2018/02/02/project-docs-rst-markup-sphinx/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;When it comes to documenting your project, especially the non-code parts,
+you might face a plethora of opinions what the &amp;#8220;correct approach&amp;#8221; might be.
+Some love &lt;em&gt;Word&lt;/em&gt; documents, some favor &lt;em&gt;PowerPoint&lt;/em&gt; slides and some like
+documents written in a markup language. I&amp;#8217;m one of the latter. This post
+will show my favorite, &lt;em&gt;reStructuredText&lt;/em&gt; with &lt;em&gt;Sphinx&lt;/em&gt;. It will list the capabilities I
+usually need when documenting, and how to do it with the features of &lt;em&gt;Sphinx&lt;/em&gt;
+and &lt;em&gt;reStructuredText&lt;/em&gt;.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">Quick Tip: Ansible commands as non-root user with environment variables</title>
+    <id>http://www.markusz.io/posts/2018/01/19/ansible-env-var-non-root/</id>
+    <updated>2018-01-19T00:00:00Z</updated>
+    <published>2018-01-19T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2018/01/19/ansible-env-var-non-root/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;This is a short quick tip. When executing &lt;em&gt;Ansible&lt;/em&gt; playbooks, you might
+need to execute a task as another user than the one you established the
+connection with. This post shows an example how to do it and deal with
+the environment variables.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">Elastic Stack (formerly ELK) - Elasticsearch</title>
+    <id>http://www.markusz.io/posts/2018/01/05/elastic-stack-elk-elasticsearch/</id>
+    <updated>2018-01-05T00:00:00Z</updated>
+    <published>2018-01-05T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2018/01/05/elastic-stack-elk-elasticsearch/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;When something goes wrong in an environment, the people trying to fix it
+mostly start by looking at the log files persisted on the local filesystem
+of the server. This gets more cumbersome the more server and services
+participate. Highly distributed applications, developed and deployed as
+microservices in a cloud environment exacerbate this too. A centralized
+logging server helps to ease the pain. In this post I&amp;#8217;ll talk about the
+popular &lt;em&gt;Elasticsearch&lt;/em&gt; service, which is part of the &lt;em&gt;Elastic Stack&lt;/em&gt;, formerly known
+as &lt;em&gt;ELK&lt;/em&gt; stack.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">Release Notes with reno</title>
+    <id>http://www.markusz.io/posts/2017/12/22/release-notes-with-reno/</id>
+    <updated>2017-12-22T00:00:00Z</updated>
+    <published>2017-12-22T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2017/12/22/release-notes-with-reno/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;&lt;em&gt;&amp;#8220;What features merged since the last release?&amp;#8221;&lt;/em&gt; &amp;#8211;
+&lt;em&gt;&amp;#8220;Did we introduce something which might break a deployment?&amp;#8221;&lt;/em&gt; &amp;#8211;
+&lt;em&gt;&amp;#8220;Let me grep through the commit history to check what happened.&amp;#8221;&lt;/em&gt;
+Remember sentences like these when you&amp;#8217;re about to release? If you
+like this fire-fighting mode, ignore this post. If you want to have a
+more relaxed release, this post will show you how to use a tool called
+&lt;em&gt;reno&lt;/em&gt; to manage your release notes.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">Recommendation: The Five Dysfunctions of a Team</title>
+    <id>http://www.markusz.io/posts/2017/12/08/book-5-team-dysfunctions/</id>
+    <updated>2017-12-08T00:00:00Z</updated>
+    <published>2017-12-08T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2017/12/08/book-5-team-dysfunctions/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;Did you ever wonder why you&amp;#8217;re (again) in a meeting without a clear result?
+Do you feel like the topics got already discussed in a previous meeting?
+How often did your hear the sentence &lt;cite&gt;&amp;#8220;Someone should work on that.&amp;#8221;&lt;/cite&gt;?
+Let&amp;#8217;s be honest, our work family is sometimes a little dysfunctional.
+Join me in my personal reflection of the book
+&lt;cite&gt;The Five Dysfunctions of a Team: A Leadership Fable&lt;/cite&gt; from 2002 by
+&lt;em&gt;Patrick Lencioni&lt;/em&gt;, which helps to understand what&amp;#8217;s happening.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">Ansible Playbook Refactoring into Roles</title>
+    <id>http://www.markusz.io/posts/2017/11/24/ansible-playbook-roles/</id>
+    <updated>2017-11-24T00:00:00Z</updated>
+    <published>2017-11-24T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2017/11/24/ansible-playbook-roles/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;In a previous post (&lt;a class=&quot;reference internal&quot; href=&quot;2017/10/27/monitoring-prometheus/#monitoring-prometheus&quot;&gt;&lt;span class=&quot;std std-ref&quot;&gt;Monitoring with Prometheus&lt;/span&gt;&lt;/a&gt;), we created one playbook
+which contained all the logic. This post will show how to do a refactoring of
+a playbook into smaller, reusable &lt;em&gt;Ansible Roles&lt;/em&gt;. This allows us to hide
+complexity and to provide defined interfaces. It also increases the
+ability to work in parallel on different parts of your
+&lt;em&gt;Infrastructure as Code (IaC)&lt;/em&gt; project. I won&amp;#8217;t explore how you publish
+your roles to &lt;em&gt;Ansible Galaxy&lt;/em&gt; but merely show a basic recipe how you
+move &lt;em&gt;Playbook&lt;/em&gt; logic step by step into project specific roles.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">The 2017 Open Source Summit Europe in Praque</title>
+    <id>http://www.markusz.io/posts/2017/11/10/osse-prague-2017/</id>
+    <updated>2017-11-10T00:00:00Z</updated>
+    <published>2017-11-10T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2017/11/10/osse-prague-2017/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;This post is my recap of the &lt;em&gt;Open Source Summit Europe&lt;/em&gt; conference which
+took place in &lt;em&gt;Praque (Czech Republic)&lt;/em&gt; from October 23-26, 2017. I&amp;#8217;ll go
+briefly through the sessions I attended and the notes I took.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">Monitoring with Prometheus</title>
+    <id>http://www.markusz.io/posts/2017/10/27/monitoring-prometheus/</id>
+    <updated>2017-10-27T00:00:00Z</updated>
+    <published>2017-10-27T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2017/10/27/monitoring-prometheus/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;One of the common causes for service degradation or interruption is still
+the failure or exhaustion of your basic infrastructure resources.
+This post gives you an intro how you can monitor your basic resources
+with &lt;em&gt;Prometheus&lt;/em&gt;. It shows the setup with &lt;em&gt;Ansible&lt;/em&gt; and the data visualization
+with &lt;em&gt;Grafana&lt;/em&gt;. The post does &lt;strong&gt;not&lt;/strong&gt; show all the capabilities of &lt;em&gt;Prometheus&lt;/em&gt;.
+In fact, I&amp;#8217;m showing you only the simplest configuration. The benefit
+of this post is, that it takes you from start to finish and gives you
+a playground you can easily recreate when things go wrong, thanks to
+&lt;em&gt;Vagrant&lt;/em&gt; and &lt;em&gt;VirtualBox&lt;/em&gt;. Beware, as this is a non-trivial (non-hello-world)
+example, this post is really long.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">Recommendation: The Phoenix Project</title>
+    <id>http://www.markusz.io/posts/2017/10/13/book-phoenix-project/</id>
+    <updated>2017-10-13T00:00:00Z</updated>
+    <published>2017-10-13T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2017/10/13/book-phoenix-project/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;This is my take on the book
+&lt;cite&gt;The Phoenix Project: A  Novel about IT, DevOps, and Helping Your Business Win&lt;/cite&gt;
+from 2014 by &lt;em&gt;Gene Kim&lt;/em&gt;; &lt;em&gt;Kevin Behr&lt;/em&gt;; &lt;em&gt;George Spafford&lt;/em&gt;. It&amp;#8217;s more of a personal
+reflection why I like the book &amp;#8211; and why I think you should read it too &amp;#8211;
+and less of a review.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">Basics about Logrotate</title>
+    <id>http://www.markusz.io/posts/2017/09/29/logrotate/</id>
+    <updated>2017-09-29T00:00:00Z</updated>
+    <published>2017-09-29T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2017/09/29/logrotate/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;Ever lost a host because one of the services on that host used all
+available disk space with its logs? &lt;em&gt;logrotate&lt;/em&gt; is a common tool
+which truncates your logs to make sure this won&amp;#8217;t happen anymore.
+This post is a short &lt;em&gt;how-to&lt;/em&gt;.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">OpenStack Nova Scheduling based on CPU architecture</title>
+    <id>http://www.markusz.io/posts/2017/08/25/openstack-cpu-arch-scheduling/</id>
+    <updated>2017-08-25T00:00:00Z</updated>
+    <published>2017-08-25T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2017/08/25/openstack-cpu-arch-scheduling/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;If you have an OpenStack cloud with compute nodes with different CPU
+architectures, then this post will give you the needed information about
+how to tag your guest images, which enables the Nova scheduler to find
+a target with the correct CPU architecture.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">Setup Grafana + Graphite + Statsd</title>
+    <id>http://www.markusz.io/posts/2016/03/06/grafana-graphite-statsd/</id>
+    <updated>2016-03-06T00:00:00Z</updated>
+    <published>2016-03-06T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2016/03/06/grafana-graphite-statsd/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;If you ever played around with time series data and wanted to visualize them
+with graphs in a nice way you probably have heard about &lt;em&gt;Grafana&lt;/em&gt;. This
+post provides a step-by-step instruction on how to build a &lt;em&gt;Grafana&lt;/em&gt;-playground
+in about 15 minutes. The setup will be build of &lt;em&gt;statsd&lt;/em&gt; to collect metrics,
+&lt;em&gt;graphite&lt;/em&gt; to store those metrics, and &lt;em&gt;Grafana&lt;/em&gt; to visualize those metrics.
+We will also create and push custom metrics and create templated graphs based
+on them. This post won&amp;#8217;t provide any in-depth details about &lt;em&gt;statsd&lt;/em&gt;,
+&lt;em&gt;graphite&lt;/em&gt; and &lt;em&gt;Grafana&lt;/em&gt; itself.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">OpenStack's Bug Management</title>
+    <id>http://www.markusz.io/posts/2015/12/01/openstack-bugs/</id>
+    <updated>2015-12-01T00:00:00Z</updated>
+    <published>2015-12-01T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2015/12/01/openstack-bugs/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;This post intends to give you enough background to play an active part in
+working with bugs in &lt;em&gt;OpenStack&lt;/em&gt;. This includes an understanding of the
+basic life cycle a bug goes through and in which state you can contribute
+in which way. It also clarifies some possible misunderstandings and gives a
+few best practices. In general, the bugs of a project (like &lt;em&gt;Nova&lt;/em&gt;, &lt;em&gt;Cinder&lt;/em&gt;,
+&lt;em&gt;Neutron&lt;/em&gt; and others) can be found in our issue tracker &lt;em&gt;Launchpad&lt;/em&gt;. The
+lists of bugs are available at &lt;code class=&quot;docutils literal&quot;&gt;&lt;span class=&quot;pre&quot;&gt;https://bugs.launchpad.net/&amp;lt;projectname&amp;gt;&lt;/span&gt;&lt;/code&gt; for
+example &lt;code class=&quot;docutils literal&quot;&gt;&lt;span class=&quot;pre&quot;&gt;https://bugs.launchpad.net/nova&lt;/span&gt;&lt;/code&gt; for the &lt;em&gt;Nova&lt;/em&gt; project.&lt;/p&gt;
+</content>
+  </entry>
+</feed>
