@@ -1,8 +1,6 @@
 
 
-.. Mar 02, 2018
-
-.. post::
+.. post:: Mar 02, 2018
    :tags: logging, elasticstack
    :category: monitoring
    :title: Elastic Stack (formerly ELK) - Logstash (Part 2)
@@ -15,6 +13,7 @@
 .. |ls| replace:: *Logstash*
 .. |fb| replace:: *Filebeat*
 .. |ki| replace:: *Kibana*
+.. |lsconf| replace:: ``/etc/logstash/conf.d/example-app.conf``
 
 
 ==================================================
@@ -184,16 +183,17 @@ So far, we've used fairly useless data for the log entries. The next
 section will use more realistic one.
 
 
-A more realistic logging data
-=============================
+Use a more realistic logging data
+=================================
 
 Writing the current timestamp into a file was just a vehicle to
 have unique log entries, which makes it easier to follow.
-Let's create more realistic logging data. This will show us a nice
-problem we will solve in the sections after this one.
+Let's create more realistic logging data. This will show us nice
+problems we will solve in the sections after this one.
 
-Create a *Python* script ``example.py`` on server ``ls1`` which logs
-into a file:
+After logging into the virtual machine ``ls1`` with ``vagrant ssh ls1``,
+create a *Python* script ``example.py`` on server ``ls1`` which logs into
+a file:
 
 .. literalinclude:: example-app/example.py
    :language: python
@@ -204,27 +204,41 @@ The highlighted line is the important one. This line ensures that our
 log record data [#pylogrecord]_ will be stored in a file, which will
 be the the data source for |ls|.
 
-Create a new pipeline file in ``/etc/logstash/conf.d/es-app3.conf``:
 
-.. code-block:: json
+
+Make sure the example app can be executed:
+
+.. code-block:: bash
    :linenos:
-   :emphasize-lines: 4
+   :emphasize-lines: 0
 
-   input {
-     file {
-       id => "my-app3-id-in"
-       path => "/var/log/app3/source.log"
-     }
-   }
+   $ chmod +x /opt/example-app/example.py
+   $ mkdir -p /var/log/example-app
 
-   output {
-     elasticsearch {
-       id => "my-app3-id-out"
-       hosts => ["http://es1:9200"]
-       index => "app3"
-     }
-   }
 
+Create a new pipeline file in |lsconf|:
+
+.. literalinclude:: step3-exampleapp.conf
+   :language: text
+   :linenos:
+   :emphasize-lines: 5-6
+
+.. warning::
+
+   The highlighted lines here tell |ls| to forget where its last scanning
+   position was for this file. This means every restart of the |ls| service
+   triggers a scan of the whole file. While this allows me to use the same
+   logging data throughout this post, which makes following the examples
+   easier, it is most likely NOT what you want to have in a production
+   environment with tons of logging data.
+
+Restart the |ls| service to read the new config:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ systemctl restart logstash.service
 
 Execute the example app:
 
@@ -232,66 +246,39 @@ Execute the example app:
    :linenos:
    :emphasize-lines: 0
 
-   $ vagrant ssh ls1
-   $ cd /opt/app3
-   $ chmod +x example.py
-   $ ./example.py
+   $ /opt/example-app/example.py
 
-This creates these entries in ``/var/log/app3/source.log``:
 
-.. code-block:: text
+This creates these entries in ``/var/log/example-app/example.log``:
+
+.. literalinclude:: example.log
+   :language: text
    :linenos:
    :emphasize-lines: 0
 
-   2018-02-20 20:40:25,121 | INFO | 2654 | 140522357225216 | example | main | 18 | Started the application.
-   2018-02-20 20:40:25,121 | DEBUG | 2654 | 140522357225216 | example | do_something | 14 | I did something!
 
-
-Query |es| for the documents for the index ``app3``:
+Query |es| for the documents for the index ``example``:
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   $ curl -s es1:9200/app3/_search? | jq
+   $ curl -s es1:9200/example/_search? | jq
 
 
-The response we get looks like below. I trimmed it down by using ``[...]``
-where I removed portions:
+The response looks like this:
 
-.. code-block:: json
+.. literalinclude:: step3-response.json
+   :language: json
+   :lines: 1,13-40,42
    :linenos:
-   :emphasize-lines: 11,21
+   :emphasize-lines: 10,23
 
-   {
-     [...],
-     "hits": {
-       "total": 2,
-       "max_score": 1,
-       "hits": [
-         {
-           [...],
-           "_source": {
-             "@version": "1",
-             "message": "2018-02-20 20:40:25,121 | DEBUG | 2654 | 140522357225216 | example | do_something | 14 | I did something!",
-             "@timestamp": "2018-02-20T20:40:36.961Z",
-             "path": "/var/log/app3/source.log",
-             "host": "ls1"
-           }
-         },
-         {
-           [...],
-           "_source": {
-             "@version": "1",
-             "message": "2018-02-20 20:40:25,121 | INFO | 2654 | 140522357225216 | example | main | 18 | Started the application.",
-             "@timestamp": "2018-02-20T20:40:36.960Z",
-             "path": "/var/log/app3/source.log",
-             "host": "ls1"
-           }
-         },
-       ]
-     }
-   }
+
+.. note::
+
+   I trimmed down the JSON responses in this post, to keep
+   the focus on the important parts.
 
 Given the knowledge from before, this is the expected outcome.
 
@@ -308,7 +295,7 @@ bring good results at first:
    :linenos:
    :emphasize-lines: 5
 
-   $ curl -s 'es1:9200/app3/_search' -H 'Content-Type: application/json' -d'
+   $ curl -s 'es1:9200/example/_search' -H 'Content-Type: application/json' -d'
    {
        "query": {
            "match" : {
@@ -321,29 +308,12 @@ bring good results at first:
 
 The response we get:
 
-.. code-block:: json
+.. literalinclude:: step3-response-match.json
+   :language: json
    :linenos:
-   :emphasize-lines: 11
+   :lines: 1,10-27,29
+   :emphasize-lines: 3,13
 
-   {
-     [...]
-     "hits": {
-       "total": 1,
-       "max_score": 0.2876821,
-       "hits": [
-         {
-           [...]
-           "_source": {
-             "@version": "1",
-             "message": "2018-02-20 20:40:25,121 | DEBUG | 2654 | 140522357225216 | example | do_something | 14 | I did something!",
-             "@timestamp": "2018-02-20T20:40:36.961Z",
-             "path": "/var/log/app3/source.log",
-             "host": "ls1"
-           }
-         }
-       ]
-     }
-   }
 
 The query we provided to |es| matched one of our logging entries.
 
@@ -359,47 +329,72 @@ The ``dissect`` filter plugin [#lsdissect]_ allows to transform your
 log entries based on delimiters. It's a good fit for the classical log files
 like the one from before.
 
+Change the file |lsconf| to look like this:
 
-.. literalinclude:: env/app4-dissect.conf
+.. literalinclude:: step4-dissect.conf
    :language: text
    :linenos:
-   :emphasize-lines: 0
+   :emphasize-lines: 10-16
 
+The highlighted lines are the ones which got added. No changes were
+made to the other lines of the previous configuration.
 
-Execute the example application again:
+The ``dissect`` filter is based on delimiter but much smarter than
+your typical ``split(' ')`` method. The lines we added here in
+basically takes ``message`` as input and splits it up into parts.
+Everything before ``%{`` and after ``}`` gets treated as a delimiter.
+In this case here, it's only a blank. Everything between ``%{`` and ``}``
+is a named field. The usage of ``+`` appends the value of this field
+to the field of the same name, which was declared before. We used it
+here for the timestamp, ``%{time} %{+time}``. It will become more clear
+when we see the result of this filter.
+
+Delete the ``example`` index [#esdelidx]_ in |es| and restart
+the |ls| service:
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   $ ./example.py
+   $ curl -X DELETE es1:9200/example/
+   $ systemctl restart logstash.service
 
 
-Query |es| with the new index ``app4``:
+.. note::
+
+   It takes a few seconds until |ls| is up an running again and realizes
+   that there are logs to deal with.
+
+Query |es| with the index ``example``:
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 0
 
-   $ curl -s es1:9200/app4/_search? | jq
+   $ curl -s es1:9200/example/_search? | jq
 
 
-Get the JSON response:
+The JSON response we get:
 
-.. literalinclude:: app4-dissect-response.json
+.. literalinclude:: step4-response.json
    :language: json
    :linenos:
-   :emphasize-lines: 0
+   :lines: 1,13-56,58
+   :emphasize-lines: 11,32
 
 
 This shows that our log entries in the log file got properly split up
-into fields. We should now be able to query |es| for those fields:
+into fields. Please note that the ``time`` field contains the full timestamp,
+although there is a blank between date and time in the log file. This
+was possible by the *"append"* syntax ``%{time} %{+time}``.
+
+We should now be able to query |es| for those fields:
 
 .. code-block:: bash
    :linenos:
    :emphasize-lines: 5
 
-   $ curl -s 'es1:9200/app4/_search' -H 'Content-Type: application/json' -d'
+   $ curl -s 'es1:9200/example/_search' -H 'Content-Type: application/json' -d'
    {
        "query": {
            "match" : {
@@ -412,46 +407,14 @@ into fields. We should now be able to query |es| for those fields:
 
 The response we get:
 
-.. code-block:: json
+.. literalinclude:: step4-response-match.json
+   :language: json
    :linenos:
-   :emphasize-lines: 0
+   :lines: 1,10-
+   :emphasize-lines: 3,13
 
-   {
-     "...": "...",
-     "hits": {
-       "total": 1,
-       "max_score": 0.2876821,
-       "hits": [
-         {
-           "_index": "app4",
-           "_type": "doc",
-           "_id": "R2jVzWEBRYCDJjrEtlgN",
-           "_score": 0.2876821,
-           "_source": {
-             "message": "2018-02-25 16:39:49,923 | DEBUG | 4845 | 140289154119424 | example | do_something | 14 | I did something!",
-             "host": "ls1",
-             "time": "2018-02-25 16:39:49,923",
-             "loggername": "example",
-             "function": "do_something",
-             "@timestamp": "2018-02-25T16:39:50.125Z",
-             "msg": "I did something!",
-             "path": "/var/log/app3/source.log",
-             "line": "14",
-             "thread": "140289154119424",
-             "@version": "1",
-             "level": "DEBUG",
-             "pid": "4845"
-           }
-         }
-       ]
-     }
-   }
-
-
-.. tip::
-
-   In case your |es| index got messy during the experiments,
-   you can delete it with ``curl -X DELETE es1:9200/app4/``.
+|es| did correctly find only 1 match for log entries where the ``level``
+field has the value ``DEBUG``.
 
 
 Three things aren't pretty yet:
@@ -466,53 +429,45 @@ Three things aren't pretty yet:
 The next sections will show ways to do that.
 
 
-Remove fields
-=============
+Remove unnecessary fields
+=========================
 
 The ``message`` field from above contains the full log entry, but
 we don't need that anymore, as we have split that into its fields.
 One way to remove that extraneous field, is the ``remove_field`` filter
-option:
+option.
 
-.. literalinclude:: env/step5-dissect-remove-field.conf
+Change the file |lsconf| to look like this:
+
+.. literalinclude:: step5-dissect-remove-field.conf
    :language: text
    :linenos:
-   :emphasize-lines: 13
+   :emphasize-lines: 15
+
+The highlighted line is the one which got added. Like before:
+
+#. delete the index in |es|
+#. restart |ls|
+#. query |es|
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ curl -X DELETE es1:9200/example/
+   $ systemctl restart logstash.service
+   $ curl -s es1:9200/example/_search? | jq
 
 
 The response looks now like this:
 
-.. code-block:: json
+.. literalinclude:: step5-response.json
+   :language: json
    :linenos:
+   :lines: 1,13-54,56
    :emphasize-lines: 0
 
-   {
-     "...": "...",
-     "hits": {
-       "total": 1,
-       "max_score": 0.2876821,
-       "hits": [
-         {
-           "...": "...",
-           "_source": {
-             "host": "ls1",
-             "time": "2018-02-25 16:39:49,923",
-             "loggername": "example",
-             "function": "do_something",
-             "@timestamp": "2018-02-25T16:39:50.125Z",
-             "msg": "I did something!",
-             "path": "/var/log/app3/source.log",
-             "line": "14",
-             "thread": "140289154119424",
-             "@version": "1",
-             "level": "DEBUG",
-             "pid": "4845"
-           }
-         }
-       ]
-     }
-   }
-
+The unnecessary ``message`` field is gone.
 It looks much cleaner now. A few more things until we're happy.
 
 
@@ -522,10 +477,10 @@ Set the timestamp field
 The ``date`` filter plugin [#lsdate]_ is capable of using our ``time`` field
 and use it as input for the ``@timestamp`` field:
 
-.. literalinclude:: env/step6-timestamp.conf
+.. literalinclude:: step6-timestamp.conf
    :language: text
    :linenos:
-   :emphasize-lines: 15-18
+   :emphasize-lines: 17-20
 
 The ``time`` field served its purpose, so we remove it like shown in the
 previous section. This example also shows nicely, that multiple filters
@@ -537,46 +492,32 @@ like the *Unix* time in seconds or milliseconds since epoch. Any other
 format is also valid, e.g. ``"MMM dd yyyy HH:mm:ss"``. See the docs
 at [#lsdate]_ for more details.
 
-We execute our example application like before and get this response:
+After changing the file |lsconf| to make it look like the setting
+above, we repeat the steps:
 
-.. code-block:: json
+#. delete the index in |es|
+#. restart |ls|
+#. query |es|
+
+.. code-block:: bash
    :linenos:
-   :emphasize-lines: 22
+   :emphasize-lines: 0
 
-   {
-     "...": "...",
-     "hits": {
-       "total": 2,
-       "max_score": 1,
-       "hits": [
-         {
-           "...": "..."
-         },
-         {
-           "_index": "app6",
-           "_type": "doc",
-           "_id": "hWgmzmEBRYCDJjrEYlhQ",
-           "_score": 1,
-           "_source": {
-             "line": "18",
-             "loggername": "example",
-             "msg": "Started the application.",
-             "function": "main",
-             "path": "/var/log/app3/source.log",
-             "thread": "140044078098176",
-             "@timestamp": "2018-02-25T18:07:57.051Z",
-             "@version": "1",
-             "level": "INFO",
-             "pid": "5923",
-             "host": "ls1"
-           }
-         }
-       ]
-     }
-   }
+   $ curl -X DELETE es1:9200/example/
+   $ systemctl restart logstash.service
+   $ curl -s es1:9200/example/_search? | jq
+
+
+.. literalinclude:: step6-response.json
+   :language: json
+   :linenos:
+   :lines: 1,13-52,54
+   :emphasize-lines: 0
+
 
 The ``time`` field is gone and the ``@timestamp`` field uses the date and
 time specified in the original log file.
+
 
 
 Specify data type conversion
@@ -586,48 +527,30 @@ The ``dissect`` filter provides the option ``convert_datatype``
 which can do a conversion to integer of float numbers. We only need
 conversions to ``int`` here:
 
-.. literalinclude:: env/step7-convert-datatype.conf
+.. literalinclude:: step7-convert-datatype.conf
    :language: text
    :linenos:
-   :emphasize-lines: 14-18
+   :emphasize-lines: 16-20
+
+After changing that in |lsconf|, same story like before:
+
+.. code-block:: bash
+   :linenos:
+   :emphasize-lines: 0
+
+   $ curl -X DELETE es1:9200/example/
+   $ systemctl restart logstash.service
+   $ curl -s es1:9200/example/_search? | jq
 
 The JSON request contains numbers now:
 
-.. code-block:: json
-   :linenos:
-   :emphasize-lines: 17,22,26
 
-   {
-     "...": "...",
-     "hits": {
-       "total": 2,
-       "max_score": 1,
-       "hits": [
-         {
-           "...": "..."
-         },
-         {
-           "_index": "app7",
-           "_type": "doc",
-           "_id": "hmg7zmEBRYCDJjrEIFgb",
-           "_score": 1,
-           "_source": {
-             "path": "/var/log/app3/source.log",
-             "line": 18,
-             "@version": "1",
-             "@timestamp": "2018-02-25T18:30:31.645Z",
-             "level": "INFO",
-             "host": "ls1",
-             "pid": 6195,
-             "loggername": "example",
-             "msg": "Started the application.",
-             "function": "main",
-             "thread": 140172021761792
-           }
-         }
-       ]
-     }
-   }
+.. literalinclude:: step7-response.json
+   :language: json
+   :linenos:
+   :lines: 1,13-52,54
+   :emphasize-lines: 13,14,17
+
 
 
 This can be useful when you search for a
@@ -637,7 +560,7 @@ This can be useful when you search for a
    :linenos:
    :emphasize-lines: 5-7
 
-   $ curl -s 'es1:9200/app7/_search' -H 'Content-Type: application/json' -d'
+   $ curl -s 'es1:9200/example/_search' -H 'Content-Type: application/json' -d'
    {
        "query": {
            "range" : {
@@ -652,64 +575,63 @@ This can be useful when you search for a
 
 The response:
 
-.. code-block:: json
+.. literalinclude:: step7-response-match.json
+   :language: json
    :linenos:
-   :emphasize-lines: 14
-
-   {
-     "...": "...",
-     "hits": {
-       "total": 1,
-       "max_score": 1,
-       "hits": [
-         {
-           "_index": "app7",
-           "_type": "doc",
-           "_id": "h2g7zmEBRYCDJjrEIFg4",
-           "_score": 1,
-           "_source": {
-             "path": "/var/log/app3/source.log",
-             "line": 14,
-             "@version": "1",
-             "@timestamp": "2018-02-25T18:30:31.645Z",
-             "level": "DEBUG",
-             "host": "ls1",
-             "pid": 6195,
-             "loggername": "example",
-             "msg": "I did something!",
-             "function": "do_something",
-             "thread": 140172021761792
-           }
-         }
-       ]
-     }
-   }
+   :lines: 1,10-
+   :emphasize-lines: 3,17
 
 
 This example isn't that impressive, admittedly, but I'm sure you get
-the idea ``:-)``.
+the principle and have an idea where this might come in handy with
+your log files.
 
 
 
-Store syslog too
-================
+Summary & Outlook
+=================
 
-.. todo:: syslog pattern
+This post showed how a log file with realistic data can be split into
+its parts by the ``dissect`` input plugin, and brought into the
+|es| service for later queries.
 
+While writing this post, a few questions came up in my mind and maybe
+you ask them yourself too:
 
-Summary
-=======
+#. What if ``dissect`` is not powerful enough for my logs?
 
-Do I need to install a |ls| server on every application server to gather
-my logs?
-Nope, |fb| to the rescue. That's an insight I got while writing
-this post. So I'll take a quick look at |fb| next, before finishing
-this series with |ki|.
+   There is a more powerful filter, named ``grok``, which is based
+   on regular expressions [#grok]_. I don't have plans to dive into
+   that filter at the moment.
 
-A more powerful filter plugin is ``grok``.
+#. Do I need to install a |ls| server on every application server to
+   gather my logs?
 
-This is a contract now, how about a log file which evolves? Maybe use
-JSON newline delimited logs?
+   Nope, |fb| to the rescue [#filebeat]_. That's an insight I got while
+   writing this post. I will probably look into that at a later point in
+   time, after I talked about |ki|.
+
+#. How do I get my *syslog*, to have a a more complete picture?
+
+   There is a syslog input plugin [#syslog]_, but I couldn't get it to work
+   yet, although the intro looks easy. I tried different things but have
+   to table that to a follow-up post in the future.
+
+#. Doesn't using the ``dissect`` filter create a contract on the structure
+   of my log file?
+
+   Yeah, I think so. Adding another field to the logger of your application
+   will most likely break the defined mapping. The structure of log files
+   doesn't change that often, I guess. I was still wondering if it may
+   be reasonable to create log files with *JSON Lines* [#jsonline]_.
+   This would imply that a log file is NOT supposed anymore to get read
+   directly by humans, but to get used as input for a log file processing
+   engine like |ls|. Not sure if this change would be welcomed by every one.
+   Maybe I'll give it a try in a follow-up post.
+
+We have enough in place to put a nice GUI on top of it. In *ELK*, this
+is |ki|. The next post in this series will show this.
+
 
 
 References
@@ -723,6 +645,14 @@ References
 
 .. [#esdelidx] https://www.elastic.co/guide/en/elasticsearch/reference/6.2/indices-delete-index.html
 
-.. [#lsdate] https://www.elastic.co/guide/en/logstash/current/plugins-filters-date.html
+.. [#lsdate] https://www.elastic.co/guide/en/logstash/6.2/plugins-filters-date.html
 
-.. [#esrange] https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-range-query.html
+.. [#esrange] https://www.elastic.co/guide/en/elasticsearch/reference/6.2/query-dsl-range-query.html
+
+.. [#grok] https://www.elastic.co/guide/en/logstash/6.2/plugins-filters-grok.html
+
+.. [#filebeat] https://www.elastic.co/products/beats/filebeat
+
+.. [#syslog] https://www.elastic.co/guide/en/logstash/6.2/plugins-inputs-syslog.html
+
+.. [#jsonline] http://jsonlines.org/
