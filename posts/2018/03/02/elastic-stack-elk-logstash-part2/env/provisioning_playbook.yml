@@ -31,6 +31,11 @@
       ping:
       with_items: '{{ groups["all"] }}'
 
+    - name: "Ensure system package cache is updated."
+      apt:
+        update_cache: "yes"
+        cache_valid_time: 3600
+
     - name: "The jq CLI should be there."
       apt:
         name: jq
@@ -54,11 +59,6 @@
       apt:
         deb: https://artifacts.elastic.co/downloads/logstash/logstash-6.2.1.deb
         state: present
-
-    - name: "The simple pipeline should be configured."
-      copy:
-        src: logstash-simple.conf
-        dest: /etc/logstash/conf.d/
 
     - name: "Logstash should bind to the public IP."
       lineinfile:
@@ -95,11 +95,6 @@
         dest: /etc/fstab
         regexp: "swap"
         state: absent
-
-    - name: "Ensure system package cache is updated."
-      apt:
-        update_cache: "yes"
-        cache_valid_time: 3600
 
     - name: "Create a group for Elasticsearch."
       group:
@@ -228,4 +223,4 @@
     - name: "The example app should be on the target."
       copy:
         src: ../example-app/example.py
-        dest: /opt/app3/
+        dest: /opt/example-app/

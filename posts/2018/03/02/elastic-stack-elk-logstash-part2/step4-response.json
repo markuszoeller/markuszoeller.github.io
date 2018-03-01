@@ -1,0 +1,58 @@
+{
+  "took": 2,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 2,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "example",
+        "_type": "doc",
+        "_id": "rV0U42EBmk4Q3X4_A09R",
+        "_score": 1,
+        "_source": {
+          "@version": "1",
+          "level": "INFO",
+          "time": "2018-03-01 19:20:56,709",
+          "pid": "8777",
+          "message": "2018-03-01 19:20:56,709 INFO 8777 140603093944064 example main 18 Started the application.",
+          "host": "ls1",
+          "path": "/var/log/example-app/example.log",
+          "loggername": "example",
+          "line": "18",
+          "thread": "140603093944064",
+          "msg": "Started the application.",
+          "function": "main",
+          "@timestamp": "2018-03-01T19:39:54.710Z"
+        }
+      },
+      {
+        "_index": "example",
+        "_type": "doc",
+        "_id": "rl0U42EBmk4Q3X4_A09R",
+        "_score": 1,
+        "_source": {
+          "@version": "1",
+          "level": "DEBUG",
+          "time": "2018-03-01 19:20:56,709",
+          "pid": "8777",
+          "message": "2018-03-01 19:20:56,709 DEBUG 8777 140603093944064 example do_something 14 I did something!",
+          "host": "ls1",
+          "path": "/var/log/example-app/example.log",
+          "loggername": "example",
+          "line": "14",
+          "thread": "140603093944064",
+          "msg": "I did something!",
+          "function": "do_something",
+          "@timestamp": "2018-03-01T19:39:54.711Z"
+        }
+      }
+    ]
+  }
+}

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import logging
-logging.basicConfig(format='%(asctime)s | %(levelname)s | '
-                           '%(process)d | %(thread)d | '
-                           '%(name)s | %(funcName)s | %(lineno)s | '
+logging.basicConfig(format='%(asctime)s %(levelname)s '
+                           '%(process)d %(thread)d '
+                           '%(name)s %(funcName)s %(lineno)s '
                            '%(message)s',
                     level=logging.DEBUG,
-                    filename="/var/log/app3/source.log")
+                    filename="/var/log/example-app/example.log")
 logger = logging.getLogger('example')
 
 

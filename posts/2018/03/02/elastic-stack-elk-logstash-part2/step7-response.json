@@ -1,0 +1,54 @@
+{
+  "took": 1,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 2,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "example",
+        "_type": "doc",
+        "_id": "tF0u42EBmk4Q3X4_6k-i",
+        "_score": 1,
+        "_source": {
+          "msg": "I did something!",
+          "level": "DEBUG",
+          "loggername": "example",
+          "@timestamp": "2018-03-01T19:20:56.709Z",
+          "thread": 140603093944064,
+          "line": 14,
+          "function": "do_something",
+          "host": "ls1",
+          "pid": 8777,
+          "@version": "1",
+          "path": "/var/log/example-app/example.log"
+        }
+      },
+      {
+        "_index": "example",
+        "_type": "doc",
+        "_id": "s10u42EBmk4Q3X4_6k-i",
+        "_score": 1,
+        "_source": {
+          "msg": "Started the application.",
+          "level": "INFO",
+          "loggername": "example",
+          "@timestamp": "2018-03-01T19:20:56.709Z",
+          "thread": 140603093944064,
+          "line": 18,
+          "function": "main",
+          "host": "ls1",
+          "pid": 8777,
+          "@version": "1",
+          "path": "/var/log/example-app/example.log"
+        }
+      }
+    ]
+  }
+}
