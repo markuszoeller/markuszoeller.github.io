@@ -19,6 +19,8 @@ Recent posts
    :date: %b %d, %Y
    :list-style: none
 
+Older posts can be found in the `archive <posts/archive>`_.
+
 .. toctree::
    :hidden:
 
