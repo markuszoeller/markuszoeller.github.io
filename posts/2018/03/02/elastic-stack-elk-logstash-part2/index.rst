@@ -611,7 +611,7 @@ you ask them yourself too:
    writing this post. I will probably look into that at a later point in
    time, after I talked about |ki|.
 
-#. How do I get my *syslog*, to have a a more complete picture?
+#. How do I get my *syslog*, to get the bigger picture?
 
    There is a syslog input plugin [#syslog]_, but I couldn't get it to work
    yet, although the intro looks easy. I tried different things but have
