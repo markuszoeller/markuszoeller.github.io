@@ -380,11 +380,11 @@ configured pipelines are recognized and how many events they processed.</p>
 <p>For this, <em>Logstash</em> needs to bind to an IP address you can reach from outside
 the server. In my virtual environment, I have this setting
 in the file <code class="docutils literal"><span class="pre">/etc/logstash/logstash.yml</span></code>:</p>
-<div class="highlight-yml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span># ------------ Metrics Settings --------------
-# Bind address for the metrics REST endpoint
-http.host: &quot;192.168.73.12&quot;
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># ------------ Metrics Settings --------------</span>
+<span class="c1"># Bind address for the metrics REST endpoint</span>
+<span class="l l-Scalar l-Scalar-Plain">http.host</span><span class="p p-Indicator">:</span> <span class="s">&quot;192.168.73.12&quot;</span>
 </pre></div>
 </td></tr></table></div>
 <p>To make the following queries a bit easier to read, export the URI of

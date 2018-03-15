@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>HTML5 slides with Reveal.js, Markdown and Docker &#8212; Markus Zoeller Blog</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/asciinema-player.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/asciinema-player.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="../../../../../about/" />
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" />
+  
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../../../../posts/atom.xml" title="Markus's Brain Swap Space">
+  
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../../../">
+          MZIO</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../../../about/">About</a></li>
+                <li><a href="../../../../category/">Categories</a></li>
+                <li><a href="../../../../tag/">Tags</a></li>
+                <li><a href="../../../../archive/">Archive</a></li>
+                <li><a href="/posts/atom.xml"><i class='fa fa-rss-square' aria-hidden='true'></i></a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../../../">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../../../search/" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="html5-slides-with-reveal-js-markdown-and-docker">
+<h1>HTML5 slides with <em>Reveal.js</em>, <em>Markdown</em> and <em>Docker</em><a class="headerlink" href="#html5-slides-with-reveal-js-markdown-and-docker" title="Permalink to this headline"> </a></h1>
+<p>Presentation slides. They can be a great tool for communicating ideas
+to others. I was looking for a way to create slide decks where I can
+specify the content as plain text and have it separate to the rendering.
+I&#8217;m sure this is somehow possible with <em>PowerPoint</em> or <em>OpenOffice</em>,
+but I didn&#8217;t bother to look for it. This post shows how I specify the
+content in a <em>Markdown</em> file and let it render by <em>Reveal.js</em> which
+I packed into a <em>Docker</em> image.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#encapsulate-reveal-js-with-docker" id="id5">Encapsulate <em>Reveal.js</em> with <em>Docker</em></a></li>
+<li><a class="reference internal" href="#the-slide-deck-main-page" id="id6">The slide deck main page</a></li>
+<li><a class="reference internal" href="#specify-the-content-in-markdown" id="id7">Specify the content in <em>Markdown</em></a></li>
+<li><a class="reference internal" href="#build-the-docker-image" id="id8">Build the <em>Docker</em> image</a></li>
+<li><a class="reference internal" href="#run-the-container-with-a-bind-mount" id="id9">Run the container with a bind mount</a></li>
+<li><a class="reference internal" href="#clean-up-the-container" id="id10">Clean up the container</a></li>
+<li><a class="reference internal" href="#re-use-the-container-for-different-presentations" id="id11">Re-use the container for different presentations</a></li>
+<li><a class="reference internal" href="#conclusion-outlook" id="id12">Conclusion &amp; Outlook</a></li>
+<li><a class="reference internal" href="#references" id="id13">References</a></li>
+</ul>
+</div>
+<table border="1" class="docutils" id="id4">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id4" title="Permalink to this table"> </a></caption>
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Date</th>
+<th class="head">Change description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>2018-03-16</td>
+<td>The first release</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="encapsulate-reveal-js-with-docker">
+<h2><a class="toc-backref" href="#contents">Encapsulate <em>Reveal.js</em> with <em>Docker</em></a><a class="headerlink" href="#encapsulate-reveal-js-with-docker" title="Permalink to this headline"> </a></h2>
+<p><em>Reveal.js</em> is capable of using <em>Markdown</em> files <a class="footnote-reference" href="#revmd" id="id1">[1]</a> and render them as HTML5
+slides. The downside of <em>Reveal.js</em> is, that it needs a lot of things installed
+to work and I didn&#8217;t want to have that on my laptop simply to show
+fancy slides. So I decided to encapsulate it with <em>Docker</em>.</p>
+<p>Create a file named <code class="docutils literal"><span class="pre">Dockerfile</span></code> to specify the image&#8217;s content:</p>
+<div class="highlight-docker"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">FROM</span><span class="s"> ubuntu:16.04</span>
+
+<span class="k">RUN</span> apt-get update <span class="o">&amp;&amp;</span> apt-get install -y <span class="se">\</span>
+  git <span class="se">\</span>
+  nodejs <span class="se">\</span>
+  nodejs-legacy <span class="se">\</span>
+  npm <span class="se">\</span>
+<span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/*
+
+<span class="k">RUN</span> git clone https://github.com/hakimel/reveal.js.git
+
+<span class="k">RUN</span> <span class="nb">cd</span> reveal.js/ <span class="o">&amp;&amp;</span> npm install
+
+<span class="k">ADD</span><span class="s"> ./index.html /reveal.js/index.html</span>
+
+<span class="k">EXPOSE</span><span class="s"> 8000</span>
+
+<span class="k">ENTRYPOINT</span><span class="s"> [&quot;npm&quot;, &quot;start&quot;, &quot;--prefix&quot;, &quot;/reveal.js/&quot;]</span>
+</pre></div>
+</td></tr></table></div>
+<p><code class="docutils literal"><span class="pre">nodejs</span></code> <em>Reveal.js</em> is a <em>node.js</em> application, that&#8217;s why we need it.
+If you don&#8217;t install <code class="docutils literal"><span class="pre">nodejs-legacy</span></code>, you&#8217;ll see this error message:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>...<span class="o">]</span>
+sh: <span class="m">1</span>: node: not found
+<span class="o">[</span>...<span class="o">]</span>
+npm ERR! Linux <span class="m">3</span>.10.0-693.17.1.el7.x86_64
+npm ERR! argv <span class="s2">&quot;/usr/bin/nodejs&quot;</span> <span class="s2">&quot;/usr/bin/npm&quot;</span> <span class="s2">&quot;install&quot;</span>
+npm ERR! node v4.2.6
+npm ERR! npm  v3.5.2
+npm ERR! file sh
+npm ERR! code ELIFECYCLE
+npm ERR! errno ENOENT
+npm ERR! syscall spawn
+
+npm ERR! node-sass@4.7.2 install: <span class="sb">`</span>node scripts/install.js<span class="sb">`</span>
+npm ERR! spawn ENOENT
+npm ERR!
+npm ERR! Failed at the node-sass@4.7.2 install script <span class="s1">&#39;node scripts/install.js&#39;</span>.
+npm ERR! Make sure you have the latest version of node.js and npm installed.
+</pre></div>
+</td></tr></table></div>
+<p><code class="docutils literal"><span class="pre">npm</span></code> is the package manager for <em>node.js</em> applications, which is needed
+so that the dependencies of <em>Reveal.js</em> get installed. The <code class="docutils literal"><span class="pre">index.html</span></code> file
+gets explained in the next section. The <code class="docutils literal"><span class="pre">ENTRYPOINT</span></code> starts the web server
+of <em>Reveal.js</em> when a container based on that image is started.</p>
+</div>
+<div class="section" id="the-slide-deck-main-page">
+<h2><a class="toc-backref" href="#contents">The slide deck main page</a><a class="headerlink" href="#the-slide-deck-main-page" title="Permalink to this headline"> </a></h2>
+<p>Create the file <code class="docutils literal"><span class="pre">index.html</span></code>, which will be used by
+<em>reveal.js</em> to serve when the HTTP server starts:</p>
+<div class="highlight-html"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">&lt;!doctype html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span><span class="p">&gt;</span>
+
+<span class="hll">        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Markus Slides<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span>
+        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;css/reveal.css&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;css/theme/black.css&quot;</span><span class="p">&gt;</span>
+
+        <span class="c">&lt;!-- Theme used for syntax highlighting of code --&gt;</span>
+        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;lib/css/zenburn.css&quot;</span><span class="p">&gt;</span>
+
+        <span class="c">&lt;!-- Printing and PDF exports --&gt;</span>
+        <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+            <span class="kd">var</span> <span class="nx">link</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span> <span class="s1">&#39;link&#39;</span> <span class="p">);</span>
+            <span class="nx">link</span><span class="p">.</span><span class="nx">rel</span> <span class="o">=</span> <span class="s1">&#39;stylesheet&#39;</span><span class="p">;</span>
+            <span class="nx">link</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s1">&#39;text/css&#39;</span><span class="p">;</span>
+            <span class="nx">link</span><span class="p">.</span><span class="nx">href</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span> <span class="sr">/print-pdf/gi</span> <span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;css/print/pdf.css&#39;</span> <span class="o">:</span> <span class="s1">&#39;css/print/paper.css&#39;</span><span class="p">;</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span> <span class="s1">&#39;head&#39;</span> <span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span> <span class="nx">link</span> <span class="p">);</span>
+        <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;reveal&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;slides&quot;</span><span class="p">&gt;</span>
+<span class="hll">                <span class="p">&lt;</span><span class="nt">section</span> <span class="na">data-markdown</span><span class="o">=</span><span class="s">&quot;content/index.md&quot;</span>
+</span><span class="hll">                         <span class="na">data-separator</span><span class="o">=</span><span class="s">&quot;^\n\n\n&quot;</span>
+</span><span class="hll">                         <span class="na">data-separator-vertical</span><span class="o">=</span><span class="s">&quot;^\n\n&quot;</span>
+</span><span class="hll">                         <span class="na">data-separator-notes</span><span class="o">=</span><span class="s">&quot;^Note:&quot;</span>
+</span><span class="hll">                         <span class="na">data-charset</span><span class="o">=</span><span class="s">&quot;iso-8859-15&quot;</span><span class="p">&gt;</span>
+</span><span class="hll">                <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+</span>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;lib/js/head.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/reveal.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+        <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+            <span class="c1">// More info about config &amp; dependencies:</span>
+            <span class="c1">// - https://github.com/hakimel/reveal.js#configuration</span>
+            <span class="c1">// - https://github.com/hakimel/reveal.js#dependencies</span>
+            <span class="nx">Reveal</span><span class="p">.</span><span class="nx">initialize</span><span class="p">({</span>
+                    <span class="nx">dependencies</span><span class="o">:</span> <span class="p">[</span>
+                            <span class="p">{</span> <span class="nx">src</span><span class="o">:</span> <span class="s1">&#39;plugin/markdown/marked.js&#39;</span> <span class="p">},</span>
+                            <span class="p">{</span> <span class="nx">src</span><span class="o">:</span> <span class="s1">&#39;plugin/markdown/markdown.js&#39;</span> <span class="p">},</span>
+                            <span class="p">{</span> <span class="nx">src</span><span class="o">:</span> <span class="s1">&#39;plugin/notes/notes.js&#39;</span><span class="p">,</span> <span class="nx">async</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span>
+                            <span class="p">{</span> <span class="nx">src</span><span class="o">:</span> <span class="s1">&#39;plugin/highlight/highlight.js&#39;</span><span class="p">,</span> <span class="nx">async</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">callback</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">hljs</span><span class="p">.</span><span class="nx">initHighlightingOnLoad</span><span class="p">();</span> <span class="p">}</span> <span class="p">}</span>
+                    <span class="p">]</span>
+            <span class="p">});</span>
+        <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>I basically copied the <code class="docutils literal"><span class="pre">index.html</span></code> which comes with <em>Reveal.js</em> and changed
+only the highlighted lines.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please note that the links are URIs and not operating system file paths.</p>
+</div>
+<p>In detail:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">data-markdown=&quot;content/index.md</span></code> specifies the path to the <em>Markdown</em>
+file. This will become important later when we start the container and
+do a bind mount from the host file system.</li>
+<li><code class="docutils literal"><span class="pre">data-separator=&quot;^\n\n\n&quot;</span></code> tells <em>Reveal.js</em> to interpret 3 empty lines in
+the <code class="docutils literal"><span class="pre">index.md</span></code> content file as the beginning of a new slide.</li>
+<li><code class="docutils literal"><span class="pre">data-separator-vertical=&quot;^\n\n&quot;</span></code> creates a new <strong>vertical slide</strong>,
+which is a nice feature of <em>Reveal.js</em>, which, for example, let&#8217;s you add
+backup slides closer to the content.</li>
+<li><code class="docutils literal"><span class="pre">data-separator-notes=&quot;^Note:&quot;</span></code> let&#8217;s you add <strong>speaker notes</strong> which
+get shown in a separate browser window when opened.</li>
+<li><code class="docutils literal"><span class="pre">data-charset=&quot;iso-8859-15&quot;</span></code> make it work for Western European
+languages.</li>
+</ul>
+<p>Let&#8217;s create the content linked to with <code class="docutils literal"><span class="pre">content/index.md</span></code> in the next
+section.</p>
+</div>
+<div class="section" id="specify-the-content-in-markdown">
+<h2><a class="toc-backref" href="#contents">Specify the content in <em>Markdown</em></a><a class="headerlink" href="#specify-the-content-in-markdown" title="Permalink to this headline"> </a></h2>
+<p>Create the file <code class="docutils literal"><span class="pre">index.md</span></code> which specifies our content:</p>
+<div class="highlight-text"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre></div></td><td class="code"><div class="highlight"><pre><span></span># Example with Code
+
+first slide
+<span class="hll">
+</span><span class="hll">
+</span><span class="hll">
+</span>## Python Code
+
+second slide
+
+```python
+def do_something():
+    action = &quot;did something&quot;
+    print(action)
+    return 0
+```
+
+<span class="hll">Note:
+</span><span class="hll">This will only display in the notes window.
+</span>
+
+
+## Bullet List
+
+third slide
+
+* this
+* and that
+* and other things
+
+
+
+# Image
+
+fourth slide
+
+<span class="hll">![Example image](content/example.drawio.svg)
+</span></pre></div>
+</td></tr></table></div>
+<p>The first 3 highlighted empty lines are an example how we can signal
+the beginning of a new slide. The speaker notes get added with <code class="docutils literal"><span class="pre">Note:</span></code>.
+The last highlighted lines links to an image. This example image
+<code class="docutils literal"><span class="pre">example.drawio.svg</span></code> (not shown in this post) is locally in the
+very same directory where <code class="docutils literal"><span class="pre">example.md</span></code> resides in. The link begins
+with <code class="docutils literal"><span class="pre">content/</span></code> though, because this the bind mount directory I
+will declare when running the container later.</p>
+</div>
+<div class="section" id="build-the-docker-image">
+<h2><a class="toc-backref" href="#contents">Build the <em>Docker</em> image</a><a class="headerlink" href="#build-the-docker-image" title="Permalink to this headline"> </a></h2>
+<p>We have the <em>Dockerfile</em> and all things which need to be part of the image
+specified, now we need to build the image.</p>
+<p>Create the file <code class="docutils literal"><span class="pre">build.sh</span></code> to build the image. This needs to be executed
+in the same directory as the <em>Dockerfile</em>:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+docker build --rm --tag markus:revealjs .
+</pre></div>
+</td></tr></table></div>
+<p>I tagged the image with <code class="docutils literal"><span class="pre">markus:revealjs</span></code> to reference it easier later on.</p>
+<p>Build the image with:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ./build.sh
+</pre></div>
+</td></tr></table></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You don&#8217;t need to save those commands in bash scripts like I did here.
+It&#8217;s simply a thing I do when I have a hard time to remember the
+exact CLI command. It&#8217;s other benefit is, that I can commit that file
+into <em>git</em> (or any other VCS).</p>
+</div>
+</div>
+<div class="section" id="run-the-container-with-a-bind-mount">
+<h2><a class="toc-backref" href="#contents">Run the container with a bind mount</a><a class="headerlink" href="#run-the-container-with-a-bind-mount" title="Permalink to this headline"> </a></h2>
+<p>Create the file <code class="docutils literal"><span class="pre">run.sh</span></code> to run the <em>Docker</em> container. The different
+options are explained below this:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+docker run <span class="se">\</span>
+-d <span class="se">\</span>
+-v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/reveal.js/content:Z <span class="se">\</span>
+-p <span class="m">50000</span>:8000 <span class="se">\</span>
+--name slides <span class="se">\</span>
+markus:revealjs
+</pre></div>
+</td></tr></table></div>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">docker</span> <span class="pre">run</span></code>: run a <em>Docker</em> image.</li>
+<li><code class="docutils literal"><span class="pre">-d</span></code>: let it run in the background as a daemon. I had trouble exiting
+the process when running it as foreground process, that&#8217;s why I let it
+run in the background.</li>
+<li><code class="docutils literal"><span class="pre">-v</span> <span class="pre">$(pwd):/reveal.js/content:Z</span></code>: do a <strong>bind mount</strong> of the current
+directory on the host (<code class="docutils literal"><span class="pre">$(pwd)</span></code>) to the directory <code class="docutils literal"><span class="pre">/reveal.js/content</span></code>
+within the running container and consider the <em>SELinux</em> context (<code class="docutils literal"><span class="pre">Z</span></code>)
+so that <em>Reveal.js</em> is allowed to read the files in that directory.</li>
+<li><code class="docutils literal"><span class="pre">-p</span> <span class="pre">50000:8000</span></code>: use the container&#8217;s exposed port <code class="docutils literal"><span class="pre">8000</span></code> and bind it
+the the hosts port <code class="docutils literal"><span class="pre">50000</span></code> (I&#8217;ve arbitrarily chosen).</li>
+<li><code class="docutils literal"><span class="pre">--name</span> <span class="pre">slides</span></code>: gives the container the name <code class="docutils literal"><span class="pre">slides</span></code>, which makes
+it easier to reference to.</li>
+<li><code class="docutils literal"><span class="pre">markus:revealjs</span></code>: use the image with that tag (we&#8217;ve set when
+building the image in the previous section).</li>
+</ul>
+<p>Run the container and watch your slides with:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ./run.sh
+$ google-chrome localhost:50000
+</pre></div>
+</td></tr></table></div>
+<p>This will open the <code class="docutils literal"><span class="pre">index.html</span></code> which renders your <em>Markdown</em> content
+with <em>Reveal.js</em>. The slide overview is opened with <code class="kbd docutils literal"><span class="pre">Esc</span></code>.</p>
+<a class="reference internal image-reference" href="../../../../../_images/slides.png"><img alt="Markdown content rendered with |rs| in the browser." src="../../../../../_images/slides.png" style="width: 100%;" /></a>
+</div>
+<div class="section" id="clean-up-the-container">
+<h2><a class="toc-backref" href="#contents">Clean up the container</a><a class="headerlink" href="#clean-up-the-container" title="Permalink to this headline"> </a></h2>
+<p>After everyone is thoroughly impressed by your slides, the
+container needs to be stopped and removed.</p>
+<p>Create the file <code class="docutils literal"><span class="pre">clean.sh</span></code> which helps with the cleanup:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+docker stop slides <span class="o">&amp;&amp;</span> docker rm slides
+</pre></div>
+</td></tr></table></div>
+<p>We use the name <code class="docutils literal"><span class="pre">slides</span></code> we specified when starting the container in
+the previous section.</p>
+<p>Start the cleanup with:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ./clean.sh
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="re-use-the-container-for-different-presentations">
+<h2><a class="toc-backref" href="#contents">Re-use the container for different presentations</a><a class="headerlink" href="#re-use-the-container-for-different-presentations" title="Permalink to this headline"> </a></h2>
+<p>My initial thought was to re-use this container for different presentations
+where I only need to store the content in different files, all named
+<code class="docutils literal"><span class="pre">index.md</span></code> but in different directories. My local directory structure
+looks like this:</p>
+<div class="highlight-text"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ tree
+.
+|-- docker
+|   |-- build.sh
+|   |-- clean.sh
+|   |-- Dockerfile
+|   |-- index.html
+|   `-- run.sh
+`-- slides
+    |-- topic-about-that
+    |   |-- index.md
+    |   `-- run.sh
+    `-- topic-about-this
+        |-- example.drawio.svg
+        |-- index.md
+        `-- run.sh
+</pre></div>
+</td></tr></table></div>
+<p>Depending on which presentation I want to show, I switch into that
+directory and call <code class="docutils literal"><span class="pre">./run.sh</span></code> to let the bind mount of <em>Docker</em>
+make the <code class="docutils literal"><span class="pre">index.md</span></code> available inside the container.</p>
+</div>
+<div class="section" id="conclusion-outlook">
+<h2><a class="toc-backref" href="#contents">Conclusion &amp; Outlook</a><a class="headerlink" href="#conclusion-outlook" title="Permalink to this headline"> </a></h2>
+<p>The way I encapsulated <em>Reveal.js</em> here in a <em>Docker</em> container lets me
+use it without polluting my local laptop with things I rarely need.</p>
+<p>The image I created is big (~700MB), which doesn&#8217;t cause any trouble
+because I have enough disk space, but I was still wondering if I could
+get that smaller with an <em>alpine</em> <a class="footnote-reference" href="#revmd" id="id2">[1]</a> or <em>nodejs</em> <a class="footnote-reference" href="#imgnojs" id="id3">[3]</a> base
+image instead of the <em>ubuntu</em> image.</p>
+<p>To be honest, my initial goal was to have static HTML generated, which
+I can push to <em>github pages</em> or something similar. I couldn&#8217;t figure out
+if this was possible with <em>Reveal.js</em>.</p>
+<p>The beautiful transitions between the slides only keep being beautiful
+if there is no lag, like in some screen sharing solutions. I&#8217;m going to
+use it in a face-to-face meeting in the next weeks (without any screen
+sharing), maybe it will work well for me in that scenario.</p>
+</div>
+<div class="section" id="references">
+<h2><a class="toc-backref" href="#contents">References</a><a class="headerlink" href="#references" title="Permalink to this headline"> </a></h2>
+<table class="docutils footnote" frame="void" id="revmd" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>)</em> <a class="reference external" href="https://github.com/hakimel/reveal.js#markdown">https://github.com/hakimel/reveal.js#markdown</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="alpine" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="https://hub.docker.com/_/alpine/">https://hub.docker.com/_/alpine/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="imgnojs" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="https://hub.docker.com/r/readytalk/nodejs/">https://hub.docker.com/r/readytalk/nodejs/</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+  <div class="section">
+  
+    
+
+
+  
+  
+  </div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015-2018, Markus Zoeller.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
