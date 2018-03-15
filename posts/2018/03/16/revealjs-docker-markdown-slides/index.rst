@@ -129,7 +129,7 @@ Specify the content in *Markdown*
 Create the file ``index.md`` which specifies our content:
 
 .. literalinclude:: slides/topic-about-this/index.md
-   :language: markdown
+   :language: text
    :linenos:
    :emphasize-lines: 4-6,18-19,37
 

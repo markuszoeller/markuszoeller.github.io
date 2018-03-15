@@ -277,7 +277,7 @@ For this, |ls| needs to bind to an IP address you can reach from outside
 the server. In my virtual environment, I have this setting
 in the file ``/etc/logstash/logstash.yml``:
 
-.. code-block:: yml
+.. code-block:: yaml
    :linenos:
    :emphasize-lines: 0
 
