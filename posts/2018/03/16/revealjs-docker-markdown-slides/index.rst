@@ -37,6 +37,8 @@ I packed into a *Docker* image.
      - Change description
    * - 2018-03-16
      - The first release
+   * - 2018-03-16
+     - Fixed wording for "3 highlighted empty lines" and a reference.
 
 
 Encapsulate *Reveal.js* with *Docker*
@@ -133,7 +135,7 @@ Create the file ``index.md`` which specifies our content:
    :linenos:
    :emphasize-lines: 4-6,18-19,37
 
-The first 3 highlighted empty lines are an example how we can signal
+As specified with ``^\n\n\n"``, 3 empty lines signal
 the beginning of a new slide. The speaker notes get added with ``Note:``.
 The last highlighted lines links to an image. This example image
 ``example.drawio.svg`` (not shown in this post) is locally in the
@@ -287,7 +289,7 @@ use it without polluting my local laptop with things I rarely need.
 
 The image I created is big (~700MB), which doesn't cause any trouble
 because I have enough disk space, but I was still wondering if I could
-get that smaller with an *alpine* [#revmd]_ or *nodejs* [#imgnojs]_ base
+get that smaller with an *alpine* [#alpine]_ or *nodejs* [#imgnojs]_ base
 image instead of the *ubuntu* image.
 
 To be honest, my initial goal was to have static HTML generated, which
