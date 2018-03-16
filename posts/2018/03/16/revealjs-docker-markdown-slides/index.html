@@ -156,6 +156,9 @@ I packed into a <em>Docker</em> image.</p>
 <tr class="row-even"><td>2018-03-16</td>
 <td>The first release</td>
 </tr>
+<tr class="row-odd"><td>2018-03-16</td>
+<td>Fixed wording for &#8220;3 highlighted empty lines&#8221; and a reference.</td>
+</tr>
 </tbody>
 </table>
 <div class="section" id="encapsulate-reveal-js-with-docker">
@@ -457,7 +460,7 @@ fourth slide
 <span class="hll">![Example image](content/example.drawio.svg)
 </span></pre></div>
 </td></tr></table></div>
-<p>The first 3 highlighted empty lines are an example how we can signal
+<p>As specified with <code class="docutils literal"><span class="pre">^\n\n\n&quot;</span></code>, 3 empty lines signal
 the beginning of a new slide. The speaker notes get added with <code class="docutils literal"><span class="pre">Note:</span></code>.
 The last highlighted lines links to an image. This example image
 <code class="docutils literal"><span class="pre">example.drawio.svg</span></code> (not shown in this post) is locally in the
@@ -606,7 +609,7 @@ make the <code class="docutils literal"><span class="pre">index.md</span></code>
 use it without polluting my local laptop with things I rarely need.</p>
 <p>The image I created is big (~700MB), which doesn&#8217;t cause any trouble
 because I have enough disk space, but I was still wondering if I could
-get that smaller with an <em>alpine</em> <a class="footnote-reference" href="#revmd" id="id2">[1]</a> or <em>nodejs</em> <a class="footnote-reference" href="#imgnojs" id="id3">[3]</a> base
+get that smaller with an <em>alpine</em> <a class="footnote-reference" href="#alpine" id="id2">[2]</a> or <em>nodejs</em> <a class="footnote-reference" href="#imgnojs" id="id3">[3]</a> base
 image instead of the <em>ubuntu</em> image.</p>
 <p>To be honest, my initial goal was to have static HTML generated, which
 I can push to <em>github pages</em> or something similar. I couldn&#8217;t figure out
@@ -621,13 +624,13 @@ sharing), maybe it will work well for me in that scenario.</p>
 <table class="docutils footnote" frame="void" id="revmd" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>)</em> <a class="reference external" href="https://github.com/hakimel/reveal.js#markdown">https://github.com/hakimel/reveal.js#markdown</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="https://github.com/hakimel/reveal.js#markdown">https://github.com/hakimel/reveal.js#markdown</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="alpine" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[2]</td><td><a class="reference external" href="https://hub.docker.com/_/alpine/">https://hub.docker.com/_/alpine/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="https://hub.docker.com/_/alpine/">https://hub.docker.com/_/alpine/</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="imgnojs" rules="none">
