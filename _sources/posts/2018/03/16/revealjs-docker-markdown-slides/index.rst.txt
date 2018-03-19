@@ -39,10 +39,23 @@ I packed into a *Docker* image.
      - The first release
    * - 2018-03-16
      - Fixed wording for "3 highlighted empty lines" and a reference.
+   * - 2018-03-19
+     - Docker is NOT needed. Add an update note to the section.
 
 
 Encapsulate *Reveal.js* with *Docker*
 =====================================
+
+.. update:: Mar 19, 2018
+
+   Mistakes were made. By me. Big time. *Docker* is NOT needed to render
+   the *Markdown* file later. I've misinterpreted the README of |rs| and
+   didn't double-check it. What you really need is a **web server**, which
+   means you can do ``$ python -m SimpleHTTPServer`` locally (in the
+   directory where your ``index.html`` is) or use *GitHub Pages* [#ghp]_
+   without any additional work. I'll keep this section to not change the
+   history, but be aware that it is not needed. Thanks to *Chris H.* for
+   pointing that out.
 
 |rs| is capable of using |md| files [#revmd]_ and render them as HTML5
 slides. The downside of |rs| is, that it needs a lot of things installed
@@ -310,3 +323,5 @@ References
 .. [#alpine] https://hub.docker.com/_/alpine/
 
 .. [#imgnojs] https://hub.docker.com/r/readytalk/nodejs/
+
+.. [#ghp] https://pages.github.com/

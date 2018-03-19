@@ -130,19 +130,19 @@ content in a <em>Markdown</em> file and let it render by <em>Reveal.js</em> whic
 I packed into a <em>Docker</em> image.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#encapsulate-reveal-js-with-docker" id="id5">Encapsulate <em>Reveal.js</em> with <em>Docker</em></a></li>
-<li><a class="reference internal" href="#the-slide-deck-main-page" id="id6">The slide deck main page</a></li>
-<li><a class="reference internal" href="#specify-the-content-in-markdown" id="id7">Specify the content in <em>Markdown</em></a></li>
-<li><a class="reference internal" href="#build-the-docker-image" id="id8">Build the <em>Docker</em> image</a></li>
-<li><a class="reference internal" href="#run-the-container-with-a-bind-mount" id="id9">Run the container with a bind mount</a></li>
-<li><a class="reference internal" href="#clean-up-the-container" id="id10">Clean up the container</a></li>
-<li><a class="reference internal" href="#re-use-the-container-for-different-presentations" id="id11">Re-use the container for different presentations</a></li>
-<li><a class="reference internal" href="#conclusion-outlook" id="id12">Conclusion &amp; Outlook</a></li>
-<li><a class="reference internal" href="#references" id="id13">References</a></li>
+<li><a class="reference internal" href="#encapsulate-reveal-js-with-docker" id="id6">Encapsulate <em>Reveal.js</em> with <em>Docker</em></a></li>
+<li><a class="reference internal" href="#the-slide-deck-main-page" id="id7">The slide deck main page</a></li>
+<li><a class="reference internal" href="#specify-the-content-in-markdown" id="id8">Specify the content in <em>Markdown</em></a></li>
+<li><a class="reference internal" href="#build-the-docker-image" id="id9">Build the <em>Docker</em> image</a></li>
+<li><a class="reference internal" href="#run-the-container-with-a-bind-mount" id="id10">Run the container with a bind mount</a></li>
+<li><a class="reference internal" href="#clean-up-the-container" id="id11">Clean up the container</a></li>
+<li><a class="reference internal" href="#re-use-the-container-for-different-presentations" id="id12">Re-use the container for different presentations</a></li>
+<li><a class="reference internal" href="#conclusion-outlook" id="id13">Conclusion &amp; Outlook</a></li>
+<li><a class="reference internal" href="#references" id="id14">References</a></li>
 </ul>
 </div>
-<table border="1" class="docutils" id="id4">
-<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id4" title="Permalink to this table"> </a></caption>
+<table border="1" class="docutils" id="id5">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id5" title="Permalink to this table"> </a></caption>
 <colgroup>
 <col width="17%" />
 <col width="83%" />
@@ -159,11 +159,25 @@ I packed into a <em>Docker</em> image.</p>
 <tr class="row-odd"><td>2018-03-16</td>
 <td>Fixed wording for &#8220;3 highlighted empty lines&#8221; and a reference.</td>
 </tr>
+<tr class="row-even"><td>2018-03-19</td>
+<td>Docker is NOT needed. Add an update note to the section.</td>
+</tr>
 </tbody>
 </table>
 <div class="section" id="encapsulate-reveal-js-with-docker">
 <h2><a class="toc-backref" href="#contents">Encapsulate <em>Reveal.js</em> with <em>Docker</em></a><a class="headerlink" href="#encapsulate-reveal-js-with-docker" title="Permalink to this headline"> </a></h2>
-<p><em>Reveal.js</em> is capable of using <em>Markdown</em> files <a class="footnote-reference" href="#revmd" id="id1">[1]</a> and render them as HTML5
+<div class="note update admonition">
+<p class="first admonition-title">Updated on Mar 19, 2018</p>
+<p class="last">Mistakes were made. By me. Big time. <em>Docker</em> is NOT needed to render
+the <em>Markdown</em> file later. I&#8217;ve misinterpreted the README of <em>Reveal.js</em> and
+didn&#8217;t double-check it. What you really need is a <strong>web server</strong>, which
+means you can do <code class="docutils literal"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">SimpleHTTPServer</span></code> locally (in the
+directory where your <code class="docutils literal"><span class="pre">index.html</span></code> is) or use <em>GitHub Pages</em> <a class="footnote-reference" href="#ghp" id="id1">[4]</a>
+without any additional work. I&#8217;ll keep this section to not change the
+history, but be aware that it is not needed. Thanks to <em>Chris H.</em> for
+pointing that out.</p>
+</div>
+<p><em>Reveal.js</em> is capable of using <em>Markdown</em> files <a class="footnote-reference" href="#revmd" id="id2">[1]</a> and render them as HTML5
 slides. The downside of <em>Reveal.js</em> is, that it needs a lot of things installed
 to work and I didn&#8217;t want to have that on my laptop simply to show
 fancy slides. So I decided to encapsulate it with <em>Docker</em>.</p>
@@ -609,7 +623,7 @@ make the <code class="docutils literal"><span class="pre">index.md</span></code>
 use it without polluting my local laptop with things I rarely need.</p>
 <p>The image I created is big (~700MB), which doesn&#8217;t cause any trouble
 because I have enough disk space, but I was still wondering if I could
-get that smaller with an <em>alpine</em> <a class="footnote-reference" href="#alpine" id="id2">[2]</a> or <em>nodejs</em> <a class="footnote-reference" href="#imgnojs" id="id3">[3]</a> base
+get that smaller with an <em>alpine</em> <a class="footnote-reference" href="#alpine" id="id3">[2]</a> or <em>nodejs</em> <a class="footnote-reference" href="#imgnojs" id="id4">[3]</a> base
 image instead of the <em>ubuntu</em> image.</p>
 <p>To be honest, my initial goal was to have static HTML generated, which
 I can push to <em>github pages</em> or something similar. I couldn&#8217;t figure out
@@ -624,19 +638,25 @@ sharing), maybe it will work well for me in that scenario.</p>
 <table class="docutils footnote" frame="void" id="revmd" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="https://github.com/hakimel/reveal.js#markdown">https://github.com/hakimel/reveal.js#markdown</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td><a class="reference external" href="https://github.com/hakimel/reveal.js#markdown">https://github.com/hakimel/reveal.js#markdown</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="alpine" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="https://hub.docker.com/_/alpine/">https://hub.docker.com/_/alpine/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td><a class="reference external" href="https://hub.docker.com/_/alpine/">https://hub.docker.com/_/alpine/</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="imgnojs" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="https://hub.docker.com/r/readytalk/nodejs/">https://hub.docker.com/r/readytalk/nodejs/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id4">[3]</a></td><td><a class="reference external" href="https://hub.docker.com/r/readytalk/nodejs/">https://hub.docker.com/r/readytalk/nodejs/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="ghp" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[4]</a></td><td><a class="reference external" href="https://pages.github.com/">https://pages.github.com/</a></td></tr>
 </tbody>
 </table>
 </div>
