@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quick Tip: Ansible target hosts with wildcard &#8212; Markus Zoeller Blog</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/asciinema-player.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/asciinema-player.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="../../../../../about/" />
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" />
+  
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../../../../posts/atom.xml" title="Markus's Brain Swap Space">
+  
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../../../">
+          MZIO</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../../../about/">About</a></li>
+                <li><a href="../../../../category/">Categories</a></li>
+                <li><a href="../../../../tag/">Tags</a></li>
+                <li><a href="../../../../archive/">Archive</a></li>
+                <li><a href="/posts/atom.xml"><i class='fa fa-rss-square' aria-hidden='true'></i></a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../../../">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../../../search/" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="quick-tip-ansible-target-hosts-with-wildcard">
+<h1>Quick Tip: <em>Ansible</em> target hosts with wildcard<a class="headerlink" href="#quick-tip-ansible-target-hosts-with-wildcard" title="Permalink to this headline"> </a></h1>
+<p>This is a short quick tip about <em>Ansible</em>. TL;DR: it&#8217;s possible to use a
+wildcard in the target hosts specifier. This became useful to me when I
+dynamically created the inventory based on <em>Ansible</em> facts.</p>
+<table border="1" class="docutils" id="id1">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id1" title="Permalink to this table"> </a></caption>
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Date</th>
+<th class="head">Change description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>2018-03-30</td>
+<td>The first release</td>
+</tr>
+</tbody>
+</table>
+<p>My scenario was, that I wanted to <strong>document the installation procedure</strong>
+of a tool I wrote. I needed to document that for at least CentOS and Ubuntu.
+That tool depends on operating system packages, which are named differently
+for Ubuntu and CentOS. To avoid that the documentation goes out of sync
+with reality, I decided to write <em>Ansible</em> code, which can be executed and
+therefore <strong>tested continuously</strong>, and include that code in my documentation.</p>
+<p>To test that, I had a local <em>Vagrant</em> environment and wanted to ensure that
+it works on Ubuntu 16.04 and CentOS 7.4 for the start.
+As I expected that this will grow over time with <strong>different distributions</strong>
+and <strong>each distribution with a set of major-minor releases</strong>, I wanted to
+avoid to control the <em>Ansible</em> targets with an inventory file and also don&#8217;t
+bind them to host names. So I decided to use the <code class="docutils literal"><span class="pre">gather_facts</span></code> option,
+to read specifics about the hosts, and <strong>dynamically group</strong> them based on
+distribution, major release number, minor release number.</p>
+<p>When doing that,
+I discovered that the facts gather the major release number and the full
+release number, which is <code class="docutils literal"><span class="pre">16.04</span></code> for Ubuntu, but <code class="docutils literal"><span class="pre">7.4.1708</span></code> for CentOS.</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>root@centos ~<span class="o">]</span><span class="c1"># ansible localhost -m setup | grep ansible_distri</span>
+        <span class="s2">&quot;ansible_distribution&quot;</span>: <span class="s2">&quot;CentOS&quot;</span>,
+        <span class="s2">&quot;ansible_distribution_file_parsed&quot;</span>: true,
+        <span class="s2">&quot;ansible_distribution_file_path&quot;</span>: <span class="s2">&quot;/etc/redhat-release&quot;</span>,
+        <span class="s2">&quot;ansible_distribution_file_variety&quot;</span>: <span class="s2">&quot;RedHat&quot;</span>,
+<span class="hll">        <span class="s2">&quot;ansible_distribution_major_version&quot;</span>: <span class="s2">&quot;7&quot;</span>,
+</span>        <span class="s2">&quot;ansible_distribution_release&quot;</span>: <span class="s2">&quot;Core&quot;</span>,
+<span class="hll">        <span class="s2">&quot;ansible_distribution_version&quot;</span>: <span class="s2">&quot;7.4.1708&quot;</span>,
+</span></pre></div>
+</td></tr></table></div>
+<p>My expectation was, that I somehow get <code class="docutils literal"><span class="pre">7.4</span></code>, without the patch level,
+but I couldn&#8217;t find a way. I also wanted to avoid to do string split magic
+in <em>Ansible</em>.</p>
+<p>As I was worried that I have to change the playbook when the patch level
+changes when updating the CentOS 7 <em>Vagrant Box</em> I wanted to have a way
+to ignore the patch level. And apparently, <em>Ansible</em> can do that with a
+<strong>wildcard</strong> <code class="docutils literal"><span class="pre">*</span></code> <strong>in the target hosts specifier</strong>. I ended up with this:</p>
+<div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Group</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">servers</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">operating</span><span class="nv"> </span><span class="s">system</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">version.&quot;</span>
+<span class="hll">      <span class="l l-Scalar l-Scalar-Plain">group_by</span><span class="p p-Indicator">:</span>
+</span><span class="hll">        <span class="l l-Scalar l-Scalar-Plain">key</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">os_{{ ansible_distribution }}_{{ ansible_distribution_version }}</span>
+</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">os_Ubuntu_16.04</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu_1604_install_tasks.yml</span>
+
+<span class="hll"><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">os_CentOS_7.4*</span>
+</span>  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">centos_74_install_tasks.yml</span>
+</pre></div>
+</td></tr></table></div>
+<p>The specifier <code class="docutils literal"><span class="pre">os_CentOS_7.4*</span></code> accepts, that the actual key is
+<code class="docutils literal"><span class="pre">os_CentOS_7.4.1708</span></code>, which solves my problem perfectly.</p>
+<p>For my user documentation with <em>Sphinx</em> I could then do this:</p>
+<div class="highlight-rst"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span>Below are examples of <span class="ge">*Ansible tasks*</span>, which show the operating system
+dependencies which must be fulfilled.
+
+<span class="gh">Ubuntu 16.04</span>
+<span class="gh">------------</span>
+
+<span class="p">..</span> <span class="ow">literalinclude</span><span class="p">::</span> ubuntu_1604_install_tasks.yml
+   <span class="nc">:language:</span> <span class="nf">yaml</span>
+
+
+<span class="gh">CentOS 7.4</span>
+<span class="gh">----------</span>
+
+<span class="p">..</span> <span class="ow">literalinclude</span><span class="p">::</span> centos_74_install_tasks.yml
+   <span class="nc">:language:</span> <span class="nf">yaml</span>
+</pre></div>
+</td></tr></table></div>
+<p>This enables me to only <strong>document working examples</strong>, which can easily
+be changed. Either by adding a new target, or removing a target which
+reached its end of life or support level.</p>
+<p>For details about <em>Sphinx</em> you can read my previous post
+<a class="reference internal" href="../../../02/02/project-docs-rst-markup-sphinx/#project-docs-rst-markup-sphinx"><span class="std std-ref">Project documentation with reStructuredText and Sphinx</span></a>.
+I thought this might be worth sharing.</p>
+</div>
+
+  <div class="section">
+  
+    
+
+
+  
+  
+  </div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015-2018, Markus Zoeller.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
