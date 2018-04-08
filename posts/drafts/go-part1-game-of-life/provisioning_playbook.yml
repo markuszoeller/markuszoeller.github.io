@@ -1,11 +1,11 @@
 ---
 
+# https://golang.org/doc/install
+
 - hosts: all
   become: true
 
   tasks:
-
-    # https://golang.org/doc/install
 
     - name: "The apt cache should be updated."
       apt:
@@ -14,13 +14,10 @@
 
     - name: "The basic build tools should be installed."
       apt:
-        name: "{{ item }}"
+        name: gcc,make
         state: present
-      with_items:
-        - gcc
-        - make
 
-    - name: "The OS packaged GO lang should NOT be available."
+    - name: "The (old) OS packaged GO lang should NOT be available."
       apt:
         name: golang-go
         state: absent
