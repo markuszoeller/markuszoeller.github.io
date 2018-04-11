@@ -1,7 +1,5 @@
 ---
 
-# https://golang.org/doc/install
-
 - hosts: all
   become: true
 
