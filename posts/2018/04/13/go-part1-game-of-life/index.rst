@@ -20,12 +20,13 @@ Learning |g| (part 1) - Conway's Game of Life
 =============================================
 
 The |g| programming language is currently fashionable, and it's been four
-years since the last time I started to learn a new programming language,
-Python. My goal in the next few months is it to learn enough |g| to read
-the *Kubernetes* code base comfortably, simply because I'm interested in
-that project and how they solved their problems. As a starting problem for
-this multi-part series, I've chosen *Conway's Game of Life* [#cgol]_, as
-these rules are simple to understand but more complex than a *hello world*.
+years since the last time I started to learn a new programming language
+(*Python*), so I decided to start a series about my learning attempts.
+As I also want to know more about *Kubernetes*, my goal is to
+learn enough |g| in the next few months to read the *Kubernetes* code base
+comfortably. As a starting point for this multi-part series, I've chosen
+*Conway's Game of Life* [#cgol]_, because its rules are simple but more
+complex than a typical *hello world* example.
 
 
 .. contents::
@@ -159,8 +160,9 @@ Things to notice are:
 
 * ``t *testing.T`` is the one parameter every test function needs to
   accept to have access to the built-in testing framework. I'm not quite
-  sure how to read it, but I guess it means we accept a reference to the
-  class ``T`` in package ``testing`` and store it in variable ``t``.
+  sure how to read it, but I guess it means we accept a reference (``*``) to
+  an instance of the class ``T`` in package ``testing`` and store it in
+  parameter ``t``.
 * I didn't find a built-in way of executing code before and after every
   test function, like ``setup`` and ``teardown``, which are known from
   other XUnit testing frameworks. Honestly, this was quite odd to me.
@@ -207,7 +209,9 @@ Learning more about the object oriented side of |g| is definitely also
 something on my plate. Note sure if will be already in the next post of this
 series, as I expect it to be a bit more complex.
 
-
+It's too early for me to make a statement about how I feel about |g|.
+The next posts will explore more things and most likely uncover some
+mistakes I made in this post here. Time will tell.
 
 
 References
