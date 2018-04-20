@@ -41,6 +41,10 @@ Use Case
 
 .. todo:: describe the use case here
 
+As *pypi* server https://www.jfrog.com/confluence/display/RTF/PyPI+Repositories
+
+Dependency resolution
+
 sub-title
 =========
 
