@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Ubuntu with Debian Sid APT repository &#8212; Markus Zoeller Blog</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/asciinema-player.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/asciinema-player.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="../../../../../about/" />
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" />
+  
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../../../../posts/atom.xml" title="Markus's Brain Swap Space">
+  
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../../../">
+          MZIO</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../../../about/">About</a></li>
+                <li><a href="../../../../category/">Categories</a></li>
+                <li><a href="../../../../tag/">Tags</a></li>
+                <li><a href="../../../../archive/">Archive</a></li>
+                <li><a href="/posts/atom.xml"><i class='fa fa-rss-square' aria-hidden='true'></i></a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../../../">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../../../search/" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="ubuntu-with-debian-sid-apt-repository">
+<h1><em>Ubuntu</em> with <em>Debian Sid</em> APT repository<a class="headerlink" href="#ubuntu-with-debian-sid-apt-repository" title="Permalink to this headline"> </a></h1>
+<p>Ubuntu is great in my opinion, and of the reasons for it is its use of
+recent versions for the packages in their APT repositories. But what if
+you need a package in an even more recent version and cannot wait for the
+next release? The Debian Sid release, the unstable development version, has
+those newer packages and they can be used in an Ubuntu with the help of
+APT package pinning and this post shows the things you need to know for that.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#use-case" id="id8">Use Case</a></li>
+<li><a class="reference internal" href="#add-the-debian-sid-repository" id="id9">Add the Debian Sid repository</a></li>
+<li><a class="reference internal" href="#pin-the-l-related-packages" id="id10">Pin the <em>libguestfs</em> related packages</a></li>
+<li><a class="reference internal" href="#check-with-apt-cache-policy" id="id11">Check with <code class="docutils literal"><span class="pre">apt-cache</span> <span class="pre">policy</span></code></a></li>
+<li><a class="reference internal" href="#conclusion" id="id12">Conclusion</a></li>
+<li><a class="reference internal" href="#references" id="id13">References</a></li>
+</ul>
+</div>
+<table border="1" class="docutils" id="id7">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id7" title="Permalink to this table"> </a></caption>
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Date</th>
+<th class="head">Change description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>2018-04-27</td>
+<td>The first release</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="use-case">
+<h2><a class="toc-backref" href="#contents">Use Case</a><a class="headerlink" href="#use-case" title="Permalink to this headline"> </a></h2>
+<p>The specific case I had, was the usage of the great tool <em>libguestfs</em> <a class="footnote-reference" href="#libgfs" id="id1">[1]</a>,
+which is very useful when dealing with virtual machine disk images.
+Unfortunately, when I tried to work with it on the s390x architecture,
+I&#8217;ve discovered a bug, which was already reported upstream <a class="footnote-reference" href="#bugisa" id="id2">[2]</a>.
+Luckily, there was also already a patch series provided on the mailing list
+of <em>libguestfs</em> <a class="footnote-reference" href="#patchml" id="id3">[3]</a> and the last commit, needed to fix the bug,
+was also already merged <a class="footnote-reference" href="#commitx86" id="id4">[4]</a> and available with version 1.37.22
+of <em>libguestfs</em>.</p>
+<p>My problem was, Ubuntu 16.04 packaged <em>libguestfs</em> in version 1.34
+and Ubuntu 18.04 packaged it in version 1.36. Both were too old and
+didn&#8217;t contain any backports. As Ubuntu is based on Debian, I checked
+their repositories and found the needed version 1.38 of <em>libguestfs</em>
+in their unstable development release named Sid <a class="footnote-reference" href="#sid" id="id5">[5]</a>.</p>
+<p>From the multiple options I had:</p>
+<ul class="simple">
+<li>use Debian Sid as host</li>
+<li>build <em>libguestfs</em> from source</li>
+<li>wait for CentOS 7.5 which has <em>libguestfs</em> 1.36 but with backports</li>
+<li>wait for Ubuntu 18.10 (in the hope it has the fixes/backports)</li>
+<li>use Ubuntu 18.04 and add the Debian Sid repositories</li>
+</ul>
+<p>proved only the last one successful for me and the next sections show
+the needed actions for this.</p>
+</div>
+<div class="section" id="add-the-debian-sid-repository">
+<h2><a class="toc-backref" href="#contents">Add the Debian Sid repository</a><a class="headerlink" href="#add-the-debian-sid-repository" title="Permalink to this headline"> </a></h2>
+<p>Install the needed packages and add the keys and the Debian Sid repo itself:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ apt update
+$ apt install -y software-properties-common <span class="se">\</span>
+debian-archive-keyring <span class="se">\</span>
+dirmngr
+$ apt-key adv --keyserver keyserver.ubuntu.com <span class="se">\</span>
+--recv-keys 8B48AD6246925553
+$ apt-key adv --keyserver keyserver.ubuntu.com <span class="se">\</span>
+--recv-keys 7638D0442B90D010
+$ add-apt-repository <span class="s2">&quot;deb http://ftp.de.debian.org/debian sid main&quot;</span>
+</pre></div>
+</td></tr></table></div>
+<p>If you don&#8217;t use the <code class="docutils literal"><span class="pre">apt-key</span></code> command before adding the repository,
+you&#8217;ll see this error message:</p>
+<div class="highlight-text"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span>Err:3 http://ftp.de.debian.org/debian sid InRelease
+  The following signatures couldn&#39;t be verified because the
+  public key is not available:
+  NO_PUBKEY 8B48AD6246925553
+  NO_PUBKEY 7638D0442B90D010
+E: The repository &#39;http://ftp.de.debian.org/debian sid InRelease&#39;
+is not signed.
+N: Updating from such a repository can&#39;t be done securely,
+and is therefore disabled by default.
+</pre></div>
+</td></tr></table></div>
+<p>After the Sid release is added to the repository list, we need to deal
+with the fact that we have the same packages in different versions in
+different repositories, which can confuse APT a little.</p>
+</div>
+<div class="section" id="pin-the-l-related-packages">
+<h2><a class="toc-backref" href="#contents">Pin the <em>libguestfs</em> related packages</a><a class="headerlink" href="#pin-the-l-related-packages" title="Permalink to this headline"> </a></h2>
+<p>The APT package preferences can be tuned with <em>preference</em> files. This
+is also called <strong>package pinning</strong>. In my case, I was only interested in
+getting the newest <em>libguestfs</em> packages.</p>
+<p>Create the file <code class="docutils literal"><span class="pre">/etc/apt/preferences.d/libguestfs.pref</span></code> with this content:</p>
+<div class="highlight-text"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span># workaround for bug:
+# https://bugs.launchpad.net/ubuntu/+source/libguestfs/+bug/1766534
+#
+# Note: 2 blank lines are required between entries
+Package: *
+Pin: release a=bionic
+Pin-Priority: 500
+
+
+Package: *
+Pin: origin &quot;ftp.de.debian.org&quot;
+Pin-Priority: 300
+
+
+# Pattern includes &#39;python-guestfs&#39; and &#39;libguestfs-tools&#39; and similarily
+# named dependencies:
+Package: *guestfs*
+Pin: origin &quot;ftp.de.debian.org&quot;
+Pin-Priority: 700
+</pre></div>
+</td></tr></table></div>
+<p>The <code class="docutils literal"><span class="pre">Pin-Priority</span></code> is the key. The higher the value, the more likely
+the matching packages get installed. The lower the value, the less likely
+it is that they get installed. The priority <code class="docutils literal"><span class="pre">500</span></code> is the default priority.
+If the pattern matches on multiple repositories and the priority is the same,
+the newest package gets installed.</p>
+<p>The preferences file above can be read as:</p>
+<ul class="simple">
+<li>All packages (<code class="docutils literal"><span class="pre">*</span></code>) from the <code class="docutils literal"><span class="pre">bionic</span></code> release have the (default)
+priority of <code class="docutils literal"><span class="pre">500</span></code>.</li>
+<li>All packages (<code class="docutils literal"><span class="pre">*</span></code>) which originate from the <code class="docutils literal"><span class="pre">ftp.de.debian.org</span></code>
+repository server, have a low priority of <code class="docutils literal"><span class="pre">300</span></code>.</li>
+<li>All packages, which have <code class="docutils literal"><span class="pre">guestfs</span></code> in their name and originate
+from the <code class="docutils literal"><span class="pre">ftp.de.debian.org</span></code> repository server, have the high priority
+of <code class="docutils literal"><span class="pre">700</span></code>.</li>
+</ul>
+<p>This means, that every time you do an <code class="docutils literal"><span class="pre">apt</span> <span class="pre">install</span> <span class="pre">&lt;package-name&gt;</span></code>,
+this list gets checked to figure out which repository to use. You can
+check the impact of that configuration with the command
+<code class="docutils literal"><span class="pre">apt-cache</span> <span class="pre">policy</span> <span class="pre">&lt;package-name&gt;</span></code>, as shown in the next section.</p>
+</div>
+<div class="section" id="check-with-apt-cache-policy">
+<h2><a class="toc-backref" href="#contents">Check with <code class="docutils literal"><span class="pre">apt-cache</span> <span class="pre">policy</span></code></a><a class="headerlink" href="#check-with-apt-cache-policy" title="Permalink to this headline"> </a></h2>
+<p>The command <code class="docutils literal"><span class="pre">apt-cache</span> <span class="pre">policy</span> <span class="pre">&lt;package-name&gt;</span></code> is a good way to determine
+what package would be installed from which repository, in case you trigger
+the install with <code class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">&lt;package-name&gt;</span></code>.</p>
+<p>Let&#8217;s check how this looks with a common package, e.g. <code class="docutils literal"><span class="pre">nano</span></code>:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ apt-cache policy nano
+nano:
+  Installed: <span class="o">(</span>none<span class="o">)</span>
+  Candidate: <span class="m">2</span>.9.3-2
+  Version table:
+     <span class="m">2</span>.9.5-1 <span class="m">300</span>
+        <span class="m">300</span> http://ftp.de.debian.org/debian sid/main s390x Packages
+     <span class="m">2</span>.9.3-2 <span class="m">500</span>
+        <span class="m">500</span> http://ports.ubuntu.com/ubuntu-ports bionic/main s390x Packages
+</pre></div>
+</td></tr></table></div>
+<p>The package is <strong>in both repositories</strong>, the newer one with version
+<code class="docutils literal"><span class="pre">2.9.5-1</span></code> is in Debian Sid and gets the priority <code class="docutils literal"><span class="pre">300</span></code>, but the older
+one in Ubuntu with version <code class="docutils literal"><span class="pre">2.9.3-2</span></code> has a higher priority of <code class="docutils literal"><span class="pre">500</span></code>
+and is therefore the install candidate.</p>
+<p>Let&#8217;s try the package I&#8217;m interested in, <code class="docutils literal"><span class="pre">libguestfs-tools</span></code>, which matches
+the pattern described in the preferences file from before:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ apt-cache policy libguestfs-tools
+libguestfs-tools:
+  Installed: <span class="o">(</span>none<span class="o">)</span>
+  Candidate: <span class="m">1</span>:1.38.0-4
+  Version table:
+     <span class="m">1</span>:1.38.0-4 <span class="m">700</span>
+        <span class="m">300</span> http://ftp.de.debian.org/debian sid/main s390x Packages
+     <span class="m">1</span>:1.36.13-1ubuntu3 <span class="m">500</span>
+        <span class="m">500</span> http://ports.ubuntu.com/ubuntu-ports bionic/universe s390x Packages
+</pre></div>
+</td></tr></table></div>
+<p>The package is in both repositories, the newer one is in Debian Sid,
+and it has the higher priority because its name matches the pattern we
+specified in the preferences file, and is therefore the install candidate
+with a priority of <code class="docutils literal"><span class="pre">700</span></code>.</p>
+</div>
+<div class="section" id="conclusion">
+<h2><a class="toc-backref" href="#contents">Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this headline"> </a></h2>
+<p>With all the things from above, I was able to get the packages (and their
+dependencies) in a version current enough to get the job done.</p>
+<p>It is also possible to enforce downgrades of a package or avoid an
+installation at all. The man page <a class="footnote-reference" href="#prefs" id="id6">[6]</a> has the details you need to
+determine how to fulfill your use case.</p>
+<p>Doing that in a multi-purpose host which needs to be kept updated, brings
+the risk that you potentially make that system unstable and less predictable.
+Doing that in a single-purpose immutable host, e.g. packaged as Docker image,
+might be a good enough band-aid until a new Ubuntu release comes out which
+contains the package in the version you need.</p>
+</div>
+<div class="section" id="references">
+<h2><a class="toc-backref" href="#contents">References</a><a class="headerlink" href="#references" title="Permalink to this headline"> </a></h2>
+<table class="docutils footnote" frame="void" id="libgfs" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://libguestfs.org/">http://libguestfs.org/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="bugisa" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="https://bugzilla.redhat.com/show_bug.cgi?id=1376547">https://bugzilla.redhat.com/show_bug.cgi?id=1376547</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="patchml" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="https://www.redhat.com/archives/libguestfs/2017-May/msg00066.html">https://www.redhat.com/archives/libguestfs/2017-May/msg00066.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="commitx86" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="https://github.com/libguestfs/libguestfs/commit/5b60dd4eff02f48d344bcdad0d4bad4676ca9168">https://github.com/libguestfs/libguestfs/commit/5b60dd4eff02f48d344bcdad0d4bad4676ca9168</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="sid" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><a class="reference external" href="https://packages.debian.org/sid/s390x/libguestfs0/download">https://packages.debian.org/sid/s390x/libguestfs0/download</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="prefs" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td><a class="reference external" href="https://linux.die.net/man/5/apt_preferences">https://linux.die.net/man/5/apt_preferences</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+  <div class="section">
+  
+    
+
+
+  
+  
+  </div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015-2018, Markus Zoeller.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
