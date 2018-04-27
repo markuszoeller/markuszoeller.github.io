@@ -2,10 +2,27 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Markus's Brain Swap Space</title>
   <id>http://www.markusz.io/posts/atom.xml</id>
-  <updated>2018-04-13T00:00:00Z</updated>
+  <updated>2018-04-27T00:00:00Z</updated>
   <link href="http://www.markusz.io/" />
   <link href="http://www.markusz.io/posts/atom.xml" rel="self" />
   <generator uri="http://ablog.readthedocs.org" version="0.8.4">ABlog</generator>
+  <entry xml:base="http://www.markusz.io/posts/atom.xml">
+    <title type="text">Ubuntu with Debian Sid APT repository</title>
+    <id>http://www.markusz.io/posts/2018/04/27/ubuntu-debian-repo-pinning/</id>
+    <updated>2018-04-27T00:00:00Z</updated>
+    <published>2018-04-27T00:00:00Z</published>
+    <link href="http://www.markusz.io/posts/2018/04/27/ubuntu-debian-repo-pinning/" />
+    <author>
+      <name>Markus Zoeller</name>
+    </author>
+    <content type="html">&lt;p&gt;Ubuntu is great in my opinion, and of the reasons for it is its use of
+recent versions for the packages in their APT repositories. But what if
+you need a package in an even more recent version and cannot wait for the
+next release? The Debian Sid release, the unstable development version, has
+those newer packages and they can be used in an Ubuntu with the help of
+APT package pinning and this post shows the things you need to know for that.&lt;/p&gt;
+</content>
+  </entry>
   <entry xml:base="http://www.markusz.io/posts/atom.xml">
     <title type="text">Learning Go (part 1) - Conway's Game of Life</title>
     <id>http://www.markusz.io/posts/2018/04/13/go-part1-game-of-life/</id>
