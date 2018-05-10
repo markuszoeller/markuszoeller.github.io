@@ -12,7 +12,9 @@ backport
 Backport
 backports
 Backports
+commoditize
 config
+configurability
 customizable
 Customizable
 datasource
@@ -25,8 +27,10 @@ deserialize
 devs
 diff
 diffs
+enablement
 extensibility
 Extensibility
+failover
 Feb
 filesystem
 Filesystem
@@ -44,6 +48,7 @@ indices
 Indices
 inline
 Inline
+interoperability
 Jan
 Jul
 Jun
@@ -80,6 +85,7 @@ playbook
 Playbook
 playbooks
 Playbooks
+playlist
 plugin
 Plugin
 plugins
@@ -98,6 +104,8 @@ regex
 Regex
 repo
 repos
+rollout
+rollouts
 runtime
 Runtime
 runtimes
@@ -120,6 +128,7 @@ Tarball
 tarballs
 Tarballs
 templated
+testability
 timestamp
 todo
 transactional
@@ -144,5 +153,6 @@ Wildcard
 wildcards
 Wildcards
 workflow
+workflows
 www
 Zoeller
