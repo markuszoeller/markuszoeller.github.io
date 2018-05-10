@@ -8,6 +8,7 @@
    sandboxed
    mortems
    Mixins
+   Kubernetes
 
 
 
@@ -178,7 +179,7 @@ channels for sharing expertise where suggested.
 
 
 Continuously Deliver your *Kubernetes* Infrastructure
-===================================================
+=====================================================
 
 https://www.youtube.com/watch?v=1xHmCrd8Qn8
 
@@ -384,8 +385,8 @@ So much to read, so little time...
 
 
 
-*Kubernetes* Multi-Cluster Operations without Federation
-========================================================
+Kubernetes Multi-Cluster Operations without Federation
+======================================================
 
 https://www.youtube.com/watch?v=zVOIk7nO_ts
 
@@ -486,8 +487,8 @@ and think more about this.
 
 
 
-*Kubernetes* 101: DIY Workshop
-==============================
+Kubernetes 101: DIY Workshop
+============================
 
 https://www.youtube.com/watch?v=mYsp_cGY2O0
 
@@ -508,7 +509,7 @@ A few tips for your own workshop are:
 
 
 What Does “Production Ready” Really Mean for a *Kubernetes* Cluster?
-==================================================================
+====================================================================
 
 https://www.youtube.com/watch?v=EjSiZgGdRqk
 
@@ -544,8 +545,8 @@ extension points.
 
 
 
-*Kubernetes* Runs Anywhere, but Does your Data?
-===============================================
+Kubernetes Runs Anywhere, but Does your Data?
+=============================================
 
 https://www.youtube.com/watch?v=Ot66g1WzXEU
 
