@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The 2018 KubeCon and CloudNativeCon in Copenhagen, Denmark &#8212; Markus Zoeller Blog</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/asciinema-player.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/asciinema-player.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="../../../../../about/" />
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" />
+  
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../../../../posts/atom.xml" title="Markus's Brain Swap Space">
+  
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../../../">
+          MZIO</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../../../about/">About</a></li>
+                <li><a href="../../../../category/">Categories</a></li>
+                <li><a href="../../../../tag/">Tags</a></li>
+                <li><a href="../../../../archive/">Archive</a></li>
+                <li><a href="/posts/atom.xml"><i class='fa fa-rss-square' aria-hidden='true'></i></a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../../../">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../../../search/" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="the-2018-kubecon-and-cloudnativecon-in-copenhagen-denmark">
+<h1>The 2018 KubeCon and CloudNativeCon in Copenhagen, Denmark<a class="headerlink" href="#the-2018-kubecon-and-cloudnativecon-in-copenhagen-denmark" title="Permalink to this headline"> </a></h1>
+<p>This post is my recap of the <em>KubeCon and CloudNativeCon</em> conference which
+took place in <em>Copenhagen (Denmark)</em> from May 1-4, 2018. I&#8217;ll go
+briefly through the sessions I attended and the notes I took.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#top-3" id="id2">Top 3</a></li>
+<li><a class="reference internal" href="#lightning-talks" id="id3">Lightning talks</a></li>
+<li><a class="reference internal" href="#day-1-keynotes" id="id4">Day 1 Keynotes</a></li>
+<li><a class="reference internal" href="#whats-up-with-all-the-different-container-runtimes" id="id5">Whats Up With All The Different Container Runtimes?</a></li>
+<li><a class="reference internal" href="#evolving-systems-design-from-unreliable-rpc-to-resilience-with-linkerd" id="id6">Evolving Systems Design: From Unreliable RPC to Resilience with <em>Linkerd</em></a></li>
+<li><a class="reference internal" href="#open-source-and-building-online-communities-using-social-media-and-communications" id="id7">Open Source and Building Online Communities using Social Media and Communications</a></li>
+<li><a class="reference internal" href="#continuously-deliver-your-kubernetes-infrastructure" id="id8">Continuously Deliver your <em>Kubernetes</em> Infrastructure</a></li>
+<li><a class="reference internal" href="#building-a-cloud-native-culture-in-an-enterprise" id="id9">Building a Cloud Native Culture in an Enterprise</a></li>
+<li><a class="reference internal" href="#serverless-wg-bof" id="id10">Serverless WG BOF</a></li>
+<li><a class="reference internal" href="#evening-keynotes" id="id11">Evening keynotes</a></li>
+<li><a class="reference internal" href="#day-2-keynotes" id="id12">Day 2 Keynotes</a></li>
+<li><a class="reference internal" href="#managing-kubernetes-what-you-need-to-know-about-day-2" id="id13">Managing <em>Kubernetes</em>: What You Need to Know About Day 2</a></li>
+<li><a class="reference internal" href="#stories-from-the-playbook" id="id14">Stories from the Playbook</a></li>
+<li><a class="reference internal" href="#challenges-to-writing-cloud-native-applications" id="id15">Challenges to Writing Cloud Native Applications</a></li>
+<li><a class="reference internal" href="#kubernetes-multi-cluster-operations-without-federation" id="id16">Kubernetes Multi-Cluster Operations without Federation</a></li>
+<li><a class="reference internal" href="#building-event-driven-pipelines-with-brigade" id="id17">Building Event-Driven Pipelines with Brigade</a></li>
+<li><a class="reference internal" href="#observability-and-the-depths-of-debugging-cloud-native-applications-using-linkerd-and-conduit" id="id18">Observability and the Depths of Debugging Cloud-Native Applications using <em>Linkerd</em> and Conduit</a></li>
+<li><a class="reference internal" href="#day-3-keynotes" id="id19">Day 3 Keynotes</a></li>
+<li><a class="reference internal" href="#kubernetes-101-diy-workshop" id="id20">Kubernetes 101: DIY Workshop</a></li>
+<li><a class="reference internal" href="#what-does-production-ready-really-mean-for-a-kubernetes-cluster" id="id21">What Does “Production Ready” Really Mean for a <em>Kubernetes</em> Cluster?</a></li>
+<li><a class="reference internal" href="#prometheus-monitoring-mixins-using-jsonnet-to-package-together-dashboards-alerts-and-exporters" id="id22">Prometheus Monitoring Mixins: Using <em>Jsonnet</em> to Package Together Dashboards, Alerts and Exporters</a></li>
+<li><a class="reference internal" href="#kubernetes-runs-anywhere-but-does-your-data" id="id23">Kubernetes Runs Anywhere, but Does your Data?</a></li>
+<li><a class="reference internal" href="#openstack-sig-deep-dive" id="id24">OpenStack SIG Deep Dive</a></li>
+<li><a class="reference internal" href="#multi-tenancy-in-kubernetes-best-practices-today-and-future-directions" id="id25">Multi-Tenancy in <em>Kubernetes</em>: Best Practices Today, and Future Directions</a></li>
+<li><a class="reference internal" href="#event-recap" id="id26">Event Recap</a></li>
+</ul>
+</div>
+<table border="1" class="docutils" id="id1">
+<caption><span class="caption-text">Change history:</span><a class="headerlink" href="#id1" title="Permalink to this table"> </a></caption>
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Date</th>
+<th class="head">Change description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>2018-05-11</td>
+<td>The first release</td>
+</tr>
+</tbody>
+</table>
+<a class="reference internal image-reference" href="../../../../../_images/IMG_20180502_084341340.jpg"><img alt="The room for the keynotes." src="../../../../../_images/IMG_20180502_084341340.jpg" style="width: 95%;" /></a>
+<p>All sessions can be found here:
+<a class="reference external" href="https://kccnceu18.sched.com/mobile/#page:page-schedule">https://kccnceu18.sched.com/mobile/#page:page-schedule</a></p>
+<p>All 300+ recordings of the whole event can be found in this playlist:
+<a class="reference external" href="https://www.youtube.com/watch?v=OUYTNywPk-s&amp;list=PLj6h78yzYM2N8GdbjmhVU65KYm_68qBmo">https://www.youtube.com/watch?v=OUYTNywPk-s&amp;list=PLj6h78yzYM2N8GdbjmhVU65KYm_68qBmo</a></p>
+<p>Be aware that the 35 minute session limit takes its toll. They speak really fast
+sometimes.</p>
+<p>If you want to sound smart in the next weeks and months, use these keywords:</p>
+<ul class="simple">
+<li><em>serverless</em> / <em>FaaS</em></li>
+<li>service mesh with <em>istio</em></li>
+<li>chaos engineering</li>
+<li>security with <em>gVisor</em></li>
+</ul>
+<div class="section" id="top-3">
+<h2><a class="toc-backref" href="#contents">Top 3</a><a class="headerlink" href="#top-3" title="Permalink to this headline"> </a></h2>
+<p>If you&#8217;re low on time, watch only these three videos, which were my highlights
+of the event:</p>
+<ul>
+<li><p class="first"><cite>Crossing the River by Feeling the Stones</cite>:</p>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=xlNYYy8pzB4">https://www.youtube.com/watch?v=xlNYYy8pzB4</a></p>
+</li>
+<li><p class="first"><cite>Anatomy of a Production Kubernetes Outage</cite>:</p>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=OUYTNywPk-s">https://www.youtube.com/watch?v=OUYTNywPk-s</a></p>
+</li>
+<li><p class="first"><cite>Multi-Tenancy in Kubernetes: Best Practices Today, and Future Directions</cite>:</p>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=xygE8DbwJ7c">https://www.youtube.com/watch?v=xygE8DbwJ7c</a></p>
+</li>
+</ul>
+<hr class="docutils" />
+<p><strong>Tuesday</strong></p>
+</div>
+<div class="section" id="lightning-talks">
+<h2><a class="toc-backref" href="#contents">Lightning talks</a><a class="headerlink" href="#lightning-talks" title="Permalink to this headline"> </a></h2>
+<p>On Tuesday evening, there were some <em>lighting talks</em>. In case you don&#8217;t know what that
+means, it&#8217;s a series of different topics, each typically presented within 5 minutes.
+Apparently I&#8217;m not into that kind of format, although the topics were interesting.
+If you do such a format in the future, please don&#8217;t try to squash 20 min of content
+into the session by talking extra fast. I didn&#8217;t note down anything in the 90 minutes,
+but it was a nice start for the next three days.</p>
+<hr class="docutils" />
+<p><strong>Wednesday</strong></p>
+</div>
+<div class="section" id="day-1-keynotes">
+<h2><a class="toc-backref" href="#contents">Day 1 Keynotes</a><a class="headerlink" href="#day-1-keynotes" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=C1kwY0N4PUk">https://www.youtube.com/watch?v=C1kwY0N4PUk</a></p>
+<p>I&#8217;ve had bad experiences with keynotes at other conferences in the past. They tended
+to be either boring or some executives didn&#8217;t have a clue what they are talking about.
+I gave it another try this time, and it was a much better experience than in the past.
+The sessions were quite <strong>good and entertaining</strong> with some interesting announcements
+(see the other <em>keynotes</em> blocks later on in this post). The most interesting thing
+at this morning where the presentation of the <strong>maturity model of the CNCF projects</strong>
+<a class="reference external" href="https://www.cncf.io/projects/">https://www.cncf.io/projects/</a> which sorts projects either in <strong>Sandbox</strong> or
+<strong>Incubating</strong> or <strong>Graduated</strong> depending on different criteria. Interesting new
+projects are:</p>
+<ul class="simple">
+<li><em>NATS</em> for messaging <a class="reference external" href="https://nats.io/">https://nats.io/</a></li>
+<li><em>SPIFFE</em> / <em>SPIRE</em> for identity management <a class="reference external" href="https://spiffe.io/">https://spiffe.io/</a></li>
+</ul>
+<p>Let&#8217;s go through the sessions after the keynotes one by one.</p>
+</div>
+<div class="section" id="whats-up-with-all-the-different-container-runtimes">
+<h2><a class="toc-backref" href="#contents">Whats Up With All The Different Container Runtimes?</a><a class="headerlink" href="#whats-up-with-all-the-different-container-runtimes" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=lHv0LVEIPk8">https://www.youtube.com/watch?v=lHv0LVEIPk8</a></p>
+<p>There is <em>containerd</em>, <em>rkt</em>, <em>cri-o</em>, <em>LXC</em>, <em>kata</em> and others.
+I was still a little clueless after this session, to be honest.
+The criteria chosen in the presentation didn&#8217;t really struck with me.
+If there are no strong reasons (and experiments to prove theories), I guess
+it&#8217;s safe to keep on going with <em>Docker</em> as a runtime.</p>
+<p>My main takeaway from this session is, that the different competing runtimes
+are encouraged to fulfill a common behavior, the <strong>Container Runtime Interface (CRI)</strong>
+<a class="reference external" href="https://github.com/opencontainers/runtime-spec/blob/master/spec.md">https://github.com/opencontainers/runtime-spec/blob/master/spec.md</a>
+specified by the the <strong>Open Container Initiave (OCI)</strong>. This enables portability and
+<strong>avoids vendor lock-in</strong>.</p>
+</div>
+<div class="section" id="evolving-systems-design-from-unreliable-rpc-to-resilience-with-linkerd">
+<h2><a class="toc-backref" href="#contents">Evolving Systems Design: From Unreliable RPC to Resilience with <em>Linkerd</em></a><a class="headerlink" href="#evolving-systems-design-from-unreliable-rpc-to-resilience-with-linkerd" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=2EqkvPqk7JU">https://www.youtube.com/watch?v=2EqkvPqk7JU</a></p>
+<p>This is one of the many talks about a <strong>service mesh</strong>, this time with
+<em>Linkerd</em>. The speaker shared his experiences of replacing a messaging
+queue with a service mesh, built with <em>Linkerd</em>. A few features made
+<em>Linkerd</em> very interesting:</p>
+<ul class="simple">
+<li>possibility of A/B testing</li>
+<li>built-in bulk head pattern</li>
+<li>automated retries on fails</li>
+</ul>
+<p>I think those things are possible with common message queues too, but
+apparently he was quite happy with the results and it solved the problems
+he faced well enough.</p>
+<p>I&#8217;ll probably take a closer look at <em>Linkerd</em> in a separate post.</p>
+</div>
+<div class="section" id="open-source-and-building-online-communities-using-social-media-and-communications">
+<h2><a class="toc-backref" href="#contents">Open Source and Building Online Communities using Social Media and Communications</a><a class="headerlink" href="#open-source-and-building-online-communities-using-social-media-and-communications" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=V0qaU512zrg">https://www.youtube.com/watch?v=V0qaU512zrg</a></p>
+<p>Communication is key. I don&#8217;t know many people who doubt that.
+How to have good and efficient communications, that&#8217;s the hard question.
+The speaker shared some insights and most of it boils down to
+<strong>know your audience</strong>. As a way to deal with all the different platforms,
+using <em>Twitter</em> for engagement with the audience and other social media
+channels for sharing expertise where suggested.</p>
+</div>
+<div class="section" id="continuously-deliver-your-kubernetes-infrastructure">
+<h2><a class="toc-backref" href="#contents">Continuously Deliver your <em>Kubernetes</em> Infrastructure</a><a class="headerlink" href="#continuously-deliver-your-kubernetes-infrastructure" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=1xHmCrd8Qn8">https://www.youtube.com/watch?v=1xHmCrd8Qn8</a></p>
+<p>A few of the more interesting practices the speaker shared were:</p>
+<ul class="simple">
+<li><strong>no pet clusters</strong> (the variance is too much maintenance effort)</li>
+<li>do operations by <em>Github</em> pull request (so called <strong>gitops</strong>)
+<a class="reference external" href="https://www.weave.works/blog/gitops-operations-by-pull-request">https://www.weave.works/blog/gitops-operations-by-pull-request</a></li>
+<li>there is no maintenance window. For example, security fixes need to be
+applicable at every point in time.</li>
+<li>run <em>etcd</em> outside of the <em>Kubernetes</em> master nodes</li>
+</ul>
+<p>The folks from <em>Zalando</em> open sourced their <em>Cluster Lifecycle Manager (CLM)</em>
+at <a class="reference external" href="https://github.com/zalando-incubator/cluster-lifecycle-manager">https://github.com/zalando-incubator/cluster-lifecycle-manager</a> and think
+it&#8217;s worth having a look.</p>
+<p>They use <em>Ginkgo</em> as <strong>Behavior Driven Development (BDD)</strong> testing framework
+<a class="reference external" href="https://onsi.github.io/ginkgo/">https://onsi.github.io/ginkgo/</a> to ensure no regressions slipped through
+with an upgrade.</p>
+<p>There was much more than what I noted down. It was an excellent session which
+condensed the 2 years long operations knowledge down into 35 minutes.</p>
+</div>
+<div class="section" id="building-a-cloud-native-culture-in-an-enterprise">
+<h2><a class="toc-backref" href="#contents">Building a Cloud Native Culture in an Enterprise</a><a class="headerlink" href="#building-a-cloud-native-culture-in-an-enterprise" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=Tm4VfJtOHt8">https://www.youtube.com/watch?v=Tm4VfJtOHt8</a></p>
+<p>I have not expected to see people from <em>The New York Times</em> (or any other
+traditional print medium) at a cloud conference. It was surprising to hear
+that they also don&#8217;t see themselves as a print company anymore, but simply
+a news company, which makes sense, as the consumption habits change fast.
+In one of the keynotes, it was mentioned that more than half their users
+were getting their news online, so it&#8217;s not surprising to hear that they
+need to manage their online content.</p>
+<p>One of the challenges was the transition from a print company to a content
+delivery company. To aid in the transition, they made good experiences
+with having office hours and <strong>support channels</strong> in slack. I think that can be
+a general pattern for dealing with <strong>cultural change</strong>.</p>
+<p>To enable the internal teams, they see themselves in a <strong>delivery engineering</strong>
+way and mentioned this blog post:
+<a class="reference external" href="http://gregdmd.com/blog/2015/07/19/delivery-engineering-team/">http://gregdmd.com/blog/2015/07/19/delivery-engineering-team/</a></p>
+<p>Lastly, they weren&#8217;t the only one which continuously mentioned the importance
+of having well defined <strong>Service Level Objectives (SLO)</strong> which can be
+measured and improved over time.</p>
+</div>
+<div class="section" id="serverless-wg-bof">
+<h2><a class="toc-backref" href="#contents">Serverless WG BOF</a><a class="headerlink" href="#serverless-wg-bof" title="Permalink to this headline"> </a></h2>
+<p>The <em>Serverless</em> working group consists of all major cloud providers and
+one of the first goals is the harmonization of an <strong>event format</strong>. Otherwise
+the interoperability suffers and the hook-in cost is too high. The spec can
+be found at <a class="reference external" href="https://github.com/cloudevents/spec/blob/master/spec.md">https://github.com/cloudevents/spec/blob/master/spec.md</a></p>
+<p>The latest <strong>whitepaper</strong> of the group can be found at
+<a class="reference external" href="https://github.com/cncf/wg-serverless/tree/master/whitepaper">https://github.com/cncf/wg-serverless/tree/master/whitepaper</a>
+It also contains a link to the current <em>Serverless</em> <strong>landscape</strong> at
+<a class="reference external" href="https://docs.google.com/spreadsheets/d/10rSQ8rMhYDgf_ib3n6kfzwEuoE88qr0amUPRxKbwVCk/">https://docs.google.com/spreadsheets/d/10rSQ8rMhYDgf_ib3n6kfzwEuoE88qr0amUPRxKbwVCk/</a>
+which is an interesting overview.</p>
+<p>An aspect of <em>Serverless</em> could be to serve as an enabler for a <strong>ChatOps</strong> model.</p>
+</div>
+<div class="section" id="evening-keynotes">
+<h2><a class="toc-backref" href="#contents">Evening keynotes</a><a class="headerlink" href="#evening-keynotes" title="Permalink to this headline"> </a></h2>
+<p>There were also some keynotes at the evening, and the highlight of it was the
+<strong>post mortem</strong> of an outage the <em>Monzo</em> bank had some time ago. The previous link
+brings you to the video, I can highly recommend it. It&#8217;s great to listen to the
+experiences others made, and especially the things which went wrong. I wish we
+would all be more open with the things which aren&#8217;t traditional success stories.
+That story also showed, that <strong>chaos engineering</strong> as a discipline is a necessity.
+Kudos to <em>Monzo</em> for being open here!</p>
+<p>Google announced two things here:</p>
+<ul class="simple">
+<li><em>gVisor</em> for sandboxed containers: <a class="reference external" href="https://github.com/google/gvisor">https://github.com/google/gvisor</a></li>
+<li><em>stackdriver</em> for observability: <a class="reference external" href="https://cloud.google.com/stackdriver/">https://cloud.google.com/stackdriver/</a></li>
+</ul>
+<p>They also mentioned their podcast I wasn&#8217;t aware of:
+<a class="reference external" href="https://www.gcppodcast.com/categories/kubernetes/">https://www.gcppodcast.com/categories/kubernetes/</a></p>
+<p>Last but not least, Prometheus in version 2 is out and fast as hell,
+thanks to the new implementation of the underlying time series database.</p>
+<hr class="docutils" />
+<p><strong>Thursday</strong></p>
+</div>
+<div class="section" id="day-2-keynotes">
+<h2><a class="toc-backref" href="#contents">Day 2 Keynotes</a><a class="headerlink" href="#day-2-keynotes" title="Permalink to this headline"> </a></h2>
+<p>The keynotes this morning also set more focus on <strong>security</strong> which was a
+major theme throughout the conference. Naturally, <strong>gVisor</strong> got mentioned
+again. Also, <strong>Prometheus</strong> is everywhere and it was not the first (or the
+last time) <strong>istio</strong> was mentioned <a class="reference external" href="https://istio.io/">https://istio.io/</a>.</p>
+<p>The <strong>operator framwork</strong> got mentioned here and in later sessions.
+In short, it&#8217;s a way to write code for all the tasks a human application
+operator would do, including the necessary operations knowledge.
+I&#8217;ve probably need to invest some time in the future to think this
+through: <a class="reference external" href="https://coreos.com/blog/introducing-operator-framework">https://coreos.com/blog/introducing-operator-framework</a>.</p>
+</div>
+<div class="section" id="managing-kubernetes-what-you-need-to-know-about-day-2">
+<h2><a class="toc-backref" href="#contents">Managing <em>Kubernetes</em>: What You Need to Know About Day 2</a><a class="headerlink" href="#managing-kubernetes-what-you-need-to-know-about-day-2" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=0TBelL8UBQU">https://www.youtube.com/watch?v=0TBelL8UBQU</a></p>
+<p>The main takeaways from this excellent session were:</p>
+<ul class="simple">
+<li><strong>user experience</strong> matters for adoption of change</li>
+<li><strong>cultural change</strong> and technical change are equally necessary</li>
+<li>think simple</li>
+</ul>
+<p>It was obvious throughout the session that the speaker had a lot of
+experience when it comes to manage <em>Kubernetes</em>. Luckily, he wrote it
+down and it will be published this summer:
+<a class="reference external" href="https://www.safaribooksonline.com/library/view/managing-kubernetes/9781492033905/">https://www.safaribooksonline.com/library/view/managing-kubernetes/9781492033905/</a></p>
+<p>Some specific tips were:</p>
+<ul class="simple">
+<li>define &#8220;high availability&#8221;</li>
+<li><strong>Mean Time to Recovery (MTTR)</strong> is THE metric</li>
+<li>organization specific logic can be done with dynamic admission control:
+<a class="reference external" href="https://kubernetes.io/docs/admin/extensible-admission-controllers/">https://kubernetes.io/docs/admin/extensible-admission-controllers/</a></li>
+<li>a bootstrapping machine helps to commoditize deployments</li>
+<li>volumes are bound to availability zones, so think about that in failover
+scenarios</li>
+</ul>
+</div>
+<div class="section" id="stories-from-the-playbook">
+<h2><a class="toc-backref" href="#contents">Stories from the Playbook</a><a class="headerlink" href="#stories-from-the-playbook" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=N2JUGnwinbQ">https://www.youtube.com/watch?v=N2JUGnwinbQ</a></p>
+<p>The speakers work in the Google <strong>Site Reliability Engineering (SRE)</strong> team
+and shared some best practices:</p>
+<ul class="simple">
+<li>playbooks improve the <strong>Mean Time to Recovery (MTTR)</strong></li>
+<li>playbooks reduce the cognitive load</li>
+<li>have <em>probers</em> as part of observability <a class="reference external" href="https://github.com/google/cloudprober">https://github.com/google/cloudprober</a></li>
+<li>use resource limits on pods</li>
+<li>have an established escalation path</li>
+<li>use <strong>coordinate -&gt; communicate -&gt; control</strong> as an escalation protocol</li>
+<li>do blameless post mortems</li>
+<li>solve issues in four steps:<ol class="arabic">
+<li>symptom analysis</li>
+<li>apply mitigation</li>
+<li>find root cause</li>
+<li>apply fix</li>
+</ol>
+</li>
+<li>a fast track for emergency rollouts might also prove useful</li>
+</ul>
+<p>They also currently work on problem fingerprinting as a technique to identify
+problems faster and automatized.</p>
+<p>Another interesting read is the SRE book at
+<a class="reference external" href="https://landing.google.com/sre/book/chapters/introduction.html">https://landing.google.com/sre/book/chapters/introduction.html</a></p>
+<p>And lastly a hint to the <em>Google Kubernetes Engine (GKE)</em> and its new
+beta offering of private clusters:
+<a class="reference external" href="https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters">https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters</a></p>
+</div>
+<div class="section" id="challenges-to-writing-cloud-native-applications">
+<h2><a class="toc-backref" href="#contents">Challenges to Writing Cloud Native Applications</a><a class="headerlink" href="#challenges-to-writing-cloud-native-applications" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=di6oFceM_CQ">https://www.youtube.com/watch?v=di6oFceM_CQ</a></p>
+<p>The key takeaways were:</p>
+<ul class="simple">
+<li>Persistent data in cloud native environments is a hard problem.</li>
+<li>Having multiple data stores with data replication between them is hard to do
+but useful.</li>
+<li>Service coupling and latency have impact on scheduling because of resources.</li>
+<li>Design for isolated testability even for end-to-end tests of your service.</li>
+<li>Include the operators in the architecture decision process as many issues
+are platform specific.</li>
+</ul>
+<p>Among others, the speaker recommended the book <em>Designing Distributed Systems</em>
+<a class="reference external" href="https://www.oreilly.com/library/view/designing-distributed-systems/9781491983638/">https://www.oreilly.com/library/view/designing-distributed-systems/9781491983638/</a>
+So much to read, so little time...</p>
+</div>
+<div class="section" id="kubernetes-multi-cluster-operations-without-federation">
+<h2><a class="toc-backref" href="#contents">Kubernetes Multi-Cluster Operations without Federation</a><a class="headerlink" href="#kubernetes-multi-cluster-operations-without-federation" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=zVOIk7nO_ts">https://www.youtube.com/watch?v=zVOIk7nO_ts</a></p>
+<p>As an example, that probably every organization has at least 3 clusters, the
+common setup of having a development cluster, a test/staging cluster and a
+production cluster was shown. In the speakers experience, having 5-10 clusters
+is the average. How do you deal with operations which span multiple clusters?</p>
+<p>The <strong>Kubernetes Federation</strong> concept in its current form is seen as not fit for
+that at the moment:
+<a class="reference external" href="https://kubernetes.io/docs/concepts/cluster-administration/federation/">https://kubernetes.io/docs/concepts/cluster-administration/federation/</a>
+One of the main problems is the necessary root access of the federation server,
+which is a security problem.</p>
+<p>A possible solution cloud be the <strong>Cluster Registry</strong> project at
+<a class="reference external" href="https://github.com/kubernetes/cluster-registry">https://github.com/kubernetes/cluster-registry</a> and by creating a workflow with
+custom <em>Kubernetes</em> resources
+<a class="reference external" href="https://kubernetes.io/docs/concepts/api-extension/custom-resources/">https://kubernetes.io/docs/concepts/api-extension/custom-resources/</a>
+which get managed by the operator pattern
+<a class="reference external" href="https://coreos.com/blog/introducing-operators.html">https://coreos.com/blog/introducing-operators.html</a></p>
+<p>According to the speaker, the user experience is best with <em>Kubernetes</em> tools,
+that&#8217;s why the extension points are preferred.</p>
+</div>
+<div class="section" id="building-event-driven-pipelines-with-brigade">
+<h2><a class="toc-backref" href="#contents">Building Event-Driven Pipelines with Brigade</a><a class="headerlink" href="#building-event-driven-pipelines-with-brigade" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=yhfc0FKdFc8">https://www.youtube.com/watch?v=yhfc0FKdFc8</a></p>
+<p><em>Brigade</em> is a tool, running in <em>Kubernetes</em>, which allows to create workflows
+based on <strong>events</strong>. I&#8217;m not sure how this differs from <em>Function as a Service (FaaS)</em>,
+e.g. OpenFaaS <a class="reference external" href="https://github.com/openfaas/faas">https://github.com/openfaas/faas</a></p>
+<p>The main use case is probably in the continuous integration / continuous delivery
+area. The speaker created an example pipeline with a CLI tool <strong>brigateterm</strong>
+during the session. In it&#8217;s simplest form, it resembles the popular mobile app
+IFTTT, but on steroids. Said that, writing <strong>glue code</strong> between legacy applications
+with <em>Brigade</em> might be a useful area for that technology too. There should be
+enough of that in your company :)</p>
+</div>
+<div class="section" id="observability-and-the-depths-of-debugging-cloud-native-applications-using-linkerd-and-conduit">
+<h2><a class="toc-backref" href="#contents">Observability and the Depths of Debugging Cloud-Native Applications using <em>Linkerd</em> and Conduit</a><a class="headerlink" href="#observability-and-the-depths-of-debugging-cloud-native-applications-using-linkerd-and-conduit" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=RC_9ywj0yz8">https://www.youtube.com/watch?v=RC_9ywj0yz8</a></p>
+<p><em>Conduit</em> is another example of a <strong>service mesh</strong> tool. It uses the sidecar pattern
+to serve as a proxy: <a class="reference external" href="https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar">https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar</a></p>
+<p>Injecting the sidecar besides the application to debug, enables us to add
+<strong>debugging functionality</strong> without altering the application itself. It&#8217;s worth
+noting that service mesh debugging is very different to monolith debugging.
+As the proxies have now all the knowledge about the communication of your
+distributed application, you can start querying them for various metrics
+to pin down the problematic service. This session walked us through that process.</p>
+<hr class="docutils" />
+<p><strong>Friday</strong></p>
+</div>
+<div class="section" id="day-3-keynotes">
+<h2><a class="toc-backref" href="#contents">Day 3 Keynotes</a><a class="headerlink" href="#day-3-keynotes" title="Permalink to this headline"> </a></h2>
+<p>The third day of the keynotes was also very good. The folks from <em>Google</em> showed
+how they could save energy my <strong>machine learning</strong>
+<a class="reference external" href="https://www.youtube.com/watch?v=I6iMznIYwM8">https://www.youtube.com/watch?v=I6iMznIYwM8</a>.
+The <em>KubeFlow</em> project is the toolkit which enables that:
+<a class="reference external" href="https://github.com/kubeflow/kubeflow">https://github.com/kubeflow/kubeflow</a>.
+Another example of machine learning was the keynote by folks from <em>booking.com</em>,
+who use it to recognize pictures for assets they can use to promote locations.</p>
+<p>Regarding <strong>security</strong>, the keynote from Liz demonstrated wonderfully the flaws of
+using root inside a container <a class="reference external" href="https://www.youtube.com/watch?v=ltrV-Qmh3oY">https://www.youtube.com/watch?v=ltrV-Qmh3oY</a>.
+Apparently most <em>Dockerfiles</em> out there don&#8217;t use the <code class="docutils literal"><span class="pre">USER</span></code> keyword.
+I also learned about the <code class="docutils literal"><span class="pre">$</span> <span class="pre">capsh</span> <span class="pre">--print</span></code> command. Very recommendable video.</p>
+<p>As mentioned at the beginning of this post, the best talk for me was the one
+named <cite>Crossing the River by Feeling the Stones</cite>. It&#8217;s about <strong>strategy</strong> and
+how to communicate it <a class="reference external" href="https://www.youtube.com/watch?v=xlNYYy8pzB4">https://www.youtube.com/watch?v=xlNYYy8pzB4</a>.
+If your company or organization has a strategy which is similar to one of
+the auto-generated ones at <a class="reference external" href="https://strategy-madlibs.herokuapp.com">https://strategy-madlibs.herokuapp.com</a> you
+should have a lot of fun with that talk. It was also the first time I heard
+about the evolution:</p>
+<ol class="arabic simple">
+<li>from genesis</li>
+<li>to custom build</li>
+<li>to service / product</li>
+<li>to utility / commodity</li>
+</ol>
+<p>I have read this post more in detail
+<a class="reference external" href="https://blog.gardeviance.org/2015/09/how-commodity-is-something.html">https://blog.gardeviance.org/2015/09/how-commodity-is-something.html</a>
+and think more about this.</p>
+</div>
+<div class="section" id="kubernetes-101-diy-workshop">
+<h2><a class="toc-backref" href="#contents">Kubernetes 101: DIY Workshop</a><a class="headerlink" href="#kubernetes-101-diy-workshop" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=mYsp_cGY2O0">https://www.youtube.com/watch?v=mYsp_cGY2O0</a></p>
+<p>As mentioned in another section here, the acceptance of change in your
+organization is one non-technical problem you need to solve before sustainable
+change actually happens. This session suggested doing a hands-on workshop
+to increase that acceptance and pointed to <em>Kubernetes</em> learning material
+at <a class="reference external" href="https://github.com/jpetazzo/container.training">https://github.com/jpetazzo/container.training</a>.</p>
+<p>A few tips for your own workshop are:</p>
+<ul class="simple">
+<li>No need to be an expert to teach something</li>
+<li>Limit unnecessary options</li>
+<li>Hand out printed credentials</li>
+<li>Consider network timeouts, maybe do the actions from a controller node</li>
+</ul>
+</div>
+<div class="section" id="what-does-production-ready-really-mean-for-a-kubernetes-cluster">
+<h2><a class="toc-backref" href="#contents">What Does “Production Ready” Really Mean for a <em>Kubernetes</em> Cluster?</a><a class="headerlink" href="#what-does-production-ready-really-mean-for-a-kubernetes-cluster" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=EjSiZgGdRqk">https://www.youtube.com/watch?v=EjSiZgGdRqk</a></p>
+<p>TL;DR: There are many possible definitions, you should have one.</p>
+<p>The speaker went through several aspects, be it <em>High Availability (HA)</em>,
+single point of failure, safe application of changes, you name it.
+The summary for me is, that being &#8220;production ready&#8221; isn&#8217;t easy, and
+even harder if the stakeholders have no common understanding what it means
+or costs. To get a feeling if your <em>Kubernetes</em> goes out of sync with
+what is commonly accepted, the conformance test suite is helpful:
+<a class="reference external" href="https://github.com/cncf/k8s-conformance">https://github.com/cncf/k8s-conformance</a>.</p>
+</div>
+<div class="section" id="prometheus-monitoring-mixins-using-jsonnet-to-package-together-dashboards-alerts-and-exporters">
+<h2><a class="toc-backref" href="#contents">Prometheus Monitoring Mixins: Using <em>Jsonnet</em> to Package Together Dashboards, Alerts and Exporters</a><a class="headerlink" href="#prometheus-monitoring-mixins-using-jsonnet-to-package-together-dashboards-alerts-and-exporters" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=b7-DtFfsL6E">https://www.youtube.com/watch?v=b7-DtFfsL6E</a></p>
+<p><em>Jsonnet</em> is a domain specific language (DSL) concerned with JSON configuration.
+Prometheus Dashboards, for example, are just big JSON objects. This is awesome if
+you want to store them in your <em>Github</em> project or want to share it with others.
+The downside of JSON is, that you cannot have variables or control structures or
+anything which can increase maintainability. <em>Jsonnet</em> allows you to more easily
+<strong>share your JSON configuration</strong> by providing configuration entry points as
+variables. It can do more that that, have a look at the examples at <a class="reference external" href="https://jsonnet.org/">https://jsonnet.org/</a>.
+<em>Jsonnet</em> is the base for <strong>Ksonnet</strong>, a DSL for <em>Kubernetes</em> resources
+<a class="reference external" href="https://ksonnet.io/">https://ksonnet.io/</a>. This configurability allows the creators of a service
+to also offer a <strong>best practice template</strong> with specific configuration
+extension points.</p>
+</div>
+<div class="section" id="kubernetes-runs-anywhere-but-does-your-data">
+<h2><a class="toc-backref" href="#contents">Kubernetes Runs Anywhere, but Does your Data?</a><a class="headerlink" href="#kubernetes-runs-anywhere-but-does-your-data" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=Ot66g1WzXEU">https://www.youtube.com/watch?v=Ot66g1WzXEU</a></p>
+<p>The most important thing here is the <strong>Container Storage Interface (CSI)</strong>
+which helps to abstract the storage back-end and allow data migration
+<a class="reference external" href="https://kubernetes.io/blog/2018/01/introducing-container-storage-interface/">https://kubernetes.io/blog/2018/01/introducing-container-storage-interface/</a>.
+Because, if your data cannot migrate, the migration of your application might
+be impaired. If you rely on a specific storage back-end, you might be in a
+vendor lock-in. The concept described in the link before reminds me of the
+driver concept in the <em>OpenStack Cinder</em> project.</p>
+</div>
+<div class="section" id="openstack-sig-deep-dive">
+<h2><a class="toc-backref" href="#contents">OpenStack SIG Deep Dive</a><a class="headerlink" href="#openstack-sig-deep-dive" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=l03heU_uG1s">https://www.youtube.com/watch?v=l03heU_uG1s</a></p>
+<p>With my history of OpenStack, I was wondering what the according special interest
+group was working on. The project can be found at
+<a class="reference external" href="https://github.com/kubernetes/cloud-provider-openstack">https://github.com/kubernetes/cloud-provider-openstack</a>
+and like others SIGs, the enablement of a common set of standards for external
+cloud providers is one of the goals. The cloud controller manager is still in
+alpha state at the time of this post:
+<a class="reference external" href="https://kubernetes.io/docs/tasks/administer-cluster/running-cloud-controller/">https://kubernetes.io/docs/tasks/administer-cluster/running-cloud-controller/</a></p>
+</div>
+<div class="section" id="multi-tenancy-in-kubernetes-best-practices-today-and-future-directions">
+<h2><a class="toc-backref" href="#contents">Multi-Tenancy in <em>Kubernetes</em>: Best Practices Today, and Future Directions</a><a class="headerlink" href="#multi-tenancy-in-kubernetes-best-practices-today-and-future-directions" title="Permalink to this headline"> </a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=xygE8DbwJ7c">https://www.youtube.com/watch?v=xygE8DbwJ7c</a></p>
+<p>The session was fully packed with content and I think the speaker could
+talk about that topic much longer and in-depth than the 35 minute limit
+allowed him to.</p>
+<p>The first and important thing is, that you need to <strong>define multi-tenancy</strong>
+when you talk about it. For example, <em>Kubernetes</em> doesn&#8217;t care about
+application internal multi-tenancy. The other cases could be:</p>
+<ul class="simple">
+<li>one tenant per cluster</li>
+<li>one tenant per <em>Kubernetes</em> namespace</li>
+<li>tenant specific nodes</li>
+</ul>
+<p>Especially the multi-tenancy per namespace, which can be seen as semi-trusted
+within a company, could be enough. <strong>Role Based Access Control (RBAC)</strong> can
+already do a lot here.</p>
+<p>As pods can talk to each other too, the network policy is a fine grained
+mechanism which could help your problem.</p>
+<p>The scheduler related features also can help you to isolate workload
+from each other, for example <strong>tains and tolerations</strong>
+<a class="reference external" href="https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/">https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/</a>
+as well as <strong>affinity and anti-affinity</strong>
+<a class="reference external" href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/">https://kubernetes.io/docs/concepts/configuration/assign-pod-node/</a>.</p>
+<p>A work in progress are <strong>security profiles</strong>, but I didn&#8217;t find a spec for it.</p>
+</div>
+<div class="section" id="event-recap">
+<h2><a class="toc-backref" href="#contents">Event Recap</a><a class="headerlink" href="#event-recap" title="Permalink to this headline"> </a></h2>
+<p>It was a great conference with fantastic content and speakers. The room sizes were
+perfect. I always found a seat and didn&#8217;t have to fall back to another session.
+The conference center also had a reasonable size, so that the 10 minute window to
+get to the next session was enough time. The lunch, coffee and snacks were plenty.
+Everything was well organized. The only thing to complain about was the lack of
+power supplies.</p>
+<p>The whole event, and the way the people speak about <em>Kubernetes</em>, reminded me of
+my first OpenStack experiences 3 years ago, where the project was at its peak of
+the hype cycle. Don&#8217;t get me wrong, <em>Kubernetes</em> (and <em>OpenStack</em> for that matter)
+is a great project which solves a specific problem space very well,
+but I&#8217;m convinced that the hype cycle is inevitable, and it might me reasonable to
+remind ourselves that <em>Kubernetes</em> is just another tool in the toolbox where you
+need to know how and when to apply it, and when another tool might be more appropriate.</p>
+<a class="reference internal image-reference" href="../../../../../_images/IMG_20180504_082231239.jpg"><img alt="The sponsors room." src="../../../../../_images/IMG_20180504_082231239.jpg" style="width: 95%;" /></a>
+</div>
+</div>
+
+  <div class="section">
+  
+    
+
+
+  
+  
+  </div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015-2018, Markus Zoeller.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
