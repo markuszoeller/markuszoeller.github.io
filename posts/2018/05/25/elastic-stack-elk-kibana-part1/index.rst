@@ -1,5 +1,5 @@
 
-.. post::
+.. post:: May 25, 2018
    :tags: logging, elasticstack
    :category: monitoring
    :title: Elastic Stack (formerly ELK) - Kibana (part 1)
