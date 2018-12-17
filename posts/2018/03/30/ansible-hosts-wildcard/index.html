@@ -203,24 +203,24 @@ to ignore the patch level. And apparently, <em>Ansible</em> can do that with a
 19
 20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
 
-<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
-  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="nt">gather_facts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
-  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Group</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">servers</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">operating</span><span class="nv"> </span><span class="s">system</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">version.&quot;</span>
-<span class="hll">      <span class="l l-Scalar l-Scalar-Plain">group_by</span><span class="p p-Indicator">:</span>
-</span><span class="hll">        <span class="l l-Scalar l-Scalar-Plain">key</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">os_{{ ansible_distribution }}_{{ ansible_distribution_version }}</span>
+  <span class="nt">tasks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Group</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">servers</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">operating</span><span class="nv"> </span><span class="s">system</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">version.&quot;</span>
+<span class="hll">      <span class="nt">group_by</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">os_{{ ansible_distribution }}_{{ ansible_distribution_version }}</span>
 </span>
-<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">os_Ubuntu_16.04</span>
-  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu_1604_install_tasks.yml</span>
+<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">os_Ubuntu_16.04</span>
+  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="nt">tasks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">include</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu_1604_install_tasks.yml</span>
 
-<span class="hll"><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">os_CentOS_7.4*</span>
-</span>  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">centos_74_install_tasks.yml</span>
+<span class="hll"><span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">os_CentOS_7.4*</span>
+</span>  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="nt">tasks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">include</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">centos_74_install_tasks.yml</span>
 </pre></div>
 </td></tr></table></div>
 <p>The specifier <code class="docutils literal"><span class="pre">os_CentOS_7.4*</span></code> accepts, that the actual key is

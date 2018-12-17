@@ -210,43 +210,43 @@ Don&#8217;t confuse the code below with any kind of actual recommendation.</p>
 42
 43</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
 
-<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
-  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
-  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="nt">tasks</span><span class="p">:</span>
 
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">apt</span><span class="nv"> </span><span class="s">cache</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">updated.&quot;</span>
-      <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">update_cache</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-        <span class="l l-Scalar l-Scalar-Plain">cache_valid_time</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3600</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">apt</span><span class="nv"> </span><span class="s">cache</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">updated.&quot;</span>
+      <span class="nt">apt</span><span class="p">:</span>
+        <span class="nt">update_cache</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="nt">cache_valid_time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3600</span>
 
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">basic</span><span class="nv"> </span><span class="s">build</span><span class="nv"> </span><span class="s">tools</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">installed.&quot;</span>
-      <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gcc,make</span>
-        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">basic</span><span class="nv"> </span><span class="s">build</span><span class="nv"> </span><span class="s">tools</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">installed.&quot;</span>
+      <span class="nt">apt</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gcc,make</span>
+        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
 
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">(old)</span><span class="nv"> </span><span class="s">OS</span><span class="nv"> </span><span class="s">packaged</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">lang</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">available.&quot;</span>
-      <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">golang-go</span>
-        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">absent</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">(old)</span><span class="nv"> </span><span class="s">OS</span><span class="nv"> </span><span class="s">packaged</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">lang</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">available.&quot;</span>
+      <span class="nt">apt</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">golang-go</span>
+        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">absent</span>
 
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">working</span><span class="nv"> </span><span class="s">directory</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">created.&quot;</span>
-      <span class="l l-Scalar l-Scalar-Plain">file</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/go&quot;</span>
-        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">directory</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">working</span><span class="nv"> </span><span class="s">directory</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">created.&quot;</span>
+      <span class="nt">file</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/go&quot;</span>
+        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">directory</span>
 
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">lang</span><span class="nv"> </span><span class="s">archive</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">downloaded</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">extracted.&quot;</span>
-      <span class="l l-Scalar l-Scalar-Plain">unarchive</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://dl.google.com/go/go1.9.3.linux-amd64.tar.gz</span>
-        <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/local/</span>
-        <span class="l l-Scalar l-Scalar-Plain">remote_src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-        <span class="l l-Scalar l-Scalar-Plain">creates</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/local/go/bin/go</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">lang</span><span class="nv"> </span><span class="s">archive</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">downloaded</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">extracted.&quot;</span>
+      <span class="nt">unarchive</span><span class="p">:</span>
+        <span class="nt">src</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://dl.google.com/go/go1.9.3.linux-amd64.tar.gz</span>
+        <span class="nt">dest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/local/</span>
+        <span class="nt">remote_src</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+        <span class="nt">creates</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/local/go/bin/go</span>
 
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">PATHs</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">set</span><span class="nv"> </span><span class="s">globally.&quot;</span>
-      <span class="l l-Scalar l-Scalar-Plain">lineinfile</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/profile</span>
-        <span class="l l-Scalar l-Scalar-Plain">line</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}&quot;</span>
-      <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">PATHs</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">set</span><span class="nv"> </span><span class="s">globally.&quot;</span>
+      <span class="nt">lineinfile</span><span class="p">:</span>
+        <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/profile</span>
+        <span class="nt">line</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}&quot;</span>
+      <span class="nt">with_items</span><span class="p">:</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">GOPATH=$HOME/go</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">PATH=$PATH:/usr/local/go/bin</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">GOROOT=$HOME/go</span>

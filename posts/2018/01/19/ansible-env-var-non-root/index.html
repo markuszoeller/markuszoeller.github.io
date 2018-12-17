@@ -199,48 +199,48 @@ it, so here it is:</p>
 <span class="c1"># ===========================================================================</span>
 <span class="c1"># Set up Elasticsearch on central logging host</span>
 <span class="c1"># ===========================================================================</span>
-<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">es1</span>
-<span class="hll">  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-</span>  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">es1</span>
+<span class="hll">  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</span>  <span class="nt">gather_facts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
 
-  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
-<span class="hll">    <span class="l l-Scalar l-Scalar-Plain">user_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">elastic</span>
-</span>    <span class="l l-Scalar l-Scalar-Plain">user_password</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">elastic</span>
-    <span class="l l-Scalar l-Scalar-Plain">user_group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">elastic</span>
+  <span class="nt">vars</span><span class="p">:</span>
+<span class="hll">    <span class="nt">user_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">elastic</span>
+</span>    <span class="nt">user_password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">elastic</span>
+    <span class="nt">user_group</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">elastic</span>
 
-  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="nt">tasks</span><span class="p">:</span>
 
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Create</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">group</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">Elasticsearch.&quot;</span>
-      <span class="l l-Scalar l-Scalar-Plain">group</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">user_group</span><span class="nv"> </span><span class="s">}}&quot;</span>
-        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Create</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">group</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">Elasticsearch.&quot;</span>
+      <span class="nt">group</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">user_group</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
 
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Allow</span><span class="nv"> </span><span class="s">passwordless</span><span class="nv"> </span><span class="s">sudo</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">group</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">user_group</span><span class="nv"> </span><span class="s">}}&quot;</span>
-      <span class="l l-Scalar l-Scalar-Plain">lineinfile</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/sudoers</span>
-        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
-        <span class="l l-Scalar l-Scalar-Plain">regexp</span><span class="p p-Indicator">:</span> <span class="s">&quot;^%{{</span><span class="nv"> </span><span class="s">user_group</span><span class="nv"> </span><span class="s">}}&quot;</span>
-        <span class="l l-Scalar l-Scalar-Plain">line</span><span class="p p-Indicator">:</span> <span class="s">&quot;%{{</span><span class="nv"> </span><span class="s">user_group</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">ALL=(ALL)</span><span class="nv"> </span><span class="s">NOPASSWD:</span><span class="nv"> </span><span class="s">ALL&quot;</span>
-        <span class="l l-Scalar l-Scalar-Plain">validate</span><span class="p p-Indicator">:</span> <span class="s">&#39;visudo</span><span class="nv"> </span><span class="s">-cf</span><span class="nv"> </span><span class="s">%s&#39;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Allow</span><span class="nv"> </span><span class="s">passwordless</span><span class="nv"> </span><span class="s">sudo</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">group</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">user_group</span><span class="nv"> </span><span class="s">}}&quot;</span>
+      <span class="nt">lineinfile</span><span class="p">:</span>
+        <span class="nt">dest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/sudoers</span>
+        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+        <span class="nt">regexp</span><span class="p">:</span> <span class="s">&quot;^%{{</span><span class="nv"> </span><span class="s">user_group</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="nt">line</span><span class="p">:</span> <span class="s">&quot;%{{</span><span class="nv"> </span><span class="s">user_group</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">ALL=(ALL)</span><span class="nv"> </span><span class="s">NOPASSWD:</span><span class="nv"> </span><span class="s">ALL&quot;</span>
+        <span class="nt">validate</span><span class="p">:</span> <span class="s">&#39;visudo</span><span class="nv"> </span><span class="s">-cf</span><span class="nv"> </span><span class="s">%s&#39;</span>
 
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Creating</span><span class="nv"> </span><span class="s">user</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">Elasticsearch</span><span class="nv"> </span><span class="s">group.&quot;</span>
-      <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">user_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
-        <span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">user_group</span><span class="nv"> </span><span class="s">}}&quot;</span>
-        <span class="l l-Scalar l-Scalar-Plain">append</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-        <span class="l l-Scalar l-Scalar-Plain">createhome</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-        <span class="l l-Scalar l-Scalar-Plain">system</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Creating</span><span class="nv"> </span><span class="s">user</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">Elasticsearch</span><span class="nv"> </span><span class="s">group.&quot;</span>
+      <span class="nt">user</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">user_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="nt">groups</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">user_group</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="nt">append</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="nt">createhome</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="nt">system</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
 
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Run</span><span class="nv"> </span><span class="s">elasticsearch</span><span class="nv"> </span><span class="s">as</span><span class="nv"> </span><span class="s">daemon.&quot;</span>
-<span class="hll">      <span class="l l-Scalar l-Scalar-Plain">environment</span><span class="p p-Indicator">:</span>
-</span><span class="hll">        <span class="l l-Scalar l-Scalar-Plain">ES_NETWORK_HOST</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_enp0s8.ipv4.address</span><span class="nv"> </span><span class="s">}}&quot;</span>
-</span><span class="hll">        <span class="l l-Scalar l-Scalar-Plain">ES_NODE_NAME</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_hostname</span><span class="nv"> </span><span class="s">}}&quot;</span>
-</span><span class="hll">      <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="s">&quot;sudo</span><span class="nv"> </span><span class="s">-E</span><span class="nv"> </span><span class="s">-u</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">user_name</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">./bin/elasticsearch</span><span class="nv"> </span><span class="s">-d</span><span class="nv"> </span><span class="s">-p</span><span class="nv"> </span><span class="s">pid&quot;</span>
-</span>      <span class="l l-Scalar l-Scalar-Plain">args</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">chdir</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/home/elastic/elasticsearch-6.1.1/</span>
-      <span class="l l-Scalar l-Scalar-Plain">async</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
-      <span class="l l-Scalar l-Scalar-Plain">poll</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Run</span><span class="nv"> </span><span class="s">elasticsearch</span><span class="nv"> </span><span class="s">as</span><span class="nv"> </span><span class="s">daemon.&quot;</span>
+<span class="hll">      <span class="nt">environment</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">ES_NETWORK_HOST</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_enp0s8.ipv4.address</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span class="hll">        <span class="nt">ES_NODE_NAME</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_hostname</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span class="hll">      <span class="nt">command</span><span class="p">:</span> <span class="s">&quot;sudo</span><span class="nv"> </span><span class="s">-E</span><span class="nv"> </span><span class="s">-u</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">user_name</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">./bin/elasticsearch</span><span class="nv"> </span><span class="s">-d</span><span class="nv"> </span><span class="s">-p</span><span class="nv"> </span><span class="s">pid&quot;</span>
+</span>      <span class="nt">args</span><span class="p">:</span>
+        <span class="nt">chdir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/home/elastic/elasticsearch-6.1.1/</span>
+      <span class="nt">async</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+      <span class="nt">poll</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
 </pre></div>
 </td></tr></table></div>
 <p>The most important part is <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">-E</span> <span class="pre">-u</span></code> <a class="footnote-reference" href="#mansudo" id="id1">[1]</a>:</p>
