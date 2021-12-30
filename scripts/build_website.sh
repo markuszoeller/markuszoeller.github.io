@@ -49,10 +49,4 @@ shift $((OPTIND-1))
 # script functionality ------------------------------------------------------
 
 
-source ${BUILD_DIR}/bin/activate
-
-log "Building the blog sources..."
-${BUILD_DIR}/bin/ablog build
-log "Built the blog sources."
-
-deactivate
+docker run --rm -v `pwd`:/opt/shared markuszoeller/blog:latest

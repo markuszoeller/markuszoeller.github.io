@@ -309,6 +309,8 @@ html_static_path = ['_static']
 # This value determines the text for the permalink; it defaults to "¶".
 # Set it to None or the empty string to disable permalinks.
 html_add_permalinks = " "
+# html_permalinks_icon = ""
+# html_permalinks = True
 
 # Custom sidebar templates, maps document names to template names.
 #html_sidebars = {}
@@ -366,3 +368,7 @@ def setup(app):
     app.add_stylesheet('http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')  # may also be an URL
     app.add_stylesheet('css/asciinema-player.css')
     app.add_javascript('js/asciinema-player.js')
+    # app.add_css_file('css/custom.css')  # may also be an URL
+    # app.add_css_file('http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')  # may also be an URL
+    # app.add_css_file('css/asciinema-player.css')
+    # app.add_js_file('js/asciinema-player.js')
