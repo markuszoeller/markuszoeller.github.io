@@ -69,10 +69,5 @@ the ``sources`` branch will do a release of the blog.
 Configuration
 =============
 
-http://ablog.readthedocs.org/manual/ablog-configuration-options/
+https://ablog.readthedocs.io/en/latest/manual/ablog-configuration-options/
 
-
-Disqus Integration
-==================
-
-https://mzio.disqus.com/admin/settings/general/
