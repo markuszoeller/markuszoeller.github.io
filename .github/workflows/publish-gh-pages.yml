@@ -1,0 +1,37 @@
+name: Publish to GithubPages
+
+on:
+  push:
+    branches:
+      - sources
+  schedule:
+  - cron: "0 0 * * *"
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Build the website
+        uses: docker://markuszoeller/blog:latest
+        with:
+          args: mgmt build
+
+      - name: Test for common errors
+        uses: docker://markuszoeller/blog:latest
+        with:
+          args: mgmt test
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == "refs/heads/sources" }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: master
+          publish_dir: ./_website
+          commit_message: Docs build of commit
+          cname: www.markusz.io
+
