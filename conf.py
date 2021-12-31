@@ -139,7 +139,7 @@ html_sidebars = {}
 
 # You can enable Disqus_ by setting ``disqus_shortname`` variable.
 # Disqus_ short name for the blog.
-disqus_shortname = "mzio"
+disqus_shortname = ""
 
 # Choose to disqus pages that are not posts, default is ``False``.
 disqus_pages = False
