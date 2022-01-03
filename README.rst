@@ -1,6 +1,8 @@
 
-.. image:: https://travis-ci.org/markuszoeller/markuszoeller.github.io.svg?branch=sources
-    :target: https://travis-ci.org/markuszoeller/markuszoeller.github.io
+.. image:: https://github.com/markuszoeller/markuszoeller.github.io/actions/workflows/publish-gh-pages.yml/badge.svg?branch=sources
+    :target: https://github.com/markuszoeller/markuszoeller.github.io/actions/workflows/publish-gh-pages.yml
+    :alt: Publish to GithubPages
+
 
 ======
 README
@@ -16,6 +18,7 @@ Environment
 The logic is in a container which needs to be build first::
 
     $ docker build . -t markuszoeller/blog:latest
+    $ docker push markuszoeller/blog:latest
 
 
 Build
@@ -23,7 +26,7 @@ Build
 
 Run this to build the content::
 
-    $ docker run --rm -v `pwd`:/opt/shared markuszoeller/blog:latest
+    $ docker run --rm -v `pwd`:/opt/shared markuszoeller/blog:latest mgmt build
 
 
 Run
@@ -33,21 +36,7 @@ Run this to show the built content::
 
     $ cd _website && python3 -m http.server
 
-After that the ``*.rst`` files in the ``posts`` directory can be changed
-and the *ablog* server updates the content automatically at:
-http://127.0.0.1:8000/
-
-Stop the serving of the blog with::
-
-    $ make stop
-
-
-Spelling
-========
-
-Check the spelling of the posts with::
-
-    $ make spelling
+After that website can be accessed at http://127.0.0.1:8000/
 
 
 Testing
@@ -55,15 +44,16 @@ Testing
 
 Check for common mistakes (which can be detected by code)::
 
-    $ make test
+    $ docker run --rm -v `pwd`:/opt/shared markuszoeller/blog:latest mgmt test
 
 
 Release
 =======
 
-The release is done automatically with *Travis CI*. The important
-files are ``.travis.yml`` and ``publish-gh-pages.sh``. Every push on
-the ``sources`` branch will do a release of the blog.
+The release is done automatically with *Github Actions*. The important
+file is ``.github/workflows/publish-gh-pages.yml`` Every push on
+the ``sources`` branch will do a release of the blog. Also every day automatically
+at 00:00 to release posts I predated.
 
 
 Configuration
