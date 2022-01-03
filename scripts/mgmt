@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+# Print a log message to stdout.
+#   arg1  message to print
+log() {
+    local msg=$1
+    echo "LOG: `date -Is` - ${msg}"
+}
+
+function build_website() {
+    echo "script 'build'"
+    ablog build
+}
+
+function test_website() {
+    echo "script 'test'"
+    # Test for sorted spelling word list ======================================
+    log "Test for sorted spelling wordlist"
+    sort -fc spelling_wordlist.txt
+    # Test for too long URLs ==================================================
+    log "Test for too long URLs"
+    # This should be possible on mailing lists and git commit messages:
+    # """
+    # According to [99] [... and so on ...].
+    # References:
+    # [99] http://www.markusz.io/posts/YYYY/MM/DD/permalink-to-the-referenced-post/
+    # """
+    # This is 77 chars long, which makes it "line-break save" for mailing lists and
+    # git commit messages.
+    # It breaks down to this:
+    #    "[99] "                                      ==  5 chars
+    #    "http://www.markusz.io/"                     == 22 chars
+    #    "posts/YYYY/MM/DD/"                          == 17 chars
+    #    "permalink-to-the-referenced-post/"          == 33 chars
+    # This means we have to check for 33 chars.
+    POST_DIR_NAME_LEN_MAX=33
+    # only the directories with an "index.rst" file are posts
+    for POST_DIR_PATH in $(find posts/ -type f -name index.rst -printf '%h\n')
+    do
+        POST_DIR_NAME=`basename "$POST_DIR_PATH"`
+        size=${#POST_DIR_NAME}
+        if [ ${size} -ge ${POST_DIR_NAME_LEN_MAX} ]
+        then
+            log "$POST_DIR_NAME is longer than $POST_DIR_NAME_LEN_MAX chars."
+            exit 1
+        fi
+    done
+    # Test for spelling mistakes ==============================================
+    log "Test for spelling mistakes"
+    sphinx-build -Q -b spelling -d .doctrees . build/spelling
+    if [ -s build/spelling/output.txt ] ; then
+        log "Found spelling mistakes"
+        cat build/spelling/output.txt
+        exit 1
+    fi
+    rm -rf build
+}
+
+function clean_workdir() {
+    echo "script 'clean'"
+    rm -rf .doctrees
+    rm -rf _website
+    rm -rf build
+}
+
+function build_image() {
+    docker build . -t markuszoeller/blog:latest
+}
+
+
+if [[ "$1" == "build" ]]; then
+    build_website
+elif [[ "$1" == "test" ]]; then
+    test_website
+elif [[ "$1" == "clean" ]]; then
+    clean_workdir
+elif [[ "$1" == "image" ]]; then
+    build_image
+else
+    echo "unknown command; exit with error"
+    exit 1
+fi
+
