@@ -27,6 +27,10 @@
     <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../../_static/js/asciinema-player.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="../../../../../about/" />
     <link rel="index" title="Index" href="../../../../../genindex/" />
@@ -36,10 +40,6 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../../../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js "></script>
 
   
   <link rel="alternate" type="application/atom+xml"  href="../../../../../posts/atom.xml" title="Markus's Brain Swap Space">
@@ -117,7 +117,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="body col-md-12 content" role="main">
+    <div class="col-md-12 content">
       
   <div class="section" id="openstack-s-bug-management">
 <h1>OpenStack&#8217;s Bug Management<a class="headerlink" href="#openstack-s-bug-management" title="Permalink to this headline"> </a></h1>
@@ -169,7 +169,7 @@ example <code class="docutils literal"><span class="pre">https://bugs.launchpad.
 <div class="section" id="overview-of-the-life-cycle">
 <h2><a class="toc-backref" href="#contents">Overview of the Life Cycle</a><a class="headerlink" href="#overview-of-the-life-cycle" title="Permalink to this headline"> </a></h2>
 <p>This is the most basic (and slightly simplified) life cycle of a bug:</p>
-<div><img height="520" src="../../../../../_images/blockdiag-939b775311630a4fcd8251d6620856361b728fcf.png" width="832" /></div><table border="1" class="docutils">
+<div><img height="520" src="../../../../../_images/blockdiag-44eba33194b0a664b1d141ba41dba26ff187877e.png" width="832" /></div><table border="1" class="docutils">
 <colgroup>
 <col width="50%" />
 <col width="50%" />
@@ -540,18 +540,18 @@ you are not supposed to set <code class="docutils literal"><span class="pre">Imp
 <p>As a bug is moved along the process to being fixed, some bug state transitions
 can lead to confusion to contributors. The following are examples of how some
 of these common state transitions and how they should be handled.</p>
-<div><img height="120" src="../../../../../_images/blockdiag-725c775bea473a2df61bb6c0ae520bb77342e3db.png" width="448" /></div><p>If there is not enough information provided, contributors switch the bug from
+<div><img height="120" src="../../../../../_images/blockdiag-27e3494ba7181047b53e0e3f5f0a7b0b255df198.png" width="448" /></div><p>If there is not enough information provided, contributors switch the bug from
 <code class="docutils literal"><span class="pre">New</span></code> to <code class="docutils literal"><span class="pre">Incomplete</span></code> and ask the reporters for more details. When the
 reporters provide that information, they switch the status back to <code class="docutils literal"><span class="pre">New</span></code>.</p>
-<div><img height="360" src="../../../../../_images/blockdiag-315c5f1bb0a95068c711b3046116b5acfa27b62b.png" width="448" /></div><p>Sometimes a bug is reported and the issue is solved by another patch which
+<div><img height="360" src="../../../../../_images/blockdiag-16349c83178783553ef2d099434f9d1768716b31.png" width="448" /></div><p>Sometimes a bug is reported and the issue is solved by another patch which
 wasn&#8217;t aware of the specific bug. It&#8217;s totally acceptable to set this bug to
 <code class="docutils literal"><span class="pre">Fix</span> <span class="pre">Committed</span></code> and link to the patch which solved it. This reduces the
 monitoring effort for bugs in &#8220;Open States&#8221; whereby other bugs can get more
 focus.</p>
-<div><img height="120" src="../../../../../_images/blockdiag-493bbb23839d92422ec4d00ead93be884dc457a9.png" width="448" /></div><p>The issue was reproduced by someone other than the reporter. You don&#8217;t need
+<div><img height="120" src="../../../../../_images/blockdiag-1068e8ab2c10cb6aa2236be78aba53064680e8af.png" width="448" /></div><p>The issue was reproduced by someone other than the reporter. You don&#8217;t need
 to be in the role of a &#8220;bug-supervisor&#8221; to do that. Every contributor is
 encouraged to do so.</p>
-<div><img height="280" src="../../../../../_images/blockdiag-feb7badf47d36c4e7acf09551d596208a0029a36.png" width="448" /></div><p>Sometimes an issue is assigned and set to <code class="docutils literal"><span class="pre">In</span> <span class="pre">Progress</span></code> but there is no
+<div><img height="280" src="../../../../../_images/blockdiag-c37288626cadb89ab340816389b7c61e9a921639.png" width="448" /></div><p>Sometimes an issue is assigned and set to <code class="docutils literal"><span class="pre">In</span> <span class="pre">Progress</span></code> but there is no
 progress in a long time for a variety of reasons, for example:</p>
 <ul class="simple">
 <li>the review for that issue was abandoned</li>
@@ -645,25 +645,6 @@ for more details.</p>
 </div>
 
   
-  
-    <div class="section">
-    <h2>Comments</h2>
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        var disqus_shortname = 'mzio';
-        var disqus_identifier = '/posts/2015/12/01/openstack-bugs/';
-        var disqus_title = 'OpenStack&amp;#8217;s Bug Management';
-        var disqus_url = 'http://www.markusz.io/posts/2015/12/01/openstack-bugs/';
-
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    </div>
   
   </div>
 

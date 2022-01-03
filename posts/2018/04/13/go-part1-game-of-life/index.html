@@ -27,6 +27,10 @@
     <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../../_static/js/asciinema-player.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="../../../../../about/" />
     <link rel="index" title="Index" href="../../../../../genindex/" />
@@ -36,10 +40,6 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../../../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js "></script>
 
   
   <link rel="alternate" type="application/atom+xml"  href="../../../../../posts/atom.xml" title="Markus's Brain Swap Space">
@@ -117,7 +117,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="body col-md-12 content" role="main">
+    <div class="col-md-12 content">
       
   <div class="section" id="learning-g-part-1-conway-s-game-of-life">
 <h1>Learning <em>Go</em> (part 1) - Conway&#8217;s Game of Life<a class="headerlink" href="#learning-g-part-1-conway-s-game-of-life" title="Permalink to this headline"> </a></h1>
@@ -210,43 +210,43 @@ Don&#8217;t confuse the code below with any kind of actual recommendation.</p>
 42
 43</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
 
-<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
-  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
-  <span class="nt">tasks</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">apt</span><span class="nv"> </span><span class="s">cache</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">updated.&quot;</span>
-      <span class="nt">apt</span><span class="p">:</span>
-        <span class="nt">update_cache</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-        <span class="nt">cache_valid_time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3600</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">apt</span><span class="nv"> </span><span class="s">cache</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">updated.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">update_cache</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="l l-Scalar l-Scalar-Plain">cache_valid_time</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3600</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">basic</span><span class="nv"> </span><span class="s">build</span><span class="nv"> </span><span class="s">tools</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">installed.&quot;</span>
-      <span class="nt">apt</span><span class="p">:</span>
-        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gcc,make</span>
-        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">basic</span><span class="nv"> </span><span class="s">build</span><span class="nv"> </span><span class="s">tools</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">installed.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gcc,make</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">(old)</span><span class="nv"> </span><span class="s">OS</span><span class="nv"> </span><span class="s">packaged</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">lang</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">available.&quot;</span>
-      <span class="nt">apt</span><span class="p">:</span>
-        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">golang-go</span>
-        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">absent</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">(old)</span><span class="nv"> </span><span class="s">OS</span><span class="nv"> </span><span class="s">packaged</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">lang</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">available.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">golang-go</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">absent</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">working</span><span class="nv"> </span><span class="s">directory</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">created.&quot;</span>
-      <span class="nt">file</span><span class="p">:</span>
-        <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/go&quot;</span>
-        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">directory</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">working</span><span class="nv"> </span><span class="s">directory</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">created.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">file</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/go&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">directory</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">lang</span><span class="nv"> </span><span class="s">archive</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">downloaded</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">extracted.&quot;</span>
-      <span class="nt">unarchive</span><span class="p">:</span>
-        <span class="nt">src</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://dl.google.com/go/go1.9.3.linux-amd64.tar.gz</span>
-        <span class="nt">dest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/local/</span>
-        <span class="nt">remote_src</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-        <span class="nt">creates</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/local/go/bin/go</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">lang</span><span class="nv"> </span><span class="s">archive</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">downloaded</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">extracted.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">unarchive</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://dl.google.com/go/go1.9.3.linux-amd64.tar.gz</span>
+        <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/local/</span>
+        <span class="l l-Scalar l-Scalar-Plain">remote_src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+        <span class="l l-Scalar l-Scalar-Plain">creates</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/local/go/bin/go</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">PATHs</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">set</span><span class="nv"> </span><span class="s">globally.&quot;</span>
-      <span class="nt">lineinfile</span><span class="p">:</span>
-        <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/profile</span>
-        <span class="nt">line</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}&quot;</span>
-      <span class="nt">with_items</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">GO</span><span class="nv"> </span><span class="s">PATHs</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">set</span><span class="nv"> </span><span class="s">globally.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">lineinfile</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/profile</span>
+        <span class="l l-Scalar l-Scalar-Plain">line</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">GOPATH=$HOME/go</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">PATH=$PATH:/usr/local/go/bin</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">GOROOT=$HOME/go</span>
@@ -739,25 +739,6 @@ mistakes I made in this post here. Time will tell.</p>
 </div>
 
   
-  
-    <div class="section">
-    <h2>Comments</h2>
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        var disqus_shortname = 'mzio';
-        var disqus_identifier = '/posts/2018/04/13/go-part1-game-of-life/';
-        var disqus_title = 'Learning &lt;em&gt;Go&lt;/em&gt; (part 1) - Conway&amp;#8217;s Game of Life';
-        var disqus_url = 'http://www.markusz.io/posts/2018/04/13/go-part1-game-of-life/';
-
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    </div>
   
   </div>
 

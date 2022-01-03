@@ -27,6 +27,10 @@
     <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../../_static/js/asciinema-player.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="../../../../../about/" />
     <link rel="index" title="Index" href="../../../../../genindex/" />
@@ -36,10 +40,6 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../../../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js "></script>
 
   
   <link rel="alternate" type="application/atom+xml"  href="../../../../../posts/atom.xml" title="Markus's Brain Swap Space">
@@ -117,7 +117,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="body col-md-12 content" role="main">
+    <div class="col-md-12 content">
       
   <div class="section" id="ansible-playbook-refactoring-into-roles">
 <h1>Ansible Playbook Refactoring into Roles<a class="headerlink" href="#ansible-playbook-refactoring-into-roles" title="Permalink to this headline"> </a></h1>
@@ -374,21 +374,21 @@ documentation pieces. I omit it in this post.</p>
 18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="c1"># tasks file for node-exporter</span>
 
-<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">Node</span><span class="nv"> </span><span class="s">Exporter</span><span class="nv"> </span><span class="s">package.&quot;</span>
-  <span class="nt">apt</span><span class="p">:</span>
-    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus-node-exporter</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">Node</span><span class="nv"> </span><span class="s">Exporter</span><span class="nv"> </span><span class="s">package.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus-node-exporter</span>
 
-<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Node</span><span class="nv"> </span><span class="s">Exporter</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">started</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">starts</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">host</span><span class="nv"> </span><span class="s">boot.&quot;</span>
-  <span class="nt">service</span><span class="p">:</span>
-    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus-node-exporter</span>
-    <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">started</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Node</span><span class="nv"> </span><span class="s">Exporter</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">started</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">starts</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">host</span><span class="nv"> </span><span class="s">boot.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus-node-exporter</span>
+    <span class="l l-Scalar l-Scalar-Plain">enabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">started</span>
 
-<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Check</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">service</span><span class="nv"> </span><span class="s">emits</span><span class="nv"> </span><span class="s">metrics.&quot;</span>
-  <span class="nt">uri</span><span class="p">:</span>
-    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:9100/metrics</span>
-    <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GET</span>
-    <span class="nt">status_code</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Check</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">service</span><span class="nv"> </span><span class="s">emits</span><span class="nv"> </span><span class="s">metrics.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">uri</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:9100/metrics</span>
+    <span class="l l-Scalar l-Scalar-Plain">method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">GET</span>
+    <span class="l l-Scalar l-Scalar-Plain">status_code</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
 </pre></div>
 </td></tr></table></div>
 <p>Use the role in the playbook instead of the moved tasks. See this <em>diff</em>
@@ -885,10 +885,10 @@ APT repository cache.</p>
 <div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">system</span><span class="nv"> </span><span class="s">package</span><span class="nv"> </span><span class="s">cache</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">updated.&quot;</span>
-  <span class="nt">apt</span><span class="p">:</span>
-    <span class="nt">update_cache</span><span class="p">:</span> <span class="s">&quot;yes&quot;</span>
-    <span class="nt">cache_valid_time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3600</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">system</span><span class="nv"> </span><span class="s">package</span><span class="nv"> </span><span class="s">cache</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">updated.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">update_cache</span><span class="p p-Indicator">:</span> <span class="s">&quot;yes&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">cache_valid_time</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3600</span>
 </pre></div>
 </td></tr></table></div>
 <p>This task is only necessary because we install <em>Node-Exporter</em>, <em>Grafana</em>
@@ -934,7 +934,7 @@ of example of creating dependencies between roles.</p>
 </ol>
 <p>like this:</p>
 <div class="highlight-yaml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">dependencies</span><span class="p">:</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">dependencies</span><span class="p p-Indicator">:</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">apt-update</span>
 </pre></div>
 </td></tr></table></div>
@@ -1099,11 +1099,11 @@ on it.</p>
 <span class="c1"># ===========================================================================</span>
 <span class="c1"># Do basic setup on all hosts</span>
 <span class="c1"># ===========================================================================</span>
-<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
-  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="nt">gather_facts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
 
-  <span class="nt">roles</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ssh-accessible</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name-ip-mapping</span>
 
@@ -1111,20 +1111,20 @@ on it.</p>
 <span class="c1"># ===========================================================================</span>
 <span class="c1"># Do setup on all hosts we want to monitor</span>
 <span class="c1"># ===========================================================================</span>
-<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>  <span class="c1"># we want the metrics of the monitoring server too</span>
-  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>  <span class="c1"># we want the metrics of the monitoring server too</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
-  <span class="nt">roles</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">node-exporter</span>
 
 
 <span class="c1"># ===========================================================================</span>
 <span class="c1"># Do prometheus server specific setup only on the monitoring server</span>
 <span class="c1"># ===========================================================================</span>
-<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
-  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
-  <span class="nt">roles</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grafana</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grafana-prometheus-datasource</span>
@@ -1134,11 +1134,11 @@ on it.</p>
 <span class="c1"># ===========================================================================</span>
 <span class="c1"># Push the &quot;applications&quot; to the application servers</span>
 <span class="c1"># ===========================================================================</span>
-<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">application-servers</span>
-  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="nt">gather_facts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">application-servers</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
 
-  <span class="nt">roles</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">workload-deploy</span>
 </pre></div>
 </td></tr></table></div>
@@ -1248,7 +1248,7 @@ but is supposed to get overridden if needed. The file
 4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="c1"># defaults file for grafana</span>
 
-<span class="nt">install_method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">os-package</span>
+<span class="l l-Scalar l-Scalar-Plain">install_method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">os-package</span>
 </pre></div>
 </td></tr></table></div>
 <p><code class="docutils literal"><span class="pre">os-package</span></code> is the default value for the variable <code class="docutils literal"><span class="pre">install_method</span></code>.
@@ -1275,13 +1275,13 @@ conditionals (<code class="docutils literal"><span class="pre">when:</span></cod
 10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="c1"># tasks file for grafana</span>
 
-<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">operating</span><span class="nv"> </span><span class="s">system</span><span class="nv"> </span><span class="s">package.&quot;</span>
-  <span class="nt">include</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">apt_install.yml</span>
-<span class="hll">  <span class="nt">when</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">install_method == &quot;os-package&quot;</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">operating</span><span class="nv"> </span><span class="s">system</span><span class="nv"> </span><span class="s">package.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">apt_install.yml</span>
+<span class="hll">  <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">install_method == &quot;os-package&quot;</span>
 </span>
-<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">source.&quot;</span>
-  <span class="nt">include</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">source_install.yml</span>
-<span class="hll">  <span class="nt">when</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">install_method == &quot;source&quot;</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">source.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">source_install.yml</span>
+<span class="hll">  <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">install_method == &quot;source&quot;</span>
 </span></pre></div>
 </td></tr></table></div>
 <p>The important part here is, that we are <strong>backwards compatible</strong>.
@@ -1295,9 +1295,9 @@ rather unspectacular:</p>
 4
 5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
 
-<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">source.&quot;</span>
-  <span class="nt">fail</span><span class="p">:</span>
-    <span class="nt">msg</span><span class="p">:</span> <span class="s">&quot;TODO</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">yet</span><span class="nv"> </span><span class="s">done!&quot;</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">source.&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">fail</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">msg</span><span class="p p-Indicator">:</span> <span class="s">&quot;TODO</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">yet</span><span class="nv"> </span><span class="s">done!&quot;</span>
 </pre></div>
 </td></tr></table></div>
 <p>I haven&#8217;t yet found time to develop the logic to install <em>Grafana</em>
@@ -1308,10 +1308,10 @@ from source, so I let the task simply fail.</p>
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
-  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
-  <span class="nt">roles</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
 <span class="hll">    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grafana</span>
 </span></pre></div>
@@ -1332,12 +1332,12 @@ conditional worked.</p>
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
-  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
-  <span class="nt">roles</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span><span class="nt"> role</span><span class="p">:</span> <span class="nv">grafana</span><span class="p p-Indicator">,</span><span class="nt"> install_method</span><span class="p">:</span> <span class="nv">source</span> <span class="p p-Indicator">}</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">role</span><span class="p p-Indicator">:</span> <span class="nv">grafana</span><span class="p p-Indicator">,</span> <span class="nv">install_method</span><span class="p p-Indicator">:</span> <span class="nv">source</span> <span class="p p-Indicator">}</span>
 </span></pre></div>
 </td></tr></table></div>
 <p>Let&#8217;s execute the playbook again:</p>
@@ -1368,7 +1368,7 @@ we have to edit the file
 4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="c1"># defaults file for roles/grafana-prometheus-datasource</span>
 
-<span class="nt">prometheus_datasource_url</span><span class="p">:</span> <span class="s">&quot;http://127.0.0.1:9090&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">prometheus_datasource_url</span><span class="p p-Indicator">:</span> <span class="s">&quot;http://127.0.0.1:9090&quot;</span>
 </pre></div>
 </td></tr></table></div>
 <p>Now we can make use of that in our existing logic in the task of that
@@ -1404,11 +1404,11 @@ more readable when you have more variables to set:</p>
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
-<span class="hll">  <span class="nt">vars</span><span class="p">:</span>
-</span><span class="hll">    <span class="nt">prometheus_datasource_url</span><span class="p">:</span> <span class="s">&quot;http://192.168.101.10:9090&quot;</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
+<span class="hll">  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+</span><span class="hll">    <span class="l l-Scalar l-Scalar-Plain">prometheus_datasource_url</span><span class="p p-Indicator">:</span> <span class="s">&quot;http://192.168.101.10:9090&quot;</span>
 </span>
-  <span class="nt">roles</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grafana-prometheus-datasource</span>
 </pre></div>
 </td></tr></table></div>
@@ -1513,25 +1513,6 @@ and try yourself on it.</p>
 </div>
 
   
-  
-    <div class="section">
-    <h2>Comments</h2>
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        var disqus_shortname = 'mzio';
-        var disqus_identifier = '/posts/2017/11/24/ansible-playbook-roles/';
-        var disqus_title = 'Ansible Playbook Refactoring into Roles';
-        var disqus_url = 'http://www.markusz.io/posts/2017/11/24/ansible-playbook-roles/';
-
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    </div>
   
   </div>
 

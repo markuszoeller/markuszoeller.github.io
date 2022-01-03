@@ -27,6 +27,10 @@
     <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../../_static/js/asciinema-player.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="../../../../../about/" />
     <link rel="index" title="Index" href="../../../../../genindex/" />
@@ -36,10 +40,6 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../../../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js "></script>
 
   
   <link rel="alternate" type="application/atom+xml"  href="../../../../../posts/atom.xml" title="Markus's Brain Swap Space">
@@ -117,7 +117,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="body col-md-12 content" role="main">
+    <div class="col-md-12 content">
       
   <div class="section" id="monitoring-with-prometheus">
 <h1>Monitoring with Prometheus<a class="headerlink" href="#monitoring-with-prometheus" title="Permalink to this headline"> </a></h1>
@@ -519,36 +519,36 @@ the plays piece by piece. I&#8217;ll show the code first and explain it below:</
 <span class="c1"># ===========================================================================</span>
 <span class="c1"># Do basic setup on all hosts</span>
 <span class="c1"># ===========================================================================</span>
-<span class="hll"><span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
-</span>  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="nt">gather_facts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="hll"><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+</span>  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
 
-  <span class="nt">tasks</span><span class="p">:</span>
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Wait</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">SSH</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">ready.&quot;</span>
-</span>      <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-      <span class="nt">delegate_to</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
-      <span class="nt">wait_for</span><span class="p">:</span>
-        <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">22</span>
-        <span class="nt">host</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">ansible_host</span><span class="nv"> </span><span class="s">}}&#39;</span>
-        <span class="nt">search_regex</span><span class="p">:</span> <span class="s">&quot;OpenSSH&quot;</span>
-        <span class="nt">delay</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
-        <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">300</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Wait</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">SSH</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">ready.&quot;</span>
+</span>      <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="l l-Scalar l-Scalar-Plain">delegate_to</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
+      <span class="l l-Scalar l-Scalar-Plain">wait_for</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">22</span>
+        <span class="l l-Scalar l-Scalar-Plain">host</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">ansible_host</span><span class="nv"> </span><span class="s">}}&#39;</span>
+        <span class="l l-Scalar l-Scalar-Plain">search_regex</span><span class="p p-Indicator">:</span> <span class="s">&quot;OpenSSH&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">delay</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+        <span class="l l-Scalar l-Scalar-Plain">timeout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">300</span>
 
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Add</span><span class="nv"> </span><span class="s">our</span><span class="nv"> </span><span class="s">servers</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">hosts</span><span class="nv"> </span><span class="s">file.&quot;</span>
-</span>      <span class="nt">lineinfile</span><span class="p">:</span>
-        <span class="nt">dest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/hosts</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Add</span><span class="nv"> </span><span class="s">our</span><span class="nv"> </span><span class="s">servers</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">hosts</span><span class="nv"> </span><span class="s">file.&quot;</span>
+</span>      <span class="l l-Scalar l-Scalar-Plain">lineinfile</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/hosts</span>
         <span class="c1"># use the IP address we specified in the Vagrantfile</span>
-        <span class="nt">line</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">hostvars[item].ansible_host</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">{{item}}&#39;</span>
-      <span class="nt">with_items</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">groups[&quot;all&quot;]</span><span class="nv"> </span><span class="s">}}&#39;</span>
+        <span class="l l-Scalar l-Scalar-Plain">line</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">hostvars[item].ansible_host</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">{{item}}&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">groups[&quot;all&quot;]</span><span class="nv"> </span><span class="s">}}&#39;</span>
 
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Ping</span><span class="nv"> </span><span class="s">each</span><span class="nv"> </span><span class="s">other</span><span class="nv"> </span><span class="s">via</span><span class="nv"> </span><span class="s">DNS</span><span class="nv"> </span><span class="s">names.&quot;</span>
-</span>      <span class="nt">ping</span><span class="p">:</span>
-      <span class="nt">with_items</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">groups[&quot;all&quot;]</span><span class="nv"> </span><span class="s">}}&#39;</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Ping</span><span class="nv"> </span><span class="s">each</span><span class="nv"> </span><span class="s">other</span><span class="nv"> </span><span class="s">via</span><span class="nv"> </span><span class="s">DNS</span><span class="nv"> </span><span class="s">names.&quot;</span>
+</span>      <span class="l l-Scalar l-Scalar-Plain">ping</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">groups[&quot;all&quot;]</span><span class="nv"> </span><span class="s">}}&#39;</span>
 
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">system</span><span class="nv"> </span><span class="s">package</span><span class="nv"> </span><span class="s">cache</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">updated.&quot;</span>
-</span>      <span class="nt">apt</span><span class="p">:</span>
-        <span class="nt">update_cache</span><span class="p">:</span> <span class="s">&quot;yes&quot;</span>
-        <span class="nt">cache_valid_time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3600</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">system</span><span class="nv"> </span><span class="s">package</span><span class="nv"> </span><span class="s">cache</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">updated.&quot;</span>
+</span>      <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">update_cache</span><span class="p p-Indicator">:</span> <span class="s">&quot;yes&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">cache_valid_time</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3600</span>
 </pre></div>
 </td></tr></table></div>
 <p>This is the <strong>first play</strong> and we use the magic group <code class="docutils literal"><span class="pre">all</span></code> as a target.
@@ -590,25 +590,25 @@ hosts file on these servers.</p>
 59</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># ===========================================================================</span>
 <span class="c1"># Do setup on all hosts we want to monitor</span>
 <span class="c1"># ===========================================================================</span>
-<span class="hll"><span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>  <span class="c1"># we want the metrics of the monitoring server too</span>
-</span>  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="hll"><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>  <span class="c1"># we want the metrics of the monitoring server too</span>
+</span>  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
-  <span class="nt">tasks</span><span class="p">:</span>
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">Node</span><span class="nv"> </span><span class="s">Exporter</span><span class="nv"> </span><span class="s">package.&quot;</span>
-</span>      <span class="nt">apt</span><span class="p">:</span>
-        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus-node-exporter</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">Node</span><span class="nv"> </span><span class="s">Exporter</span><span class="nv"> </span><span class="s">package.&quot;</span>
+</span>      <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus-node-exporter</span>
 
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Node</span><span class="nv"> </span><span class="s">Exporter</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">started</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">starts</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">host</span><span class="nv"> </span><span class="s">boot.&quot;</span>
-</span>      <span class="nt">service</span><span class="p">:</span>
-        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus-node-exporter</span>
-        <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">started</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Node</span><span class="nv"> </span><span class="s">Exporter</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">started</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">starts</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">host</span><span class="nv"> </span><span class="s">boot.&quot;</span>
+</span>      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus-node-exporter</span>
+        <span class="l l-Scalar l-Scalar-Plain">enabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">started</span>
 
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Check</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">service</span><span class="nv"> </span><span class="s">emits</span><span class="nv"> </span><span class="s">metrics.&quot;</span>
-</span>      <span class="nt">uri</span><span class="p">:</span>
-        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:9100/metrics</span>
-        <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GET</span>
-        <span class="nt">status_code</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Check</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">service</span><span class="nv"> </span><span class="s">emits</span><span class="nv"> </span><span class="s">metrics.&quot;</span>
+</span>      <span class="l l-Scalar l-Scalar-Plain">uri</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:9100/metrics</span>
+        <span class="l l-Scalar l-Scalar-Plain">method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">GET</span>
+        <span class="l l-Scalar l-Scalar-Plain">status_code</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
 </pre></div>
 </td></tr></table></div>
 <p>After we have prepared the servers with the basic steps, we install
@@ -726,107 +726,107 @@ monitoring.</p>
 165</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># ===========================================================================</span>
 <span class="c1"># Do prometheus server specific setup only on the monitoring server</span>
 <span class="c1"># ===========================================================================</span>
-<span class="hll"><span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
-</span>  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="hll"><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">monitoring</span>
+</span>  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
 
-  <span class="nt">tasks</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
     <span class="c1"># --- Prometheus --------------------------------------------------------</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">server.&quot;</span>
-      <span class="nt">apt</span><span class="p">:</span>
-        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">server.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Configure</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">server.&quot;</span>
-      <span class="nt">copy</span><span class="p">:</span>
-<span class="hll">        <span class="nt">src</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus.yml</span>
-</span>        <span class="nt">dest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/prometheus/prometheus.yml</span>
-      <span class="nt">notify</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">event_restart_prometheus</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Configure</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">server.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">copy</span><span class="p p-Indicator">:</span>
+<span class="hll">        <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus.yml</span>
+</span>        <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/prometheus/prometheus.yml</span>
+      <span class="l l-Scalar l-Scalar-Plain">notify</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">event_restart_prometheus</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">started</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">starts</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">host</span><span class="nv"> </span><span class="s">boot.&quot;</span>
-      <span class="nt">service</span><span class="p">:</span>
-        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
-        <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">started</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">started</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">starts</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">host</span><span class="nv"> </span><span class="s">boot.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
+        <span class="l l-Scalar l-Scalar-Plain">enabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">started</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Check</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">accessible.&quot;</span>
-      <span class="nt">uri</span><span class="p">:</span>
-<span class="hll">        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:9090/graph</span>
-</span>        <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GET</span>
-        <span class="nt">status_code</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Check</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">accessible.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">uri</span><span class="p p-Indicator">:</span>
+<span class="hll">        <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:9090/graph</span>
+</span>        <span class="l l-Scalar l-Scalar-Plain">method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">GET</span>
+        <span class="l l-Scalar l-Scalar-Plain">status_code</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
 
     <span class="c1"># --- Grafana -----------------------------------------------------------</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Grafana</span><span class="nv"> </span><span class="s">server.&quot;</span>
-      <span class="nt">apt</span><span class="p">:</span>
-        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grafana</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Install</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Grafana</span><span class="nv"> </span><span class="s">server.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">grafana</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Copy</span><span class="nv"> </span><span class="s">Grafana</span><span class="nv"> </span><span class="s">configuration</span><span class="nv"> </span><span class="s">file.&quot;</span>
-      <span class="nt">copy</span><span class="p">:</span>
-<span class="hll">        <span class="nt">src</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grafana.ini</span>
-</span>        <span class="nt">dest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/grafana/grafana.ini</span>
-      <span class="nt">notify</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">event_restart_grafana</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Copy</span><span class="nv"> </span><span class="s">Grafana</span><span class="nv"> </span><span class="s">configuration</span><span class="nv"> </span><span class="s">file.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">copy</span><span class="p p-Indicator">:</span>
+<span class="hll">        <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">grafana.ini</span>
+</span>        <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/grafana/grafana.ini</span>
+      <span class="l l-Scalar l-Scalar-Plain">notify</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">event_restart_grafana</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">Grafana</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">started</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">starts</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">host</span><span class="nv"> </span><span class="s">boot.&quot;</span>
-      <span class="nt">service</span><span class="p">:</span>
-        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grafana</span>
-        <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">started</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">Grafana</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">started</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">starts</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">host</span><span class="nv"> </span><span class="s">boot.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">grafana</span>
+        <span class="l l-Scalar l-Scalar-Plain">enabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">started</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Check</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">Grafana</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">accessible.&quot;</span>
-      <span class="nt">uri</span><span class="p">:</span>
-<span class="hll">        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000</span>
-</span>        <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GET</span>
-        <span class="nt">status_code</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Check</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">Grafana</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">accessible.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">uri</span><span class="p p-Indicator">:</span>
+<span class="hll">        <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000</span>
+</span>        <span class="l l-Scalar l-Scalar-Plain">method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">GET</span>
+        <span class="l l-Scalar l-Scalar-Plain">status_code</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Add</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">as</span><span class="nv"> </span><span class="s">datasource</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">Grafana.&quot;</span>
-      <span class="nt">vars</span><span class="p">:</span>
-        <span class="nt">prometheus_datasource</span><span class="p">:</span>
-          <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;prometheus&quot;</span>
-          <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;prometheus&quot;</span>
-          <span class="nt">url</span><span class="p">:</span> <span class="s">&quot;http://127.0.0.1:9090&quot;</span>
-          <span class="nt">access</span><span class="p">:</span> <span class="s">&quot;proxy&quot;</span>
-          <span class="nt">isDefault</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-          <span class="nt">basicAuth</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-      <span class="nt">uri</span><span class="p">:</span>
-        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000/api/datasources</span>
-        <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">POST</span>
-        <span class="nt">body</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">prometheus_datasource</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">to_json</span><span class="nv"> </span><span class="s">}}&quot;</span>
-        <span class="nt">body_format</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
-        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">admin</span>
-        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">admin</span>
-        <span class="nt">force_basic_auth</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-        <span class="nt">status_code</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200,500</span>  <span class="c1"># 500 means, the datasource is already added</span>
-        <span class="nt">headers</span><span class="p">:</span>
-          <span class="nt">Content-Type</span><span class="p">:</span> <span class="s">&quot;application/json&quot;</span>
-          <span class="nt">Accept</span><span class="p">:</span> <span class="s">&quot;application/json&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Add</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">as</span><span class="nv"> </span><span class="s">datasource</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">Grafana.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">prometheus_datasource</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;prometheus&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="s">&quot;prometheus&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="s">&quot;http://127.0.0.1:9090&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">access</span><span class="p p-Indicator">:</span> <span class="s">&quot;proxy&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">isDefault</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+          <span class="l l-Scalar l-Scalar-Plain">basicAuth</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="l l-Scalar l-Scalar-Plain">uri</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000/api/datasources</span>
+        <span class="l l-Scalar l-Scalar-Plain">method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">POST</span>
+        <span class="l l-Scalar l-Scalar-Plain">body</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">prometheus_datasource</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">to_json</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">body_format</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
+        <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">admin</span>
+        <span class="l l-Scalar l-Scalar-Plain">password</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">admin</span>
+        <span class="l l-Scalar l-Scalar-Plain">force_basic_auth</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+        <span class="l l-Scalar l-Scalar-Plain">status_code</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">200,500</span>  <span class="c1"># 500 means, the datasource is already added</span>
+        <span class="l l-Scalar l-Scalar-Plain">headers</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">Content-Type</span><span class="p p-Indicator">:</span> <span class="s">&quot;application/json&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">Accept</span><span class="p p-Indicator">:</span> <span class="s">&quot;application/json&quot;</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Upload</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">example</span><span class="nv"> </span><span class="s">Grafana</span><span class="nv"> </span><span class="s">dashboard.&quot;</span>
-      <span class="nt">uri</span><span class="p">:</span>
-        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000/api/dashboards/db</span>
-        <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">POST</span>
-<span class="hll">        <span class="nt">body</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;infra-node-metrics.json&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
-</span>        <span class="nt">body_format</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
-        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">admin</span>
-        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">admin</span>
-        <span class="nt">force_basic_auth</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-        <span class="nt">status_code</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
-        <span class="nt">headers</span><span class="p">:</span>
-          <span class="nt">Content-Type</span><span class="p">:</span> <span class="s">&quot;application/json&quot;</span>
-          <span class="nt">Accept</span><span class="p">:</span> <span class="s">&quot;application/json&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Upload</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">example</span><span class="nv"> </span><span class="s">Grafana</span><span class="nv"> </span><span class="s">dashboard.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">uri</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000/api/dashboards/db</span>
+        <span class="l l-Scalar l-Scalar-Plain">method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">POST</span>
+<span class="hll">        <span class="l l-Scalar l-Scalar-Plain">body</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;infra-node-metrics.json&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span>        <span class="l l-Scalar l-Scalar-Plain">body_format</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
+        <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">admin</span>
+        <span class="l l-Scalar l-Scalar-Plain">password</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">admin</span>
+        <span class="l l-Scalar l-Scalar-Plain">force_basic_auth</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+        <span class="l l-Scalar l-Scalar-Plain">status_code</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+        <span class="l l-Scalar l-Scalar-Plain">headers</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">Content-Type</span><span class="p p-Indicator">:</span> <span class="s">&quot;application/json&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">Accept</span><span class="p p-Indicator">:</span> <span class="s">&quot;application/json&quot;</span>
 
 
   <span class="c1"># --- After all tasks are executed (if notified) --------------------------</span>
-<span class="hll">  <span class="nt">handlers</span><span class="p">:</span>
-</span>    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Restart</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">service.&quot;</span>
-      <span class="nt">service</span><span class="p">:</span>
-        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
-        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">restarted</span>
-      <span class="nt">listen</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">event_restart_prometheus</span>
+<span class="hll">  <span class="l l-Scalar l-Scalar-Plain">handlers</span><span class="p p-Indicator">:</span>
+</span>    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Restart</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Prometheus</span><span class="nv"> </span><span class="s">service.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restarted</span>
+      <span class="l l-Scalar l-Scalar-Plain">listen</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">event_restart_prometheus</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Restart</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Grafana</span><span class="nv"> </span><span class="s">service.&quot;</span>
-      <span class="nt">service</span><span class="p">:</span>
-        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grafana</span>
-        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">restarted</span>
-      <span class="nt">listen</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">event_restart_grafana</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Restart</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Grafana</span><span class="nv"> </span><span class="s">service.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">grafana</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restarted</span>
+      <span class="l l-Scalar l-Scalar-Plain">listen</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">event_restart_grafana</span>
 </pre></div>
 </td></tr></table></div>
 <p>This is a big one. The important parts are highlighted. We apply this logic
@@ -863,16 +863,16 @@ to have impact on our resources. We need applications:</p>
 183</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># ===========================================================================</span>
 <span class="c1"># Push the &quot;applications&quot; to the application servers</span>
 <span class="c1"># ===========================================================================</span>
-<span class="hll"><span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">application-servers</span>
-</span>  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="nt">gather_facts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="hll"><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">application-servers</span>
+</span>  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
 
-  <span class="nt">tasks</span><span class="p">:</span>
-     <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Copy</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">applications</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">servers.&quot;</span>
-       <span class="nt">copy</span><span class="p">:</span>
-         <span class="nt">src</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}&quot;</span>
-         <span class="nt">dest</span><span class="p">:</span> <span class="s">&quot;/root/{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}&quot;</span>
-       <span class="nt">with_items</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Copy</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">applications</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">servers.&quot;</span>
+       <span class="l l-Scalar l-Scalar-Plain">copy</span><span class="p p-Indicator">:</span>
+         <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}&quot;</span>
+         <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="s">&quot;/root/{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}&quot;</span>
+       <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span>
          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">eat_cpu.py</span>
          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">eat_disk.py</span>
          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">eat_memory.py</span>
@@ -930,32 +930,32 @@ with defined interfaces.</p>
 29</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># The full config is at:</span>
 <span class="c1">#   https://prometheus.io/docs/operating/configuration/</span>
 
-<span class="nt">global</span><span class="p">:</span>
+<span class="l l-Scalar l-Scalar-Plain">global</span><span class="p p-Indicator">:</span>
   <span class="c1"># How frequently to scrape targets by default.</span>
-  <span class="nt">scrape_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">15s</span>
+  <span class="l l-Scalar l-Scalar-Plain">scrape_interval</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">15s</span>
 
-<span class="hll"><span class="nt">scrape_configs</span><span class="p">:</span>
+<span class="hll"><span class="l l-Scalar l-Scalar-Plain">scrape_configs</span><span class="p p-Indicator">:</span>
 </span>
-  <span class="p p-Indicator">-</span> <span class="nt">job_name</span><span class="p">:</span> <span class="s">&#39;monitoring&#39;</span>
-    <span class="nt">target_groups</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">targets</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;localhost:9100&#39;</span><span class="p p-Indicator">]</span>
-        <span class="nt">labels</span><span class="p">:</span>
-          <span class="nt">name</span><span class="p">:</span> <span class="s">&#39;monitoring&#39;</span>
-          <span class="nt">owner</span><span class="p">:</span> <span class="s">&#39;mzio&#39;</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">job_name</span><span class="p p-Indicator">:</span> <span class="s">&#39;monitoring&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">target_groups</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">targets</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;localhost:9100&#39;</span><span class="p p-Indicator">]</span>
+        <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&#39;monitoring&#39;</span>
+          <span class="l l-Scalar l-Scalar-Plain">owner</span><span class="p p-Indicator">:</span> <span class="s">&#39;mzio&#39;</span>
 
-<span class="hll">  <span class="p p-Indicator">-</span> <span class="nt">job_name</span><span class="p">:</span> <span class="s">&#39;app-server-1&#39;</span>
-</span>    <span class="nt">target_groups</span><span class="p">:</span>
-<span class="hll">      <span class="p p-Indicator">-</span> <span class="nt">targets</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;app-server-1:9100&#39;</span><span class="p p-Indicator">]</span>
-</span>        <span class="nt">labels</span><span class="p">:</span>
-<span class="hll">          <span class="nt">name</span><span class="p">:</span> <span class="s">&#39;app-server-1&#39;</span>
-</span>          <span class="nt">arch</span><span class="p">:</span> <span class="s">&#39;x86&#39;</span>
+<span class="hll">  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">job_name</span><span class="p p-Indicator">:</span> <span class="s">&#39;app-server-1&#39;</span>
+</span>    <span class="l l-Scalar l-Scalar-Plain">target_groups</span><span class="p p-Indicator">:</span>
+<span class="hll">      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">targets</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;app-server-1:9100&#39;</span><span class="p p-Indicator">]</span>
+</span>        <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+<span class="hll">          <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&#39;app-server-1&#39;</span>
+</span>          <span class="l l-Scalar l-Scalar-Plain">arch</span><span class="p p-Indicator">:</span> <span class="s">&#39;x86&#39;</span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">job_name</span><span class="p">:</span> <span class="s">&#39;app-server-2&#39;</span>
-    <span class="nt">target_groups</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">targets</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;app-server-2:9100&#39;</span><span class="p p-Indicator">]</span>
-        <span class="nt">labels</span><span class="p">:</span>
-          <span class="nt">name</span><span class="p">:</span> <span class="s">&#39;app-server-2&#39;</span>
-          <span class="nt">arch</span><span class="p">:</span> <span class="s">&#39;x86&#39;</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">job_name</span><span class="p p-Indicator">:</span> <span class="s">&#39;app-server-2&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">target_groups</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">targets</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;app-server-2:9100&#39;</span><span class="p p-Indicator">]</span>
+        <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&#39;app-server-2&#39;</span>
+          <span class="l l-Scalar l-Scalar-Plain">arch</span><span class="p p-Indicator">:</span> <span class="s">&#39;x86&#39;</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition important">
@@ -1306,25 +1306,6 @@ demo purposes, that&#8217;s why I don&#8217;t add an explanation to them.</p>
 </div>
 
   
-  
-    <div class="section">
-    <h2>Comments</h2>
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        var disqus_shortname = 'mzio';
-        var disqus_identifier = '/posts/2017/10/27/monitoring-prometheus/';
-        var disqus_title = 'Monitoring with Prometheus';
-        var disqus_url = 'http://www.markusz.io/posts/2017/10/27/monitoring-prometheus/';
-
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    </div>
   
   </div>
 

@@ -27,6 +27,10 @@
     <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../../_static/js/asciinema-player.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="../../../../../about/" />
     <link rel="index" title="Index" href="../../../../../genindex/" />
@@ -36,10 +40,6 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../../../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js "></script>
 
   
   <link rel="alternate" type="application/atom+xml"  href="../../../../../posts/atom.xml" title="Markus's Brain Swap Space">
@@ -117,7 +117,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="body col-md-12 content" role="main">
+    <div class="col-md-12 content">
       
   <div class="section" id="openstack-nova-scheduling-based-on-cpu-architecture">
 <h1>OpenStack Nova Scheduling based on CPU architecture<a class="headerlink" href="#openstack-nova-scheduling-based-on-cpu-architecture" title="Permalink to this headline"> </a></h1>
@@ -243,15 +243,15 @@ uses <code class="docutils literal"><span class="pre">cpu_arch</span></code>:</p
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">os_image</span><span class="p">:</span>
-    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cirros</span>
-    <span class="nt">container_format</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bare</span>
-    <span class="nt">disk_format</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qcow2</span>
-    <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
-    <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cirros-0.3.0-x86_64-disk.img</span>
-    <span class="nt">properties</span><span class="p">:</span>
-<span class="hll">      <span class="nt">cpu_arch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">x86_64</span>
-</span>      <span class="nt">distro</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">os_image</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cirros</span>
+    <span class="l l-Scalar l-Scalar-Plain">container_format</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bare</span>
+    <span class="l l-Scalar l-Scalar-Plain">disk_format</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qcow2</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+    <span class="l l-Scalar l-Scalar-Plain">filename</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cirros-0.3.0-x86_64-disk.img</span>
+    <span class="l l-Scalar l-Scalar-Plain">properties</span><span class="p p-Indicator">:</span>
+<span class="hll">      <span class="l l-Scalar l-Scalar-Plain">cpu_arch</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x86_64</span>
+</span>      <span class="l l-Scalar l-Scalar-Plain">distro</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu</span>
 </pre></div>
 </td></tr></table></div>
 <p>I&#8217;m not sure if that metadata property has any effect anywhere. It hadn&#8217;t
@@ -412,25 +412,6 @@ full list of supported CPU architectures can be found at <a class="footnote-refe
 </div>
 
   
-  
-    <div class="section">
-    <h2>Comments</h2>
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        var disqus_shortname = 'mzio';
-        var disqus_identifier = '/posts/2017/08/25/openstack-cpu-arch-scheduling/';
-        var disqus_title = 'OpenStack Nova Scheduling based on CPU architecture';
-        var disqus_url = 'http://www.markusz.io/posts/2017/08/25/openstack-cpu-arch-scheduling/';
-
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    </div>
   
   </div>
 
