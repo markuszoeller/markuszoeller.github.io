@@ -1,0 +1,338 @@
+{
+  "version": 1,
+  "width": 120,
+  "height": 30,
+  "duration": 18.98732,
+  "command": null,
+  "title": null,
+  "env": {
+    "TERM": "xterm-256color",
+    "SHELL": "/usr/bin/zsh"
+  },
+  "stdout": [
+    [
+      0.454062,
+      "\u001b[1m\u001b[7m%\u001b[27m\u001b[1m\u001b[0m                                                                                                                       \r \r"
+    ],
+    [
+      5.8e-05,
+      "\u001b]2;markus@DESKTOP-0BO7FL4:~/git/github.com/markuszoeller/markuszoeller.github.io\u0007\u001b]1;..ler.github.io\u0007"
+    ],
+    [
+      0.017439,
+      "\r\u001b[0m\u001b[27m\u001b[24m\u001b[J\u001b[39m\u001b[49m\u001b[0m\r\n\u001b[40m\u001b[1m\u001b[40m\u001b[32mmarkus\u001b[1m\u001b[32m\u001b[40m\u001b[34m@\u001b[1m\u001b[34m\u001b[40m\u001b[36mDESKTOP-0BO7FL4\u001b[1m\u001b[36m\u001b[40m\u001b[32m \u001b[0m\u001b[32m\u001b[40m\u001b[33m\u001b[40m~/git/github.com/markuszoeller/markuszoeller.github.io\u001b[1m\u001b[33m\u001b[40m\u001b[32m [\u001b[1m\u001b[32m\u001b[40m\u001b[34msources \u001b[31m*\u001b[39m\u001b[49m\u001b[0m\u001b[39m\u001b[49m\u001b[0m\u001b[40m\u001b[1m\u001b[40m\u001b[32m]\u001b[K\u001b[39m\u001b[49m\u001b[0m\r\n\u001b[40m\u001b[34m±\u001b[39m\u001b[49m\u001b[0m\u001b[40m %\u001b[39m\u001b[49m\u001b[0m \u001b[K\u001b[111C!\u001b[1m\u001b[36m432\u001b[39m\u001b[49m\u001b[0m\u001b[115D"
+    ],
+    [
+      2.1e-05,
+      "\u001b[?1h\u001b=\u001b[?2004h"
+    ],
+    [
+      1.287218,
+      "e"
+    ],
+    [
+      0.199388,
+      "\bec"
+    ],
+    [
+      0.215905,
+      "h"
+    ],
+    [
+      0.064149,
+      "o"
+    ],
+    [
+      0.119763,
+      " "
+    ],
+    [
+      0.224179,
+      "f"
+    ],
+    [
+      0.169639,
+      "o"
+    ],
+    [
+      0.134373,
+      "o"
+    ],
+    [
+      1.008291,
+      "\u001b[?1l\u001b>\u001b[?2004l\r\r\n"
+    ],
+    [
+      0.001191,
+      "=== 2022-01-04T17:53:27+00:00 command start ===\r\n\r\n"
+    ],
+    [
+      0.00103,
+      "$ echo foo\r\n"
+    ],
+    [
+      0.000133,
+      "\u001b]2;echo foo\u0007\u001b]1;echo\u0007"
+    ],
+    [
+      7e-05,
+      "foo\r\n\u001b[1m\u001b[7m%\u001b[27m\u001b[1m\u001b[0m                                                                                                                       \r \r"
+    ],
+    [
+      0.001879,
+      "\r\n=== 2022-01-04T17:53:27+00:00 (0s) command end ===\r\n"
+    ],
+    [
+      0.000176,
+      "\u001b]2;markus@DESKTOP-0BO7FL4:~/git/github.com/markuszoeller/markuszoeller.github.io\u0007\u001b]1;..ler.github.io\u0007"
+    ],
+    [
+      0.016756,
+      "\r\u001b[0m\u001b[27m\u001b[24m\u001b[J\u001b[39m\u001b[49m\u001b[0m\r\n\u001b[40m\u001b[1m\u001b[40m\u001b[32mmarkus\u001b[1m\u001b[32m\u001b[40m\u001b[34m@\u001b[1m\u001b[34m\u001b[40m\u001b[36mDESKTOP-0BO7FL4\u001b[1m\u001b[36m\u001b[40m\u001b[32m \u001b[0m\u001b[32m\u001b[40m\u001b[33m\u001b[40m~/git/github.com/markuszoeller/markuszoeller.github.io\u001b[1m\u001b[33m\u001b[40m\u001b[32m [\u001b[1m\u001b[32m\u001b[40m\u001b[34msources \u001b[31m*\u001b[39m\u001b[49m\u001b[0m\u001b[39m\u001b[49m\u001b[0m\u001b[40m\u001b[1m\u001b[40m\u001b[32m]\u001b[K\u001b[39m\u001b[49m\u001b[0m\r\n\u001b[40m\u001b[34m±\u001b[39m\u001b[49m\u001b[0m\u001b[40m %\u001b[39m\u001b[49m\u001b[0m \u001b[K\u001b[111C!\u001b[1m\u001b[36m433\u001b[39m\u001b[49m\u001b[0m\u001b[115D"
+    ],
+    [
+      5.6e-05,
+      "\u001b[?1h\u001b=\u001b[?2004h"
+    ],
+    [
+      1.260332,
+      "s"
+    ],
+    [
+      0.174706,
+      "\bsl"
+    ],
+    [
+      0.223833,
+      "e"
+    ],
+    [
+      0.111985,
+      "e"
+    ],
+    [
+      0.432688,
+      "p"
+    ],
+    [
+      0.080745,
+      " "
+    ],
+    [
+      0.59866,
+      "2"
+    ],
+    [
+      0.448161,
+      "\u001b[?1l\u001b>"
+    ],
+    [
+      1.5e-05,
+      "\u001b[?2004l\r\r\n"
+    ],
+    [
+      0.001434,
+      "=== 2022-01-04T17:53:31+00:00 command start ===\r\n\r\n"
+    ],
+    [
+      0.000889,
+      "$ sleep 2\r\n"
+    ],
+    [
+      0.000266,
+      "\u001b]2;sleep 2\u0007\u001b]1;sleep\u0007"
+    ],
+    [
+      2.0,
+      "\u001b[1m\u001b[7m%\u001b[27m\u001b[1m\u001b[0m                                                                                                                       \r \r"
+    ],
+    [
+      0.001843,
+      "\r\n=== 2022-01-04T17:53:33+00:00 (2s) command end ===\r\n"
+    ],
+    [
+      0.000224,
+      "\u001b]2;markus@DESKTOP-0BO7FL4:~/git/github.com/markuszoeller/markuszoeller.github.io\u0007\u001b]1;..ler.github.io\u0007"
+    ],
+    [
+      0.016328,
+      "\r\u001b[0m\u001b[27m\u001b[24m\u001b[J\u001b[39m\u001b[49m\u001b[0m\r\n\u001b[40m\u001b[1m\u001b[40m\u001b[32mmarkus\u001b[1m\u001b[32m\u001b[40m\u001b[34m@\u001b[1m\u001b[34m\u001b[40m\u001b[36mDESKTOP-0BO7FL4\u001b[1m\u001b[36m\u001b[40m\u001b[32m \u001b[0m\u001b[32m\u001b[40m\u001b[33m\u001b[40m~/git/github.com/markuszoeller/markuszoeller.github.io\u001b[1m\u001b[33m\u001b[40m\u001b[32m [\u001b[1m\u001b[32m\u001b[40m\u001b[34msources \u001b[31m*\u001b[39m\u001b[49m\u001b[0m\u001b[39m\u001b[49m\u001b[0m\u001b[40m\u001b[1m\u001b[40m\u001b[32m]\u001b[K\u001b[39m\u001b[49m\u001b[0m\r\n\u001b[40m\u001b[34m±\u001b[39m\u001b[49m\u001b[0m\u001b[40m %\u001b[39m\u001b[49m\u001b[0m \u001b[K\u001b[111C!\u001b[1m\u001b[36m434\u001b[39m\u001b[49m\u001b[0m\u001b[115D\u001b[?1h\u001b="
+    ],
+    [
+      2e-05,
+      "\u001b[?2004h"
+    ],
+    [
+      0.977843,
+      "p"
+    ],
+    [
+      0.151927,
+      "\bps"
+    ],
+    [
+      0.151764,
+      " "
+    ],
+    [
+      0.144967,
+      "a"
+    ],
+    [
+      0.095373,
+      "u"
+    ],
+    [
+      0.135886,
+      "x"
+    ],
+    [
+      0.11177,
+      " "
+    ],
+    [
+      0.424742,
+      "|"
+    ],
+    [
+      0.247523,
+      " "
+    ],
+    [
+      0.112239,
+      "g"
+    ],
+    [
+      0.216087,
+      "r"
+    ],
+    [
+      0.064674,
+      "e"
+    ],
+    [
+      0.263038,
+      " "
+    ],
+    [
+      0.480088,
+      "\b"
+    ],
+    [
+      0.384164,
+      "p"
+    ],
+    [
+      0.103881,
+      " "
+    ],
+    [
+      0.120296,
+      "d"
+    ],
+    [
+      0.175785,
+      "e"
+    ],
+    [
+      0.128583,
+      "f"
+    ],
+    [
+      0.175286,
+      "u"
+    ],
+    [
+      0.200348,
+      "n"
+    ],
+    [
+      0.207936,
+      "c"
+    ],
+    [
+      0.207951,
+      "t"
+    ],
+    [
+      0.895954,
+      "\u001b[?1l\u001b>"
+    ],
+    [
+      4.2e-05,
+      "\u001b[?2004l\r\r\n"
+    ],
+    [
+      0.001262,
+      "=== 2022-01-04T17:53:39+00:00 command start ===\r\n\r\n"
+    ],
+    [
+      0.001032,
+      "$ ps aux | grep defunct\r\n"
+    ],
+    [
+      0.000177,
+      "\u001b]2;ps aux | grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox} \u0007\u001b]1;ps\u0007"
+    ],
+    [
+      0.002902,
+      "root      6486  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6494  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6501  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6503  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6505  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6512  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6514  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6516  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6523  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6525  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6527  0.0  0.0"
+    ],
+    [
+      5.7e-05,
+      "      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6534  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6536  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6539  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6541  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nroot      6543  0.0  0.0      0     0 ?        Z    17:10   0:00 [init] <\u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K>\r\nmarkus    9753  0.0  0.0   8160   736 pts/5    S+   18:53   0:00 grep --color=auto --exclude-dir=.bzr --exclude-dir=CVS --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn --exclude-dir=.idea --exclude-dir=.tox \u001b[01;31m\u001b[Kdefunct\u001b[m\u001b[K\r\n"
+    ],
+    [
+      0.000125,
+      "\u001b[1m\u001b[7m%\u001b[27m\u001b[1m\u001b[0m                                                                                                                       \r \r"
+    ],
+    [
+      0.001826,
+      "\r\n=== 2022-01-04T17:53:39+00:00 (0s) command end ===\r\n"
+    ],
+    [
+      0.000181,
+      "\u001b]2;markus@DESKTOP-0BO7FL4:~/git/github.com/markuszoeller/markuszoeller.github.io\u0007\u001b]1;..ler.github.io\u0007"
+    ],
+    [
+      0.016052,
+      "\r\u001b[0m\u001b[27m\u001b[24m\u001b[J\u001b[39m\u001b[49m\u001b[0m\r\n\u001b[40m\u001b[1m\u001b[40m\u001b[32mmarkus\u001b[1m\u001b[32m\u001b[40m\u001b[34m@\u001b[1m\u001b[34m\u001b[40m\u001b[36mDESKTOP-0BO7FL4\u001b[1m\u001b[36m\u001b[40m\u001b[32m \u001b[0m\u001b[32m\u001b[40m\u001b[33m\u001b[40m~/git/github.com/markuszoeller/markuszoeller.github.io\u001b[1m\u001b[33m\u001b[40m\u001b[32m [\u001b[1m\u001b[32m\u001b[40m\u001b[34msources \u001b[31m*\u001b[39m\u001b[49m\u001b[0m\u001b[39m\u001b[49m\u001b[0m\u001b[40m\u001b[1m\u001b[40m\u001b[32m]\u001b[K\u001b[39m\u001b[49m\u001b[0m\r\n\u001b[40m\u001b[34m±\u001b[39m\u001b[49m\u001b[0m\u001b[40m %\u001b[39m\u001b[49m\u001b[0m \u001b[K\u001b[111C!\u001b[1m\u001b[36m435\u001b[39m\u001b[49m\u001b[0m\u001b[115D"
+    ],
+    [
+      5.1e-05,
+      "\u001b[?1h\u001b=\u001b[?2004h"
+    ],
+    [
+      1.24862,
+      "e"
+    ],
+    [
+      0.20824,
+      "\bex"
+    ],
+    [
+      0.192709,
+      "i"
+    ],
+    [
+      0.191325,
+      "t"
+    ],
+    [
+      1.672049,
+      "\u001b[?1l\u001b>\u001b[?2004l\r\r\n"
+    ],
+    [
+      0.001359,
+      "=== 2022-01-04T17:53:43+00:00 command start ===\r\n\r\n"
+    ],
+    [
+      0.000804,
+      "$ exit\r\n"
+    ],
+    [
+      0.00017,
+      "\u001b]2;exit\u0007\u001b]1;exit\u0007"
+    ]
+  ]
+}
