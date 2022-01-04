@@ -61,3 +61,10 @@ Configuration
 
 https://ablog.readthedocs.io/en/latest/manual/ablog-configuration-options/
 
+
+Terminal Replay
+===============
+
+The terminal replay happens with ``asciinema``::
+
+    pip install -U "asciinema==1.3.0"
