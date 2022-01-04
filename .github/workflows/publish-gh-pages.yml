@@ -5,7 +5,8 @@ on:
     branches:
       - sources
   schedule:
-  - cron: "0 0 * * *"
+  # Only Sundays on odd months: https://crontab.guru/#0_0_*_1,3,5,7,9,11_0   
+  - cron: "0 0 * 1,3,5,7,9,11 0"
 
 jobs:
   build-and-publish:
