@@ -12,6 +12,11 @@ import sys
 import ablog
 import sphinx_bootstrap_theme
 
+
+# To include my own extensions in this repo:
+sys.path.append(os.path.abspath("./_ext"))
+
+
 # -- General ABlog Options ----------------------------------------------------
 
 # A path relative to the configuration directory for blog archive pages.
@@ -164,7 +169,8 @@ extensions = [
     'alabaster',
     'ablog',
     'sphinxcontrib.spelling',
-    'sphinxcontrib.blockdiag'
+    'sphinxcontrib.blockdiag',
+    'asciinema'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

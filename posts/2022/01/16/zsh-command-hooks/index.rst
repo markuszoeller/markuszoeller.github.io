@@ -37,14 +37,8 @@ long a command took.
 Example
 =======
 
-.. raw:: html
-
-   <asciinema-player
-   src="../../../../../_static/asciinema/zsh_hook_3768E4.json"
-   cols="120"
-   rows="30"
-   poster="npt:0:05">
-   </asciinema-player>
+.. asciinema:: zsh_hook_3768E4.json
+   :poster: npt:0:05
 
 
 Note the two lines which contain ``command start`` and ``command end`` which surround the command
